@@ -1,19 +1,16 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
-    <base href="">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Главная страница | ThermoBlock</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="Строительные термоблоки, дома из термоблоков">
-    <link rel="shortcut icon" href="{% static '/favicon.ico'%}">
-    <link rel="icon" href="{% static '/favicon.ico' %}" type="image/x-icon">
+    <meta name="description" content="Строительные термоблоки, дома из термоблоков">
+    <meta name="keywords" content="термоблок, теплый дом, энергоэффективный дом">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="canonical" href="index.html">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -25,26 +22,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css">
     <link href="https://fonts.googleapis.com/css?family=Arimo:400,700|Roboto:400,700|Oswald:300,400|PT+Sans+Narrow"
         rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'css/media.css' %}" rel="stylesheet">
-    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/media.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
     <script src="/feedback/form-processing.js"></script>
     <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
     
-        ym(96063256, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-        });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/96063256" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
 
@@ -52,16 +36,16 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
     <!-- <script src="http://malsup.github.com/jquery.form.js"></script> -->
     <!-- formit -->
-    <link rel="stylesheet" href="assets/components/ajaxform/css/default.css" type="text/css" />
+    <!-- <link rel="stylesheet" href="assets/components/ajaxform/css/default.css" type="text/css" /> -->
 </head>
 
-<body id="ex1">
+<body>
     <header>
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-12">
                     <div class="logo">
-                        <img src="{% static 'img/logo.png' %}" alt="" class="img-fluid">
+                        <img src="img/logo.png" alt="" class="img-fluid">
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-4">
@@ -262,13 +246,13 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul id="menu" class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link ex" href="index.html#ex1">Главная <span class="sr-only">(current)</span></a>
+                        <a class="nav-link ex" href="#main">Главная <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ex" href="index.html#products">Продукция</a>
+                        <a class="nav-link ex" href="#products">Продукция</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="katalog.html">Готовые проекты</a>
+                        <a class="nav-link disabled" href="#catalog">Готовые проекты</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link ex" href="index.html#ex3">Портфолио</a>
@@ -312,7 +296,7 @@
             </div>
         </div>
     </nav>
-    <section class="main_slider">
+    <!-- <section class="main_slider">
         <div class="item">
             <div class="image"
                 style="background-image: url(https://thermoblock03.ru/assets/manager/main_slider/gal2.jpg);"></div>
@@ -321,7 +305,6 @@
                     МЕЧТЫ!</div>
                 <div class="text2 animated" data-animation="fadeInTop" data-delay="0.6s">Дом из THERMOBLOCK за 2 месяца!
                 </div>
-                <!-- <a href="katalog.html" class="btn animated" data-animation="fadeInTop" data-delay="0.3s">Выбрать дом</a> -->
                 <a href="javascript:;" class="btn animated" data-animation="fadeInTop" data-delay="0.3s"
                     data-toggle="modal" data-target="#header_form">Запросить расчет</a>
             </div>
@@ -350,65 +333,69 @@
                     data-toggle="modal" data-target="#header_form">Запросить расчет</a>
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <section class="intro">
+    <section class="intro" id="main">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="global_title">ThermoBlock - экономичное и быстрое строительство</div>
-                    <div class="global_subtitle">Блоки для энергоэффективных зданий</div>
+                    <h2 class="global_title">ThermoBlock - экономичное и быстрое строительство</h2>
+                    <h3 class="global_subtitle">Блоки для энергоэффективных зданий</h3>
                     <div class="global_line"></div>
-                    <img src="https://thermoblock03.ru/assets/manager/IMG_20190201_115128.jpg" alt="">
+                    <img src="img_about/thermoblock_stock.jpg" alt="склад термоблоков">
                     <div class="text">
-                        <p><strong>"Thermoblock"</strong></p>
-                        <p><span>- с 2006 года занимались производством шлакоблока, на оборудовании собственной
-                                разработки.</span></p>
-                        <p><span>- к 2015 году освоен выпуск энергоэффективного строительного материала - "Thermoblock".
+                        <p><strong>Основные этапы "Thermoblock"</strong></p>
+                        <ul>
+                        <li><span>с 2006 года занимались производством шлакоблока, на оборудовании собственной
+                                разработки.</span></li>
+                        <li><span>к 2015 году освоен выпуск энергоэффективного строительного материала - "Thermoblock".
                                 Аналог популярных в скандинавских странах керамзитобетонных блоков с утеплителем.</span>
-                        </p>
-                        <p><span>- в 2016 году было открыто новое направление - проектирование, <br
+                        </li>
+                        <li><span>в 2016 году было открыто новое направление - проектирование, <br
                                     class="d-none d-xl-block" />строительство зданий и сооружений из
-                                "Thermoblock".</span></p>
-                        <p><span>- доставка "Thermoblock" и сопутствующих материалов собственным транспортом.</span></p>
-                        <p><span>- с 2018 года "Thermoblock" представлен в торговых строительных сетях <br
-                                    class="d-none d-xl-block" />г. Улан-Удэ.</span></p>
-                        <p><span>В настоящее время компания ведет разработку и внедрение в производство различных блоков
-                                - элементов системы каменного малоэтажного домостроения.</span></p>
+                                "Thermoblock".</span></li>
+                        <li><span>доставка "Thermoblock" и сопутствующих материалов собственным транспортом.</span></li>
+                        <li><span>с 2018 года "Thermoblock" представлен в торговых строительных сетях <br
+                                    class="d-none d-xl-block" />г. Улан-Удэ.</span></li>
+                        <li><span>В настоящее время компания ведет разработку и внедрение в производство различных блоков
+                                - элементов системы каменного малоэтажного домостроения.</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="product" id="ex2">
+    <section class="product" id="products">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="global_title only">Основные виды продукции ThermoBlock</div>
+                    <h2 class="global_title only">Основные виды продукции ThermoBlock</h2>
                     <div class="global_line"></div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="{% static 'blocks_img/tb400.png'%}" alt="" class="img-fluid">
+                    <img src="img_blocks/tb400.png" alt="ТБ400" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
-                    <div class="name">ThermoBlock ТБ400 - Основа линейки продукции - рядовой блок с теплоизоляцией.
-                    </div>
-                    <h3>Размеры и вес:</h3>
+                    <h3 class="name">ThermoBlock ТБ400 
+                    </h3>
+                    <h4>Стеновой (рядовой) блок для стены толщиной 400 мм.</h4>
+                    <p class="name">основная линейка продукции для самых энергоэффективных домов. Рядовой блок имеет теплоизоляцию и с обоих сторон имеет ...</p>
+                    <p>Размеры и вес:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Длина:</td>
-                                    <td class="info-b">600мм</td>
+                                    <td class="info-b">600 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Ширина:</td>
-                                    <td class="info-b">400мм</td>
+                                    <td class="info-b">400 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Высота:</td>
-                                    <td class="info-b">200мм</td>
+                                    <td class="info-b">200 мм</td>
                                 </tr>
                             </table>
                         </div>
@@ -416,20 +403,20 @@
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Вес блока:</td>
-                                    <td class="info-b">30кг</td>
+                                    <td class="info-b">30 кг</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Блоков в поддоне:</td>
-                                    <td class="info-b">20шт</td>
+                                    <td class="info-b">20 шт</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Вес поддона:</td>
-                                    <td class="info-b">600кг</td>
+                                    <td class="info-b">600 кг</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                    <h3>Основные характеристики:</h3>
+                    <p>Основные характеристики:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="table table-bordered">
@@ -443,7 +430,7 @@
                                 </tr>
                                 <tr>
                                     <td class="info-a">Звукоизоляция дБА (Rw):</td>
-                                    <td class="info-b">51Дб</td>
+                                    <td class="info-b">51 Дб</td>
                                 </tr>
                             </table>
                         </div>
@@ -451,42 +438,44 @@
                             <table class="table table-bordered">
                                 <tr>
                                     <td class="info-a">Расход бетона:</td>
-                                    <td class="info-b">0,125м3/м2 стены</td>
+                                    <td class="info-b">0,125 м3/м2 стены</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Расход блоков:</td>
-                                    <td class="info-b">8,33/1/м2</td>
+                                    <td class="info-b">8,33 на м2</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Вес бетонированной стены:</td>
-                                    <td class="info-b">550кг/м2</td>
+                                    <td class="info-b">550 кг/м2</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/ugl_m.png" alt="" class="img-fluid">
+                    <img src="img_blocks/tbu400.png" alt="ТБУ400" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
-                    <div class="name">Углы дома являются уязвимыми местом, которое часто промерзает. Угловой блок ТБУ400
+                    <h3 class="name">ThermoBlock ТБУ400</h3>
+                    <h4>Угловой блок для стены толщиной 400 мм.</h4>
+                    <p class="name">Углы дома являются уязвимыми местом, которое часто промерзает. Угловой блок ТБУ400
                         имеет Г-образный изгиб, который способствует созданию монолитного теплового контура по всему
-                        периметру.</div>
-                    <h3>Размеры и вес:</h3>
+                        периметру.</p>
+                    <p>Размеры и вес:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Длина:</td>
-                                    <td class="info-b">600мм</td>
+                                    <td class="info-b">600 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Ширина:</td>
-                                    <td class="info-b">400мм</td>
+                                    <td class="info-b">400 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Высота:</td>
-                                    <td class="info-b">200мм</td>
+                                    <td class="info-b">200 мм</td>
                                 </tr>
                             </table>
                         </div>
@@ -494,20 +483,20 @@
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Вес блока:</td>
-                                    <td class="info-b">30кг</td>
+                                    <td class="info-b">30 кг</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Блоков в поддоне:</td>
-                                    <td class="info-b">20шт</td>
+                                    <td class="info-b">20 шт</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Вес поддона:</td>
-                                    <td class="info-b">600кг</td>
+                                    <td class="info-b">600 кг</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                    <h3>Основные характеристики:</h3>
+                    <p>Основные характеристики:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="table table-bordered">
@@ -521,7 +510,7 @@
                                 </tr>
                                 <tr>
                                     <td class="info-a">Звукоизоляция дБА (Rw):</td>
-                                    <td class="info-b">51Дб</td>
+                                    <td class="info-b">51 Дб</td>
                                 </tr>
                             </table>
                         </div>
@@ -529,40 +518,42 @@
                             <table class="table table-bordered">
                                 <tr>
                                     <td class="info-a">Расход бетона:</td>
-                                    <td class="info-b">0,125м3/м2 стены</td>
+                                    <td class="info-b">0,125 м3/м2 стены</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Расход блоков:</td>
-                                    <td class="info-b">8,33/1/м2</td>
+                                    <td class="info-b">8,33 1/м2</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Вес бетонированной стены:</td>
-                                    <td class="info-b">550кг/м2</td>
+                                    <td class="info-b">550 кг/м2</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/1a_m.png" alt="" class="img-fluid">
+                    <img src="img_blocks/tb300.png" alt="ТБ300" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
-                    <div class="name">ThermoBlock ТБ300.</div>
-                    <h3>Размеры и вес:</h3>
+                    <h3 class="name">ThermoBlock ТБ300.</h3>
+                    <h4>Стеновой (рядовой) блок для стены толщиной 300 мм.</h4>
+                    <p class="name">Блок отличается от четырехсотой серии ...</p>
+                    <p>Размеры и вес:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Длина:</td>
-                                    <td class="info-b">400мм</td>
+                                    <td class="info-b">400 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Ширина:</td>
-                                    <td class="info-b">300мм</td>
+                                    <td class="info-b">300 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Высота:</td>
-                                    <td class="info-b">200мм</td>
+                                    <td class="info-b">200 мм</td>
                                 </tr>
                             </table>
                         </div>
@@ -570,20 +561,20 @@
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Вес блока:</td>
-                                    <td class="info-b">21кг</td>
+                                    <td class="info-b">21 кг</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Блоков в поддоне:</td>
-                                    <td class="info-b">40шт</td>
+                                    <td class="info-b">40 шт</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Вес поддона:</td>
-                                    <td class="info-b">840кг</td>
+                                    <td class="info-b">840 кг</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                    <h3>Основные характеристики:</h3>
+                    <p>Основные характеристики:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="table table-bordered">
@@ -597,7 +588,7 @@
                                 </tr>
                                 <tr>
                                     <td class="info-a">Звукоизоляция дБА (Rw):</td>
-                                    <td class="info-b">51Дб</td>
+                                    <td class="info-b">51 Дб</td>
                                 </tr>
                             </table>
                         </div>
@@ -605,42 +596,44 @@
                             <table class="table table-bordered">
                                 <tr>
                                     <td class="info-a">Расход бетона:</td>
-                                    <td class="info-b">0,08м3/м2 стены</td>
+                                    <td class="info-b">0,08 м3/м2 стены</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Расход блоков:</td>
-                                    <td class="info-b">12,5шт/м2</td>
+                                    <td class="info-b">12,5 шт/м2</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Вес бетонированной стены:</td>
-                                    <td class="info-b">412,5кг/м2</td>
+                                    <td class="info-b">412,5 кг/м2</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/tbu300_m.png" alt="" class="img-fluid">
+                    <img src="img_blocks/tbu300_m.png" alt="ТБУ300" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
-                    <div class="name">Углы дома являются уязвимыми местом, которое часто промерзает. Угловой блок ТБУ300
+                    <h3 class="name">ThermoBlock ТБУ300.</h3>
+                    <h4>Угловой блок для стены толщиной 300 мм.</h4>
+                    <p class="name">Углы дома являются уязвимыми местом, которое часто промерзает. Угловой блок ТБУ300
                         имеет Г-образный изгиб, который способствует созданию монолитного теплового контура по всему
-                        периметру.</div>
-                    <h3>Размеры и вес:</h3>
+                        периметру.</p>
+                    <p>Размеры и вес:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Длина:</td>
-                                    <td class="info-b">500мм</td>
+                                    <td class="info-b">500 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Ширина:</td>
-                                    <td class="info-b">300мм</td>
+                                    <td class="info-b">300 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Высота:</td>
-                                    <td class="info-b">200мм</td>
+                                    <td class="info-b">200 мм</td>
                                 </tr>
                             </table>
                         </div>
@@ -648,20 +641,20 @@
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Вес блока:</td>
-                                    <td class="info-b">21кг</td>
+                                    <td class="info-b">21 кг</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Блоков в поддоне:</td>
-                                    <td class="info-b">40шт</td>
+                                    <td class="info-b">40 шт</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Вес поддона:</td>
-                                    <td class="info-b">840кг</td>
+                                    <td class="info-b">840 кг</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                    <h3>Основные характеристики:</h3>
+                    <p>Основные характеристики:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="table table-bordered">
@@ -675,7 +668,7 @@
                                 </tr>
                                 <tr>
                                     <td class="info-a">Звукоизоляция дБА (Rw):</td>
-                                    <td class="info-b">51Дб</td>
+                                    <td class="info-b">51 Дб</td>
                                 </tr>
                             </table>
                         </div>
@@ -683,41 +676,43 @@
                             <table class="table table-bordered">
                                 <tr>
                                     <td class="info-a">Расход бетона:</td>
-                                    <td class="info-b">0,08м3/м2 стены</td>
+                                    <td class="info-b">0,08 м3/м2 стены</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Расход блоков:</td>
-                                    <td class="info-b">12,5шт/м2</td>
+                                    <td class="info-b">12,5 шт/м2</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Вес бетонированной стены:</td>
-                                    <td class="info-b">412,5кг/м2</td>
+                                    <td class="info-b">412,5 кг/м2</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/PB200_m.png" alt="" class="img-fluid">
+                    <img src="img_blocks/PB200_m.png" alt="ПБ200" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
-                    <div class="name">Для устройства внутренних несущих и не несущих стен представлены перегородочные
-                        блоки ПБ200</div>
-                    <h3>Размеры и вес:</h3>
+                    <h3 class="name">ThermoBlock ПБ200.</h3>
+                    <h4>Рядовой блок для внутренней стены толщиной 200 мм.</h4>
+                    <p class="name">Для устройства внутренних несущих и не несущих стен толщиной 200 мм. представлены перегородочные
+                        блоки ПБ200.</p>
+                    <p>Размеры и вес:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Длина:</td>
-                                    <td class="info-b">600мм</td>
+                                    <td class="info-b">600 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Ширина:</td>
-                                    <td class="info-b">200мм</td>
+                                    <td class="info-b">200 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Высота:</td>
-                                    <td class="info-b">200мм</td>
+                                    <td class="info-b">200 мм</td>
                                 </tr>
                             </table>
                         </div>
@@ -725,20 +720,20 @@
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Вес блока:</td>
-                                    <td class="info-b">24кг</td>
+                                    <td class="info-b">24 кг</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Блоков в поддоне:</td>
-                                    <td class="info-b">40шт</td>
+                                    <td class="info-b">40 шт</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Вес поддона:</td>
-                                    <td class="info-b">960кг</td>
+                                    <td class="info-b">960 кг</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                    <h3>Основные характеристики:</h3>
+                    <p>Основные характеристики:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="table table-bordered">
@@ -772,26 +767,28 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/pb100_mv2.png" alt="" class="img-fluid">
+                    <img src="img_blocks/pb100_mv2.png" alt="ПБ100" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
-                    <div class="name">Для устройства внутренних несущих и не несущих стен представлены перегородочные
+                    <h3 class="name">ThermoBlock ПБ100.</h3>
+                    <h4>Рядовой блок для внутренней стены толщиной 100 мм.</h4>
+                    <div class="name">Для устройства внутренних несущих и не несущих стен толщиной 100 мм. представлены перегородочные
                         блоки ПБ100</div>
-                    <h3>Размеры и вес:</h3>
+                    <p>Размеры и вес:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Длина:</td>
-                                    <td class="info-b">600мм</td>
+                                    <td class="info-b">600 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Ширина:</td>
-                                    <td class="info-b">100мм</td>
+                                    <td class="info-b">100 мм</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Высота:</td>
-                                    <td class="info-b">200мм</td>
+                                    <td class="info-b">200 мм</td>
                                 </tr>
                             </table>
                         </div>
@@ -799,7 +796,7 @@
                             <table class="padding-control table table-bordered">
                                 <tr>
                                     <td class="info-a">Вес блока:</td>
-                                    <td class="info-b">14,5кг</td>
+                                    <td class="info-b">14,5 кг</td>
                                 </tr>
                                 <tr>
                                     <td class="info-a">Блоков в поддоне:</td>
@@ -812,7 +809,7 @@
                             </table>
                         </div>
                     </div>
-                    <h3>Основные характеристики:</h3>
+                    <p>Основные характеристики:</p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <table class="table table-bordered">
@@ -856,27 +853,74 @@
         </div>
     </section>
 
-    <section class="clients">
+    <section class="properties">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="global_title only">Строительство из ThermoBlock</div>
+                    <h3 class="global_title">Свойства ThermoBlock</h3>
+                    <p class="global_subtitle">Основные характеристики материала, подтвержденные <b>испытаниями</b>.</p>
+                    <div class="global_line"></div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <h4 class="name">Эффективная теплоизоляция</h4>
+                    <img src="img_blocks/temp.png"
+                        alt="" class="img-fluid">
+                    <p class="description">
+                        Эффективная теплоизоляция и способность сохранять тепло являются самым главным преимуществом
+                            ThermoBlock дома сохраняют тепло зимой и дарят приятную прохладу летом. Благодаря своей
+                            массивной конструкции дом потребляет мало энергии и проживание в таком доме очень
+                            экономично. Особенностью блока и технология строительства полностью исключают образование
+                            мостов холода.
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <h4 class="name">Высокая прочность</h4>
+                    <img src="img_blocks/seism.png"
+                        alt="" class="img-fluid">
+                    <p class="description">
+                        ThermoBlock высокопрочный материал. Сооружения из блоков выдерживают сейсмическую нагрузку
+                            8-9 баллов. С течением времени такой дом только повышает свои качественные показатели.
+                            Надежность, прочность и массивность этих блоков делает их идеальным выбором для
+                            строительства дома на века.
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="name">Быстрота и простота возведения</div>
+                    <img src="img_blocks/sroki.png"
+                        alt="" class="img-fluid">
+                    <p class="description">
+                        Технология строительства продумана до мелочей. Легкая приспособляемость к этапам выполняемых
+                            работ. Готовые рядовые и угловые элементы значительно упрощают работу строителей и сокращают
+                            общие сроки строительства. В среднем возведение дома в 200м2 занимает 1-2 месяца (с учетом
+                            устройства фундамента). Благодаря конструкции блоков, имеющих заливочные полости, монтаж
+                            труб и кабелей в стенах, а также установка розеток и других элементов не представляет
+                            сложности.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="clients" id="catalog">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="global_title only">Строительство из ThermoBlock</h2>
                     <div class="global_line"></div>
                 </div>
                 <div class="col-md-6 col-sm-12">
-                    <div class="title">Индивидуальное строительство</div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/ehh_TgxcqNo.40ce70a25e567e8d641f214f8c8c04901.jpg"
-                        alt="" class="img-fluid" />
+                    <h3 class="title">Индивидуальное строительство</h3>
+                    <img src="img_building/home_1.jpg"
+                        alt="Жилой индивидуальный дом из термоблока г. Улан-Удэ ул. Петрова" class="img-fluid" />
                     <div class="text">
                         <p><span>Из <strong>"Thermoblock"</strong> можно реализовать любой проект, даже если проект
                                 готовился под другие строительные материалы<br /><br /></span></p>
                         <p class="hideOnMob"><span>ПРЕИМУЩЕСТВА СТРОИТЕЛЬСТВА</span>:</p>
                         <div>
                             <ul>
-                                <li>
-                                    <div style="display: inline !important;">более быстрое строительство, чем из других
-                                        материалов;</div>
-                                    <div style="display: inline !important;"> </div>
+                                <li>более быстрое строительство, чем из других
+                                        материалов;
                                 </li>
                                 <li>дом из "Thermoblock" сможет построить даже человек без специальной подготовки;</li>
                                 <li>минимум рабочих на стройке, 3-4 человека;</li>
@@ -887,9 +931,9 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
-                    <div class="title">Коммерческое строительство </div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/org2.40ce70a25e567e8d641f214f8c8c04901.jpg"
-                        alt="" class="img-fluid" />
+                    <h3 class="title">Коммерческое строительство </h3>
+                    <img src="img_building/office_3.jpg"
+                        alt="Офисное здание из термоблока г. Улан-Удэ" class="img-fluid" />
                     <div class="text">
                         <p><span><strong>ThermoBlock</strong> подходит для строительства торговых центров, магазинов,
                                 ресторанов, многоквартирных жилых домов, гостиниц, СТО, общежитий, складов,
@@ -903,101 +947,6 @@
                             <li>легко проводить финишную отделку;</li>
                             <li>минимум затрат на отопление.</li>
                         </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="paralax_form">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="wrapper">
-                        <div class="top">
-                            <div class="title"><span>Заполните простую форму</span> и мы подготовим смету по
-                                строительству энергоэффективного дома</div>
-                            <div class="subtitle">Заполните форму, и наш специалист проконсультирует вас!</div>
-                        </div>
-                        <div class="form1">
-                            <form action="index.html" method="post" class="ajax_form form-horizontal" role="form">
-                                <div class="form-row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="af_name8">Ваше имя</label>
-                                        <input type="text" class="form-control" id="af_name8" name="name" value=""
-                                            placeholder="">
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label for="af_phone8">Телефон</label>
-                                        <input type="phone" class="form-control phone-input" id="phone5" name="phone"
-                                            value="" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-6">
-                                        <div class="fz_wrapper">
-                                            <a href="#"><span class="fa fa-exclamation-circle"></span> Ваши
-                                                личные данные<br> в безопасности</a>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <button type="submit" class="btn_submit">Получить расчет</button>
-                                    </div>
-                                </div>
-
-
-
-                                <input type="hidden" name="af_action" value="4938df71b509702d24e9d59686f95372" />
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="properties">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="global_title">Свойства ThermoBlock</div>
-                    <div class="global_subtitle">Основные характеристики материала, подтвержденные испытаниями.</div>
-                    <div class="global_line"></div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="name">Эффективная теплоизоляция</div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/temp.ccbb4aa61bc01bf7e348312e4bbb345f1.png"
-                        alt="" class="img-fluid">
-                    <div class="description">
-                        <p>Эффективная теплоизоляция и способность сохранять тепло являются самым главным преимуществом
-                            ThermoBlock дома сохраняют тепло зимой и дарят приятную прохладу летом. Благодаря своей
-                            массивной конструкции дом потребляет мало энергии и проживание в таком доме очень
-                            экономично. Особенностью блока и технология строительства полностью исключают образование
-                            мостов холода.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="name">Высокая прочность</div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/seism.ccbb4aa61bc01bf7e348312e4bbb345f1.png"
-                        alt="" class="img-fluid">
-                    <div class="description">
-                        <p>ThermoBlock высокопрочный материал. Сооружения из блоков выдерживают сейсмическую нагрузку
-                            8-9 баллов. С течением времени такой дом только повышает свои качественные показатели.
-                            Надежность, прочность и массивность этих блоков делает их идеальным выбором для
-                            строительства дома на века.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="name">Быстрота и простота возведения</div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/sroki.ccbb4aa61bc01bf7e348312e4bbb345f1.png"
-                        alt="" class="img-fluid">
-                    <div class="description">
-                        <p>Технология строительства продумана до мелочей. Легкая приспособляемость к этапам выполняемых
-                            работ. Готовые рядовые и угловые элементы значительно упрощают работу строителей и сокращают
-                            общие сроки строительства. В среднем возведение дома в 200м2 занимает 1-2 месяца (с учетом
-                            устройства фундамента). Благодаря конструкции блоков, имеющих заливочные полости, монтаж
-                            труб и кабелей в стенах, а также установка розеток и других элементов не представляет
-                            сложности.</p>
                     </div>
                 </div>
             </div>
@@ -1054,11 +1003,11 @@
         </div>
     </section>
 
-    <section class="portfolio" id="ex3">
+    <section class="portfolio" id="buit_hauses">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="global_title">Примеры домов из "ThermoBlock"</div>
+                    <h3 class="global_title">Построенные дома из "ThermoBlock"</h3>
                     <div class="global_subtitle">Построй дом своей мечты</div>
                     <div class="global_line"></div>
                 </div>
@@ -1066,63 +1015,61 @@
                     <div class="item">
                         <a data-fancybox="gallery"
                             data-caption="Lorem Ipsum - это текст-рыба, часто используемый в печати и веб-дизайне. "
-                            href="https://thermoblock03.ru/assets/manager/portfolio/KHYWi48Pv00.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/KHYWi48Pv00.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            href="img_building/office_3.jpg"><img
+                                src="img_building/office_3.jpg"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery"
                             data-caption="Lorem Ipsum - это текст-рыба, часто используемый в печати и веб-дизайне. "
-                            href="https://thermoblock03.ru/assets/manager/portfolio/IMG_20180.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_20180.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            href="img_building//home1_2.jpg"><img
+                                src="img_building//home1_2.jpg"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/govBeTtsgi8.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/govBeTtsgi8.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="img_building/home1_1.jpg"><img
+                                src="img_building/home1_1.jpg"
+                                class="img-fluid"></a>
+                    </div>
+                    <div class="item">
+                        <a data-fancybox="gallery" data-caption="Частный дом из термоблока в с. Бичура" href="img_building/home1_4.jpg"><img
+                                src="img_building/home1_4.jpg""
+                                class="img-fluid"></a>
+                    </div>
+                    <div class="item">
+                        <a data-fancybox="gallery" data-caption="Частный дом из термоблока в с. Баргузин" href="img_building/home1_5.jpg"><img
+                                src="img_building/home1_5.jpg"
+                                class="img-fluid"></a>
+                    </div>
+                    <div class="item">
+                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст- рыба, часто используемый в
+                            печати и веб-дизайне. " href="img_building/home_1.jpg"><img
+                                src="img_building/home_1.jpg"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/gal3.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/gal3.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="img_building/home2_1.jpg"><img
+                                src="img_building/home2_1.jpg"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
-                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/gal1.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/gal1.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст- рыба, часто используемый в
+                            печати и веб-дизайне. " href="img_building/home2_3.jpg"><img
+                                src="img_building/home2_3.jpg"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
-                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/IMG_1305.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_1305.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст- рыба, часто используемый в
+                            печати и веб-дизайне. " href="img_building/office_1.jpg"><img
+                                src="img_building/office_1.jpg"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
-                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/IMG_1286.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_1286.6b4a3c93722115a85e449853a0c7b6d21.jpg"
-                                class="img-fluid"></a>
-                    </div>
-                    <div class="item">
-                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/tbJo8FPP4BA.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/tbJo8FPP4BA.6b4a3c93722115a85e449853a0c7b6d21.jpg"
-                                class="img-fluid"></a>
-                    </div>
-                    <div class="item">
-                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/IMG_20180523_185438.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_20180523_185438.6b4a3c93722115a85e449853a0c7b6d21.jpg"
-                                class="img-fluid"></a>
-                    </div>
-                    <div class="item">
-                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/IMG_20180817_204613.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_20180817_204613.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                        <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст- рыба, часто используемый в
+                            печати и веб-дизайне. " href="img_building/office_2.jpg"><img
+                                src="img_building/office_2.jpg"
                                 class="img-fluid"></a>
                     </div>
 
@@ -1138,20 +1085,7 @@
         </div>
     </section>
 
-    <!--section class="reviews" id="ex4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="global_title">Клиенты о ThermoBlock</div>
-                        <div class="global_subtitle">Отзывы о ThermoBlock</div>
-                        <div class="global_line"></div>
-                    </div>
-                    
-                </div>
-            </div>
-        </section-->
-
-    <section class="paralax_form par2">
+    <section class="paralax_form">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -1171,15 +1105,14 @@
                                     </div>
                                     <div class="form-group col-sm-6">
                                         <label for="af_phone8">Телефон</label>
-                                        <input type="phone" class="form-control phone-input" id="phone3" name="phone"
+                                        <input type="phone" class="form-control phone-input" id="phone5" name="phone"
                                             value="" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-sm-6">
                                         <div class="fz_wrapper">
-                                            <a 
-                                                href="#"><span class="fa fa-exclamation-circle"></span> Ваши
+                                            <a href="#"><span class="fa fa-exclamation-circle"></span> Ваши
                                                 личные данные<br> в безопасности</a>
                                         </div>
                                     </div>
@@ -1190,7 +1123,7 @@
 
 
 
-                                <input type="hidden" name="af_action" value="83e9516fd98c9e431e01a474822604bf" />
+                                <input type="hidden" name="af_action" value="4938df71b509702d24e9d59686f95372" />
                             </form>
                         </div>
                     </div>
@@ -1198,6 +1131,20 @@
             </div>
         </div>
     </section>
+
+
+    <!--section class="reviews" id="ex4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="global_title">Клиенты о ThermoBlock</div>
+                        <div class="global_subtitle">Отзывы о ThermoBlock</div>
+                        <div class="global_line"></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section-->
 
     <!--section class="articles">
             <div class="container">
@@ -1442,6 +1389,48 @@
                             <a href="index.html#" class="action">Написать</a>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="wrapper">
+                        <div class="top">
+                            <div class="title"><span>Заполните простую форму</span> и мы подготовим смету по
+                                строительству энергоэффективного дома</div>
+                            <div class="subtitle">Заполните форму, и наш специалист проконсультирует вас!</div>
+                        </div>
+                        <div class="form1">
+                            <form action="index.html" method="post" class="ajax_form form-horizontal" role="form">
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="af_name8">Ваше имя</label>
+                                        <input type="text" class="form-control" id="af_name8" name="name" value=""
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="af_phone8">Телефон</label>
+                                        <input type="phone" class="form-control phone-input" id="phone3" name="phone"
+                                            value="" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <div class="fz_wrapper">
+                                            <a 
+                                                href="#"><span class="fa fa-exclamation-circle"></span> Ваши
+                                                личные данные<br> в безопасности</a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <button type="submit" class="btn_submit">Получить расчет</button>
+                                    </div>
+                                </div>
+
+
+
+                                <input type="hidden" name="af_action" value="83e9516fd98c9e431e01a474822604bf" />
+                            </form>
+                        </div>
                 </div>
             </div>
         </div>
