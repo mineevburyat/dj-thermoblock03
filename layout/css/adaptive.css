@@ -1,0 +1,40 @@
+@media (max-width: 812px) {
+    .header__logo {
+        display: none;
+    }
+    .header__top-img {
+        display: inline-block;
+        float: left;
+    }
+
+    .brend {
+        display: none;
+    }
+}
+
+@media (max-width: 786px) {
+    .header__top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 696px) {
+    .header {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 529px) {
+    .header__down {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .header__top {
+        font-size: 1.1em;
+    }
+    .header__address {
+        font-size: 0.8em;
+    }
+}

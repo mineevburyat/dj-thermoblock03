@@ -1,0 +1,359 @@
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* GLOBAL STYLE */
+.icon {
+    color: #991d27;
+}
+
+.icon_white {
+    color: white;
+}
+
+.brend {
+    font-weight: bold;
+    color: rgb(111, 42, 43);
+}
+/* HEADER Style */
+.header {
+    display: flex;
+    background-color: #d3d3d3;
+    justify-content: space-between;
+    padding-bottom: 3px;
+}
+
+.header__logo {
+    width: 150px;
+    padding:12px 6px;
+}
+.header__img {
+    width: 100%;
+}
+
+.header__center {
+    padding: 0 6px;
+    flex-grow: 2;
+}
+
+.header__top {
+    font-family: Arimo, sans-serif;
+    line-height: 24px;
+    text-align: center;
+    margin-bottom: 12px;
+    color: #991d27;
+    font-size: 1.5em;
+    margin-top: 3px;
+}
+.header__top-img {
+    width:100px;
+    display: none;
+}
+.header__down {
+    display: flex;
+    justify-content: space-around;
+}
+
+.header__address {
+}
+
+.address {
+    max-width: 320px;
+    margin: 0 12px;
+}
+.address__title {
+    font-family: Arimo, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    line-height: 24px;
+    text-align: center;
+}
+
+.address__list {
+}
+.address__item {
+    margin-top: 6px;
+    text-align: center;
+}
+.address__link {
+    color: rgb(81, 81, 81);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.address__link:before {
+    content: "\2616";
+    margin-right: 0.5em;
+}
+.address__link:hover {
+    color: #991d27;
+}
+.header__phone {
+}
+.phone {
+    max-width: 250px;
+    margin: 0 12px;
+    min-width: 120px;
+}
+.phone__title {
+    font-family: Arimo, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    line-height: 24px;
+    text-align: center;
+}
+
+.phone__list {
+    
+}
+.phone__item {
+    margin-top: 3px;
+    text-align: center;
+}
+
+.phone__link {
+    color: rgb(81, 81, 81);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.phone__link:before {
+    content: "\260e";
+    margin-right: 0.5em;
+  }
+
+.phone__link:hover {
+    color: #991d27;
+}
+
+.header__buttons {
+    margin: auto;
+    padding: 12px 6px;
+}
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.feedback-btn {
+    display: inline-block;
+    padding: 10px 20px 10px 20px;
+    border: 1px solid #c2c2c2;
+    border-radius: 5px;
+    box-shadow: 0px 0px 0px 0px #525252;
+    background: linear-gradient(to top, rgb(191, 35, 37), rgb(111, 42, 43));
+    color: #fff;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    text-shadow: 0px 0px 0px #ffffff;
+    text-transform: uppercase;
+    width: 150px;
+}
+
+.icons{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.icons__item {
+    padding: 3px;
+}
+.icons__item a i {
+    font-size: 1.5em;;
+}
+.icons__item a i:hover {
+    color: #991d27;
+}
+
+/* MENU */
+
+.main-nav {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    
+}
+.menu {
+    margin: auto;
+    padding: 0;
+    display: flex;
+    background-color: #d3d3d3;
+    
+}
+.menu__item {
+    background-color: #d3d3d3;
+    /* margin-right: 22px; */
+    width: 130px;
+	height: 0;
+	border-bottom: 30px solid white; 
+	border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+}
+
+.menu__link {
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    color: rgb(65, 64, 64);
+    padding: 12px;
+    width: 130px;
+    text-align: center;
+}
+
+.menu__link_active {
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    color: #991d27;
+    padding: 12px;
+    width: 130px;
+    text-align: center;
+}
+
+.menu__link:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+.sr-only {
+}
+
+/* PRODUCTS */
+
+#products {
+    margin-top: 12px;
+    
+}
+
+.products__title {
+    text-align: center;
+    text-transform: uppercase;
+}
+.categories {
+    display: flex;
+    padding: 6px;
+    border: #d3d3d3;
+    margin-right: 10px;
+    overflow-x: scroll;
+}
+
+.categories__title {
+    text-align: center;
+    
+}
+
+.category__text {
+    width: 60%;
+    margin: auto;
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+}
+.card {
+    width: 300px;
+   text-align: center;
+   margin: 0 auto;
+   border-bottom: 2px solid #F5F5F5;
+   background: white;
+   font-family: "Open Sans";
+   transition: .3s ease-in;
+}
+.card__img {
+    display: block;
+   width: 100%;
+}
+.card__body {
+    background: #fafafa;
+    padding: 15px 0;
+}
+.card__title {
+    font-size: 18px;
+   font-weight: 400;
+   color: #444444;
+   margin: 0 0 10px 0;
+}
+.card__text {
+}
+.card__btn {
+}
+
+/* PROPERTIES */
+#properties {
+    margin: 20px;
+}
+.properties__title {
+    text-align: center;
+}
+.properties__text {
+    text-align: center;
+}
+.properties__list {
+    display: flex;
+    justify-content: space-between;
+}
+.properties__card {
+    max-width: 300px;
+}
+.properties__name {
+}
+.properties__img {
+    display: block;
+    width: 100%;
+}
+.properties__descr {
+}
