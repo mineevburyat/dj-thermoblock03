@@ -531,19 +531,23 @@
             let scroll = this.scrollY;
             console.log(scroll)
         }); */
-        document.getScroll = function() {
-            if (window.pageYOffset != undefined) {
-                return [pageXOffset, pageYOffset];
-            } else {
-                var sx, sy, d = document,
-                    r = d.documentElement,
-                    b = d.body;
-                sx = r.scrollLeft || b.scrollLeft || 0;
-                sy = r.scrollTop || b.scrollTop || 0;
-                console.log(sx, sy)
-                return [sx, sy];
+        window.addEventListener('scroll', () => {
+            let scrollDistance = window.scrollY;
+            console.log(scrollDistance)
+            if (window.innerWidth > 768) {
+                document.querySelectorAll('section').forEach((el, i) => {
+                    if (el.offsetTop - document.querySelector('nav').clientHeight <= scrollDistance) {
+                        document.querySelectorAll('.menu__link').forEach((el) => {
+                            if (el.classList.contains('active')) {
+                                el.classList.remove('active');
+                            }
+                        });
+        
+                        document.querySelectorAll('.menu__link')[i].classList.add('active');
+                    }
+                });
             }
-        }
+        });
     </script>
   </body>
 </html>
