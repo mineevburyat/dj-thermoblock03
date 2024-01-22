@@ -147,7 +147,7 @@ html {
 
 .active {
     background-color: #991d27;
-    
+    color: white !important
 }
 
 section {
@@ -318,29 +318,37 @@ section:nth-child(even) {
 
 
 
-.main-nav {
+/* .main-nav {
   position: sticky;
   top: 0;
   width: 100%;
   
+} */
+
+.mainnav {
+    background-color: #d3d3d3;
+    position: fixed;
+    top: -50px;
+    width: 100%;
+    transition: top 0.3s;
+    z-index: 1000;
 }
-.menu {
+
+/* .menu {
   margin: auto;
   padding: 0;
   display: flex;
   background-color: #d3d3d3;
-}
-.menu__item {
+} */
+/* .menu__item {
   background-color: #d3d3d3;
-  /* margin-right: 22px; */
   width: 140px;
   height: 0;
-  /* border-bottom: 30px solid white;
-  border-right: 20px solid transparent;
-  border-left: 20px solid transparent; */
-}
 
-.menu__link {
+} */
+
+
+/* .menu__link {
   display: block;
   text-decoration: none;
   text-transform: uppercase;
@@ -350,9 +358,23 @@ section:nth-child(even) {
   width: 130px;
   text-align: center;
   font-weight: bold;
+} */
+
+.mainnav__link {
+    float: left;
+    display: block;
+    color: white;
+    text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  color: rgb(65, 64, 64);
+  padding: 6px;
+  width: 130px;
+  text-align: center;
+  font-weight: bold;
 }
 
-.menu__link:hover {
+.mainnav__link:hover {
   font-weight: bold;
   text-decoration: underline;
 }
