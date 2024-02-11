@@ -22,7 +22,7 @@
     <link href="css/adaptive.css" rel="stylesheet" />
 </head>
   <body>
-    <header class="header">
+    <header class="header" id="top">
       <div class="header__logo">
         <a href="/">
           <img src="img/logo.png" alt="logo thermoblock" class="header__img" />
@@ -147,6 +147,7 @@
                 <a class="menu__link" href="#about">О нас</a>
             </li>
         </ul> -->
+        <a href="#top" id="back-to-top" class="mainnav__link back-to-top" title="Back to top">▲</a>
         <a class="mainnav__link active" href="#products">Продукция <span class="sr-only">(текущий)</span></a>
         <a class="mainnav__link" href="#properties">Приемущества</a>
         <a class="mainnav__link" href="#building">Строительство</a>
@@ -519,23 +520,23 @@
             </ul>
         </div>
     </section>
-    <section id="projects">
+    <section id="projects" class="project">
         <h2 class="portfolio__title">Типовые проекты домов из <span class="brend">"ThermoBlock"</span></h2>
         <h3 class="portfolio__subtitle">Выберите или создайте свой проект энергоэффективного дома</h3>
         <p><a href="#">Наш проектный центр создаст полный проект вашего дома с 3D визуализацией, сметой и поможет с оформлением ипотеки технологичный дом из термоблока!</a></p>
-        <div class="building__cards">
-            <div class="buildingCard">
-                <h4 class="buildingCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
-                <div class="buildingCard__top">
-                    <a href="#" class="buildingCard__image">
+        <div class="projects__cards">
+            <div class="projectCard">
+                <h4 class="projectCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
+                <div class="projectCard__top">
+                    <a href="#" class="projectCard__image">
                         <img src="img_project/house_6_7_2_tb300.jpg"
                     alt="Жилой дом 6х7,2 из термоблока ТБ300" class="img-fluid" />
                     </a>
                 </div>
-                <div class="buildingCard__buttom">
+                <div class="projectCard__buttom">
                    
-                    <button class="buildingCard__subtitle">ПОДРОБНЕЕ</button>
-                    <ul class="buildingCard__list">
+                    <button class="projectCard__subtitle">ПОДРОБНЕЕ</button>
+                    <ul class="projectCard__list">
                         <li>Рядный блок ТБ300 - 19 поддонов (760 термоблоков)
                         </li>
                         <li>Угловой блок ТБУ300 - 60 термоблоков</li>
@@ -544,18 +545,18 @@
                     </ul>
                 </div>
             </div>
-            <div class="buildingCard">
-                <h4 class="buildingCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
-                <div class="buildingCard__top">
-                    <a href="#" class="buildingCard__image">
+            <div class="projectCard">
+                <h4 class="projectCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
+                <div class="projectCard__top">
+                    <a href="#" class="projectCard__image">
                         <img src="img_project/house_6_7_2_tb300.jpg"
                     alt="Жилой дом 6х7,2 из термоблока ТБ300" class="img-fluid" />
                     </a>
                 </div>
-                <div class="buildingCard__buttom">
+                <div class="projectCard__buttom">
                    
-                    <button class="buildingCard__subtitle">ПОДРОБНЕЕ</button>
-                    <ul class="buildingCard__list">
+                    <button class="projectCard__subtitle">ПОДРОБНЕЕ</button>
+                    <ul class="projectCard__list">
                         <li>Рядный блок ТБ300 - 19 поддонов (760 термоблоков)
                         </li>
                         <li>Угловой блок ТБУ300 - 60 термоблоков</li>
@@ -564,18 +565,18 @@
                     </ul>
                 </div>
             </div>
-            <div class="buildingCard">
-                <h4 class="buildingCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
-                <div class="buildingCard__top">
-                    <a href="#" class="buildingCard__image">
+            <div class="projectCard">
+                <h4 class="projectCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
+                <div class="projectCard__top">
+                    <a href="#" class="projectCard__image">
                         <img src="img_project/house_6_7_2_tb300.jpg"
                     alt="Жилой дом 6х7,2 из термоблока ТБ300" class="img-fluid" />
                     </a>
                 </div>
-                <div class="buildingCard__buttom">
+                <div class="projectCard__buttom">
                    
-                    <button class="buildingCard__subtitle">ПОДРОБНЕЕ</button>
-                    <ul class="buildingCard__list">
+                    <button class="projectCard__subtitle">ПОДРОБНЕЕ</button>
+                    <ul class="projectCard__list">
                         <li>Рядный блок ТБ300 - 19 поддонов (760 термоблоков)
                         </li>
                         <li>Угловой блок ТБУ300 - 60 термоблоков</li>
@@ -584,18 +585,78 @@
                     </ul>
                 </div>
             </div>
-            <div class="buildingCard">
-                <h4 class="buildingCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
-                <div class="buildingCard__top">
-                    <a href="#" class="buildingCard__image">
+            <div class="projectCard">
+                <h4 class="projectCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
+                <div class="projectCard__top">
+                    <a href="#" class="projectCard__image">
                         <img src="img_project/house_6_7_2_tb300.jpg"
                     alt="Жилой дом 6х7,2 из термоблока ТБ300" class="img-fluid" />
                     </a>
                 </div>
-                <div class="buildingCard__buttom">
+                <div class="projectCard__buttom">
                    
-                    <button class="buildingCard__subtitle">ПОДРОБНЕЕ</button>
-                    <ul class="buildingCard__list">
+                    <button class="projectCard__subtitle">ПОДРОБНЕЕ</button>
+                    <ul class="projectCard__list">
+                        <li>Рядный блок ТБ300 - 19 поддонов (760 термоблоков)
+                        </li>
+                        <li>Угловой блок ТБУ300 - 60 термоблоков</li>
+                        <li>Перегородочный блок ПБ200 - 3 поддона (120 штук)</li>
+                        <li>Перегородочный блок ПБ100  - 110 штук.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="projectCard">
+                <h4 class="projectCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
+                <div class="projectCard__top">
+                    <a href="#" class="projectCard__image">
+                        <img src="img_project/house_6_7_2_tb300.jpg"
+                    alt="Жилой дом 6х7,2 из термоблока ТБ300" class="img-fluid" />
+                    </a>
+                </div>
+                <div class="projectCard__buttom">
+                   
+                    <button class="projectCard__subtitle">ПОДРОБНЕЕ</button>
+                    <ul class="projectCard__list">
+                        <li>Рядный блок ТБ300 - 19 поддонов (760 термоблоков)
+                        </li>
+                        <li>Угловой блок ТБУ300 - 60 термоблоков</li>
+                        <li>Перегородочный блок ПБ200 - 3 поддона (120 штук)</li>
+                        <li>Перегородочный блок ПБ100  - 110 штук.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="projectCard">
+                <h4 class="projectCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
+                <div class="projectCard__top">
+                    <a href="#" class="projectCard__image">
+                        <img src="img_project/house_6_7_2_tb300.jpg"
+                    alt="Жилой дом 6х7,2 из термоблока ТБ300" class="img-fluid" />
+                    </a>
+                </div>
+                <div class="projectCard__buttom">
+                   
+                    <button class="projectCard__subtitle">ПОДРОБНЕЕ</button>
+                    <ul class="projectCard__list">
+                        <li>Рядный блок ТБ300 - 19 поддонов (760 термоблоков)
+                        </li>
+                        <li>Угловой блок ТБУ300 - 60 термоблоков</li>
+                        <li>Перегородочный блок ПБ200 - 3 поддона (120 штук)</li>
+                        <li>Перегородочный блок ПБ100  - 110 штук.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="projectCard">
+                <h4 class="projectCard__title">Жилой дом 6х7,2 из термоблока ТБ300</h4>
+                <div class="projectCard__top">
+                    <a href="#" class="projectCard__image">
+                        <img src="img_project/house_6_7_2_tb300.jpg"
+                    alt="Жилой дом 6х7,2 из термоблока ТБ300" class="img-fluid" />
+                    </a>
+                </div>
+                <div class="projectCard__buttom">
+                   
+                    <button class="projectCard__subtitle">ПОДРОБНЕЕ</button>
+                    <ul class="projectCard__list">
                         <li>Рядный блок ТБ300 - 19 поддонов (760 термоблоков)
                         </li>
                         <li>Угловой блок ТБУ300 - 60 термоблоков</li>
@@ -605,6 +666,7 @@
                 </div>
             </div>
         </div>
+        <button id="left">влево</button><button id="right">вправо</button>
     </section>
     <section id="about">
         <h2 class="portfolio__title">О нас<span class="brend">"ThermoBlock"</span></h2>
@@ -732,6 +794,14 @@
         </div>
     </footer>
     <script type="text/javascript" defer>
+        btn_left = document.getElementById('left')
+        btn_right = document.getElementById('right')
+        btn_left.addEventListener('click', function() {
+            document.querySelector('.projects__cards').scrollLeft -= 300;
+        })
+        btn_right.addEventListener('click', function() {
+            document.querySelector('.projects__cards').scrollLeft += 300;
+        })
         const anchors = document.querySelectorAll('.menu__link')
         for (let anchor of anchors ) {
             anchor.addEventListener('click', function(event) {
@@ -763,7 +833,7 @@
             let scrollDistance = window.scrollY;
             if (window.innerWidth > 768) {
                 document.querySelectorAll('section').forEach((el, i) => {
-                    if (el.offsetTop - document.querySelector('nav').clientHeight - 80 <= scrollDistance) {
+                    if (el.offsetTop - document.querySelector('nav').clientHeight - 90 <= scrollDistance) {
                         console.log(el, i, el.offsetTop, scrollDistance, document.querySelector('nav').clientHeight)
                         document.querySelectorAll('.mainnav__link').forEach((item) => {
                             if (item.classList.contains('active')) {
@@ -771,7 +841,7 @@
                             }
                         });
         
-                        document.querySelectorAll('.mainnav__link')[i].classList.add('active');
+                        document.querySelectorAll('.mainnav__link')[i+1].classList.add('active');
                     }
                 });
             }

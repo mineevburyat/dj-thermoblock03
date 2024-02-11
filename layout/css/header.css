@@ -130,6 +130,7 @@ table {
 /* GLOBAL STYLE */
 html {
     scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
   }
 
 .icon {
@@ -725,4 +726,94 @@ section:nth-child(even) {
 .btn {
 }
 .btn_text {
+}
+
+/* projects */
+
+.projects__cards {
+    display: flex;
+    overflow-x: hidden;
+  margin: 0 auto;
+  gap: 18px;
+  /* width: 99vw; */
+  flex-wrap: nowrap;
+  scroll-snap-type: x mandatory;
+  /* max-height: 100%; */
+  /* scroll-snap-align: center; */
+    scrollbar-width: none;
+}
+
+.projectCard::-webkit-scrollbar-track {
+    width: 0;
+    height: 0;
+}
+
+.projectCard {
+    max-width: 450px;
+    min-width: 300px;
+  min-height: 350px;
+  box-shadow: 3px 6px 10px rgba(153, 29, 39, 0.3);
+  display: flex;
+  flex-direction: column; /* Размещаем элементы в колонку */
+  border-radius: 4px;
+  transition: 0.2s;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.projectCard__title {
+    display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.2vw;
+  line-height: 150%;
+  color: #515151;
+  border-bottom: 1px solid #991d27;
+  text-align: center;
+
+}
+.projectCard__top {
+    flex: 0 0 220px; /* Задаем высоту 220px, запрещаем расширение и сужение по высоте */
+  /* position: relative; */
+  overflow: hidden; /* Скрываем, что выходит за пределы */
+}
+.projectCard__image {
+    display: block;
+  /* position: absolute; */
+  width: 100%;
+  height: 100%;
+}
+
+.projectCard__image > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Встраиваем картинку в контейнер card__image */
+  transition: 0.2s;
+}
+
+.projectCard__image:hover > img {
+  transform: scale(1.1);
+}
+
+.projectCard__buttom {
+    display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  flex: 1 0 auto; /* Занимаем всю оставшуюся высоту карточки */
+  padding: 10px;
+}
+.projectCard__subtitle {
+    font-weight: bold;
+    color: #991d27;
+}
+.projectCard__text {
+    text-align: center;
+}
+
+.projectCard__list {
+    list-style: circle;
+    margin-left: 22px;
 }

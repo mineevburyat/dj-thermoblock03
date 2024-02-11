@@ -28,9 +28,9 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link href="{% static 'css/media.css' %}" rel="stylesheet">
     <link href="{% static 'css/animate.css' %}" rel="stylesheet">
-    <script src="/feedback/form-processing.js"></script>
+    {% comment %} <script src="/feedback/form-processing.js"></script> {% endcomment %}
     <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
+    {% comment %} <script type="text/javascript" >
         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();
         for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -43,8 +43,9 @@
             accurateTrackBounce:true,
             webvisor:true
         });
-    </script>
+    </script> 
     <noscript><div><img src="https://mc.yandex.ru/watch/96063256" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    {% endcomment %}
     <!-- /Yandex.Metrika counter -->
 
 
@@ -52,7 +53,7 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
     <!-- <script src="http://malsup.github.com/jquery.form.js"></script> -->
     <!-- formit -->
-    <link rel="stylesheet" href="assets/components/ajaxform/css/default.css" type="text/css" />
+    {% comment %} <link rel="stylesheet" href="assets/components/ajaxform/css/default.css" type="text/css" /> {% endcomment %}
 </head>
 
 <body id="ex1">
@@ -196,54 +197,8 @@
                 <!--             <a href="#" data-toggle="modal" data-target="#fixed_form" class="icon phone d-none d-sm-block"><span>Заказать звонок</span></a> -->
             </div>
         </div>
-        <!--div class="floating_mobile d-block d-sm-none">
-        <a href="https://wa.me/79835361052" target="_blank" class="icon whatsapp"><span>Задайте свой<br> вопрос по WhatsApp</span></a>
-    </div-->
-        <div class="modal fade" id="fixed_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="modal_header_wrapper">
-                            <div class="modal_title">Оставьте заявку и мы свяжемся с вами</div>
-                            <div class="modal_subtitle">Заполните форму, и наш специалист проконсультирует вас!</div>
-                        </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="index.html" method="post" class="ajax_form form-horizontal" role="form">
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-                                    <label for="af_name4">Ваше имя</label>
-                                    <input type="text" class="form-control" id="af_name4" name="name" value=""
-                                        placeholder="">
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <label for="af_phone4">Телефон</label>
-                                    <input type="phone" class="form-control phone-input" id="phone" name="phone4"
-                                        value="" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-sm-6">
-                                    <div class="fz_wrapper">
-                                        <a href="#"><span class="fa fa-exclamation-circle"></span> Ваши
-                                            личные данные<br> в безопасности</a>
-                                    </div>
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <button type="submit" class="btn_submit">Получить расчет</button>
-                                </div>
-                            </div>
-                            <input type="hidden" name="af_action" value="8a42d8207a0931d91a9dd3831a8f89ca" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </header>
+
     <nav class="navbar navbar-expand-md navbar-light">
         <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
@@ -262,31 +217,25 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul id="menu" class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link ex" href="index.html#ex1">Главная <span class="sr-only">(current)</span></a>
+                        <a class="nav-link ex" href="#ex1">Главная <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ex" href="index.html#products">Продукция</a>
+                        <a class="nav-link ex" href="#ex2">Продукция</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="katalog.html">Готовые проекты</a>
+                        <a class="nav-link disabled" href="#">Готовые проекты</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ex" href="index.html#ex3">Портфолио</a>
+                        <a class="nav-link ex" href="#ex3">Портфолио</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="instrukcziya/index.html">Инструкция</a>
-                    </li>
-                    <!--li class="nav-item">
-                    <a class="nav-link ex" href="#ex4">Отзывы</a>
-                </li>
-                <li class="nav-item d-md-none d-lg-block">
-                    <a class="nav-link" href="stati-i-videomaterialyi/">Статьи и видеоматериалы</a>
-                </li-->
-                    <li class="nav-item d-md-none d-xl-block">
-                        <a class="nav-link ex" href="index.html#ex5">Контакты</a>
+                        <a class="nav-link disabled" href="#">Инструкция</a>
                     </li>
                     <li class="nav-item d-md-none d-xl-block">
-                        <a class="nav-link" href="partneram.html">Партнерам</a>
+                        <a class="nav-link ex" href="#ex5">Контакты</a>
+                    </li>
+                    <li class="nav-item d-md-none d-xl-block">
+                        <a class="nav-link" href="#">Партнерам</a>
                     </li>
                     <li class="nav-item dropdown d-none d-md-block d-xl-none">
                         <a class="nav-link dropdown-toggle" href="index.html#" id="navbarDropdownMenuLink"
@@ -294,7 +243,6 @@
                             Еще
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <!--a class="dropdown-item d-none d-md-block d-lg-none" href="stati-i-videomaterialyi/">Статьи и видеоматериалы</a-->
                             <a class="dropdown-item ex" href="index.html#ex5">Контакты</a>
                             <a class="dropdown-item" href="partneram.html">Партнерам</a>
                         </div>
@@ -312,10 +260,11 @@
             </div>
         </div>
     </nav>
+
     <section class="main_slider">
         <div class="item">
             <div class="image"
-                style="background-image: url(https://thermoblock03.ru/assets/manager/main_slider/gal2.jpg);"></div>
+                style="background-image: url({% static 'img_slider/slaid1.jpg' %});"></div>
             <div class="text_wrapper">
                 <div class="text1 animated d-none d-sm-block" data-animation="fadeInTop" data-delay="0.9s">ДОМ ВАШЕЙ
                     МЕЧТЫ!</div>
@@ -328,7 +277,7 @@
         </div>
         <div class="item">
             <div class="image"
-                style="background-image: url(https://thermoblock03.ru/assets/manager/main_slider/3%D0%B0.PNG);"></div>
+                style="background-image: url({% static 'img_slider/slaid2.png' %});"></div>
             <div class="text_wrapper">
                 <div class="text1 animated d-none d-sm-block" data-animation="fadeInTop" data-delay="0.9s">ДОМ ВАШЕЙ
                     МЕЧТЫ!</div>
@@ -340,7 +289,7 @@
         </div>
         <div class="item">
             <div class="image"
-                style="background-image: url(https://thermoblock03.ru/assets/manager/main_slider/2%D0%B0.PNG);"></div>
+                style="background-image: url({% static 'img_slider/slaid3.png' %});"></div>
             <div class="text_wrapper">
                 <div class="text1 animated d-none d-sm-block" data-animation="fadeInTop" data-delay="0.9s">НИЗКАЯ
                     СЕБЕСТОИМОСТЬ СТРОИТЕЛЬСТВА!</div>
@@ -466,7 +415,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/ugl_m.png" alt="" class="img-fluid">
+                    <img src="{% static 'blocks_img/tbu400.png'%}" alt="" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
                     <div class="name">Углы дома являются уязвимыми местом, которое часто промерзает. Угловой блок ТБУ400
@@ -544,7 +493,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/1a_m.png" alt="" class="img-fluid">
+                    <img src="{% static 'blocks_img/tb300.png'%}" alt="" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
                     <div class="name">ThermoBlock ТБ300.</div>
@@ -620,7 +569,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/tbu300_m.png" alt="" class="img-fluid">
+                    <img src="{% static 'blocks_img/tbu300.png'%}" alt="" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
                     <div class="name">Углы дома являются уязвимыми местом, которое часто промерзает. Угловой блок ТБУ300
@@ -698,7 +647,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/PB200_m.png" alt="" class="img-fluid">
+                    <img src="{% static 'blocks_img/pb200.png'%}" alt="" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
                     <div class="name">Для устройства внутренних несущих и не несущих стен представлены перегородочные
@@ -772,7 +721,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <img src="assets/manager/pb100_mv2.png" alt="" class="img-fluid">
+                    <img src="{% static 'blocks_img/pb100.png'%}" alt="" class="img-fluid">
                 </div>
                 <div class="col-lg-8 col-md-6 col-sm-12">
                     <div class="name">Для устройства внутренних несущих и не несущих стен представлены перегородочные
@@ -848,8 +797,7 @@
                 <div class="col-12 portfolio">
                     <div class="btn_wrapper">
                         <a href="instrukcziya/index.html" class="btn"></a>
-                        <div class="btn_text">Инструкция по производству работ из теплоизоляционных блоков ThermoBlock
-                        </div>
+                        <div>Инструкция по производству работ из теплоизоляционных блоков ThermoBlock</div>
                     </div>
                 </div>
             </div>
@@ -865,7 +813,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="title">Индивидуальное строительство</div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/ehh_TgxcqNo.40ce70a25e567e8d641f214f8c8c04901.jpg"
+                    <img src="{% static 'img/building1.jpg'%}"
                         alt="" class="img-fluid" />
                     <div class="text">
                         <p><span>Из <strong>"Thermoblock"</strong> можно реализовать любой проект, даже если проект
@@ -888,7 +836,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="title">Коммерческое строительство </div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/org2.40ce70a25e567e8d641f214f8c8c04901.jpg"
+                    <img src="{% static 'img/building2.jpg'%}"
                         alt="" class="img-fluid" />
                     <div class="text">
                         <p><span><strong>ThermoBlock</strong> подходит для строительства торговых центров, магазинов,
@@ -966,8 +914,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="name">Эффективная теплоизоляция</div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/temp.ccbb4aa61bc01bf7e348312e4bbb345f1.png"
-                        alt="" class="img-fluid">
+                    <img src="{% static '/blocks_img/temp.png' %}" alt="" class="img-fluid">
                     <div class="description">
                         <p>Эффективная теплоизоляция и способность сохранять тепло являются самым главным преимуществом
                             ThermoBlock дома сохраняют тепло зимой и дарят приятную прохладу летом. Благодаря своей
@@ -978,8 +925,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="name">Высокая прочность</div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/seism.ccbb4aa61bc01bf7e348312e4bbb345f1.png"
-                        alt="" class="img-fluid">
+                    <img src="{% static '/blocks_img/seism.png' %}" alt="" class="img-fluid">
                     <div class="description">
                         <p>ThermoBlock высокопрочный материал. Сооружения из блоков выдерживают сейсмическую нагрузку
                             8-9 баллов. С течением времени такой дом только повышает свои качественные показатели.
@@ -989,7 +935,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="name">Быстрота и простота возведения</div>
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/sroki.ccbb4aa61bc01bf7e348312e4bbb345f1.png"
+                    <img src="{% static '/blocks_img/sroki.png' %}"
                         alt="" class="img-fluid">
                     <div class="description">
                         <p>Технология строительства продумана до мелочей. Легкая приспособляемость к этапам выполняемых
@@ -1066,63 +1012,66 @@
                     <div class="item">
                         <a data-fancybox="gallery"
                             data-caption="Lorem Ipsum - это текст-рыба, часто используемый в печати и веб-дизайне. "
-                            href="https://thermoblock03.ru/assets/manager/portfolio/KHYWi48Pv00.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/KHYWi48Pv00.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            href="{% static 'img_building/home1_1.jpg' %}"><img
+                                src="{% static 'img_building/home1_1.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery"
                             data-caption="Lorem Ipsum - это текст-рыба, часто используемый в печати и веб-дизайне. "
-                            href="https://thermoblock03.ru/assets/manager/portfolio/IMG_20180.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_20180.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            href="{% static 'img_building/home1_2.jpg' %}">
+                            <img
+                                src="{% static 'img_building/home1_2.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/govBeTtsgi8.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/govBeTtsgi8.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="{% static 'img_building/home1_3.jpg' %}">
+                            <img
+                                src="{% static 'img_building/home1_3.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/gal3.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/gal3.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="{% static 'img_building/home1_4.jpg' %}"><img
+                                src="{% static 'img_building/home1_4.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/gal1.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/gal1.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="{% static 'img_building/home1_5.jpg' %}"><img
+                                src="{% static 'img_building/home1_5.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/IMG_1305.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_1305.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="{% static 'img_building/home2_1.jpg' %}">
+                            <img
+                                src="{% static 'img_building/home2_1.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/IMG_1286.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_1286.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="{% static 'img_building/home2_2.jpg' %}"><img
+                                src="{% static 'img_building/home2_2.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/tbJo8FPP4BA.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/tbJo8FPP4BA.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="{% static 'img_building/home2_3.jpg' %}"><img
+                                src="{% static 'img_building/home2_3.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/IMG_20180523_185438.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_20180523_185438.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="{% static 'img_building/home2_4.jpg' %}"><img
+                                src="{% static 'img_building/home2_4.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
                     <div class="item">
                         <a data-fancybox="gallery" data-caption="Lorem Ipsum - это текст-" рыба", часто используемый в
-                            печати и веб-дизайне. " href=" assets/manager/portfolio/IMG_20180817_204613.jpg"><img
-                                src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_20180817_204613.6b4a3c93722115a85e449853a0c7b6d21.jpg"
+                            печати и веб-дизайне. " href="{% static 'img_building/home2_5.jpg' %}"><img
+                                src="{% static 'img_building/home2_5.jpg' %}"
                                 class="img-fluid"></a>
                     </div>
 
@@ -1137,19 +1086,6 @@
             </div>
         </div>
     </section>
-
-    <!--section class="reviews" id="ex4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="global_title">Клиенты о ThermoBlock</div>
-                        <div class="global_subtitle">Отзывы о ThermoBlock</div>
-                        <div class="global_line"></div>
-                    </div>
-                    
-                </div>
-            </div>
-        </section-->
 
     <section class="paralax_form par2">
         <div class="container">
@@ -1198,63 +1134,6 @@
             </div>
         </div>
     </section>
-
-    <!--section class="articles">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="global_title">Строительство ThermoBlock</div>
-                        <div class="global_subtitle">Как строить из ThermoBlock? Статьи об особенностях материала и тонкостях строительства.</div>
-                        <div class="global_line"></div>
-                    </div>
-                    <div class="col-12">
-                        <div class="articles_slider">
-                            <div class="item">
-    <div class="eff_cross">
-        <img class="img-fluid" src="https://img.youtube.com/vi/VOvo_To5Efw/hqdefault.jpg" alt="">
-    </div>
-    <div class="wrapper">
-        <a href="stati-i-videomaterialyi/thermoblock"><div class="title">ThermoBlock</div></a>
-        <div class="text"></div>
-        <a href="stati-i-videomaterialyi/thermoblock">Читать далее<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-    </div>
-</div>
-<div class="item">
-    <div class="eff_cross">
-        <img class="img-fluid" src="/assets/components/phpthumbof/cache/stat1.ded0b6e55cdd54fcab9868374ecef79a1.jpg" alt="">
-    </div>
-    <div class="wrapper">
-        <a href="stati-i-videomaterialyi/statya-s-kartinkoj-thermoblock"><div class="title">Фундамент под термоблоки</div></a>
-        <div class="text"><p><span>В России по ГОСТу разрешается строить здания из термоблоков не более чем 9 этажей в высоту, но как показывает практика, чаще всего из термоблоков строят частные дома высотой не более 2–3 этажей. Для построек такой величины принято возводить фундамент ленточного типа. Параметры фундамента под дом из Thermoblock рассчитывают, в первую очередь, опираясь на данные о глубине промерзания грунта в регионе, в среднем данная величина составляет 1200 мм, прибавляем к ней 20% и получаем высоту фундамента. Для стандартных частных строений используют ширину ленты фундамента 500–600 мм. Вес одного квадратного метра несущей конструкции дома из Thermoblock составляет 350–400 кг/м2, так что для двух этажей такого фундамента вполне достаточно.</span><br /><span>Если вы надумали строить одноэтажный дом, то не думайте, что можно пересчитать параметры фундамента и уменьшить его высоту, меньше глубины промерзания грунта высоту фундамента устанавливать нельзя, в противном случае тёплые стены не помогут — помещения всегда будут сырыми и влажными. К тому же требуется учитывать дополнительный вес отделочных и облицовочных материалов, а это всегда лишние нагрузки.<br /></span>Чтобы продолжить возведение стен, необходимо первым делом выставить Thermoblock по периметру в два ряда, состыковав их между собой. </p></div>
-        <a href="stati-i-videomaterialyi/statya-s-kartinkoj-thermoblock">Читать далее<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-    </div>
-</div>
-<div class="item">
-    <div class="eff_cross">
-        <img class="img-fluid" src="/assets/components/phpthumbof/cache/stat2.ded0b6e55cdd54fcab9868374ecef79a1.jpg" alt="">
-    </div>
-    <div class="wrapper">
-        <a href="stati-i-videomaterialyi/statya-s-kartinkoj-thermoblock2"><div class="title">Армирование</div></a>
-        <div class="text"><p><span>Армирование стен </span><br /><span>Для обеспечения жёсткости стен применяется вертикальное и горизонтальное армирование. Концентрация арматурных прутьев не должна быть выше или меньше установленной нормы. В случае недостатка арматуры стены могут быть недостаточно прочными, а в случае переизбытка — могут трескаться. </span><br /><br /><span>Для вертикального армирования необходимо использовать метровые отрезки 12-й арматуры. Их можно вставлять в уже залитый бетон без предварительного связывания. Шаг вертикального армирования должен составлять пол блока, по два прута на ячейку. Отрезки специально сделаны такого размера, так как после заливки очередного слоя прутья должны торчать из бетона на 30–40 см, благодаря этому свежий слой бетона сможет намертво схватиться с предыдущим уже подсохшим слоем. </span><br /><br /><span>Армирования несъёмной опалубки </span><br /><span>Горизонтальное армирование еще называют «армированный пояс», укладывать его необходимо с шагом в три ряда. В соединительных элементах Thermoblock есть для этого специальные направляющие, в которые и укладываются прутья. Перед заливкой обязательно связать контур пояса между собой вязальной проволокой и зафиксировать его с вертикальным армированием аналогичным образом. </span></p>
-<p><span>Армирование в местах углов </span><br /><span>Для того чтобы организовать цельный контур в местах углов, необходимо проделать соответствующее отверстие в Thermoblock. Для угловой кладки используется Thermoblock с одной «глухой» стороной, этой частью его монтируют к лицевой стороне. Не существует блоков с уже проделанными отверстиями, поэтому придётся немного поработать ножом. Данное отверстие прорезается как с верхней стороны, так и с нижней, для того, чтобы бетон нормально растекался и образовывал цельный и крепкий узел.</span></p></div>
-        <a href="stati-i-videomaterialyi/statya-s-kartinkoj-thermoblock2">Читать далее<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-    </div>
-</div>
-<div class="item">
-    <div class="eff_cross">
-        <img class="img-fluid" src="/assets/components/phpthumbof/cache/stat3.ded0b6e55cdd54fcab9868374ecef79a1.jpg" alt="">
-    </div>
-    <div class="wrapper">
-        <a href="stati-i-videomaterialyi/statya-s-kartinkoj-thermoblock3"><div class="title">Работа с дверными и оконными проёмами</div></a>
-        <div class="text"><p><span>Работа с дверными и оконными проёмами </span><br /><span>При возведении верхней части дверного проёма принято использовать бетонные перемычки. Для их изготовления требуется соорудить небольшую деревянную опалубку по заранее продуманным параметрам. Длина перемычки должна быть больше, чем ширина проёма, минимум на 40 см, если ширина проёма стандартна и составляет 80 см, то смело можно изготавливать перемычку по размерам Thermoblock . </span><br /><br /><span>Армирование перемычки делается в два ряда. Налейте примерно 5 см бетона в опалубку, затем уложите два продольных прута и сверху них поперечные с шагом 20 см, далее заливайте форму бетоном пока не останется уровень примерно в 5–7 см, повторите процедуру с арматурой и залейте все до конца. Перед тем как разгладить свежую бетонную поверхность, необходимо выпустить из изделия максимально возможное количество воздуха, в течении одной или двух минут обстукивайте опалубку по кругу молотком. </span><br /><span>Для того чтобы бетонное изделие не схватилось с нижней поверхностью, на момент изготовления под деревянную опалубку положите слой клеёнки. Сохнуть перемычка должна не менее 3–5 дней, поэтому лучше всего изготовить всё заранее. </span><br /><br /><span>В случае с оконными проемами ситуация обстоит гораздо легче, верхняя часть проёма застраивается как и обычная стена, с одной лишь разницей в том, что под основание блока подкладывается доска, которая призвана играть роль опалубки, чтобы задержать бетон. Доска должна быть цельной на длине всего проёма, снизу она подпирается вертикальными деревянными стойками — такой способ обеспечивает надёжность конструкции. Далее стена просто заливается, а доску, для большей надёжности, можно не демонтировать до конца постройки всех стен. </span></p></div>
-        <a href="stati-i-videomaterialyi/statya-s-kartinkoj-thermoblock3">Читать далее<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-    </div>
-</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section-->
 
     <section class="persons d-none">
         <div class="container">
@@ -1336,65 +1215,65 @@
                     <div class="achievements_slider">
                         <div class="item">
                             <a data-fancybox="achievements" data-caption="Система добровольной сертификации арталикс"
-                                href="https://thermoblock03.ru/assets/manager/%D0%A0%D0%B8%D1%81%D1%83%D0%BD%D0%BE%D0%BA%20(2).jpg"><img
-                                    src="https://thermoblock03.ru/assets/components/phpthumbof/cache/%20(2).a87f4cf9306bc1933a3398b0de0c6e731.jpg"
+                                href="{% static 'img_arch/arch1.jpg'%}"><img
+                                    src="{% static 'img_arch/arch1.jpg'%}"
                                     class="img-fluid"></a>
                             <div class="text">Система добровольной сертификации арталикс</div>
                         </div>
                         <div class="item">
                             <a data-fancybox="achievements"
                                 data-caption="Золотая медаль выставки. Стройиндустрия - 2018"
-                                href="https://thermoblock03.ru/assets/manager/documents/IMG_20180330_140808.jpg"><img
-                                    src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_20180330_140808.a87f4cf9306bc1933a3398b0de0c6e731.jpg"
+                                href="{% static 'img_arch/arch2.jpg'%}"><img
+                                    src="{% static 'img_arch/arch2.jpg'%}"
                                     class="img-fluid"></a>
                             <div class="text">Золотая медаль выставки. Стройиндустрия - 2018</div>
                         </div>
                         <div class="item">
                             <a data-fancybox="achievements" data-caption="Стройиндустрия - 2018"
-                                href="https://thermoblock03.ru/assets/manager/documents/IMG_20180330_140818.jpg"><img
-                                    src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_20180330_140818.a87f4cf9306bc1933a3398b0de0c6e731.jpg"
+                                href="{% static 'img_arch/arch3.jpg'%}"><img
+                                    src="{% static 'img_arch/arch3.jpg'%}"
                                     class="img-fluid"></a>
                             <div class="text">Стройиндустрия - 2018</div>
                         </div>
                         <div class="item">
                             <a data-fancybox="achievements" data-caption="Стройка - 2016"
-                                href="https://thermoblock03.ru/assets/manager/documents/stroika2016.jpg"><img
-                                    src="https://thermoblock03.ru/assets/components/phpthumbof/cache/stroika2016.a87f4cf9306bc1933a3398b0de0c6e731.jpg"
+                                href="{% static 'img_arch/arch4.jpg'%}"><img
+                                    src="{% static 'img_arch/arch4.jpg'%}"
                                     class="img-fluid"></a>
                             <div class="text">Стройка - 2016</div>
                         </div>
                         <div class="item">
                             <a data-fancybox="achievements" data-caption="Стройидустрия: наш дом - 2015"
-                                href="https://thermoblock03.ru/assets/manager/documents/stroyIndus2015.jpg"><img
-                                    src="https://thermoblock03.ru/assets/components/phpthumbof/cache/stroyIndus2015.a87f4cf9306bc1933a3398b0de0c6e731.jpg"
+                                href="{% static 'img_arch/arch5.jpg'%}"><img
+                                    src="{% static 'img_arch/arch5.jpg'%}"
                                     class="img-fluid"></a>
                             <div class="text">Стройидустрия: наш дом - 2015</div>
                         </div>
                         <div class="item">
                             <a data-fancybox="achievements" data-caption="Стройиндустрия - 2016"
-                                href="https://thermoblock03.ru/assets/manager/documents/stroyIndus2016.jpg"><img
-                                    src="https://thermoblock03.ru/assets/components/phpthumbof/cache/stroyIndus2016.a87f4cf9306bc1933a3398b0de0c6e731.jpg"
+                                href="{% static 'img_arch/arch6.jpg'%}"><img
+                                    src="{% static 'img_arch/arch6.jpg'%}"
                                     class="img-fluid"></a>
                             <div class="text">Стройиндустрия - 2016</div>
                         </div>
                         <div class="item">
                             <a data-fancybox="achievements" data-caption="Стройка - 2017"
-                                href="https://thermoblock03.ru/assets/manager/documents/stroyka2017.jpg"><img
-                                    src="https://thermoblock03.ru/assets/components/phpthumbof/cache/stroyka2017.a87f4cf9306bc1933a3398b0de0c6e731.jpg"
+                                href="{% static 'img_arch/arch7.jpg'%}"><img
+                                    src="{% static 'img_arch/arch7.jpg'%}"
                                     class="img-fluid"></a>
                             <div class="text">Стройка - 2017</div>
                         </div>
                         <div class="item">
                             <a data-fancybox="achievements" data-caption="СтройТехМаркет - 2015"
-                                href="https://thermoblock03.ru/assets/manager/documents/stroytehmarket2015.jpg"><img
-                                    src="https://thermoblock03.ru/assets/components/phpthumbof/cache/stroytehmarket2015.a87f4cf9306bc1933a3398b0de0c6e731.jpg"
+                                href="{% static 'img_arch/arch8.jpg'%}"><img
+                                    src="{% static 'img_arch/arch8.jpg'%}"
                                     class="img-fluid"></a>
                             <div class="text">СтройТехМаркет - 2015</div>
                         </div>
                         <div class="item">
                             <a data-fancybox="achievements" data-caption="БАЙКАЛ ЭКСПО"
-                                href="https://thermoblock03.ru/assets/manager/documents/baikalExpo2017.jpg"><img
-                                    src="https://thermoblock03.ru/assets/components/phpthumbof/cache/baikalExpo2017.a87f4cf9306bc1933a3398b0de0c6e731.jpg"
+                                href="{% static 'img_arch/arch9.jpg'%}"><img
+                                    src="{% static 'img_arch/arch9.jpg'%}"
                                     class="img-fluid"></a>
                             <div class="text">БАЙКАЛ ЭКСПО</div>
                         </div>
@@ -1446,6 +1325,7 @@
             </div>
         </div>
     </section>
+
     <footer>
         <div class="container">
             <div class="row">
@@ -1457,19 +1337,19 @@
                 </div>
                 <div class="col-lg-4">
                     <a data-fancybox="" data-type="iframe"
-                        data-src="http://thermoblock.ibb.su/obrabotka-personalnyix-dannyix" href="javascript:;">Политика
+                        data-src="http://thermoblock.ibb.su/obrabotka-personalnyix-dannyix" href="#">Политика
                         конфиденциальности</a>
                 </div>
                 <div class="col-lg-4 col-12">
                     <div class="amo-web">
                         <div class="bw">
-                            <a title="Создание сайтов в Улан-Удэ" href="index.html#" class="bw_logo animated fliz">
+                            {% comment %} <a title="Создание сайтов в Улан-Удэ" href="index.html#" class="bw_logo animated fliz">
                                 <img width="60" height="60" title="Создание сайтов в Улан-Удэ"
                                     alt="Создание сайтов в Улан-Удэ" src="logoamoweb-nm.png" />
-                            </a>
+                            </a> {% endcomment %}
                             <p>
-                                <a href="index.html#" title="Создание сайтов">Создание сайтов</a><br>
-                                <a href="index.html#" title="Продвижение сайтов">Продвижение сайтов</a>
+                                <a href="http://mineev03.ru" title="Создание сайтов">Создание сайтов</a><br>
+                                <a href="http://mineev03.ru" title="Продвижение сайтов">Продвижение сайтов</a>
                             </p>
                         </div>
                         <style type="text/css">
@@ -1613,8 +1493,8 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="js/jquery.maskedinput.js"></script>
-    <script src="js/jquery.maskedinput.min.js"></script>
+    {% comment %} <script src="js/jquery.maskedinput.js"></script>
+    <script src="js/jquery.maskedinput.min.js"></script> {% endcomment %}
     <script>
         $("#menu").on("click", ".ex", function (event) {
             event.preventDefault();
@@ -1788,47 +1668,7 @@
             });
         });
 
-
-/*
-        $(function () {
-            //2. Получить элемент, к которому необходимо добавить маску
-            $("#phone").mask("8(999) 999-9999");
-            $('.ajax_form').append('<input type="text" name="org" value="" class="_org" style="visibility:hidden; height: 0; width: 0; padding: 0; border:none;"/>')
-        });
-
-
-        $(function () {
-            //2. Получить элемент, к которому необходимо добавить маску
-            $("#phone2").mask("8(999) 999-9999");
-            $('.ajax_form').append('<input type="text" name="org" value="" class="_org" style="visibility:hidden; height: 0; width: 0; padding: 0; border:none;"/>')
-        });
-
-
-        $(function () {
-            //2. Получить элемент, к которому необходимо добавить маску
-            $("#phone3").mask("8(999) 999-9999");
-            $('.ajax_form').append('<input type="text" name="org" value="" class="_org" style="visibility:hidden; height: 0; width: 0; padding: 0; border:none;"/>')
-        });
-
-
-        $(function () {
-            //2. Получить элемент, к которому необходимо добавить маску
-            $("#phone4").mask("8(999) 999-9999");
-            $('.ajax_form').append('<input type="text" name="org" value="" class="_org" style="visibility:hidden; height: 0; width: 0; padding: 0; border:none;"/>')
-        });
-
-        $(function () {
-            //2. Получить элемент, к которому необходимо добавить маску
-            $("#phone5").mask("8(999) 999-9999");
-            $('.ajax_form').append('<input type="text" name="org" value="" class="_org" style="visibility:hidden; height: 0; width: 0; padding: 0; border:none;"/>')
-        }); */
-
-
     </script>
-
-    <!-- <script type="text/javascript" src="assets/components/ajaxform/js/default.js"></script>
-    <script
-        type="text/javascript">AjaxForm.initialize({ "assetsUrl": "\/assets\/components\/ajaxform\/", "actionUrl": "\/assets\/components\/ajaxform\/action.php", "closeMessage": "\u0437\u0430\u043a\u0440\u044b\u0442\u044c \u0432\u0441\u0435", "formSelector": "form.ajax_form", "pageId": 1 });</script> -->
 </body>
 
 </html>
