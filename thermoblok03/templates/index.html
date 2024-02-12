@@ -108,17 +108,18 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="form" action="/feedback/processing.php" enctype="multipart/form-data" novalidate class="ajax_form form-horizontal">
+                                <form id="form" action="/feedback" method="post" enctype="multipart/form-data" novalidate class="ajax_form form-horizontal">
+                                    {% csrf_token %}
                                     <div class="form-row">
                                         <div class="form-group col-sm-6">
-                                            <label for="af_name9">Ваше имя</label>
-                                            <input type="text" class="form-control" id="af_name9" name="name" value=""
-                                                placeholder="">
+                                            <label for="name">Ваше имя</label>
+                                            <input type="text" class="form-control" id="name" name="name" value=""
+                                                placeholder="Как к вам обращаться">
                                         </div>
                                         <div class="form-group col-sm-6">
-                                            <label for="af_phone9">Телефон</label>
+                                            <label for="phone">Телефон</label>
                                             <input type="phone" class="form-control phone-input" id="phone" name="phone"
-                                                value="" placeholder="">
+                                                value="" placeholder="телефонный номер">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -868,34 +869,32 @@
                             <div class="subtitle">Заполните форму, и наш специалист проконсультирует вас!</div>
                         </div>
                         <div class="form1">
-                            <form action="index.html" method="post" class="ajax_form form-horizontal" role="form">
+                            <form id="form" action="/feedback" method="post" enctype="multipart/form-data" novalidate class="ajax_form form-horizontal">
+                                {% csrf_token %}
                                 <div class="form-row">
                                     <div class="form-group col-sm-6">
-                                        <label for="af_name8">Ваше имя</label>
-                                        <input type="text" class="form-control" id="af_name8" name="name" value=""
-                                            placeholder="">
+                                        <label for="name">Ваше имя</label>
+                                        <input type="text" class="form-control" id="name" name="name" value=""
+                                            placeholder="Как к вам обращаться">
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label for="af_phone8">Телефон</label>
-                                        <input type="phone" class="form-control phone-input" id="phone5" name="phone"
-                                            value="" placeholder="">
+                                        <label for="phone">Телефон</label>
+                                        <input type="phone" class="form-control phone-input" id="phone" name="phone"
+                                            value="" placeholder="телефонный номер">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-sm-6">
                                         <div class="fz_wrapper">
-                                            <a href="#"><span class="fa fa-exclamation-circle"></span> Ваши
-                                                личные данные<br> в безопасности</a>
+                                            <a href="#"><span class="fa fa-exclamation-circle"></span>
+                                                Ваши личные данные<br> в безопасности</a>
                                         </div>
                                     </div>
                                     <div class="form-group col-sm-6">
                                         <button type="submit" class="btn_submit">Получить расчет</button>
                                     </div>
                                 </div>
-
-
-
-                                <input type="hidden" name="af_action" value="4938df71b509702d24e9d59686f95372" />
+                               
                             </form>
                         </div>
                     </div>
@@ -1098,35 +1097,32 @@
                             <div class="subtitle">Заполните форму, и наш специалист проконсультирует вас!</div>
                         </div>
                         <div class="form1">
-                            <form action="index.html" method="post" class="ajax_form form-horizontal" role="form">
+                            <form id="form" action="/feedback" method="post" enctype="multipart/form-data" novalidate class="ajax_form form-horizontal">
+                                {% csrf_token %}
                                 <div class="form-row">
                                     <div class="form-group col-sm-6">
-                                        <label for="af_name8">Ваше имя</label>
-                                        <input type="text" class="form-control" id="af_name8" name="name" value=""
-                                            placeholder="">
+                                        <label for="name">Ваше имя</label>
+                                        <input type="text" class="form-control" id="name" name="name" value=""
+                                            placeholder="Как к вам обращаться">
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label for="af_phone8">Телефон</label>
-                                        <input type="phone" class="form-control phone-input" id="phone3" name="phone"
-                                            value="" placeholder="">
+                                        <label for="phone">Телефон</label>
+                                        <input type="phone" class="form-control phone-input" id="phone" name="phone"
+                                            value="" placeholder="телефонный номер">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-sm-6">
                                         <div class="fz_wrapper">
-                                            <a 
-                                                href="#"><span class="fa fa-exclamation-circle"></span> Ваши
-                                                личные данные<br> в безопасности</a>
+                                            <a href="#"><span class="fa fa-exclamation-circle"></span>
+                                                Ваши личные данные<br> в безопасности</a>
                                         </div>
                                     </div>
                                     <div class="form-group col-sm-6">
                                         <button type="submit" class="btn_submit">Получить расчет</button>
                                     </div>
                                 </div>
-
-
-
-                                <input type="hidden" name="af_action" value="83e9516fd98c9e431e01a474822604bf" />
+                               
                             </form>
                         </div>
                     </div>
