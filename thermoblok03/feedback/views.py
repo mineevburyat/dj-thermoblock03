@@ -1,7 +1,6 @@
 from math import e
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, HttpResponseRedirect
-from traitlets import Instance
 from .forms import FeedbackForm
 from django.contrib import messages
 
