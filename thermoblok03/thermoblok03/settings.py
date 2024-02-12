@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'feedback',
     'instructions',
+    'house_projects'
 ]
 
 MIDDLEWARE = [
