@@ -18,7 +18,7 @@ class Products(models.Model):
                             help_text='Артикул',
                             unique=True)
     subtitle = models.CharField(verbose_name='Подзаголовок продукта',
-                            max_length=55,
+                            max_length=105,
                             help_text='')
     length = models.IntegerField(verbose_name='Длинна блока',
                             help_text='(мм.)')

@@ -6,8 +6,13 @@ from django.contrib import admin
 admin.site.register(Characteristics)
 admin.site.register(MediaProduct)
 
+class CharacteristicsInline(admin.TabularInline):
+    model = Characteristics
+    extra = 0
+
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
+    inlines = (CharacteristicsInline, )
     fieldsets = [
         (
             None,
@@ -18,36 +23,21 @@ class ProductsAdmin(admin.ModelAdmin):
         (
             "Габариты и вес",
             {
-                "fileds": (("length", "width", "height"),
+                "fields": (("length", "width", "height"),
                             ("block_weight", "blocks_in_paddon"))
             }
         ),
         (
             "Характеристики",
             {
-                "fileds": ("soundproofing",
+                "fields": ("soundproofing",
                            ("concrete", "block_consumption"))
             }
         ),
          ("Изображение",
           {
-              "fileds": ("images",)
+              "fields": ("images",)
           })
 
     ]
 
-[
-        (
-            None,
-            {
-                "fields": ["url", "title", "content", "sites"],
-            },
-        ),
-        (
-            "Advanced options",
-            {
-                "classes": ["collapse"],
-                "fields": ["registration_required", "template_name"],
-            },
-        ),
-    ]
