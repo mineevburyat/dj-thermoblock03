@@ -1,6 +1,6 @@
 from lib2to3.refactor import MultiprocessingUnsupported
 from django.db import models
-from traitlets import default
+
 
 # Create your models here.
 class Feedback(models.Model):
