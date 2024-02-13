@@ -52,6 +52,8 @@ def feedback_save(request):
             messages.success(request, 'Ваш контакт успешно отправлен, менеджер свяжется с вами')
             if not status:
                 print('неотправилось')
+        else:
+            print(form.errors)
     return HttpResponseRedirect('/')
 
 
