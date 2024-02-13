@@ -11,7 +11,7 @@ class Feedback(models.Model):
     name = models.CharField(verbose_name='имя посетителя',
                             max_length=50)
     phone = models.CharField(verbose_name='телефон',
-                             max_length=12)
+                             max_length=20)
     description = models.TextField(verbose_name="дополнения", blank=True, null=True)
     crm_status = models.BooleanField(default=False)
     crm_error = models.TextField(verbose_name="Сообщение об ошибке", blank=True, null=True)
