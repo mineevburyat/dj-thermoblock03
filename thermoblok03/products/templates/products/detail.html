@@ -1,1 +1,84 @@
 {% extends "base2.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-0">{{product.title}}</h1>
+    <h2>{{product.subtitle}}</h2>
+<div class="media">
+    <img src="{{product.images.url}}" class="align-self-center mr-3" alt="{{product.img_alt}}">
+    <div class="media-body">
+      
+      <h3>Размеры и вес:</h3>
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <table class="padding-control table table-bordered">
+                    <tr>
+                        <td class="info-a">Длина:</td>
+                        <td class="info-b">{{product.length}} мм.</td>
+                    </tr>
+                    <tr>
+                        <td class="info-a">Ширина:</td>
+                        <td class="info-b">{{product.width}} мм.</td>
+                    </tr>
+                    <tr>
+                        <td class="info-a">Высота:</td>
+                        <td class="info-b">{{product.height}} мм.</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <table class="padding-control table table-bordered">
+                    <tr>
+                        <td class="info-a">Вес блока:</td>
+                        <td class="info-b">{{product.block_weight}} кг.</td>
+                    </tr>
+                    <tr>
+                        <td class="info-a">Блоков в поддоне:</td>
+                        <td class="info-b">{{product.blocks_in_paddon}} шт.</td>
+                    </tr>
+                    <tr>
+                        <td class="info-a">Вес поддона:</td>
+                        <td class="info-b">{{product.paddon_weight.0}} кг.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <h3>Основные характеристики:</h3>
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <td class="info-a">Звукоизоляция Rw, <pre>(дБ):</pre></td>
+                        <td class="info-b">{{product.soundproofing}}</td>
+                    </tr>
+                    {% for character in product.get_characteristics %}
+                    <tr>
+                        <td class="info-a">{{character.name}}, <pre>({{character.unit}}):</pre></td>
+                        <td class="info-b">{{character.value}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <td class="info-a">Расход бетона, <pre>(м.куб./м.кв.):</pre></td>
+                        <td class="info-b">{{product.concrete}}</td>
+                    </tr>
+                    <tr>
+                        <td class="info-a">Расход блоков, <pre>(шт./м.кв.):</pre></td>
+                        <td class="info-b">{{product.block_consumption}}</td>
+                    </tr>
+                    <tr>
+                        <td class="info-a">Вес бетонированной стены, <pre>(кг./м.кв.):</pre></td>
+                        <td class="info-b">{{product.wall_weight.0}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae reprehenderit labore eveniet quod quis aliquid eius voluptatem cupiditate iusto enim reiciendis a libero perferendis, laboriosam placeat officiis eaque officia magnam.</p>
+
+</div>
+{% endblock content %}

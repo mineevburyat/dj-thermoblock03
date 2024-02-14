@@ -1,8 +1,10 @@
+/home/mineev/dj-thermoblock03/thermoblok03/static
 [
     {
         "model": "products.products",
         "pk": 1,
         "fields": {
+            "slug": "tb400",
             "title": "ThermoBlock ТБ400",
             "subtitle": "Линейка продукции для стен толщиной 400 мм. (рядовой блок)",
             "length": 600,
@@ -20,6 +22,7 @@
         "model": "products.products",
         "pk": 2,
         "fields": {
+            "slug": "tbu400",
             "title": "ThermoBlock ТБУ400",
             "subtitle": "Линейка продукции для стен толщиной 400 мм. (угловой блок)",
             "length": 600,
@@ -37,6 +40,7 @@
         "model": "products.products",
         "pk": 3,
         "fields": {
+            "slug": "tb300",
             "title": "ThermoBlock ТБ300",
             "subtitle": "Линейка продукции для стен толщиной 300 мм. (рядовой блок)",
             "length": 400,
@@ -54,6 +58,7 @@
         "model": "products.products",
         "pk": 4,
         "fields": {
+            "slug": "tbu300",
             "title": "ThermoBlock ТБУ300",
             "subtitle": "Линейка продукции для стен толщиной 300 мм. (угловой блок)",
             "length": 500,
@@ -71,6 +76,7 @@
         "model": "products.products",
         "pk": 5,
         "fields": {
+            "slug": "pb200",
             "title": "ПБ200",
             "subtitle": "устройства внутренних несущих и не несущих стен (толщиной 200 мм.)",
             "length": 600,
@@ -88,13 +94,14 @@
         "model": "products.products",
         "pk": 6,
         "fields": {
+            "slug": "pb100",
             "title": "ПБ100",
             "subtitle": "устройства внутренних несущих и не несущих стен (толщиной 100 мм.)",
             "length": 600,
             "width": 100,
             "height": 200,
             "block_weight": 15,
-            "blocks_in_paddon": 60,
+            "blocks_in_paddon": 75,
             "soundproofing": "38.00",
             "concrete": "0.040",
             "block_consumption": "8.33",

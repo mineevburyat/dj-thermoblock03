@@ -1,18 +1,20 @@
-from turtle import width
+from enum import unique
 from django.db import models
 from django.forms import CharField
+from django.urls import reverse
 
 # Create your models here.
 # TODO models for products
 
-DENSITY_CONCRETE = 2300
+DENSITY_CONCRETE = 2400
 
 
 class Products(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
-
+        ordering = ("pk",)
+    slug = models.SlugField(unique=True)
     title = models.CharField(verbose_name='Название продукта',
                             max_length=25,
                             help_text='Артикул',
@@ -46,18 +48,27 @@ class Products(models.Model):
                                upload_to='img_products')
     
     def paddon_weight(self):
-        value = self.block_weight * self.blocks_in_paddon
+        value = round(self.block_weight * self.blocks_in_paddon, 2)
         return (value, 'кг.')
     
     def wall_weight(self):
         value = self.block_weight * self.block_consumption + self.concrete * DENSITY_CONCRETE
-        return (value, 'кг./м.кв.')
+        return (round(value,2), 'кг./м.кв.')
     
     def __str__(self):
         return f"{self.title} ({self.length}x{self.width}x{self.height})"
 
     def img_alt(self):
         return f"{self.title} {self.subtitle}"
+    
+    def get_absolute_url(self):
+        return reverse("products:detail", kwargs={"product_slug": self.slug})
+    
+    def get_characteristics(self):
+        return Characteristics.objects.filter(product=self)
+    
+    def get_dimensions(self):
+        return f"{self.length // 10}/{self.width // 10}/{self.height // 10}"
     
 class Characteristics(models.Model):
     class Meta:

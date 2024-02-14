@@ -1,1 +1,43 @@
-[{"model": "products.characteristics", "pk": 1, "fields": {"name": "Термическое сопротивление R", "value": "5.45", "unit": "м2 °C/Вт", "product": 1}}, {"model": "products.characteristics", "pk": 2, "fields": {"name": "Термическое сопротивление R", "value": "5.45", "unit": "м2 °C/Вт", "product": 2}}, {"model": "products.characteristics", "pk": 3, "fields": {"name": "Термическое сопротивление R", "value": "3.94", "unit": "м2 °C/Вт", "product": 3}}, {"model": "products.characteristics", "pk": 4, "fields": {"name": "Термическое сопротивление R", "value": "3.94", "unit": "м2 °C/Вт", "product": 4}}]
+/home/mineev/dj-thermoblock03/thermoblok03/static
+[
+    {
+        "model": "products.characteristics",
+        "pk": 1,
+        "fields": {
+            "name": "Термическое сопротивление R",
+            "value": "5.45",
+            "unit": "м2 °C/Вт",
+            "product": 1
+        }
+    },
+    {
+        "model": "products.characteristics",
+        "pk": 2,
+        "fields": {
+            "name": "Термическое сопротивление R",
+            "value": "5.45",
+            "unit": "м2 °C/Вт",
+            "product": 2
+        }
+    },
+    {
+        "model": "products.characteristics",
+        "pk": 3,
+        "fields": {
+            "name": "Термическое сопротивление R",
+            "value": "3.94",
+            "unit": "м2 °C/Вт",
+            "product": 3
+        }
+    },
+    {
+        "model": "products.characteristics",
+        "pk": 4,
+        "fields": {
+            "name": "Термическое сопротивление R",
+            "value": "3.94",
+            "unit": "м2 °C/Вт",
+            "product": 4
+        }
+    }
+]

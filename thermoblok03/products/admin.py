@@ -17,7 +17,7 @@ class ProductsAdmin(admin.ModelAdmin):
         (
             None,
             {
-                "fields": ("title", "subtitle")
+                "fields": (("title", "slug"), "subtitle")
             }
         ),
         (

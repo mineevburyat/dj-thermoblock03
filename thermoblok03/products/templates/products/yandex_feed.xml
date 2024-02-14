@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% comment %} <yml_catalog date="2024-01-12T17:22"> {% endcomment %}
+  <yml_catalog date="{{now}}">
+  <shop>
+    <name>Термоблок03</name>
+    <company>ООО "Строй Тех</company>
+    <url>{{url}}</url>
+    <categories>
+            <category id="1">Термоблок</category>
+    </categories>
+    <offers>
+      {% for product in products %}
+      <offer id="{{product.slug}}-012024">
+                <name>{{product.title}}</name>
+                <vendor>Термоблок03</vendor>
+                <vendorCode>{{product.slug}}</vendorCode>
+                <url>{{url}}{{product.get_absolute_url}}</url>
+                <!-- <price>от 8990</price> -->
+                <enable_auto_discounts>false</enable_auto_discounts>
+                <currencyId>RUR</currencyId>
+                <categoryId>1</categoryId>
+                <picture>{{url}}{{product.images.url}}</picture>
+                <delivery>false</delivery>
+                <description>
+                    <![CDATA[          
+                        <p>Линейка продукции для энергоэффективных домов.</p>
+                        <p>Стеновой блок имеет теплоизоляцию и с обоих сторон основу для укладки арматуры и заливки бетона.</p>
+                    ]]>
+                </description>
+                <available>unknown</available>
+                <country_of_origin>Россия</country_of_origin>           
+                <sales_notes>Необходим предварительный расчет количества блоков.</sales_notes>
+                <manufacturer_warranty>true</manufacturer_warranty>
+                {% for character in product.get_characteristics %}
+                <param name="{{character.name}}, ({{character.unit}})">{{character.value}}</param>
+                {% endfor %}
+                <param name="Звукоизоляция, (дБ)">{{product.soundproofing}}</param>
+                <param name="Блоков в поддоне, (шт.)">{{product.blocks_in_paddon}}</param>
+                <param name="Расход блоков, (шт./м.кв.)">{{product.block_consumption}}</param>
+                <param name="Расход бетона, (м.куб./м.кв.)">{{product.concrete}}</param>
+                <param name="Вес бетонированной стены, (кг./м.кв.)">{{product.wall_weight.0}}</param>
+                <weight>{{product.block_weight}}</weight>
+                <dimensions>{{product.get_dimensions}}</dimensions>
+      </offer>
+      {% endfor %}     
+    </offers>
+  </shop>
+</yml_catalog>

@@ -1,1 +1,26 @@
 {% extends "base2.html" %}
+
+{% block content %}
+<section class="products">
+    <div class="container">
+        <h1 class="title">Наши ThermoBlock</h1>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-6 col-xl-4 mb-2">
+              <div class="card">
+                <div class="card-header"></div>
+                <img class="card-img-top" src="{{product.images.url}}" alt="{{product.img_alt}}">
+                <div class="card-body"><!-- Начало текстового контента -->
+                  <h2 class="card-title">{{product.title}}</h2>
+                  <h6 class="card-subtitle mb-2 text-muted">{{product.subtitle}}</h6>
+                  {% comment %} <p class="card-text">Некоторый текст...</p> {% endcomment %}
+                  <a href="{{ product.get_absolute_url }}" class="card-link">Подробнее</a>
+                  <a href="#" class="card-link">Купить</a>
+                </div><!-- Конец текстового контента -->
+              </div><!-- Конец карточки -->
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}
