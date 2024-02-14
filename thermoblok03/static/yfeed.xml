@@ -1,0 +1,172 @@
+<yml_catalog date="2024-02-14T09:41">
+    <shop>
+    <name>Термоблок03</name>
+    <company>ООО "Строй Тех</company>
+    <url>https://thermoblock03.ru</url>
+    <categories>
+    <category id="1">Термоблок</category>
+    </categories>
+    <offers>
+    <offer id="tb400-012024">
+    <name>ThermoBlock ТБ400</name>
+    <vendor>Термоблок03</vendor>
+    <vendorCode>tb400</vendorCode>
+    <url>https://thermoblock03.ru/products/tb400/</url>
+    <!--  <price>от 8990</price>  -->
+    <enable_auto_discounts>false</enable_auto_discounts>
+    <currencyId>RUR</currencyId>
+    <categoryId>1</categoryId>
+    <picture>https://thermoblock03.ru/media/img_products/tb400.png</picture>
+    <delivery>false</delivery>
+    <description>
+    <![CDATA[ <p>Линейка продукции для энергоэффективных домов.</p> <p>Стеновой блок имеет теплоизоляцию и с обоих сторон основу для укладки арматуры и заливки бетона.</p> ]]>
+    </description>
+    <available>unknown</available>
+    <country_of_origin>Россия</country_of_origin>
+    <sales_notes>Необходим предварительный расчет количества блоков.</sales_notes>
+    <manufacturer_warranty>true</manufacturer_warranty>
+    <param name="Термическое сопротивление R, (м2 °C/Вт)">5,45</param>
+    <param name="Звукоизоляция, (дБ)">51,00</param>
+    <param name="Блоков в поддоне, (шт.)">20</param>
+    <param name="Расход блоков, (шт./м.кв.)">8,33</param>
+    <param name="Расход бетона, (м.куб./м.кв.)">0,125</param>
+    <param name="Вес бетонированной стены, (кг./м.кв.)">549,90</param>
+    <weight>30</weight>
+    <dimensions>60/40/20</dimensions>
+    </offer>
+    <offer id="tbu400-012024">
+    <name>ThermoBlock ТБУ400</name>
+    <vendor>Термоблок03</vendor>
+    <vendorCode>tbu400</vendorCode>
+    <url>https://thermoblock03.ru/products/tbu400/</url>
+    <!--  <price>от 8990</price>  -->
+    <enable_auto_discounts>false</enable_auto_discounts>
+    <currencyId>RUR</currencyId>
+    <categoryId>1</categoryId>
+    <picture>https://thermoblock03.ru/media/img_products/tbu400.png</picture>
+    <delivery>false</delivery>
+    <description>
+    <![CDATA[ <p>Линейка продукции для энергоэффективных домов.</p> <p>Стеновой блок имеет теплоизоляцию и с обоих сторон основу для укладки арматуры и заливки бетона.</p> ]]>
+    </description>
+    <available>unknown</available>
+    <country_of_origin>Россия</country_of_origin>
+    <sales_notes>Необходим предварительный расчет количества блоков.</sales_notes>
+    <manufacturer_warranty>true</manufacturer_warranty>
+    <param name="Термическое сопротивление R, (м2 °C/Вт)">5,45</param>
+    <param name="Звукоизоляция, (дБ)">51,00</param>
+    <param name="Блоков в поддоне, (шт.)">20</param>
+    <param name="Расход блоков, (шт./м.кв.)">8,33</param>
+    <param name="Расход бетона, (м.куб./м.кв.)">0,125</param>
+    <param name="Вес бетонированной стены, (кг./м.кв.)">549,90</param>
+    <weight>30</weight>
+    <dimensions>60/40/20</dimensions>
+    </offer>
+    <offer id="tb300-012024">
+    <name>ThermoBlock ТБ300</name>
+    <vendor>Термоблок03</vendor>
+    <vendorCode>tb300</vendorCode>
+    <url>https://thermoblock03.ru/products/tb300/</url>
+    <!--  <price>от 8990</price>  -->
+    <enable_auto_discounts>false</enable_auto_discounts>
+    <currencyId>RUR</currencyId>
+    <categoryId>1</categoryId>
+    <picture>https://thermoblock03.ru/media/img_products/tb300.png</picture>
+    <delivery>false</delivery>
+    <description>
+    <![CDATA[ <p>Линейка продукции для энергоэффективных домов.</p> <p>Стеновой блок имеет теплоизоляцию и с обоих сторон основу для укладки арматуры и заливки бетона.</p> ]]>
+    </description>
+    <available>unknown</available>
+    <country_of_origin>Россия</country_of_origin>
+    <sales_notes>Необходим предварительный расчет количества блоков.</sales_notes>
+    <manufacturer_warranty>true</manufacturer_warranty>
+    <param name="Термическое сопротивление R, (м2 °C/Вт)">3,94</param>
+    <param name="Звукоизоляция, (дБ)">51,00</param>
+    <param name="Блоков в поддоне, (шт.)">40</param>
+    <param name="Расход блоков, (шт./м.кв.)">12,50</param>
+    <param name="Расход бетона, (м.куб./м.кв.)">0,080</param>
+    <param name="Вес бетонированной стены, (кг./м.кв.)">454,50</param>
+    <weight>21</weight>
+    <dimensions>40/30/20</dimensions>
+    </offer>
+    <offer id="tbu300-012024">
+    <name>ThermoBlock ТБУ300</name>
+    <vendor>Термоблок03</vendor>
+    <vendorCode>tbu300</vendorCode>
+    <url>https://thermoblock03.ru/products/tbu300/</url>
+    <!--  <price>от 8990</price>  -->
+    <enable_auto_discounts>false</enable_auto_discounts>
+    <currencyId>RUR</currencyId>
+    <categoryId>1</categoryId>
+    <picture>https://thermoblock03.ru/media/img_products/tbu300.png</picture>
+    <delivery>false</delivery>
+    <description>
+    <![CDATA[ <p>Линейка продукции для энергоэффективных домов.</p> <p>Стеновой блок имеет теплоизоляцию и с обоих сторон основу для укладки арматуры и заливки бетона.</p> ]]>
+    </description>
+    <available>unknown</available>
+    <country_of_origin>Россия</country_of_origin>
+    <sales_notes>Необходим предварительный расчет количества блоков.</sales_notes>
+    <manufacturer_warranty>true</manufacturer_warranty>
+    <param name="Термическое сопротивление R, (м2 °C/Вт)">3,94</param>
+    <param name="Звукоизоляция, (дБ)">51,00</param>
+    <param name="Блоков в поддоне, (шт.)">40</param>
+    <param name="Расход блоков, (шт./м.кв.)">12,50</param>
+    <param name="Расход бетона, (м.куб./м.кв.)">0,080</param>
+    <param name="Вес бетонированной стены, (кг./м.кв.)">454,50</param>
+    <weight>21</weight>
+    <dimensions>50/30/20</dimensions>
+    </offer>
+    <offer id="pb200-012024">
+    <name>ПБ200</name>
+    <vendor>Термоблок03</vendor>
+    <vendorCode>pb200</vendorCode>
+    <url>https://thermoblock03.ru/products/pb200/</url>
+    <!--  <price>от 8990</price>  -->
+    <enable_auto_discounts>false</enable_auto_discounts>
+    <currencyId>RUR</currencyId>
+    <categoryId>1</categoryId>
+    <picture>https://thermoblock03.ru/media/img_products/pb200.png</picture>
+    <delivery>false</delivery>
+    <description>
+    <![CDATA[ <p>Линейка продукции для энергоэффективных домов.</p> <p>Стеновой блок имеет теплоизоляцию и с обоих сторон основу для укладки арматуры и заливки бетона.</p> ]]>
+    </description>
+    <available>unknown</available>
+    <country_of_origin>Россия</country_of_origin>
+    <sales_notes>Необходим предварительный расчет количества блоков.</sales_notes>
+    <manufacturer_warranty>true</manufacturer_warranty>
+    <param name="Звукоизоляция, (дБ)">38,00</param>
+    <param name="Блоков в поддоне, (шт.)">40</param>
+    <param name="Расход блоков, (шт./м.кв.)">8,33</param>
+    <param name="Расход бетона, (м.куб./м.кв.)">0,110</param>
+    <param name="Вес бетонированной стены, (кг./м.кв.)">463,92</param>
+    <weight>24</weight>
+    <dimensions>60/20/20</dimensions>
+    </offer>
+    <offer id="pb100-012024">
+    <name>ПБ100</name>
+    <vendor>Термоблок03</vendor>
+    <vendorCode>pb100</vendorCode>
+    <url>https://thermoblock03.ru/products/pb100/</url>
+    <!--  <price>от 8990</price>  -->
+    <enable_auto_discounts>false</enable_auto_discounts>
+    <currencyId>RUR</currencyId>
+    <categoryId>1</categoryId>
+    <picture>https://thermoblock03.ru/media/img_products/pb100.png</picture>
+    <delivery>false</delivery>
+    <description>
+    <![CDATA[ <p>Линейка продукции для энергоэффективных домов.</p> <p>Стеновой блок имеет теплоизоляцию и с обоих сторон основу для укладки арматуры и заливки бетона.</p> ]]>
+    </description>
+    <available>unknown</available>
+    <country_of_origin>Россия</country_of_origin>
+    <sales_notes>Необходим предварительный расчет количества блоков.</sales_notes>
+    <manufacturer_warranty>true</manufacturer_warranty>
+    <param name="Звукоизоляция, (дБ)">38,00</param>
+    <param name="Блоков в поддоне, (шт.)">75</param>
+    <param name="Расход блоков, (шт./м.кв.)">8,33</param>
+    <param name="Расход бетона, (м.куб./м.кв.)">0,040</param>
+    <param name="Вес бетонированной стены, (кг./м.кв.)">220,95</param>
+    <weight>15</weight>
+    <dimensions>60/10/20</dimensions>
+    </offer>
+    </offers>
+    </shop>
+    </yml_catalog>
