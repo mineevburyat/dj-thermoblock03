@@ -1,0 +1,40 @@
+{% extends "base2.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    {% for instruction in instructions %}
+    <div class="raw">
+        <div class="d-flex">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <img src="{% static 'blocks_img/tb400.png'%}" alt="" class="img-fluid">
+        </div>
+        <div class="col-lg-8 col-md-6 col-sm-12">
+            <h2 class="name">Инструкция ThermoBlock {{instruction.name}}</h2>
+            <h3 class="h6 text-muted">{{instruction.description}}</h3>
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <table class="padding-control table table-bordered">
+                        <tr>
+                            <td class="info-a">Основных этапов строительства</td>
+                            <td class="info-b">{{instruction.get_stages_count}}</td>
+                        </tr>
+                        <tr>
+                            <td class="info-a">Всего рекомендаций</td>
+                            <td class="info-b">{{instruction.get_recomendations_count}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                        <a class="btn btn-primary" href={{instruction.get_absolute_url}}>Читать</a>
+                        <a class="btn btn-warning">Скачать</a>
+                        <a class="btn btn-danger">К блокам</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

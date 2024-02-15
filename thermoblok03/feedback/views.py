@@ -5,7 +5,7 @@ from .forms import FeedbackForm
 from django.contrib import messages
 
 import bitrix24
-# Create your views here.
+# TODO make capcha
 
 def create_on_crm(instanse, name, phone, description=''):
     bx = bitrix24.Bitrix24('https://b24-h4z6cg.bitrix24.ru/rest/1/voeqwkq3jrdf6sp1/')

@@ -3,3 +3,5 @@ Disallow: /admin
 Disallow: /search/
 Disallow: /feedback/
 Allow /products/
+Allow /
+
