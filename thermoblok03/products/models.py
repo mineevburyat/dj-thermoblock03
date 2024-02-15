@@ -4,7 +4,7 @@ from django.forms import CharField
 from django.urls import reverse
 
 # Create your models here.
-# TODO models for products
+# TODO product link with certificats and instructions
 
 DENSITY_CONCRETE = 2400
 
