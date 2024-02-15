@@ -1,5 +1,5 @@
 User-agent: *
-Allow /products
 Disallow: /admin
 Disallow: /search/
-
+Disallow: /feedback/
+Allow /products/
