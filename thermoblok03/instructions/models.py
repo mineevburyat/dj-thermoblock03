@@ -38,7 +38,8 @@ class StageInstruction(models.Model):
                             max_length=35)
     description = models.TextField(verbose_name='краткое описание этапа')
     instruction = models.ForeignKey(Instractions,
-                                    verbose_name='инструкция')
+                                    verbose_name='инструкция',
+                                    on_delete=models.PROTECT)
     
     def __str__(self):
         return f"{self.instruction.name} {self.title} ({self.page})"

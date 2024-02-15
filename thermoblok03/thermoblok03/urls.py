@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type="text/plain")),
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('feedback', include('feedback.urls', namespace='feedback')),
     path('instructions/', include('instructions.urls', namespace='instructions')),
