@@ -51,7 +51,7 @@
                 <div class="global_title">ThermoBlock - экономичное и быстрое строительство</div>
                 <div class="global_subtitle">Блоки для энергоэффективных зданий</div>
                 <div class="global_line"></div>
-                <img src="https://thermoblock03.ru/assets/manager/IMG_20190201_115128.jpg" alt="">
+                <img src="{% static 'img_about/sclad.jpg' %}" alt="">
                 <div class="text">
                     <p><strong>"Thermoblock"</strong></p>
                     <p><span>- с 2006 года занимались производством шлакоблока, на оборудовании собственной
@@ -539,7 +539,7 @@
             </div>
             <div class="col-12 portfolio">
                 <div class="btn_wrapper">
-                    <a href="instrukcziya/index.html" class="btn"></a>
+                    <a href="{% url 'instruction:list' %}" class="btn"></a>
                     <div>Инструкция по производству работ из теплоизоляционных блоков ThermoBlock</div>
                 </div>
             </div>
@@ -872,73 +872,7 @@
         </div>
     </div>
 </section>
-
-<section class="persons d-none">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="uptitle">Компания в лицах</div>
-                <div class="global_title">Команда специалистов!</div>
-                <div class="global_subtitle">Квалифицированные специалисты - грамотные консультации!</div>
-                <div class="global_line"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="item">
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/IMG_20180327_144624.90a2a4f2ccbe5632201f42f66119e3e91.jpg"
-                        class="img-fluid" />
-                    <a href="https://api.whatsapp.com/send?phone=79835361052"><i
-                            class="fa fa-whatsapp"></i>Связаться по WhatsApp</a>
-                    <div class="wrapper">
-                        <div class="name">Алдар Жаргалов</div>
-                        <div class="description">Менеджер по продажам. Обладает углубленным знанием продуктов
-                            компании.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="item">
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/370x450.0ef8d95558dfa544da46250fbda4817e1.png"
-                        class="img-fluid" />
-                    <a href="https://api.whatsapp.com/send?phone=79835361052"><i
-                            class="fa fa-whatsapp"></i>Связаться по WhatsApp</a>
-                    <div class="wrapper">
-                        <div class="name">Иван Иванов</div>
-                        <div class="description">Еще один менеджер по продажам. Обладает углубленным знанием
-                            продуктов компании.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="item">
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/370x450.0ef8d95558dfa544da46250fbda4817e1.png"
-                        class="img-fluid" />
-                    <a href="https://api.whatsapp.com/send?phone=79835361052"><i
-                            class="fa fa-whatsapp"></i>Связаться по WhatsApp</a>
-                    <div class="wrapper">
-                        <div class="name">Иван Иванов</div>
-                        <div class="description">И еще один менеджер по продажам. Обладает углубленным знанием
-                            продуктов компании.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="item">
-                    <img src="https://thermoblock03.ru/assets/components/phpthumbof/cache/370x450.0ef8d95558dfa544da46250fbda4817e1.png"
-                        class="img-fluid" />
-                    <a href="https://api.whatsapp.com/send?phone=79835361052"><i
-                            class="fa fa-whatsapp"></i>Связаться по WhatsApp</a>
-                    <div class="wrapper">
-                        <div class="name">Иван Иванов</div>
-                        <div class="description">Работяга. Профессиональный строитель с многолетним опытом
-                            строительства по технологии ThermoBlock.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{% block personal %}{% endblock personal %}
 
 <section class="achievements">
     <div class="container">
@@ -1022,48 +956,50 @@
 </section>
 {% endblock content %}
 
-    <section class="contacts" id="ex5">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="title">Контакты ThermoBlock</div>
-                </div>
-                <div class="col-12">
-                    <div class="wrapper">
-                        <div class="item">
-                            <div class="icon"><i class="fa fa-map-marker"></i></div>
-                            <div class="height_control">
-                                <div class="top">Адреса офисов</div>
-                                <div class="text">Улан-Удэ, Н.Петрова 70 офис 309, "Бизнес Лайф"</div>
-                            </div>
-                            <a href="partneram.html" class="action">Смотреть на карте</a>
+{% block contact %}
+<section class="contacts" id="ex5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="title">Контакты ThermoBlock</div>
+            </div>
+            <div class="col-12">
+                <div class="wrapper">
+                    <div class="item">
+                        <div class="icon"><i class="fa fa-map-marker"></i></div>
+                        <div class="height_control">
+                            <div class="top">Адреса офисов</div>
+                            <div class="text">Улан-Удэ, Н.Петрова 70 офис 309, "Бизнес Лайф"</div>
                         </div>
-                        <div class="item">
-                            <div class="icon"><i class="fa fa-phone-square"></i></div>
-                            <div class="height_control">
-                                <div class="top">Телефоны для связи</div>
-                                <a href="tel:" class="phone"></a>
-                                <a href="tel:+73012206320" class="phone">+7 3012 206320</a>
-                                <a href="tel:+73012392848" class="phone">+7 3012 392848</a>
-                                <a href="tel:+73012392868" class="phone">+7 3012 392868</a>
-                            </div>
-                            <a href="tel:" class="action">Позвонить</a>
+                        <a href="partneram.html" class="action">Смотреть на карте</a>
+                    </div>
+                    <div class="item">
+                        <div class="icon"><i class="fa fa-phone-square"></i></div>
+                        <div class="height_control">
+                            <div class="top">Телефоны для связи</div>
+                            <a href="tel:" class="phone"></a>
+                            <a href="tel:+73012206320" class="phone">+7 3012 206320</a>
+                            <a href="tel:+73012392848" class="phone">+7 3012 392848</a>
+                            <a href="tel:+73012392868" class="phone">+7 3012 392868</a>
                         </div>
-                        <div class="item">
-                            <div class="icon"><i class="fa fa-envelope"></i></div>
-                            <div class="height_control">
-                                <div class="top">Наш Email</div>
-                                <div class="text">Почта для заявок и предложений сотрудничества</div>
-                                <div class="email">thermoblock@mail.ru</div>
-                                <div class="email"></div>
-                            </div>
-                            <a href="index.html#" class="action">Написать</a>
+                        <a href="tel:" class="action">Позвонить</a>
+                    </div>
+                    <div class="item">
+                        <div class="icon"><i class="fa fa-envelope"></i></div>
+                        <div class="height_control">
+                            <div class="top">Наш Email</div>
+                            <div class="text">Почта для заявок и предложений сотрудничества</div>
+                            <div class="email">thermoblock@mail.ru</div>
+                            <div class="email"></div>
                         </div>
+                        <a href="index.html#" class="action">Написать</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+{% endblock contact %}
 
     <footer>
         <div class="container">
@@ -1235,178 +1171,7 @@
     {% comment %} <script src="js/jquery.maskedinput.js"></script>
     <script src="js/jquery.maskedinput.min.js"></script> {% endcomment %}
     <script>
-        $("#menu").on("click", ".ex", function (event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            var target = $(href);
-            var top = target.offset().top;
-            $('body,html').animate({ scrollTop: top }, 1000);
-        });
-        $('.q').on('click', function () {
-            var objName = this.getAttribute('data-id');
-            var obj = $(objName);
-            $('.q').removeClass('on');
-            if (obj.css("display") != "none") {
-                obj.animate({
-                    height: 'hide',
-                }, 300);
-            }
-            else {
-                var visibleBlocks = $("div[id*='menu-']:visible");
-                if (visibleBlocks.length < 1) {
-                    obj.animate({
-                        height: 'show',
-                    }, 300);
-                    $(this).addClass('on');
-                } else {
-                    $(visibleBlocks).animate({
-                        height: 'hide',
-                    }, 300);
-                }
-            }
-        });
-        var icons = document.getElementsByClassName("main_icon");
-        var icons_i = 0;
-        var icon;
-        var timerId = setInterval(function () {
-            $(".main_icon").removeClass("active");
-            icon = icons[icons_i];
-            $(icon).addClass("active");
-            icons_i++;
-            if (icons_i == 3) {
-                icons_i = 0;
-            }
-        }, 2000);
-        $(document).ready(function () {
-            $(function () {
-                if (location.hash.length) {
-                    var target = $('[name="' + location.hash.substr(1) + '"]');
-                    if (!target.length)
-                        target = $(location.hash);
-                    if (target.length)
-                        $('html,body').animate({ scrollTop: target.offset().top }, 1000);
-                };
-            });
-            $('.main_slider').on('init', function (e, slick) {
-                var $firstAnimatingElements = $('div.item:first-child').find('[data-animation]');
-                doAnimations($firstAnimatingElements);
-            });
-            $('.main_slider').on('beforeChange', function (e, slick, currentSlide, nextSlide) {
-                var $animatingElements = $('div.item[data-slick-index="' + nextSlide + '"]').find('[data-animation]');
-                doAnimations($animatingElements);
-            });
-            $('.main_slider').slick({
-                infinite: true,
-                autoplay: true,
-                autoplaySpeed: 4000,
-                dots: true,
-                arrows: true,
-                speed: 500,
-                fade: true,
-                cssEase: 'linear',
-            });
-            $('.nav_slider').slick({
-                arrows: true,
-                variableWidth: true,
-                infinite: false,
-            });
-            $('.articles_slider').slick({
-                arrows: true,
-                dots: false,
-                infinite: true,
-                slidesToShow: 3,
-                slidesToScroll: 2,
-                responsive: [
-                    {
-                        breakpoint: 991,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2,
-                        }
-                    },
-                    {
-                        breakpoint: 600,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }]
-            });
-            $('.achievements_slider').slick({
-                arrows: true,
-                dots: false,
-                infinite: true,
-                slidesToShow: 6,
-                slidesToScroll: 3,
-                responsive: [
-                    {
-                        breakpoint: 991,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 2,
-                        }
-                    },
-                    {
-                        breakpoint: 575,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }]
-            });
-            $('.articles_list_slider').slick({
-                arrows: true,
-                dots: false,
-                infinite: true,
-                slidesToShow: 3,
-                slidesToScroll: 2,
-                responsive: [
-                    {
-                        breakpoint: 991,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2,
-                        }
-                    },
-                    {
-                        breakpoint: 600,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }]
-            });
-            function doAnimations(elements) {
-                var animationEndEvents = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-                elements.each(function () {
-                    var $this = $(this);
-                    var $animationDelay = $this.data('delay');
-                    var $animationType = 'animated ' + $this.data('animation');
-                    $this.css({
-                        'animation-delay': $animationDelay,
-                        '-webkit-animation-delay': $animationDelay,
-                        'opacity': 1
-                    });
-                    $this.addClass($animationType).one(animationEndEvents, function () {
-                        $this.removeClass($animationType);
-                    });
-                });
-            };
-            $(".floating").on('click', function () {
-                var animationEndEvents = 'webkitAnimationEnd animationend';
-                var elem = $(".floating_icons_wrapper");
-                elem.removeClass("fadeInUp animated");
-                if (elem.hasClass("d-none")) {
-                    $(".floating").addClass("active");
-                    elem.removeClass("d-none").addClass("fadeInUp animated");
-                }
-                else {
-                    elem.addClass("d-none");
-                    $(".floating").removeClass("active");
-                }
-            });
-        });
-
+        
     </script>
 </body>
 

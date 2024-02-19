@@ -1,5 +1,5 @@
 from math import e
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, HttpResponseRedirect
 from .forms import FeedbackForm
 from django.contrib import messages
@@ -48,12 +48,26 @@ def feedback_save(request):
             form.save(commit=False)
             inst = form.instance
             inst.ip_address = ip
-            status = create_on_crm(inst, inst.name, inst.phone)
+            form.save()
+            # status = create_on_crm(inst, inst.name, inst.phone)
             messages.success(request, 'Ваш контакт успешно отправлен, менеджер свяжется с вами')
-            if not status:
-                print('неотправилось')
         else:
             print(form.errors)
     return HttpResponseRedirect('/')
 
-
+def feedback_ajax(request):
+    if request.method == "POST":
+        print(request.POST)
+        form = FeedbackForm(data=request.POST)
+        if form.is_valid():
+            ip = request.META.get('REMOTE_ADDR', '') or request.META.get('HTTP_X_FORWARDED_FOR', '')
+            form.save(commit=False)
+            inst = form.instance
+            inst.ip_address = ip
+            form.save()
+            data = {"status": True}
+        else:
+            data = {"status": False, "errors": form.errors}
+        return JsonResponse(data)
+    else:
+        return JsonResponse({"status": False, "errors": ['not ajax']})

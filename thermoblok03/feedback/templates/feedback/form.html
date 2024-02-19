@@ -1,0 +1,65 @@
+{% load feedbackform %}
+
+<div class="modal fade protectedForm" id="header_form" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal_header_wrapper">
+                    <div class="modal_title">Сколько будет стоит ваш дом из ThermoBlock?</div>
+                    <div class="modal_subtitle">Заполните форму, и наш специалист проконсультирует вас!
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- TODO include block make -->
+                <!-- TODO ajax form -->
+                {% get_form request as form %}
+                <form id="form" action="/feedback" method="post" enctype="multipart/form-data" validate class="ajax_form form-horizontal">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <label for="name">Ваше имя</label>
+                            <input type="text" class="form-control" id="name" 
+                            name="name" value="{% if form.name.value %} form.name.value {% endif %}"
+                            maxlength="50" required 
+                                placeholder="Как к вам обращаться">
+                            <p id="form_name_err"></p>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="phone">Телефон</label>
+                            <input type="phone" class="form-control phone-input" 
+                            id="phone" 
+                            name="phone" required 
+                            value="{% if form.phone.value %} form.phone.value {% endif %}" 
+                            placeholder="телефонный номер">
+                            <p id="form_phone_err"></p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm-12">
+                            {{form.captcha}}
+                            <p id="form_captcha_err"></p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <div class="fz_wrapper">
+                                <a href="#"><span class="fa fa-exclamation-circle"></span>
+                                    Ваши личные данные<br> в безопасности</a>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <button type="submit" id="btn_ajax" class="btn_submit">Получить расчет</button>
+                        </div>
+                    </div>
+                    
+                </form>
+                <div id="result_form"></div> 
+            </div>
+        </div>
+    </div>
+</div>
