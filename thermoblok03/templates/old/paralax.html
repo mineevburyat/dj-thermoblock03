@@ -1,0 +1,44 @@
+    <section class="paralax_form par2">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="wrapper">
+                        <div class="top">
+                            <div class="title"><span>Заполните простую форму</span> и мы подготовим смету по
+                                строительству энергоэффективного дома</div>
+                            <div class="subtitle">Заполните форму, и наш специалист проконсультирует вас!</div>
+                        </div>
+                        <div class="form1">
+                            <form id="form" action="/feedback" method="post" enctype="multipart/form-data" novalidate class="ajax_form form-horizontal">
+                                {% csrf_token %}
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="name">Ваше имя</label>
+                                        <input type="text" class="form-control" id="name" name="name" value=""
+                                            placeholder="Как к вам обращаться">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="phone">Телефон</label>
+                                        <input type="phone" class="form-control phone-input" id="phone" name="phone"
+                                            value="" placeholder="телефонный номер">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <div class="fz_wrapper">
+                                            <a href="#"><span class="fa fa-exclamation-circle"></span>
+                                                Ваши личные данные<br> в безопасности</a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <button type="submit" class="btn_submit">Получить расчет</button>
+                                    </div>
+                                </div>
+                               
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
