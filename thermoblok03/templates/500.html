@@ -1,0 +1,199 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}ThermoBlock | Технические работы {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <!-- Иконка ошибки -->
+            <div class="mb-4">
+                <div class="error-icon">
+                    <i class="bi bi-tools"></i>
+                </div>
+            </div>
+            
+            <!-- Заголовок -->
+            <h1 class="display-4 fw-bold mb-3">Проводятся технические работы</h1>
+            
+            <!-- Описание -->
+            <p class="lead text-muted mb-4">
+                Наш сайт временно недоступен. Мы уже работаем над решением проблемы.
+                Пожалуйста, попробуйте зайти позже или свяжитесь с нами другим способом.
+            </p>
+            
+            <!-- Таймер до возвращения -->
+            <div class="card border-warning mb-5">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <i class="bi bi-clock-history fs-1 text-warning me-3"></i>
+                        <div>
+                            <h5 class="card-title mb-1">Сайт вернется через:</h5>
+                            <div class="countdown">
+                                <span id="hours">00</span>:<span id="minutes">30</span>:<span id="seconds">00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Что делать пока сайт не работает -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-telephone fs-1 text-primary mb-3 d-block"></i>
+                            <h5>Позвоните нам</h5>
+                            <p class="text-muted">Мы ответим на все вопросы по телефону</p>
+                            <a href="tel:+73012206320" class="btn btn-primary w-100">
+                                <i class="bi bi-telephone me-2"></i>+7 (3012) 20-63-20
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <i class="bi bi-envelope fs-1 text-primary mb-3 d-block"></i>
+                            <h5>Напишите нам</h5>
+                            <p class="text-muted">Отправьте email, мы ответим в течение часа</p>
+                            <a href="mailto:info@thermoblock.ru" class="btn btn-primary w-100">
+                                <i class="bi bi-envelope me-2"></i>info@thermoblock.ru
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        
+            <!-- Информация для разработчиков -->
+            {% if request.user.is_staff %}
+            <div class="alert alert-danger mt-4">
+                <h5 class="alert-heading">Информация для администратора:</h5>
+                <p class="mb-2">Ошибка 500: Internal Server Error</p>
+                <p class="mb-2">Время: {% now "Y-m-d H:i:s" %}</p>
+                <p class="mb-0">IP: {{ request.META.REMOTE_ADDR }}</p>
+            </div>
+            {% endif %}
+            
+            <!-- Кнопка обновления -->
+            <button onclick="window.location.reload()" class="btn btn-secondary btn-lg mt-3 me-2">
+                <i class="bi bi-arrow-clockwise me-2"></i>Обновить страницу
+            </button>
+            
+            <button onclick="history.back()" class="btn btn-outline-secondary btn-lg mt-3">
+                <i class="bi bi-arrow-left me-2"></i>Назад
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .error-icon {
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(135deg, #ff6b35, #ffa726);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        color: white;
+        font-size: 4rem;
+        box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+        animation: pulse 2s infinite;
+    }
+    
+    .countdown {
+        font-size: 2.5rem;
+        font-weight: 700;
+        font-family: 'Courier New', monospace;
+        color: #dc3545;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    @media (max-width: 768px) {
+        .error-icon {
+            width: 100px;
+            height: 100px;
+            font-size: 2.5rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+        }
+        
+        .countdown {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Таймер обратного отсчета (30 минут)
+        let totalSeconds = 30 * 60;
+        
+        function updateCountdown() {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            if (totalSeconds > 0) {
+                totalSeconds--;
+                setTimeout(updateCountdown, 1000);
+            } else {
+                document.querySelector('.countdown').innerHTML = '<span class="text-success">Сайт восстановлен!</span>';
+                document.querySelector('.countdown').classList.add('fs-4');
+            }
+        }
+        
+        updateCountdown();
+        
+        // Анимация появления
+        const elements = document.querySelectorAll('.error-icon, h1, .lead, .card, .alert');
+        elements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                el.style.transition = 'all 0.6s ease';
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+        
+        // Автоматическое обновление через 5 минут
+        setTimeout(() => {
+            window.location.reload();
+        }, 5 * 60 * 1000);
+        
+        // Отправка информации об ошибке (только для staff)
+        {% if request.user.is_staff %}
+        fetch('/api/log-error/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                error: '500',
+                url: window.location.href,
+                timestamp: new Date().toISOString(),
+                user_agent: navigator.userAgent
+            })
+        }).catch(error => console.error('Error logging:', error));
+        {% endif %}
+    });
+</script>
+{% endblock %}

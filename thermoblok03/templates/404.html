@@ -1,0 +1,161 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}ThermoBlock | Страница не найдена {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <!-- Иконка ошибки -->
+            <div class="mb-1">
+                <div class="error-icon">
+                    <i class="bi bi-house-x"></i>
+                </div>
+            </div>
+            
+            <!-- Заголовок -->
+            <h1 class="display-4 fw-bold mb-3">Этой страницы больше нет</h1>
+            
+            <!-- Описание -->
+            <p class="lead text-muted mb-4">
+                Возможно, мы переехали на новый адрес или страница была удалена. 
+                Но не расстраивайтесь — у нас много полезной информации о строительстве!
+            </p>
+            
+            <!-- Что могло случиться -->
+            <div class="card border-0 shadow-sm mb-5">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Что могло произойти:</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center">
+                                <i class="bi bi-link-45deg fs-1 text-primary mb-2"></i>
+                                <p class="mb-0">Ссылка устарела</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center">
+                                <i class="bi bi-keyboard fs-1 text-primary mb-2"></i>
+                                <p class="mb-0">Ошибка в адресе</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center">
+                                <i class="bi bi-arrow-right-circle fs-1 text-primary mb-2"></i>
+                                <p class="mb-0">Страница переехала</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% comment %}
+            <!-- Поиск по сайту -->
+            <div class="card border-0 shadow-sm mb-5">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Найдите нужную информацию:</h5>
+                    <form action="{% url 'search' %}" method="get" class="mb-3">
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control" placeholder="Что ищете?" name="q">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i> Найти
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endcomment %}
+            <!-- Полезные ссылки -->
+            <h5 class="mb-3">Популярные страницы:</h5>
+            <div class="row g-3 mb-5">
+                <div class="col-md-3 col-6">
+                    <a href="{% url 'home:index' %}" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-house me-2"></i>Главная
+                    </a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <a href="{% url 'blocksale:index' %}" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-cpu me-2"></i>Магазин термоблоков
+                    </a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <a href="{% url 'construction:index' %}" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-grid-3x3 me-2"></i>Строительство домов
+                    </a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <a href="{% url 'review:index' %}" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-chat-text me-2"></i>Отзывы
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Контакты -->
+            <div class="alert alert-info">
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="bi bi-info-circle fs-4 me-3"></i>
+                    <div>
+                        <h5 class="mb-1 text-center">Нужна помощь?</h5>
+                        <p class="mb-0 text-center">Позвоните нам: <a href="tel:+73012206320" class="fw-bold">+7 (3012) 20-63-20</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Кнопка назад -->
+            <button onclick="history.back()" class="btn btn-secondary btn-lg mt-3">
+                <i class="bi bi-arrow-left me-2"></i>Вернуться назад
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .error-icon {
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(135deg, #1a5fb4, #ff6b35);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        color: white;
+        font-size: 4rem;
+        box-shadow: 0 10px 30px rgba(26, 95, 180, 0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .error-icon {
+            width: 100px;
+            height: 100px;
+            font-size: 2.5rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Анимация появления
+        const elements = document.querySelectorAll('.error-icon, h1, .lead, .card, .alert');
+        elements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                el.style.transition = 'all 0.6s ease';
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+        
+        // Сохранение URL для отладки (только в development)
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.log('404 Error - Requested URL:', window.location.href);
+        }
+    });
+</script>
+{% endblock %}

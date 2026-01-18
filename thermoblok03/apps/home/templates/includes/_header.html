@@ -1,0 +1,66 @@
+{% load static yandex_metrika_full %}
+
+{% yandex_metrika %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm" id="mainNavbar">
+    <div class="container">
+        <!-- Логотип -->
+        <a class="navbar-brand" href="{% url 'home:index' %}">
+            <img src="{% static 'img/logofulltext.png' %}" alt="logo text ThermoBlock - строительные технологии">
+        </a>
+        
+        <!-- Кнопка бургер-меню для мобильных -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Основное меню -->
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home:index' %}#solution" {% ym_data_goal 'start' %}>Преимущества</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" {% ym_data_goal 'faq' %}>Вопросы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" {% ym_data_goal 'shop_block' %}>ТермоБлоки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" {% ym_data_goal 'shop_hause' %}>Проекты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" {% ym_data_goal 'review' %}>Отзывы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" {% ym_data_goal 'about' %}">О нас</a>
+                </li>
+            </ul>
+            <div class="d-flex flex-column">
+                <!-- Кнопка "Рассчитать" -->
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#calculatorModal" {% ym_data_goal 'btn_form' %}>
+                    <i class="bi bi-calculator me-2"></i>Рассчитать
+                </button>
+                <!-- Группа кнопок соцсетей -->
+                <div class="btn-toolbar justify-content-center mt-2" role="toolbar" aria-label="Toolbar with social buttons">
+                    <div class="btn-group me-2 social-header" role="group" aria-label="First group">
+                        <a href="#" class="text-secondary me-2" aria-label="rutube" target="_blank">
+                            <i class="bi bi-youtube fs-5"></i>
+                        </a>
+                        <a href="#" class="text-secondary me-2" aria-label="Instagram">
+                            <i class="bi bi-instagram fs-5"></i>
+                        <a href="https://vk.com/thermoblock" class="text-secondary me-2" aria-label="vk" target="_blank">
+                            <i class="bi bi-vk fs-5"></i>
+                        </a>
+                        <a href="https://t.me/thermoblock" class="text-secondary me-2" aria-label="telegram" target="_blank">
+                            <i class="bi bi-telegram fs-5"></i>
+                        </a>
+                        <a href="https://wa.me/78001234567" class="text-secondary me-2" aria-label="whatsapp" target="_blank">
+                            <i class="bi bi-whatsapp fs-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

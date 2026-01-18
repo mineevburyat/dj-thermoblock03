@@ -1,0 +1,160 @@
+{% load static yandex_metrika_full %}
+
+<footer class="footer bg-dark text-white pt-5 pb-4">
+    <div class="container">
+        <h3 class="text-center hotlogo display-6">Мы идеальны для качественного малоэтажного строительства!</h3>
+        <div class="row">
+            <!-- Колонка 1: Логотип и описание -->
+            <div class="col-lg-3 mb-4">
+                <div class="footer-brand mb-3">
+                    <div class="d-flex align-items-center">
+                        <div class="w-25">
+                        <img src="{% static '/img/logograph.png'%}" alt="logo graph termoblock" class="img-fluid">
+                        </div>
+                        <h4 class="logo-text p-3">
+                            <span class="hotlogo">Термо</span>
+                            <span class="coollogo">Блок</span>
+                            <br>
+                            <span class="greytext small">строительные технологии</span>
+                        </h4>
+                    </div>
+                </div>
+                <p class="text-white-50 mb-4">
+                    Технология контролируемого везведения монолитных утепленных стен с помощью
+                    технологичных блоков несъемной опалубки. ThermoBlock это быстрое и контролируемое строительство 
+                    теплых, прочных и технологичных умных домов. Производство термоблоков локализовано в Республике Бурятия.
+                </p>
+             </div>
+            <!-- Колонка 2: Для застройщиков -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h4 class="h5 mb-3">Для застройщиков</h4>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="#problem">О технологии</a></li>
+                    <li><a href="#benefits">Преимущества</a></li>
+                    <li><a href="#faq">Частые вопросы</a></li>
+                    <li><a href="#">Калькулятор экономии</a></li>
+                    <li><a href="#">Примеры объектов</a></li>
+                </ul>
+                <!-- Кнопка "Рассчитать" в футере -->
+                <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#calculatorModal">
+                    <i class="bi bi-calculator me-2"></i>Рассчитать стоимость
+                </button>
+            </div>
+            <!-- Колонка 3: Контакты -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="text-white mb-3">Контакты</h5>
+                <div itemscope itemtype="https://schema.org/LocalBusiness" class="office-info">
+                    <!-- Название бизнеса -->
+                    <h4 class="" itemprop="name">ООО "Строй Тех"</h4>
+                    <!-- Адрес -->
+                    <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="address-block">
+                        <div class="address-line">
+                            <i class="bi bi-geo-alt text-warning me-2 mt-1"></i>
+                            <span itemprop="streetAddress"> ул. Николая Петрова, д.70, офис 309, "Бизнес Лайф"</span>,
+                        </div>
+                        <div class="address-line">
+                            <span itemprop="addressLocality">Улан-Удэ</span>,
+                            <span itemprop="addressRegion">Республика Бурятия</span>,
+                            <span itemprop="postalCode">670000</span>
+                        </div>
+                        <div class="address-line">
+                            <span itemprop="addressCountry">Россия</span>
+                        </div>
+                        <small class="text-warning text-center">Пн-Пт: 9:00-18:00</small>
+                    </div>
+                    
+                    <!-- Контакты -->
+                    <div class="contacts-block mt-3">
+                        <div class="contact-item" itemprop="telephone">
+                            <i class="bi bi-telephone-fill text-warning me-2"></i>
+                            <a href="tel:+7964106320" class="text-white text-decoration-none">+7 (3012) 20-63-20</a>
+                        </div>
+                        
+                        <div class="contact-item" itemprop="faxNumber">
+                            <i class="bi bi-printer-fill text-warning me-2"></i>
+                            <span>+7 (3012) 20-63-20</span>
+                        </div>
+                        
+                        <div class="contact-item" itemprop="email">
+                            <i class="bi bi-envelope-fill text-warning me-2"></i>
+                            <a href="mailto:info@thermoblock.ru" class="text-white text-decoration-none">info@thermoblock.ru</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Дополнительная информация -->
+                    <div class="business-info" style="display: none;">
+                        <meta itemprop="priceRange" content="$$">
+                        <meta itemprop="openingHours" content="Mo-Fr 09:00-18:00">
+                        <meta itemprop="openingHours" content="Sa 10:00-15:00">
+                        <link itemprop="currenciesAccepted" content="RUB">
+                        <meta itemprop="paymentAccepted" content="Наличные, Банковская карта, Безналичный расчет">
+                    </div>
+                    
+                    <!-- Геолокация -->
+                    <div itemprop="geo" itemscope itemtype="https://schema.org/GeoCoordinates" style="display: none;">
+                        <meta itemprop="latitude" content="51.84342112490193">
+                        <meta itemprop="longitude" content="107.64706042154886">, 
+                    </div>
+                </div>
+
+                
+                <div class="footer-social">
+                    <p class="text-white mb-2">Подписывайтесь в соцсетях:</p>
+                    <div class="d-flex gap-2" itemscope itemtype="https://schema.org/Organization">
+                            <!-- Скрытая информация об организации -->
+                        <meta itemprop="name" content="ThermoBlock">
+                        <meta itemprop="url" content="https://thermoblock.ru">
+                        <a href="https://vk.com/thermoblock" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer nofollow"
+                            itemprop="sameAs" title="ThermoBlock во ВКонтакте" aria-label="Страница ThermoBlock во ВКонтакте">
+                            <i class="bi bi-vk"></i>
+                        </a>
+                        <a href="https://t.me/thermoblock" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer nofollow"
+                            itemprop="sameAs" title="Канал ThermoBlock в Telegram" aria-label="Канал ThermoBlock в Telegram">
+                            <i class="bi bi-telegram"></i>
+                        </a>
+                        <a href="https://wa.me/78001234567" class="btn btn-outline-light btn-sm" target="_blank">
+                            <i class="bi bi-whatsapp"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@thermoblock" class="btn btn-outline-light btn-sm" target="_blank" rel="noopener noreferrer nofollow"
+                            itemprop="sameAs" title="Канал ThermoBlock на YouTube" aria-label="Канал ThermoBlock на YouTube">
+                            <i class="bi bi-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Колонка 4: Для партнеров -->
+            <div class="col-lg-3 mb-4">
+                <h4 class="h5 mb-3">Для строителей и партнеров</h4>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="#">Обучение технологии</a></li>
+                    <li><a href="#">Сертификация бригад</a></li>
+                    <li><a href="#">Техническая документация</a></li>
+                    <li><a href="#">BIM-модели</a></li>
+                    <li><a href="#">Партнерская программа</a></li>
+                </ul>
+                                <!-- Кнопка "Рассчитать" в футере -->
+                <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#calculatorModal">
+                    <i class="bi bi-house me-1"></i>Стать партнером
+                </button>
+            </div>
+        </div>
+        
+        <!-- Нижняя часть футера -->
+        <hr class="bg-white-50 my-4">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-white-50 small mb-0">
+                    © 2016-{% now "Y" %} ThermoBlock - зарегестрированный торговый знак. Все права защищены.
+                </p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="/privacy" class="text-white-50 small text-decoration-none me-3">Политика конфиденциальности</a>
+                <a href="/terms" class="text-white-50 small text-decoration-none">Пользовательское соглашение</a>
+                
+            </div>
+        </div>
+    </div>
+</footer>
+{% ym_auto_goals %}
+
+

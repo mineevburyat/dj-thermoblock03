@@ -21,7 +21,7 @@ env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'captcha',
+    'apps.home',
     'apps.feedback',
     'apps.instructions',
     'apps.house_projects',
@@ -131,3 +132,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+
+# yandex metrika
+YANDEX_METRIKA_ID = env('YANDEX_METRIKA_ID', default=None)
+YANDEX_METRIKA_SETTINGS = {
+    'clickmap': True,
+    'trackLinks': True,
+    'accurateTrackBounce': True,
+    'webvisor': True,
+    'trackHash': True,
+    'ecommerce': 'dataLayer',  # Для интернет-магазинов
+}

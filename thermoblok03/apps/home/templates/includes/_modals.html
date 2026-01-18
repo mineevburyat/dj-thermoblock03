@@ -1,0 +1,56 @@
+    <!-- Модальное окно консультации -->
+    <div class="modal fade" id="calculatorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <h5 class="modal-title">Заказать консультацию</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-4">Наш специалист свяжется с вами в течение 15 минут</p>
+                    <form id="consultationForm">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="tel" class="form-control" placeholder="Телефон" required>
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select">
+                                <option selected>Меня интересует...</option>
+                                <option value="blocks">Покупка блоков</option>
+                                <option value="construction">Строительство под ключ</option>
+                                <option value="project">Индивидуальный проект</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-3">
+                            <i class="bi bi-telephone me-2"></i> Заказать звонок
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Модальное окно успешной отправки -->
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center py-5">
+                <div class="mb-4">
+                    <i class="bi bi-check-circle-fill text-success display-1"></i>
+                </div>
+                <h4 class="mb-3">Заявка отправлена!</h4>
+                <p class="text-muted mb-4">
+                    Наш специалист свяжется с вами в течение 15 минут для детального расчета.
+                </p>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    Понятно, спасибо!
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

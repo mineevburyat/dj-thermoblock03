@@ -1,0 +1,81 @@
+    <nav class="navbar navbar-expand-md navbar-light">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="icons_wrapper d-md-none d-block">
+                <div class="icon"><a href="https://www.instagram.com/thermoblock03/"><i class="fa fa-instagram"></i></a>
+                </div>
+                <div class="icon"><a href="https://ok.ru/group/57676644155440"><i
+                            class="fa fa-odnoklassniki-square"></i></a></div>
+                <div class="icon"><a href="https://www.youtube.com/channel/UCu5c3oxdMWvgyRwli_pokkw"><i
+                            class="fa fa-youtube-square"></i></a></div>
+                <div class="icon"><a href="https://vk.com/club116450358"><i class="fa fa-vk"></i></a></div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul id="menu" class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html#ex1">Главная <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ex2">Продукция</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="katalog.html">Готовые проекты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ex3">Наши дома</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="instrukcziya/index.html">Инструкция</a>
+                    </li> -->
+                    <li class="nav-item dropdown d-md-none d-xl-block">
+                        <a class="nav-link dropdown-toggle" href="#" id="instructionDropDown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Инструкция
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="instructionDropDown">
+                            <!--a class="dropdown-item d-none d-md-block d-lg-none" href="stati-i-videomaterialyi/">Статьи и видеоматериалы</a-->
+                            <a class="dropdown-item" href="{% url 'instructions:tb300' %}" style="text-align: center;">ТБ400</a>
+                            <a class="dropdown-item" href="{% url 'instructions:tb400' %}" style="text-align: center;">ТБ300</a>
+                        </div>
+                    </li>
+                    <!--li class="nav-item">
+                    <a class="nav-link ex" href="#ex4">Отзывы</a>
+                </li>
+                <li class="nav-item d-md-none d-lg-block">
+                    <a class="nav-link" href="stati-i-videomaterialyi/">Статьи и видеоматериалы</a>
+                </li-->
+                    <li class="nav-item d-md-none d-xl-block">
+                        <a class="nav-link" href="#ex5">Контакты</a>
+                    </li>
+                    <!-- <li class="nav-item d-md-none d-xl-block">
+                        <a class="nav-link" href="partneram.html">Партнерам</a>
+                    </li> -->
+                    <li class="nav-item dropdown d-none d-md-block d-xl-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Еще
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <!--a class="dropdown-item d-none d-md-block d-lg-none" href="stati-i-videomaterialyi/">Статьи и видеоматериалы</a-->
+                            <a class="dropdown-item" href="#ex5">Контакты</a>
+                            <!-- <a class="dropdown-item" href="partneram.html">Партнерам</a> -->
+                            <a class="dropdown-item" href="instrukcziya-po-proizvodstvu-rabot-iz-teploizolyaczionnyix-blokov.html">Инструкция ТБ400</a>
+                            <a class="dropdown-item" href="instrukcziya-po-proizvodstvu-rabot-iz-teploizolyaczionnyix-blokov-tb300.html">Инструкция ТБ300</a>
+                        </div>
+                    </li>
+                    <div class="icons_wrapper d-none d-md-block">
+                        <div class="icon"><a href="https://www.instagram.com/thermoblock03/"><i
+                                    class="fa fa-instagram"></i></a></div>
+                        <div class="icon"><a href="https://ok.ru/group/57676644155440"><i
+                                    class="fa fa-odnoklassniki-square"></i></a></div>
+                        <div class="icon"><a href="https://www.youtube.com/channel/UCu5c3oxdMWvgyRwli_pokkw"><i
+                                    class="fa fa-youtube-square"></i></a></div>
+                        <div class="icon"><a href="https://vk.com/club116450358"><i class="fa fa-vk"></i></a></div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>

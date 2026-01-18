@@ -1,0 +1,35 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}ThermoBlock - главная страница{% endblock %}
+{% block meta_description %}Технология несъемной опалубки ThermoBlock для быстрого строительства теплых и надежных домов. Рассчитайте стоимость онлайн.{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+    {% include 'home/_info.html' %}
+    {% comment %}
+    {% include 'section/slider.html' %}
+    {%endcomment %} 
+    {% include 'section/intro.html' %}
+
+    {% include 'section/product.html' %}
+
+    {% include 'section/clients.html' %}
+
+    {% include 'section/propeties.html' %}
+
+    {% include 'section/faq.html' %}
+
+    {% include 'section/portfolio.html' %}
+
+    {% comment %}
+    {% include 'section/achievements.html' %}
+    {% endcomment %}
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

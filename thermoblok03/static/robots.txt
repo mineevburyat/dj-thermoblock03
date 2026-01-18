@@ -1,7 +1,5 @@
 User-agent: *
-Disallow: /admin
-Disallow: /search/
-Disallow: /feedback/
-Allow /products/
-Allow /
+Allow: /
+Disallow: /admin/
 
+Sitemap: https://thermoblock.ru/sitemap.xml
