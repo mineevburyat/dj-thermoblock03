@@ -709,7 +709,7 @@ main {
 }
 /* FAQ STYLE
 -------------------------------------------------------------------------------*/
-.faq {
+#faq {
     padding-bottom: 50px;
     padding-top: 50px;
     background-image: url(../img/gal3.jpg);
@@ -717,12 +717,11 @@ main {
     background-size: cover;
     background-position: center;
 }
-.faq .title {
-    font-size: 20px;
-    font-family: Oswald,sans-serif;
-    color: white;
+#faq .title {
+    color: var(--secondary);
+    font-weight: 600;
 }
-.faq .subtitle {
+#faq .subtitle {
     font-size: 36px;
     font-weight: normal;
     font-family: Oswald,sans-serif;
@@ -730,13 +729,13 @@ main {
     margin-top: 5px;
     color: white;
 }
-.faq .wrapper {
+#faq .wrapper {
     max-width: 670px;
 }
-.faq .item {
+#faq .item {
     margin-bottom: 20px;
 }
-.faq .item .q {
+#faq .item .q {
     padding: 18px 55px 18px 20px;
     line-height: 25px;
     font-size: 16px;
@@ -746,19 +745,19 @@ main {
     background: #ffffff;
     cursor: pointer;
 }
-.faq .item .q:hover {
+#faq .item .q:hover {
     background: linear-gradient(to top, rgb(191, 35, 37), rgb(111, 42, 43));
     color: white;
 }
-.faq .item .a {
+#faq .item .a {
     background: rgb(191, 35, 37);
     color: white;
     border-top: 1px solid #d4d4d4;
 }
-.faq .item .a .text {
+#faq .item .a .text {
     padding: 15px 20px 15px 20px;
 }
-.faq .q:after {
+#faq .q:after {
     content: "";
     background: url(../img/arrow-plus.png) no-repeat 0 0;
     width: 25px;
@@ -768,16 +767,16 @@ main {
     right: 15px;
     top: 18px;
 }
-.faq .q:hover:after {
+#faq .q:hover:after {
     background-position: 0 -100px;
 }
-.faq .item .q:hover .plus {
+#faq .item .q:hover .plus {
     border: 1px solid white;
 }
-.faq .item .on.q:after{
+#faq .item .on.q:after{
     background-position: 0 -149px;
 }
-.faq .item .q.on {
+#faq .item .q.on {
     background: linear-gradient(to top, rgb(191, 35, 37), rgb(111, 42, 43)) !important;
     color: white !important;
 }

@@ -11,6 +11,8 @@
     <meta name="keywords" content="{% block meta_keywords %}несъемная опалубка, строительство, теплый дом, монолитные стены, контроль строительства в конструкции блока{% endblock %}">
     
     <!-- Favicon -->
+    <!-- Для современных браузеров -->
+    <link rel="icon" href="{% static 'logo.svg' %}" type="image/svg+xml">
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <!-- Для разных устройств и браузеров -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
@@ -26,14 +28,13 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
  
-
-
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+{% comment %}
     <!-- Кнопка чатбота -->
     {% include 'includes/_chatbot.html' %}
-    
+{% endcomment %}
     <!-- Модальные окна -->
     {% include 'includes/_modals.html' %}
     

@@ -140,6 +140,5 @@ YANDEX_METRIKA_SETTINGS = {
     'trackLinks': True,
     'accurateTrackBounce': True,
     'webvisor': True,
-    'trackHash': True,
     'ecommerce': 'dataLayer',  # Для интернет-магазинов
 }
