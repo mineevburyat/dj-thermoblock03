@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'captcha',
     'apps.home',
+    'apps.about',
     'apps.feedback',
     'apps.instructions',
     'apps.house_projects',
-    # 'products',
+    'apps.products',
+    'apps.faq',
+    'apps.review',
 ]
 
 MIDDLEWARE = [

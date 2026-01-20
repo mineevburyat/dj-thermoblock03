@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Allow: /
 Disallow: /admin/
+Disallow: /captcha/
 
 Sitemap: https://thermoblock.ru/sitemap.xml

@@ -17,23 +17,25 @@
         <!-- Основное меню -->
         <div class="collapse navbar-collapse" id="navbarMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% comment %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'home:index' %}#solution" {% ym_data_goal 'start' %}>Преимущества</a>
                 </li>
+            {% endcomment %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#" {% ym_data_goal 'faq' %}>Вопросы</a>
+                    <a class="nav-link" href="{% url 'faq:index' %}" {% ym_data_goal 'faq' %}>Вопросы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" {% ym_data_goal 'shop_block' %}>ТермоБлоки</a>
+                    <a class="nav-link" href="{% url 'products:index' %}" {% ym_data_goal 'shop_block' %}>ТермоБлоки</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" {% ym_data_goal 'shop_hause' %}>Проекты</a>
+                    <a class="nav-link" href="{% url 'projects:index' %}" {% ym_data_goal 'shop_hause' %}>Проекты</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" {% ym_data_goal 'review' %}>Отзывы</a>
+                    <a class="nav-link" href="{% url 'review:index' %}" {% ym_data_goal 'review' %}>Отзывы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" {% ym_data_goal 'about' %}">О нас</a>
+                    <a class="nav-link" href="{%url 'about:index' %}" {% ym_data_goal 'about' %}">О нас</a>
                 </li>
             </ul>
             <div class="d-flex flex-column">
@@ -41,6 +43,12 @@
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#calculatorModal" {% ym_data_goal 'btn_form' %}>
                     <i class="bi bi-calculator me-2"></i>Рассчитать
                 </button>
+                {% comment %}
+                <!-- Кнопка-триггер для модального окна -->
+                <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#constructionModal">
+                    <i class="fas fa-house-user"></i> Получить консультацию 
+                </button>
+                {%endcomment %}
                 <!-- Группа кнопок соцсетей -->
                 <div class="btn-toolbar justify-content-center mt-2" role="toolbar" aria-label="Toolbar with social buttons">
                     <div class="btn-group me-2 social-header" role="group" aria-label="First group">

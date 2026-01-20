@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.timezone import now
-# Create your views here.
 from .models import Products
 
+
+class IndexView(TemplateView):
+    template_name = 'products/index.html'
 
 class ProductListView(ListView):
     model = Products

@@ -1,0 +1,507 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+ThermoBlock | Пользовательское соглашение
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .agreement-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .brand-name {
+            color: #ff6b35;
+            font-weight: 700;
+        }
+        
+        .section-title {
+            color: #2a5298;
+            border-left: 4px solid #ff6b35;
+            padding-left: 15px;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .highlight-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .service-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            border-color: #2a5298;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .service-icon {
+            color: #ff6b35;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .agreement-header {
+                background: none !important;
+                color: black !important;
+            }
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container py-2">   
+        <!-- Хлебные крошки -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home:index' %}">
+                        <i class="fas fa-home"></i> Главная
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'about:index' %}">О нас</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Пользовательское соглашение
+                </li>
+            </ol>
+        </nav>
+        <!-- Основной контейнер -->
+        <div class="card shadow-lg">
+            <!-- Заголовок -->
+            
+            
+            <!-- Информация о компании -->
+            <div class="card-body bg-light border-bottom">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="fw-bold">ООО "Строй Тех"</h5>
+                        <p class="mb-1"><i class="fas fa-trademark me-2"></i>Торговая марка: ThermoBlock</p>
+                        <p class="mb-1"><i class="fas fa-industry me-2"></i>Производитель блоков несъемной опалубки</p>
+                        <p class="mb-0"><i class="fas fa-hard-hat me-2"></i>Строительство домов под ключ</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>ИНН:</strong> [ВАШ ИНН]</p>
+                        <p class="mb-1"><strong>ОГРН:</strong> [ВАШ ОГРН]</p>
+                        <p class="mb-1"><strong>Адрес:</strong> [ВАШ АДРЕС]</p>
+                        <p class="mb-0"><strong>Сайт:</strong> [ВАШ ДОМЕН]</p>
+                    </div>
+                    <button onclick="window.print()" class="btn btn-outline-primary">
+                        <i class="fas fa-print me-2"></i> Распечатать
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Основное содержание -->
+            <div class="card-body p-4 p-md-5">
+                <!-- Введение -->
+                <div class="text-center mb-5">
+                    <h1 class="h3 fw-bold mb-3">Пользовательское соглашение</h1>
+                    <div class="highlight-box">
+                        <p class="mb-0">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            Настоящее Соглашение регулирует отношения между ООО "Строй Тех" (бренд ThermoBlock) 
+                            и Пользователем при использовании сайта и получении услуг компании.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Разделы соглашения -->
+                <div id="agreementContent">
+                    
+                    <!-- Раздел 1 -->
+                    <section>
+                        <h3 class="section-title">1. Общие положения</h3>
+                        <p>1.1. Настоящее Пользовательское соглашение (далее — «Соглашение») регулирует отношения между:</p>
+                        <ul>
+                            <li><strong>ООО "Строй Тех"</strong> (бренд ThermoBlock), далее — «Компания», «Исполнитель»</li>
+                            <li><strong>Посетителем сайта</strong> [ваш-домен.ru], далее — «Пользователь», «Заказчик»</li>
+                        </ul>
+                        
+                        <p>1.2. Использование сайта и услуг Компании означает полное и безоговорочное принятие Пользователем условий настоящего Соглашения.</p>
+                        
+                        <div class="warning-box">
+                            <p class="mb-0">
+                                <i class="fas fa-hand-point-right me-2"></i>
+                                <strong>Важно:</strong> Перед использованием сайта и услуг внимательно ознакомьтесь с условиями Соглашения. 
+                                Если вы не согласны с условиями, прекратите использование сайта.
+                            </p>
+                        </div>
+                    </section>
+                    
+                    <!-- Раздел 2 -->
+                    <section>
+                        <h3 class="section-title">2. Предмет соглашения</h3>
+                        <p>2.1. Компания предоставляет следующие услуги через сайт:</p>
+                        
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="service-card">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-cube service-icon"></i>
+                                        <h6 class="fw-bold mb-0">Продажа термоблоков</h6>
+                                    </div>
+                                    <p class="small mb-0">Приобретение блоков несъемной опалубки ThermoBlock для самостоятельного строительства</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="service-card">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-calculator service-icon"></i>
+                                        <h6 class="fw-bold mb-0">Расчет материалов</h6>
+                                    </div>
+                                    <p class="small mb-0">Расчет необходимого количества термоблоков по предоставленным эскизам</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="service-card">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-drafting-compass service-icon"></i>
+                                        <h6 class="fw-bold mb-0">Проектирование</h6>
+                                    </div>
+                                    <p class="small mb-0">Разработка индивидуальных проектов домов из термоблоков</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="service-card">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-home service-icon"></i>
+                                        <h6 class="fw-bold mb-0">Строительство под ключ</h6>
+                                    </div>
+                                    <p class="small mb-0">Возведение домов и зданий из термоблоков «под ключ»</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p>2.2. Технические характеристики, цены и условия предоставления каждой услуги указываются в соответствующих разделах сайта и в договорах подряда.</p>
+                    </section>
+                    
+                    <!-- Раздел 3 -->
+                    <section>
+                        <h3 class="section-title">3. Порядок взаимодействия</h3>
+                        
+                        <h5 class="fw-bold mt-4 mb-3">3.1. Консультации и расчеты</h5>
+                        <ul>
+                            <li>Консультации по телефону, электронной почте или через формы сайта предоставляются бесплатно</li>
+                            <li>Расчет стоимости материалов производится на основании предоставленных Заказчиком данных</li>
+                            <li>Предварительные расчеты не являются офертой и могут быть изменены</li>
+                        </ul>
+                        
+                        <h5 class="fw-bold mt-4 mb-3">3.2. Заказ услуг</h5>
+                        <ul>
+                            <li>Заказ услуг оформляется через формы на сайте или по телефону</li>
+                            <li>После получения заявки с Пользователем связывается менеджер для уточнения деталей</li>
+                            <li>Окончательные условия оказания услуг фиксируются в договоре подряда</li>
+                        </ul>
+                        
+                        <h5 class="fw-bold mt-4 mb-3">3.3. Проектирование</h5>
+                        <ul>
+                            <li>Стоимость проектных работ определяется индивидуально</li>
+                            <li>Для начала проектирования требуется предоплата 50% от стоимости проекта</li>
+                            <li>Сроки разработки проекта согласовываются дополнительно</li>
+                        </ul>
+                    </section>
+                    
+                    <!-- Раздел 4 -->
+                    <section>
+                        <h3 class="section-title">4. Цены и оплата</h4>
+                        
+                        <p>4.1. Цены на сайте указаны в рублях и включают НДС (если иное не указано отдельно).</p>
+                        
+                        <p>4.2. Стоимость услуг может изменяться в зависимости от:</p>
+                        <ul>
+                            <li>Сложности проекта</li>
+                            <li>Удаленности объекта строительства</li>
+                            <li>Объема работ</li>
+                            <li>Используемых материалов</li>
+                            <li>Сезонности</li>
+                        </ul>
+                        
+                        <p>4.3. Оплата производится:</p>
+                        <ul>
+                            <li>За материалы — по факту отгрузки или по предоплате</li>
+                            <li>За строительные работы — по этапам согласно графику платежей в договоре</li>
+                            <li>Безналичным расчетом на расчетный счет Компании</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <p class="mb-0">
+                                <i class="fas fa-file-invoice-dollar me-2"></i>
+                                <strong>Окончательная стоимость</strong> всех услуг определяется в договоре подряда 
+                                и не может быть изменена без письменного согласия обеих сторон.
+                            </p>
+                        </div>
+                    </section>
+                    
+                    <!-- Раздел 5 -->
+                    <section>
+                        <h3 class="section-title">5. Строительство домов</h3>
+                        
+                        <p>5.1. Строительство домов из термоблоков ThermoBlock осуществляется на основании договора подряда, который включает:</p>
+                        <ul>
+                            <li>Техническое задание</li>
+                            <li>Смету расходов</li>
+                            <li>График производства работ</li>
+                            <li>График платежей</li>
+                            <li>Гарантийные обязательства</li>
+                        </ul>
+                        
+                        <p>5.2. Обязанности Заказчика при строительстве:</p>
+                        <ul>
+                            <li>Предоставить земельный участок с оформленными правами собственности</li>
+                            <li>Обеспечить доступ к участку для техники и материалов</li>
+                            <li>Своевременно производить оплату согласно графику</li>
+                            <li>Принимать выполненные этапы работ</li>
+                        </ul>
+                        
+                        <p>5.3. Обязанности Исполнителя:</p>
+                        <ul>
+                            <li>Выполнить работы в соответствии с проектом и СНИП</li>
+                            <li>Использовать материалы надлежащего качества</li>
+                            <li>Соблюдать сроки выполнения работ</li>
+                            <li>Обеспечить безопасность на объекте</li>
+                        </ul>
+                    </section>
+                    
+                    <!-- Раздел 6 -->
+                    <section>
+                        <h3 class="section-title">6. Гарантии и ответственность</h3>
+                        
+                        <h5 class="fw-bold mt-4 mb-3">6.1. Гарантии на материалы</h5>
+                        <ul>
+                            <li>Гарантия на блоки ThermoBlock — 50 лет</li>
+                            <li>Гарантия подтверждается сертификатами качества</li>
+                            <li>Гарантия распространяется на сохранение геометрических размеров и теплоизоляционных свойств</li>
+                        </ul>
+                        
+                        <h5 class="fw-bold mt-4 mb-3">6.2. Гарантии на работы</h5>
+                        <ul>
+                            <li>Гарантия на строительные работы — 5 лет с момента сдачи объекта</li>
+                            <li>Гарантия покрывает дефекты, возникшие по вине Исполнителя</li>
+                            <li>Гарантийный ремонт производится в течение 30 дней с момента обращения</li>
+                        </ul>
+                        
+                        <h5 class="fw-bold mt-4 mb-3">6.3. Ограничение ответственности</h5>
+                        <div class="warning-box">
+                            <p class="mb-0">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Компания не несет ответственности за:
+                            </p>
+                            <ul class="mb-0 mt-2">
+                                <li>Нарушение сроков строительства по причинам, не зависящим от Компании</li>
+                                <li>Изменение характеристик материалов при неправильном хранении или монтаже</li>
+                                <li>Повреждения объекта после приемки работ Заказчиком</li>
+                                <li>Убытки, вызванные действиями третьих лиц</li>
+                            </ul>
+                        </div>
+                    </section>
+                    
+                    <!-- Раздел 7 -->
+                    <section>
+                        <h3 class="section-title">7. Интеллектуальная собственность</h3>
+                        
+                        <p>7.1. Все материалы сайта (тексты, изображения, проекты, чертежи) являются интеллектуальной собственностью ООО "Строй Тех".</p>
+                        
+                        <p>7.2. Торговая марка ThermoBlock® является зарегистрированным товарным знаком.</p>
+                        
+                        <p>7.3. Запрещается:</p>
+                        <ul>
+                            <li>Копирование и распространение материалов сайта без разрешения</li>
+                            <li>Использование товарного знака ThermoBlock без лицензии</li>
+                            <li>Воспроизведение технологий строительства, защищенных патентами</li>
+                        </ul>
+                    </section>
+                    
+                    <!-- Раздел 8 -->
+                    <section>
+                        <h3 class="section-title">8. Конфиденциальность</h3>
+                        
+                        <p>8.1. Обработка персональных данных Пользователя осуществляется в соответствии с <a href="/privacy-policy/">Политикой конфиденциальности</a>.</p>
+                        
+                        <p>8.2. Компания обязуется не разглашать коммерческую информацию, полученную от Заказчика в ходе сотрудничества.</p>
+                        
+                        <p>8.3. Заказчик обязуется не разглашать технические решения и ноу-хау, ставшие известными в ходе строительства.</p>
+                    </section>
+                    
+                    <!-- Раздел 9 -->
+                    <section>
+                        <h3 class="section-title">9. Разрешение споров</h3>
+                        
+                        <p>9.1. Все споры и разногласия решаются путем переговоров.</p>
+                        
+                        <p>9.2. В случае невозможности разрешения спора путем переговоров, спор передается на рассмотрение в суд по месту нахождения Компании.</p>
+                        
+                        <p>9.3. Претензионный порядок разрешения споров является обязательным. Срок рассмотрения претензии — 30 дней.</p>
+                    </section>
+                    
+                    <!-- Раздел 10 -->
+                    <section>
+                        <h3 class="section-title">10. Заключительные положения</h3>
+                        
+                        <p>10.1. Настоящее Соглашение вступает в силу с момента начала использования сайта Пользователем.</p>
+                        
+                        <p>10.2. Компания вправе в одностороннем порядке изменять условия Соглашения. Изменения вступают в силу после их публикации на сайте.</p>
+                        
+                        <p>10.3. Все дополнительные соглашения оформляются в письменной форме и являются неотъемлемой частью договора подряда.</p>
+                        
+                        <p>10.4. Недействительность какого-либо положения Соглашения не влечет недействительности остальных положений.</p>
+                    </section>
+                    
+                    <!-- Контакты -->
+                    <section class="mt-5">
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">
+                                <h4 class="h5 mb-0"><i class="fas fa-file-contract me-2"></i>Реквизиты и контакты</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5>ООО "Строй Тех"</h5>
+                                        <p class="mb-1"><strong>Торговая марка:</strong> ThermoBlock</p>
+                                        <p class="mb-1"><strong>Юридический адрес:</strong> [ВАШ АДРЕС]</p>
+                                        <p class="mb-1"><strong>ИНН/КПП:</strong> [ВАШ ИНН]/[ВАШ КПП]</p>
+                                        <p class="mb-1"><strong>ОГРН:</strong> [ВАШ ОГРН]</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>Контакты</h5>
+                                        <p class="mb-1"><i class="fas fa-phone me-2"></i>[ТЕЛЕФОН]</p>
+                                        <p class="mb-1"><i class="fas fa-envelope me-2"></i>[EMAIL]</p>
+                                        <p class="mb-1"><i class="fas fa-globe me-2"></i>[ВАШ ДОМЕН]</p>
+                                        <p class="mb-0"><i class="fas fa-clock me-2"></i>Пн-Пт: 9:00-18:00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Дата и подпись -->
+                    <div class="mt-5 pt-4 border-top">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>Дата вступления в силу:</strong> {% now "d.m.Y" %}</p>
+                                <p class="mb-0"><strong>Последнее обновление:</strong> {% now "d.m.Y" %}</p>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <p class="mb-0">
+                                    <strong>Генеральный директор ООО "Строй Тех"</strong><br>
+                                    [ФИО директора]
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Кнопки действий -->
+                <div class="d-flex justify-content-between mt-5 pt-4 border-top no-print">
+                    <div>
+                        <a href="{% url 'about:privacy'%}" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-user-shield me-1"></i>Политика конфиденциальности
+                        </a>
+                        <a href="{% url 'about:contact' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-phone me-1"></i>Контакты
+                        </a>
+                    </div>
+                    <div>
+                        <button onclick="window.print()" class="btn btn-primary">
+                            <i class="fas fa-print me-1"></i>Распечатать
+                        </button>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Стили для печати -->
+<style>
+    @media print {
+        /* Скрыть ненужные элементы при печати */
+        .breadcrumb,
+        button,
+        .no-print {
+            display: none !important;
+        }
+        
+        /* Улучшить читаемость для печати */
+        body {
+            font-size: 12pt;
+            line-height: 1.5;
+        }
+        
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+        }
+    }
+</style>
+    <script>
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Подсветка текущего раздела при прокрутке
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const scrollPosition = window.scrollY + 150;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if(scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    section.style.backgroundColor = 'rgba(255, 107, 53, 0.05)';
+                    section.style.transition = 'background-color 0.3s';
+                    section.style.padding = '20px';
+                    section.style.borderRadius = '8px';
+                } else {
+                    section.style.backgroundColor = '';
+                    section.style.padding = '';
+                }
+            });
+        });
+    </script>
+{% endblock %}

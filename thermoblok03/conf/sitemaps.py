@@ -1,13 +1,35 @@
 from django.contrib import sitemaps
 from django.urls import reverse
-
+from django.utils import timezone
+from django.conf import settings 
 
 class StaticViewSitemap(sitemaps.Sitemap):
-    priority = 0.5
+    priority = 1
     changefreq = "daily"
+    protocol = 'https'
 
     def items(self):
-        return ["index", "instructions:list"]
+        return ["home:index"]
 
     def location(self, item):
         return reverse(item)
+    
+    def lastmod(self, obj):
+        # Для статических страниц можно возвращать текущее время
+        return timezone.now()
+    
+    def get_urls(self, **kwargs):
+        # Формируем базовый URL
+        base_url = f"https://"
+        base_url += settings.ALLOWED_HOSTS[0]  # берем первый домен из настроек
+        
+        urls = []
+        for item in self.items():
+            path = self.location(item)
+            urls.append({
+                'location': f"{base_url}{path}",
+                'changefreq': getattr(self, 'changefreq', 'daily'),
+                'priority': str(getattr(self, 'priority', 0.5)),
+                'lastmod': str(getattr(self,'lastmod',timezone.now()))
+            })
+        return urls

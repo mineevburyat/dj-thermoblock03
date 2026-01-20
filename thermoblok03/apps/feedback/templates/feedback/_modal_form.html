@@ -1,0 +1,200 @@
+{% load static %}
+
+
+<!-- Модальное окно -->
+<div class="modal fade" id="constructionModal" tabindex="-1" aria-labelledby="constructionModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Заголовок -->
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="constructionModalLabel">
+                    <i class="fas fa-clipboard-list"></i> Консультация по строительству
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- Форма -->
+            <div class="modal-body">
+                <!-- Прогресс бар -->
+                <div class="progress mb-4">
+                    <div class="progress-bar" role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">Шаг 1 из 3</div>
+                </div>
+                
+                <form id="constructionForm" method="POST" action="{% url 'feedback:submit_construction_request' %}">
+                    {% csrf_token %}
+                    
+                    <!-- Шаг 1: Тип строения -->
+                    <div class="step step-1 active">
+                        <h4 class="mb-4"><i class="fas fa-home"></i> Какой объект вы планируете построить?</h4>
+                        <div class="row">
+                            {% for value, label in building_types %}
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check card h-100 building-type-card">
+                                    <input class="form-check-input" type="radio" name="building_type" value="{{ value }}" id="type_{{ forloop.counter }}" required>
+                                    <label class="form-check-label card-body" for="type_{{ forloop.counter }}">
+                                        <div class="text-center">
+                                            <i class="fas fa-{{ value.icon }} fa-3x mb-3 text-primary"></i>
+                                            <h5>{{ label }}</h5>
+                                            {% if value.description %}
+                                            <p class="text-muted small">{{ value.description }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Шаг 2: Этажность -->
+                    <div class="step step-2 d-none">
+                        <h4 class="mb-4"><i class="fas fa-building"></i> Этажность объекта</h4>
+                        <div class="mb-4">
+                            <label for="floor_count" class="form-label">Количество этажей:</label>
+                            <select class="form-select form-select-lg" id="floor_count" name="floor_count" required>
+                                <option value="" selected disabled>Выберите вариант</option>
+                                {% for value, label in floor_options %}
+                                <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Дополнительные особенности:</label>
+                            <div class="row">
+                                {% for value, label in features %}
+                                <div class="col-6 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features" value="{{ value }}" id="feature_{{ forloop.counter }}">
+                                        <label class="form-check-label" for="feature_{{ forloop.counter }}">
+                                            {{ label }}
+                                        </label>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Шаг 3: Проект и контакты -->
+                    <div class="step step-3 d-none">
+                        <h4 class="mb-4"><i class="fas fa-project-diagram"></i> Наличие проекта</h4>
+                        
+                        <!-- Наличие проекта -->
+                        <div class="mb-4">
+                            <label class="form-label">У вас уже есть проект или эскиз?</label>
+                            <div class="btn-group-vertical w-100" role="group">
+                                {% for value, label in project_options %}
+                                <input type="radio" class="btn-check" name="project_status" value="{{ value }}" id="project_{{ forloop.counter }}" required>
+                                <label class="btn btn-outline-primary text-start mb-2" for="project_{{ forloop.counter }}">
+                                    <i class="fas fa-{{ value.icon }} me-2"></i>{{ label }}
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <!-- Загрузка файла -->
+                        <div class="mb-4" id="fileUploadSection" style="display: none;">
+                            <label for="project_file" class="form-label">Прикрепите ваш проект или эскиз (макс. 10MB):</label>
+                            <input type="file" class="form-control" id="project_file" name="project_file" accept=".pdf,.jpg,.jpeg,.png,.dwg,.skp">
+                            <div class="form-text">Поддерживаемые форматы: PDF, JPG, PNG, DWG, SKP</div>
+                        </div>
+                        
+                        <!-- Контактная информация -->
+                        <div class="contact-info mt-5">
+                            <h4 class="mb-4"><i class="fas fa-address-card"></i> Контактная информация</h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Ваше имя *</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Телефон *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label">Предпочтительный способ связи:</label>
+                                <div class="row">
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="contact_method" value="phone" id="contact_phone" checked>
+                                            <label class="form-check-label" for="contact_phone">
+                                                <i class="fas fa-phone"></i> Телефон
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="contact_method" value="email" id="contact_email" checked>
+                                            <label class="form-check-label" for="contact_email">
+                                                <i class="fas fa-envelope"></i> Email
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="contact_method" value="whatsapp" id="contact_whatsapp">
+                                            <label class="form-check-label" for="contact_whatsapp">
+                                                <i class="fab fa-whatsapp"></i> WhatsApp
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="comments" class="form-label">Дополнительные пожелания или комментарии:</label>
+                                <textarea class="form-control" id="comments" name="comments" rows="3" placeholder="Расскажите подробнее о вашем проекте..."></textarea>
+                            </div>
+                            
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="agree_terms" name="agree_terms" required>
+                                <label class="form-check-label" for="agree_terms">
+                                    Я согласен на обработку персональных данных и принимаю <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">условия</a>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопки навигации -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <button type="button" class="btn btn-outline-primary" id="prevBtn" style="display: none;">
+                            <i class="fas fa-arrow-left"></i> Назад
+                        </button>
+                        <button type="button" class="btn btn-primary" id="nextBtn">
+                            Далее <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
+                            <i class="fas fa-paper-plane"></i> Отправить заявку
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно с условиями -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Условия обработки данных</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Мы обязуемся использовать ваши персональные данные исключительно для связи с вами по поводу консультации по строительству.</p>
+                <p>Ваши данные не будут переданы третьим лицам без вашего согласия.</p>
+            </div>
+        </div>
+    </div>
+</div>

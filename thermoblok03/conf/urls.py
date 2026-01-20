@@ -10,7 +10,6 @@ from django.contrib.sitemaps import GenericSitemap
 from .sitemaps import StaticViewSitemap
 
 sitemaps = {
-    # "products": GenericSitemap({"queryset": Products.objects.all()}, priority=0.8),
     "static": StaticViewSitemap
 }
 
@@ -19,11 +18,14 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type="text/plain")),
     path('sitemap.xml', sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
     path('', include('apps.home.urls', namespace='home')),
-    path('feedback', include('apps.feedback.urls', namespace='feedback')),
+    path('about/', include('apps.about.urls', namespace='about')),
+    path('feedback/', include('apps.feedback.urls', namespace='feedback')),
     path('instructions/', include('apps.instructions.urls', namespace='instructions')),
-    path('house_projects/', include('apps.house_projects.urls', namespace='projects')),
-    # path('products/', include('products.urls', namespace='products')),
+    path('constructs/', include('apps.house_projects.urls', namespace='constructs')),
+    path('products/', include('apps.products.urls', namespace='products')),
     path('captcha/', include('captcha.urls')),
+    path('faq/', include('apps.faq.urls', namespace='faq')),
+    path('review/', include('apps.review.urls', namespace='review')),
 ]
 
 

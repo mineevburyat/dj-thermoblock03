@@ -1,0 +1,82 @@
+/* Стили для карточек выбора типа строения */
+.building-type-card {
+    cursor: pointer;
+    border: 2px solid #dee2e6;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.building-type-card:hover {
+    border-color: #0d6efd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.building-type-card .form-check-input {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.building-type-card .form-check-label {
+    padding-left: 40px !important;
+}
+
+/* Анимация для шагов */
+.step {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Стили для кнопок способов связи */
+.btn-group-vertical .btn {
+    padding: 12px 20px;
+    margin-bottom: 8px;
+    text-align: left;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+}
+
+.btn-group-vertical .btn:hover {
+    background-color: #e7f1ff;
+    border-color: #0d6efd;
+}
+
+.btn-group-vertical .btn-check:checked + .btn {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+}
+
+/* Прогресс бар */
+.progress {
+    height: 10px;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #0d6efd, #6610f2);
+    transition: width 0.5s ease;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .building-type-card .form-check-label h5 {
+        font-size: 1rem;
+    }
+    
+    .btn-group-vertical .btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}
