@@ -1,5 +1,13 @@
 User-agent: *
 Allow: /
+Allow: /about/
+Allow: /constructs/
+Allow: /products/
+Allow: /faq/
+Allow: /review/
 Disallow: /admin/
+Disallow: /captcha/
+Disallow: /feedback/
+Disallow: /search/
 
 Sitemap: https://thermoblock.ru/sitemap.xml
