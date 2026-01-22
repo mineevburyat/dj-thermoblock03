@@ -7,6 +7,16 @@ from django.http import JsonResponse, HttpResponse
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import json
+from .forms import CalculationRequestForm
+from django.core.mail import send_mail
+from django.conf import settings
+
+from django.views.generic import TemplateView
+
 import json
 from datetime import datetime
 
@@ -216,4 +226,100 @@ def send_notification_email(request_data):
         fail_silently=False,
     )
 
+class QuestionViews(TemplateView):
+    template_name = 'feedback/question.html'
 
+@csrf_exempt
+@require_POST
+def submit_request(request):
+    try:
+        data = json.loads(request.body)
+        form = CalculationRequestForm(data)
+        print(data)
+        
+        if form.is_valid():
+            calculation_request = form.save()
+            print(calculation_request)
+            # Отправка email администратору
+            admin_subject = f"Новая заявка на расчёт от {calculation_request.name}"
+            admin_message = f"""
+            Новая заявка на расчёт дома ThermoBlock
+
+            Контактная информация:
+            Имя: {calculation_request.name} {calculation_request.surname}
+            Телефон: {calculation_request.phone}
+            Email: {calculation_request.email or 'не указан'}
+            Способ связи: {calculation_request.get_contact_method_display()}
+
+            Детали проекта:
+            Тип дома: {calculation_request.get_house_type_display()}
+            Участок: {calculation_request.get_land_status_display()}
+            Проект: {calculation_request.get_project_status_display()}
+            Сроки: {calculation_request.get_timeline_display()}
+            Оплата: {calculation_request.get_payment_method_display()}
+
+            Комментарии: {calculation_request.comments or 'нет'}
+
+            Согласие на обработку данных: {'Да' if calculation_request.data_agreement else 'Нет'}
+            """
+            
+            send_mail(
+                admin_subject,
+                admin_message,
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.ADMIN_EMAIL],
+                fail_silently=False,
+            )
+            
+            # Отправка email клиенту (если указан email)
+            if calculation_request.email:
+                client_subject = "Ваша заявка принята - ThermoBlock"
+                client_message = f"""
+                Здравствуйте, {calculation_request.name}!
+
+                Спасибо за вашу заявку на расчёт стоимости дома.
+                Мы получили ваши ответы и уже работаем над подготовкой коммерческого предложения.
+
+                Наш специалист свяжется с вами в течение 24 часов по выбранному способу связи: 
+                {calculation_request.get_contact_method_display()}.
+
+                С уважением,
+                Команда ThermoBlock
+                Телефон: +7 (XXX) XXX-XX-XX
+                Сайт: https://thermoblock.ru
+                """
+                
+                send_mail(
+                    client_subject,
+                    client_message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [calculation_request.email],
+                    fail_silently=True,
+                )
+            
+            return JsonResponse({
+                'success': True,
+                'message': 'Заявка успешно отправлена!'
+            })
+        else:
+            # Собираем ошибки формы
+            errors = {}
+            for field, error_list in form.errors.items():
+                errors[field] = error_list[0]
+            
+            return JsonResponse({
+                'success': False,
+                'message': 'Пожалуйста, исправьте ошибки в форме',
+                'errors': errors
+            }, status=400)
+            
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'message': 'Неверный формат данных'
+        }, status=400)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': f'Ошибка сервера: {str(e)}'
+        }, status=500)
