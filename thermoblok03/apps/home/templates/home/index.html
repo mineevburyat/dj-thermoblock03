@@ -5,6 +5,75 @@
 {% block meta_description %}ThermoBlock - технология производства бетонных блоков несъемной опалубки с утеплителем. Возведение монолитных утепленных стен по технологии ThermoBlock.{% endblock %}
 
 {% block extra_css %}
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+}
+
+.video-preview {
+    position: relative;
+    width: 100%;
+    height: 315px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.video-preview:hover .preview-image {
+    transform: scale(1.05);
+}
+
+.play-button-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.play-button-overlay i {
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.play-button-overlay i:hover {
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+    z-index: 1;
+}
+
+.video-embed-container {
+    width: 100%;
+    height: 315px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.video-embed-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+</style>
 
 {% endblock %}
 
@@ -19,5 +88,65 @@
 {% endblock %}
 
 {% block extra_js %}
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const videoPreview = document.getElementById('videoPreview');
+    const videoEmbed = document.getElementById('videoEmbed');
+    const videoPlayer = document.getElementById('videoPlayer');
+    
+    // ВСТАВЬТЕ ССЫЛКУ НА ВИДЕО RUTUBE
+    const rutubeVideoUrl = 'https://rutube.ru/video/2ca9edd76f08f73bd64d7c5c02995a86/';
+    
+    // Обработчик клика по превью
+    videoPreview.addEventListener('click', function() {
+        // Получаем ID видео из ссылки
+        const videoId = extractRuTubeVideoId(rutubeVideoUrl);
+        
+        if (videoId) {
+            // Прячем превью
+            videoPreview.style.display = 'none';
+            
+            // Показываем плеер
+            videoEmbed.style.display = 'block';
+            
+            // Загружаем видео с RuTube с автозапуском
+            videoPlayer.src = `https://rutube.ru/play/embed/${videoId}?autoplay=1`;
+        } else {
+            alert('Не удалось определить ID видео');
+        }
+    });
+    
+    // Функция для извлечения ID видео из ссылки RuTube
+    function extractRuTubeVideoId(url) {
+        try {
+            // Разные форматы ссылок RuTube:
+            // https://rutube.ru/video/9c4f41f5a8b5f3e7f5c1d9e8f7a2b3c1/
+            // https://rutube.ru/video/9c4f41f5a8b5f3e7f5c1d9e8f7a2b3c1
+            // rutube.ru/video/9c4f41f5a8b5f3e7f5c1d9e8f7a2b3c1/
+            
+            // Удаляем параметры и слеши
+            const cleanUrl = url.split('?')[0];
+            const parts = cleanUrl.split('/');
+            
+            // Ищем часть с ID (обычно это 32-символьная строка)
+            for (let part of parts) {
+                if (part.length >= 20 && !part.includes('http') && !part.includes('rutube') && !part.includes('video')) {
+                    return part;
+                }
+            }
+            
+            // Альтернативный способ: последняя значимая часть URL
+            const lastPart = parts[parts.length - 1];
+            if (lastPart && lastPart.length > 0 && lastPart !== 'video') {
+                return lastPart.replace('/', '');
+            }
+            
+            return null;
+        } catch (error) {
+            console.error('Ошибка при извлечении ID видео:', error);
+            return null;
+        }
+    }
+});
+</script>
 {% endblock %}
