@@ -9,12 +9,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(
     DEBUG=(bool, True),
     SECRET_KEY=(str, 'get_random_secret_key()'),
-    ALLOWED_HOSTS=(list, ['localhost', '*']),
+    ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
     PG_DB=(str, 'project_bd'),
     PG_USER=(str, 'pgdb_user'),
     PG_PASS=(str, 'pgdb_user_pass'),
     PG_HOST=(str, 'localhost'),
     PG_PORT=(str, ''),
+    EMAIL_PORT=(int, 587),
+    EMAIL_USE_TLS=(bool, True),
+    EMAIL_USE_SSL=(bool,False),
+    CSRF_TRUSTED_ORIGINS=(list,[])
 )
 env.read_env(BASE_DIR / '.env')
 
@@ -148,14 +152,18 @@ YANDEX_METRIKA_SETTINGS = {
 
 
 # Email настройки
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.your-email-provider.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@example.com'
-EMAIL_HOST_PASSWORD = 'your-email-password'
-DEFAULT_FROM_EMAIL = 'noreply@thermoblock.ru'
-ADMIN_EMAIL = 'admin@thermoblock.ru'
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+ADMIN_EMAIL = env('ADMIN_EMAIL')
 
 # CSRF
-CSRF_TRUSTED_ORIGINS = ['https://your-domain.com']
+CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS')

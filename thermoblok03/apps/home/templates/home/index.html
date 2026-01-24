@@ -79,12 +79,14 @@
 
 {% block content %}
     {% include 'home/_info.html' %}
-    {% include 'home/_hero1.html' %}
+    {% include 'home/_hero.html' %}
+    {% comment %}
     {% include 'home/_problemandsolution.html' %}
     {% include 'home/_pathclient.html' %}
     {% include 'home/_howitwork.html' %}
     {% include 'home/_faq.html' %}
     {% include 'home/_feedback.html' %}
+    {% endcomment %}
 {% endblock %}
 
 {% block extra_js %}

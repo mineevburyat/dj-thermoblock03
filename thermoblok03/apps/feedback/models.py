@@ -83,7 +83,7 @@ class CalculationRequest(models.Model):
     email = models.EmailField(blank=True)
     comments = models.TextField(blank=True)
     data_agreement = models.BooleanField(default=False)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
     is_processed = models.BooleanField(default=False)
     
     class Meta:

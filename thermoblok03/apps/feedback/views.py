@@ -229,97 +229,119 @@ def send_notification_email(request_data):
 class QuestionViews(TemplateView):
     template_name = 'feedback/question.html'
 
+def _send_to_crm(calculation_request):
+    # Отправка email администратору
+    admin_subject = f"Новая заявка на расчёт от {calculation_request.name}"
+    admin_message = f"""
+    Новая заявка на расчёт дома ThermoBlock
+
+    Контактная информация:
+    Имя: {calculation_request.name} {calculation_request.surname}
+    Телефон: {calculation_request.phone}
+    Email: {calculation_request.email or 'не указан'}
+    Способ связи: {calculation_request.get_contact_method_display()}
+
+    Детали проекта:
+    Тип дома: {calculation_request.get_house_type_display()}
+    Участок: {calculation_request.get_land_status_display()}
+    Проект: {calculation_request.get_project_status_display()}
+    Сроки: {calculation_request.get_timeline_display()}
+    Оплата: {calculation_request.get_payment_method_display()}
+
+    Комментарии: {calculation_request.comments or 'нет'}
+
+    Согласие на обработку данных: {'Да' if calculation_request.data_agreement else 'Нет'}
+    """
+    try:
+        send_mail(
+            admin_subject,
+            admin_message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL],
+            fail_silently=False,
+        )
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+def _send_to_client(calculation_request):
+    client_subject = "Ваша заявка принята - ThermoBlock"
+    client_message = f"""
+    Здравствуйте, {calculation_request.name}!
+
+    Спасибо за вашу заявку на расчёт стоимости дома.
+    Мы получили ваши ответы и уже работаем над подготовкой коммерческого предложения.
+
+    Наш специалист свяжется с вами в течение 24 часов по выбранному способу связи: 
+    {calculation_request.get_contact_method_display()}.
+
+    С уважением,
+    Команда ThermoBlock
+    Телефон: +7 (3012) 20-63-20
+    Сайт: https://thermoblock.ru
+    """
+    
+    try:
+        send_mail(
+            client_subject,
+            client_message,
+            settings.DEFAULT_FROM_EMAIL,
+            [calculation_request.email],
+            fail_silently=True,
+        )
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
+
+
 @csrf_exempt
 @require_POST
 def submit_request(request):
     try:
         data = json.loads(request.body)
         form = CalculationRequestForm(data)
-        print(data)
-        
-        if form.is_valid():
-            calculation_request = form.save()
-            print(calculation_request)
-            # Отправка email администратору
-            admin_subject = f"Новая заявка на расчёт от {calculation_request.name}"
-            admin_message = f"""
-            Новая заявка на расчёт дома ThermoBlock
-
-            Контактная информация:
-            Имя: {calculation_request.name} {calculation_request.surname}
-            Телефон: {calculation_request.phone}
-            Email: {calculation_request.email or 'не указан'}
-            Способ связи: {calculation_request.get_contact_method_display()}
-
-            Детали проекта:
-            Тип дома: {calculation_request.get_house_type_display()}
-            Участок: {calculation_request.get_land_status_display()}
-            Проект: {calculation_request.get_project_status_display()}
-            Сроки: {calculation_request.get_timeline_display()}
-            Оплата: {calculation_request.get_payment_method_display()}
-
-            Комментарии: {calculation_request.comments or 'нет'}
-
-            Согласие на обработку данных: {'Да' if calculation_request.data_agreement else 'Нет'}
-            """
-            
-            send_mail(
-                admin_subject,
-                admin_message,
-                settings.DEFAULT_FROM_EMAIL,
-                [settings.ADMIN_EMAIL],
-                fail_silently=False,
-            )
-            
-            # Отправка email клиенту (если указан email)
-            if calculation_request.email:
-                client_subject = "Ваша заявка принята - ThermoBlock"
-                client_message = f"""
-                Здравствуйте, {calculation_request.name}!
-
-                Спасибо за вашу заявку на расчёт стоимости дома.
-                Мы получили ваши ответы и уже работаем над подготовкой коммерческого предложения.
-
-                Наш специалист свяжется с вами в течение 24 часов по выбранному способу связи: 
-                {calculation_request.get_contact_method_display()}.
-
-                С уважением,
-                Команда ThermoBlock
-                Телефон: +7 (XXX) XXX-XX-XX
-                Сайт: https://thermoblock.ru
-                """
-                
-                send_mail(
-                    client_subject,
-                    client_message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [calculation_request.email],
-                    fail_silently=True,
-                )
-            
-            return JsonResponse({
-                'success': True,
-                'message': 'Заявка успешно отправлена!'
-            })
-        else:
-            # Собираем ошибки формы
-            errors = {}
-            for field, error_list in form.errors.items():
-                errors[field] = error_list[0]
-            
-            return JsonResponse({
-                'success': False,
-                'message': 'Пожалуйста, исправьте ошибки в форме',
-                'errors': errors
-            }, status=400)
-            
     except json.JSONDecodeError:
         return JsonResponse({
             'success': False,
             'message': 'Неверный формат данных'
         }, status=400)
     except Exception as e:
+        print(e)
         return JsonResponse({
             'success': False,
             'message': f'Ошибка сервера: {str(e)}'
-        }, status=500)
+        }, status=500) 
+    
+    if form.is_valid():
+        calculation_request = form.save()
+        if _send_to_crm(calculation_request):
+            print('отправил на CRM')
+        else:
+            print('ошибка отправки в црм')
+        # Отправка email клиенту (если указан email)
+        if calculation_request.email:
+            if _send_to_client(calculation_request):
+                print('успешно на почту отправили клиенту')
+            else:
+                print('подозрительный почтовый ящик - сообщение не отправлено')
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Заявка успешно отправлена!'
+        })
+    else:
+        # Собираем ошибки формы
+        errors = {}
+        for field, error_list in form.errors.items():
+            errors[field] = error_list[0]
+        print(errors)
+        return JsonResponse({
+            'success': False,
+            'message': 'Пожалуйста, исправьте ошибки в форме',
+            'errors': errors
+        }, status=400)
+            
+    

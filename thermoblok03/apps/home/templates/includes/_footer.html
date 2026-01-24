@@ -29,16 +29,18 @@
             <div class="col-lg-3 col-md-6 mb-4">
                 <h4 class="h5 mb-3">Для застройщиков</h4>
                 <ul class="list-unstyled footer-links">
+                    <li><a href="{% url 'faq:index' %}">Частые вопросы</a></li>
+                    {%comment %}
+                    <li><a href="#">Калькулятор экономии</a></li>
                     <li><a href="#problem">О технологии</a></li>
                     <li><a href="#benefits">Преимущества</a></li>
-                    <li><a href="#faq">Частые вопросы</a></li>
-                    <li><a href="#">Калькулятор экономии</a></li>
-                    <li><a href="#">Примеры объектов</a></li>
+                    {%endcomment%}
+                    <li><a href="{% url 'review:index' %}">Отзывы</a></li>
                 </ul>
                 <!-- Кнопка "Рассчитать" в футере -->
-                <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#calculatorModal">
+                <a class="btn btn-primary w-100 mt-3" href={% url 'feedback:question'%}>
                     <i class="bi bi-calculator me-2"></i>Рассчитать стоимость
-                </button>
+                </a>
             </div>
             <!-- Колонка 3: Контакты -->
             <div class="col-lg-3 col-md-6 mb-4">
@@ -100,7 +102,7 @@
                 
                 <div class="footer-social">
                     <p class="text-white mb-2">Подписывайтесь в соцсетях:</p>
-                    <div class="d-flex gap-2" itemscope itemtype="https://schema.org/Organization">
+                    <div class="d-flex gap-2 justify-content-center" itemscope itemtype="https://schema.org/Organization">
                             <!-- Скрытая информация об организации -->
                         <meta itemprop="name" content="ThermoBlock">
                         <meta itemprop="url" content="https://thermoblock.ru">
@@ -122,6 +124,7 @@
                     </div>
                 </div>
             </div>
+            {% comment %}
             <!-- Колонка 4: Для партнеров -->
             <div class="col-lg-3 mb-4">
                 <h4 class="h5 mb-3">Для строителей и партнеров</h4>
@@ -137,6 +140,7 @@
                     <i class="bi bi-house me-1"></i>Стать партнером
                 </button>
             </div>
+            {% endcomment %}
         </div>
         
         <!-- Нижняя часть футера -->

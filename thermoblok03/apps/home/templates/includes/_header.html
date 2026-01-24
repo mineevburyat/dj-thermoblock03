@@ -40,9 +40,9 @@
             </ul>
             <div class="d-flex flex-column">
                 <!-- Кнопка "Рассчитать" -->
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#calculatorModal" {% ym_data_goal 'btn_form' %}>
+                <a class="btn btn-primary" href="{% url 'feedback:question'%}" {% ym_data_goal 'btn_form' %}>
                     <i class="bi bi-calculator me-2"></i>Рассчитать
-                </button>
+                </a>
                 {% comment %}
                 <!-- Кнопка-триггер для модального окна -->
                 <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#constructionModal">
