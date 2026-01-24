@@ -7,6 +7,7 @@
     --light: #f8f9fa;
     --dark: #2c3e50;
     --gray: #878787;
+
     --light-gray: #e9ecef;
     --success: #28a745;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -16,7 +17,14 @@
 }
 
 /* Переопределение Bootstrap переменных */
-/* Custom Buttons */
+.text-primary {
+    color: #1a5fb4 !important;
+}
+
+.text-light {
+    color: #878787 !important;
+}
+
 .btn-primary {
     background-color: var(--secondary);
     border-color: var(--secondary);
@@ -103,17 +111,6 @@
     flex: 1;
 }
 
-/* Анимации */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 .animate__animated {
     animation-duration: 0.6s;
@@ -124,17 +121,6 @@
     animation-name: fadeInUp;
 }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-    .display-3 {
-        font-size: 2.5rem;
-    }
-    
-    section {
-        padding: 60px 0;
-    }
-
-}
 
 /* Утилиты */
 .cursor-pointer {
@@ -174,7 +160,6 @@ body {
     padding-bottom: 0.3rem;
 }
 
-
 .nav-link {
     font-weight: 500;
     padding: 0.5rem 1rem;
@@ -198,45 +183,35 @@ body {
     opacity: 0.8;
 }
 
-/* Адаптивность */
-@media (max-width: 992px) {
-    .navbar-collapse {
-        padding: 1rem 0;
-    }
-    
-    .social-header {
-        margin-bottom: 1rem;
-        justify-content: center;
-    }
-    
-    .btn-primary {
-        width: 100%;
-    }
+.navbar-brand img {
+    height: 40px;
 }
+/* Адаптивность */
+
 
 /* footer */
 
-    .footer {
-        background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-    }
-    
-    .footer-brand .logo-icon {
-        width: 40px;
-        height: 40px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .footer-brand .logo-text {
-        font-size: 1.5rem;
-    }
-    
-    .footer-links {
-    list-style: none;
-    padding-left: 0;
+.footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+}
+
+.footer-brand .logo-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-brand .logo-text {
+    font-size: 1.5rem;
+}
+
+.footer-links {
+list-style: none;
+padding-left: 0;
 }
 
 .footer-links li {
@@ -282,73 +257,88 @@ body {
     font-size: 0.9rem;
 }
 
-    .footer a {
-        transition: all 0.3s ease;
-    }
-    
-    .footer a:hover {
-        color: var(--bs-warning) !important;
-        padding-left: 5px;
-    }
-    
-    .footer-social .btn {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-    }
-    
-    .footer-social .btn:hover {
-        transform: translateY(-3px);
-        background: var(--bs-warning);
-        border-color: var(--bs-warning);
-        color: #000;
-    }
-    
-    .subscribe-form .form-control {
-        background: rgba(255,255,255,0.1);
-        border-color: rgba(255,255,255,0.2);
-        color: white;
-    }
-    
-    .subscribe-form .form-control::placeholder {
-        color: rgba(255,255,255,0.5);
-    }
-    
-    .subscribe-form .btn-warning {
-        background: var(--bs-warning);
-        border-color: var(--bs-warning);
-    }
-    
-    .subscribe-form .btn-warning:hover {
-        background: #e0a800;
-        border-color: #d39e00;
-    }
-    
-    @media (max-width: 768px) {
-        .footer {
-            text-align: center;
-        }
-        
-        .footer-brand {
-            justify-content: center;
-        }
-        
-        .footer-social {
-            justify-content: center;
-        }
-    }
+.footer a {
+    transition: all 0.3s ease;
+}
+
+.footer a:hover {
+    color: var(--bs-warning) !important;
+    padding-left: 5px;
+}
+
+.footer-social .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.footer-social .btn:hover {
+    transform: translateY(-3px);
+    background: var(--bs-warning);
+    border-color: var(--bs-warning);
+    color: #000;
+}
+
+.subscribe-form .form-control {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.subscribe-form .form-control::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+.subscribe-form .btn-warning {
+    background: var(--bs-warning);
+    border-color: var(--bs-warning);
+}
+
+.subscribe-form .btn-warning:hover {
+    background: #e0a800;
+    border-color: #d39e00;
+}
 
 /* main content */
 /* Смещаем main вниз на высоту меню */
 main {
-    margin-top: 110px; /* Высота фиксированного nav */
+    padding-top: 70px; /* Высота фиксированного nav */
 }
 
+/* slider */
+.hero-slider {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+/* Стили для нижней навигации */
+/* Фиксированная высота для контента */
+.min-h-slider {
+    min-height: 450px;
+}
 
+/* Контейнер для изображений с фиксированной высотой */
+.image-container {
+    height: 350px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.image-container:hover img {
+    transform: scale(1.05);
+}
 /* INTRO STYLE
 -------------------------------------------------------------------------------*/
 .intro {
@@ -364,6 +354,7 @@ main {
 .intro .text {
     text-align: justify;
 }
+
 /* EVENT */
 .event{
     padding-bottom: 5rem;
@@ -381,7 +372,7 @@ main {
     padding: 0;
     padding-left: 50px;
     padding-top: 20px;
-     list-style-image: url(../img/gal.png);
+    list-style-image: url(../img/gal.png);
 }
 .event-list li{
     font-weight: bold;
@@ -390,6 +381,78 @@ main {
 .event-text{
     font-size: 23px ;
     font-weight: bold;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.btn-primary-custom {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.btn-primary-custom:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-2px);
+    transition: all 0.3s;
+}
+
+.btn-secondary-custom {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: white;
+}
+
+.btn-secondary-custom:hover {
+    background-color: var(--secondary-dark);
+    border-color: var(--secondary-dark);
+    transform: translateY(-2px);
+    transition: all 0.3s;
+}
+
+.btn-outline-custom {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    background-color: transparent;
+}
+
+.btn-outline-custom:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+.highlight {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+h1 {
+    color: var(--primary);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: auto;
+        padding: 2rem 0;
+    }
+    
+    .btn-group-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn-group-mobile .btn {
+        width: 100%;
+    }
 }
 /* PRODUCT STYLE
 -------------------------------------------------------------------------------*/

@@ -1,0 +1,161 @@
+{%load static %}
+<section class="hero-slider py-1">
+    <div class="container">
+        <div id="simpleCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <!-- Слайды (такие же как выше) -->
+                <div class="carousel-item active">
+                    <div class="row align-items-center min-h-slide">
+                        <div class="col-lg-7">
+                            <h2 class="display-5 fw-bold mb-2">
+                                Надежный и теплый дом <span class="text-primary">за 30 дней</span>
+                            </h2>
+                            <p class="lead mb-4">
+                                ThermoBlock - это бескаркасная технология строительства монолитных несущих стен без колонн, ригеля и перемычек.
+                            </p>
+                            <p class="lead mb-4">
+                                Несущие <strong>УТЕПЛЕННЫЕ</strong> стены здания готовые к чистовой отделке и и могут иметь заложенные внутри коммуникации.
+                            </p>
+                            <a href="{% url 'feedback:question' %}" class="btn btn-primary btn-lg px-4">
+                                <i class="bi bi-calculator me-2"></i>Рассчитать стоимость
+                            </a>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="image-container">
+                                <img src="{% static 'img_building/wall.jpg' %}" 
+                                 class="img-fluid rounded shadow" 
+                                 alt="Монолитная стена ThermoBlock в разрезе">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center min-h-slide">
+                        <div class="col-lg-7">
+                            <h2 class="display-5 fw-bold mb-2">
+                                Стройте <span class="hotlogo">в 2 раза быстрее</span>
+                            </h2>
+                            <p class="lead mb-4">
+                                Технология несъемной опалубки ускоряет процесс строительства.
+                            </p>
+                            <p class="lead mb-4">
+                                ThermoBlock это ЧЕТЫРЕ В ОДНОМ: <sup class="badge badge-pill badge-dark">1.</sup> несущие <sup class="badge badge-pill badge-dark">2.</sup> утепленные стены здания готовые к <sup class="badge badge-pill badge-dark">3.</sup> чистовой отделке с проложенными <sup class="badge badge-pill badge-dark">4.</sup> внутри стены коммуникациями. 
+                            </p>
+                            <a href="{% url 'feedback:question' %}" class="btn btn-secondary btn-lg px-4">
+                                <i class="bi bi-lightning-charge me-2"></i>Быстрый расчет
+                            </a>
+                        </div>
+                        <div class="col-lg-5">
+                            <img src="{% static 'img_building/windowontop.jpg' %}" 
+                                 class="img-fluid rounded shadow" 
+                                 alt="Проемы из ThermoBlock">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center min-h-slide">
+                        <div class="col-lg-7">
+                            <h2 class="display-5 fw-bold mb-2">
+                                Простой контроль <span class="text-primary">этапов строительства</span>
+                            </h2>
+                            <p class="lead mb-4">
+                                В конструктив блоков несъемной опалубки заложены все строительные нормы и правила. Достаточно соблюдать <strong>6 основных правил</strong> для постройки надежной и долговечной стены.
+                            </p>
+                            <a href="{% url 'feedback:question' %}" class="btn btn-primary btn-lg px-4">
+                                <i class="bi bi-lightning-charge me-2"></i>Хочу контролировать
+                            </a>
+                        </div>
+                        <div class="col-lg-5">
+                            <img src="{% static 'img_building/wallontop.png' %}" 
+                                 class="img-fluid rounded shadow" 
+                                 alt="стена из ThermoBlock сверху">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center min-h-slide">
+                        <div class="col-lg-7">
+                            <h2 class="display-5 fw-bold mb-2">
+                                Сейсмостойкость стен <span class="text-primary">до 8 балов</span>
+                            </h2>
+                            <p class="lead mb-4">
+                                Результаты вибродинамических испытаний на полигоне КазНИИСА здания из ThermoBlock показали, что такие дома выдержат землетрясение в 8 баллов.
+                            </p>
+                            <a href="{% url 'feedback:question' %}" class="btn btn-primary btn-lg px-4">
+                                <i class="bi bi-lightning-charge me-2"></i>Хочу такой дом
+                            </a>
+                        </div>
+                        <div class="col-lg-5">
+                            <img src="{% static 'img_building/wallontop.png' %}" 
+                                 class="img-fluid rounded shadow" 
+                                 alt="стена из ThermoBlock сверху">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center min-h-slide">
+                        <div class="col-lg-7">
+                            <h2 class="display-5 fw-bold mb-2">
+                                Низкий коэффициент <span class="text-primary">теплопроводности</span>
+                            </h2>
+                            <p class="lead mb-4">
+                                Блоки разработаны специально для северных регионов. Имеют эффект термоса. Прекрасно работают в диапазоне температур от – 50 до +50 градусов Цельсия. Позволяют экономить в зимнее время на отоплении и на кондиционировании в летнее. 
+                            </p>
+                            <a href="{% url 'feedback:question' %}" class="btn btn-primary btn-lg px-4">
+                                <i class="bi bi-lightning-charge me-2"></i>Расчет теплоэффективности
+                            </a>
+                        </div>
+                        <div class="col-lg-5">
+                            <img src="{% static 'img_building/wallontop.png' %}" 
+                                 class="img-fluid rounded shadow" 
+                                 alt="стена из ThermoBlock сверху">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row align-items-center min-h-slide">
+                        <div class="col-lg-7">
+                            <h2 class="display-5 fw-bold mb-2">
+                                Высокая <span class="hotlogo">пожаробезопасность</span>
+                            </h2>
+                            <p class="lead mb-4">
+                                ThermoBlock относится к группе негорючих строительных материалов, скорость распространения огня по конструкции равен нулю. 
+                            </p>
+                            <a href="{% url 'feedback:question' %}" class="btn btn-primary btn-lg px-4">
+                                <i class="bi bi-lightning-charge me-2"></i>Подробнее
+                            </a>
+                        </div>
+                        <div class="col-lg-5">
+                            <img src="{% static 'img_building/wallontop.png' %}" 
+                                 class="img-fluid rounded shadow" 
+                                 alt="стена из ThermoBlock сверху">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Индикаторы и кнопки вместе под слайдером -->
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <!-- Кнопка "Назад" -->
+                <button class="btn btn-outline-secondary btn-sm me-3" type="button" data-bs-target="#simpleCarousel" data-bs-slide="prev">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                
+                <!-- Индикаторы -->
+                <div class="carousel-indicators position-static m-0">
+                    <button type="button" data-bs-target="#simpleCarousel" data-bs-slide-to="0" class="active mx-1" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#simpleCarousel" data-bs-slide-to="1" class="mx-1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#simpleCarousel" data-bs-slide-to="2" class="mx-1" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#simpleCarousel" data-bs-slide-to="3" class="mx-1" aria-label="Slide 4"></button>
+                    <button type="button" data-bs-target="#simpleCarousel" data-bs-slide-to="4" class="mx-1" aria-label="Slide 5"></button>
+                    <button type="button" data-bs-target="#simpleCarousel" data-bs-slide-to="5" class="mx-1" aria-label="Slide 6"></button>
+                </div>
+                
+                <!-- Кнопка "Вперед" -->
+                <button class="btn btn-outline-secondary btn-sm ms-3" type="button" data-bs-target="#simpleCarousel" data-bs-slide="next">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
