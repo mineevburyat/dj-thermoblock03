@@ -1,0 +1,255 @@
+{% extends 'home/base.html' %}
+
+{% block title %}ThermoBlock | категории блоков {% endblock %}
+{% block meta_description %}ThermoBlock - предлагаемые категории стен возводимых по технологии{% endblock %}
+{% block meta_keywords %}ThermoBlock, категории ThermoBlock, продукция {% endblock %}
+{% block extra_css %}
+<style>
+.category-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.card-header {
+    border-bottom: none;
+    font-weight: 700;
+}
+.badge-new {
+    font-size: 0.7em;
+    vertical-align: super;
+}
+.premium-card {
+    border-top: 5px solid #ffc107;
+}
+.optimum-card {
+    border-top: 5px solid #0d6efd;
+}
+.partition-card {
+    border-top: 5px solid #198754;
+}
+.light-card {
+    border-top: 5px solid #6f42c1;
+}
+.specs-list {
+    list-style: none;
+    padding-left: 0;
+}
+.specs-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.specs-list li:last-child {
+    border-bottom: none;
+}
+.old-name {
+    font-size: 0.9em;
+    color: #6c757d;
+    font-style: italic;
+}
+.hero-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 3rem 0;
+    margin-bottom: 3rem;
+    border-radius: 0 0 20px 20px;
+}
+</style>
+{% endblock %}
+{% block content %}
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold">Системы строительства ThermoBlock</h1>
+                <p class="lead">Инновационные решения для энергоэффективного монолитного и блочного строительства</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <span class="badge bg-warning text-dark fs-6">Технология будущего</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Основной контент - категории -->
+<section class="container">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <!-- Термоблоки Премиум -->
+        <div class="col">
+            <div class="card category-card premium-card">
+                <div class="card-header bg-warning bg-opacity-10 d-flex justify-content-between align-items-center">
+                    <h3 class="h5 mb-0">Термоблоки Премиум</h3>
+                    <span class="badge bg-warning">Премиум</span>
+                </div>
+                <div class="card-body">
+                    <p class="old-name">Старое название: Термоблоки серии 400</p>
+                    <p class="card-text">Для возведения теплых монолитных стен толщиной 400 мм</p>
+                    
+                    <h6 class="fw-bold mt-4">Конструкция "сэндвич":</h6>
+                    <ul class="specs-list">
+                        <li>✅ Наружный бетонный панцирь: <strong>10 см</strong></li>
+                        <li>✅ Внутренний бетонный панцирь: <strong>10 см</strong></li>
+                        <li>✅ Утеплитель по середине: <strong>180 мм</strong></li>
+                    </ul>
+                    
+                    <div class="mt-3">
+                        <span class="badge bg-dark">Монолитная технология</span>
+                        <span class="badge bg-success">Максимальная теплоизоляция</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="#" class="btn btn-warning">Подробнее о серии</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Термоблоки Оптимум -->
+        <div class="col">
+            <div class="card category-card optimum-card">
+                <div class="card-header bg-primary bg-opacity-10 d-flex justify-content-between align-items-center">
+                    <h3 class="h5 mb-0">Термоблоки Оптимум</h3>
+                    <span class="badge bg-primary">Оптимально</span>
+                </div>
+                <div class="card-body">
+                    <p class="old-name">Старое название: Блоки серии 300</p>
+                    <p class="card-text">Монолитно-плиточные стены толщиной 300 мм</p>
+                    
+                    <h6 class="fw-bold mt-4">Конструкция стен:</h6>
+                    <ul class="specs-list">
+                        <li>✅ Внутренний бетонный монолит: <strong>10 см</strong></li>
+                        <li>✅ Наружная бетонная панель: <strong>5 см</strong></li>
+                        <li>✅ Утеплитель посередине: <strong>13 см</strong></li>
+                    </ul>
+                    
+                    <div class="mt-3">
+                        <span class="badge bg-dark">Монолитно-плиточная</span>
+                        <span class="badge bg-info">Оптимальная стоимость</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="#" class="btn btn-primary">Подробнее о серии</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Перегородочные ThermoBlock -->
+        <div class="col">
+            <div class="card category-card partition-card">
+                <div class="card-header bg-success bg-opacity-10 d-flex justify-content-between align-items-center">
+                    <h3 class="h5 mb-0">Перегородочные ThermoBlock</h3>
+                    <span class="badge bg-success">Универсальные</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Серия ПБ для внутренних конструкций</p>
+                    
+                    <h6 class="fw-bold mt-4">Назначение и толщины:</h6>
+                    <ul class="specs-list">
+                        <li>📐 Доступные толщины: <strong>100 мм и 200 мм</strong></li>
+                        <li>🏢 Внутренние несущие и ограждающие перегородки</li>
+                        <li>🏠 Подвальные ограждения</li>
+                        <li>⚓ Заборные и лестничные фундаменты</li>
+                    </ul>
+                    
+                    <div class="mt-3">
+                        <span class="badge bg-secondary">Внутренние работы</span>
+                        <span class="badge bg-dark">Фундаментные решения</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="#" class="btn btn-success">Подробнее о серии</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Термоблоки Лайт -->
+        <div class="col">
+            <div class="card category-card light-card">
+                <div class="card-header bg-purple bg-opacity-10 d-flex justify-content-between align-items-center">
+                    <h3 class="h5 mb-0">Термоблоки Лайт <span class="badge-new badge bg-danger">НОВИНКА</span></h3>
+                    <span class="badge bg-purple">Бюджетные</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Бюджетное блочное строительство с элементами технологии</p>
+                    
+                    <h6 class="fw-bold mt-4">Особенности технологии:</h6>
+                    <ul class="specs-list">
+                        <li>🧱 Блочное строительство (как газобетон/пенополистиролбетон)</li>
+                        <li>🔗 Использование блоков серии 300 в угловых узлах</li>
+                        <li>🏗️ Блоки серии 300 как колонны и перекрытия</li>
+                        <li>🚫 Без ригельности и каркасности</li>
+                    </ul>
+                    
+                    <div class="mt-3">
+                        <span class="badge bg-danger">Новинка</span>
+                        <span class="badge bg-warning text-dark">Бюджетное решение</span>
+                        <span class="badge bg-dark">Конкурент блочным стенам</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="#" class="btn btn-purple text-white">Подробнее о серии</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Сравнительная таблица -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h3 class="h5 mb-0">Сравнение серий ThermoBlock</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Серия</th>
+                                    <th>Тип строительства</th>
+                                    <th>Толщина стены</th>
+                                    <th>Ключевая особенность</th>
+                                    <th>Назначение</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Премиум</strong></td>
+                                    <td>Монолитное</td>
+                                    <td>400 мм</td>
+                                    <td>Двойной бетонный панцирь по 10 см</td>
+                                    <td>Теплые монолитные стены</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Оптимум</strong></td>
+                                    <td>Монолитно-плиточное</td>
+                                    <td>300 мм</td>
+                                    <td>10 см монолит + 5 см панель</td>
+                                    <td>Оптимальное решение</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Перегородочные</strong></td>
+                                    <td>Блочное</td>
+                                    <td>100/200 мм</td>
+                                    <td>Внутренние конструкции</td>
+                                    <td>Перегородки, фундаменты</td>
+                                </tr>
+                                <tr class="table-info">
+                                    <td><strong>Лайт</strong></td>
+                                    <td>Блочное с элементами технологии</td>
+                                    <td>Различная</td>
+                                    <td>Бюджетное + технология в узлах</td>
+                                    <td>Конкуренция с блочными стенами</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThermoBlock - Системы строительства</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --premium-color: #ffc107;
+            --optimum-color: #0d6efd;
+            --partition-color: #198754;
+            --light-color: #6f42c1;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .category-section {
+            margin-bottom: 5rem;
+        }
+        
+        .section-header {
+            position: relative;
+            padding-bottom: 20px;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 5px;
+            background: var(--section-color, #0d6efd);
+            border-radius: 5px;
+        }
+        
+        .monolithic-section .section-header::after {
+            background: linear-gradient(90deg, var(--premium-color), var(--optimum-color));
+        }
+        
+        .block-section .section-header::after {
+            background: var(--light-color);
+        }
+        
+        /* Стили карточек */
+        .card-tech {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            height: 100%;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+        
+        .card-tech:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        /* Общие стили для верхней части с картинкой */
+        .card-image-header {
+            height: 220px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px 16px 0 0;
+        }
+        
+        .card-image-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
+            border-radius: 16px 16px 0 0;
+        }
+        
+        .card-image-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            width: 100%;
+        }
+        
+        /* Фоновые изображения для карточек */
+        .card-premium .card-image-header {
+            background-image: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="%238B4513"/><rect x="50" y="100" width="100" height="100" fill="%23FFD700" opacity="0.9"/><rect x="250" y="100" width="100" height="100" fill="%238B4513" opacity="0.9"/><rect x="150" y="100" width="100" height="100" fill="%23FFF3CD"/><line x1="150" y1="100" x2="150" y2="200" stroke="white" stroke-width="3"/><line x1="250" y1="100" x2="250" y2="200" stroke="white" stroke-width="3"/><text x="200" y="80" fill="white" font-family="Arial" font-size="14" text-anchor="middle">ПРЕМИУМ СЕРИЯ 400</text></svg>');
+        }
+        
+        .card-optimum .card-image-header {
+            background-image: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="%230d6efd"/><rect x="50" y="120" width="140" height="80" fill="%238B4513" opacity="0.9"/><rect x="210" y="120" width="80" height="80" fill="%23FFD700" opacity="0.9"/><rect x="290" y="120" width="60" height="80" fill="%23A0522D" opacity="0.9"/><line x1="190" y1="120" x2="190" y2="200" stroke="white" stroke-width="3"/><line x1="290" y1="120" x2="290" y2="200" stroke="white" stroke-width="3"/><text x="200" y="100" fill="white" font-family="Arial" font-size="14" text-anchor="middle">ОПТИМУМ СЕРИЯ 300</text></svg>');
+        }
+        
+        .card-partition .card-image-header {
+            background-image: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="%23198754"/><rect x="80" y="100" width="80" height="100" fill="white" opacity="0.9"/><rect x="180" y="100" width="80" height="100" fill="white" opacity="0.9"/><rect x="280" y="100" width="80" height="100" fill="white" opacity="0.9"/><path d="M80 100 L80 200" stroke="%23198754" stroke-width="3"/><path d="M160 100 L160 200" stroke="%23198754" stroke-width="3"/><path d="M180 100 L180 200" stroke="%23198754" stroke-width="3"/><path d="M260 100 L260 200" stroke="%23198754" stroke-width="3"/><path d="M280 100 L280 200" stroke="%23198754" stroke-width="3"/><path d="M360 100 L360 200" stroke="%23198754" stroke-width="3"/><text x="200" y="80" fill="white" font-family="Arial" font-size="14" text-anchor="middle">ПЕРЕГОРОДОЧНЫЕ СИСТЕМЫ</text></svg>');
+        }
+        
+        .card-light .card-image-header {
+            background-image: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="%236f42c1"/><rect x="100" y="100" width="200" height="30" fill="%23a98eda" rx="5"/><rect x="120" y="140" width="160" height="30" fill="%230d6efd" rx="5"/><rect x="140" y="180" width="120" height="30" fill="%23a98eda" rx="5"/><circle cx="200" cy="100" r="15" fill="%23ffc107"/><circle cx="200" cy="140" r="10" fill="white"/><circle cx="200" cy="180" r="15" fill="%23ffc107"/><text x="200" y="80" fill="white" font-family="Arial" font-size="14" text-anchor="middle">ТЕРМОБЛОКИ ЛАЙТ</text><text x="200" y="240" fill="white" font-family="Arial" font-size="12" text-anchor="middle">БЮДЖЕТНОЕ РЕШЕНИЕ</text></svg>');
+        }
+        
+        /* Бейджи на картинке */
+        .image-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 3;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .new-badge {
+            animation: pulse 2s infinite;
+            font-size: 0.7rem;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        /* Контент карточки */
+        .card-body-tech {
+            padding: 1.5rem;
+        }
+        
+        .old-name {
+            font-size: 0.85em;
+            color: #6c757d;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0,0,0,0.03);
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .tech-specs {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-specs li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            padding-left: 1.75rem;
+        }
+        
+        .tech-specs li:last-child {
+            border-bottom: none;
+        }
+        
+        .tech-specs li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--item-color, #198754);
+            font-weight: bold;
+        }
+        
+        .card-premium .tech-specs li::before {
+            color: var(--premium-color);
+        }
+        
+        .card-optimum .tech-specs li::before {
+            color: var(--optimum-color);
+        }
+        
+        .card-partition .tech-specs li::before {
+            color: var(--partition-color);
+        }
+        
+        .card-light .tech-specs li::before {
+            color: var(--light-color);
+        }
+        
+        /* Теги */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tag {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .tag-premium {
+            background: rgba(255, 193, 7, 0.15);
+            color: #856404;
+        }
+        
+        .tag-optimum {
+            background: rgba(13, 110, 253, 0.15);
+            color: #084298;
+        }
+        
+        .tag-partition {
+            background: rgba(25, 135, 84, 0.15);
+            color: #0a3622;
+        }
+        
+        .tag-light {
+            background: rgba(111, 66, 193, 0.15);
+            color: #432874;
+        }
+        
+        /* Кнопки */
+        .btn-tech {
+            border-radius: 12px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn-tech:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-premium {
+            background: linear-gradient(135deg, var(--premium-color), #ffda6a);
+            color: #000;
+        }
+        
+        .btn-optimum {
+            background: linear-gradient(135deg, var(--optimum-color), #6ea8fe);
+            color: white;
+        }
+        
+        .btn-partition {
+            background: linear-gradient(135deg, var(--partition-color), #75b798);
+            color: white;
+        }
+        
+        .btn-light {
+            background: linear-gradient(135deg, var(--light-color), #a98eda);
+            color: white;
+        }
+        
+        /* Блок преимуществ */
+        .tech-highlight {
+            background: linear-gradient(120deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0) 100%);
+            padding: 3rem 0;
+            border-radius: 20px;
+            margin: 3rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2.5rem 0;
+            }
+            
+            .card-image-header {
+                height: 200px;
+                padding: 1.5rem;
+            }
+            
+            .section-header {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="bi bi-house-heart-fill text-warning"></i>
+                <span class="text-warning ms-2">Thermo</span><span class="text-white">Block</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#monolithic"><i class="bi bi-building me-2"></i>Монолитное</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#block"><i class="bi bi-boxes me-2"></i>Блочное</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacts"><i class="bi bi-telephone me-2"></i>Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <!-- Главный заголовок -->
+        <section class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-4 fw-bold mb-4">Системы строительства ThermoBlock</h1>
+                <p class="lead mb-4 col-lg-8 mx-auto">
+                    Инновационные технологии для энергоэффективного строительства. 
+                    Мы предлагаем полный спектр решений для монолитного и блочного строительства, 
+                    сочетающих прочность бетона и высокие теплоизоляционные свойства.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <span class="badge bg-warning text-dark fs-6 p-3">
+                        <i class="bi bi-thermometer-sun me-2"></i>Энергоэффективность
+                    </span>
+                    <span class="badge bg-primary fs-6 p-3">
+                        <i class="bi bi-lightning-charge me-2"></i>Быстрота монтажа
+                    </span>
+                    <span class="badge bg-success fs-6 p-3">
+                        <i class="bi bi-cash-coin me-2"></i>Экономия на отоплении
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция: Монолитное строительство -->
+        <section id="monolithic" class="category-section monolithic-section">
+            <div class="section-header">
+                <h2 class="h1 fw-bold"><i class="bi bi-building me-3"></i>Монолитное строительство</h2>
+                <p class="lead mb-0">
+                    Технологии несъемной опалубки для возведения теплых и прочных монолитных конструкций
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Карточка: Премиум -->
+                <div class="col-md-4">
+                    <div class="card card-tech card-premium h-100">
+                        <!-- Верхняя часть с картинкой и текстом -->
+                        <div class="card-image-header">
+                            <span class="image-badge bg-warning text-dark">ПРЕМИУМ</span>
+                            <div class="card-image-content">
+                                <h3 class="h3 fw-bold mb-2">Серия "Премиум"</h3>
+                                <p class="mb-1 opacity-90">Термоблоки серии 400</p>
+                                <p class="mb-0 opacity-80">Теплые монолитные стены 400 мм</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Основной контент -->
+                        <div class="card-body-tech">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-diagram-3 me-2"></i>Конструкция "сэндвич":</h5>
+                            <ul class="tech-specs">
+                                <li>Наружный бетонный панцирь: <strong>10 см</strong></li>
+                                <li>Внутренний бетонный панцирь: <strong>10 см</strong></li>
+                                <li>Утеплитель по середине: <strong>180 мм</strong></li>
+                                <li>Общая толщина стены: <strong>400 мм</strong></li>
+                            </ul>
+                            
+                            <div class="tech-tags">
+                                <span class="tag tag-premium">
+                                    <i class="bi bi-shield-check"></i> Макс. изоляция
+                                </span>
+                                <span class="tag tag-premium">
+                                    <i class="bi bi-house-heart"></i> Для коттеджей
+                                </span>
+                            </div>
+                            
+                            <button class="btn btn-premium btn-tech mt-2">
+                                Подробнее <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка: Оптимум -->
+                <div class="col-md-4">
+                    <div class="card card-tech card-optimum h-100">
+                        <!-- Верхняя часть с картинкой и текстом -->
+                        <div class="card-image-header">
+                            <span class="image-badge bg-primary">ОПТИМАЛЬНО</span>
+                            <div class="card-image-content">
+                                <h3 class="h3 fw-bold mb-2">Серия "Оптимум"</h3>
+                                <p class="mb-1 opacity-90">Блоки серии 300</p>
+                                <p class="mb-0 opacity-80">Монолитно-плиточные стены 300 мм</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Основной контент -->
+                        <div class="card-body-tech">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-layers-half me-2"></i>Конструкция стен:</h5>
+                            <ul class="tech-specs">
+                                <li>Внутренний бетонный монолит: <strong>10 см</strong></li>
+                                <li>Утеплитель посередине: <strong>13 см</strong></li>
+                                <li>Наружная бетонная панель: <strong>5 см</strong></li>
+                                <li>Общая толщина стены: <strong>300 мм</strong></li>
+                            </ul>
+                            
+                            <div class="tech-tags">
+                                <span class="tag tag-optimum">
+                                    <i class="bi bi-currency-exchange"></i> Оптимальная цена
+                                </span>
+                                <span class="tag tag-optimum">
+                                    <i class="bi bi-graph-up"></i> Лучшее соотношение
+                                </span>
+                            </div>
+                            
+                            <button class="btn btn-optimum btn-tech mt-2">
+                                Подробнее <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка: Перегородочные системы -->
+                <div class="col-md-4">
+                    <div class="card card-tech card-partition h-100">
+                        <!-- Верхняя часть с картинкой и текстом -->
+                        <div class="card-image-header">
+                            <span class="image-badge bg-success">УНИВЕРСАЛЬНЫЕ</span>
+                            <div class="card-image-content">
+                                <h3 class="h3 fw-bold mb-2">Перегородочные системы</h3>
+                                <p class="mb-1 opacity-90">Серия ПБ</p>
+                                <p class="mb-0 opacity-80">Для внутренних конструкций</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Основной контент -->
+                        <div class="card-body-tech">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-wrench-adjustable me-2"></i>Назначение:</h5>
+                            <ul class="tech-specs">
+                                <li><strong>Внутренние перегородки</strong> (несущие и ограждающие)</li>
+                                <li><strong>Подпорные стены</strong> и ограждения</li>
+                                <li><strong>Легкие фундаменты</strong> заборные и лестничные</li>
+                                <li><strong>Подвальные ограждения</strong></li>
+                            </ul>
+                            
+                            <div class="tech-tags">
+                                <span class="tag tag-partition">
+                                    <i class="bi bi-rulers"></i> 100/200 мм
+                                </span>
+                                <span class="tag tag-partition">
+                                    <i class="bi bi-gear-wide-connected"></i> Многофункциональные
+                                </span>
+                            </div>
+                            
+                            <button class="btn btn-partition btn-tech mt-2">
+                                Подробнее <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция: Блочное строительство -->
+        <section id="block" class="category-section block-section">
+            <div class="section-header">
+                <h2 class="h1 fw-bold"><i class="bi bi-boxes me-3"></i>Блочное строительство</h2>
+                <p class="lead mb-0">
+                    Бюджетные решения для традиционного блочного строительства с элементами технологии ThermoBlock
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <!-- Карточка: Термоблоки Лайт -->
+                    <div class="card card-tech card-light h-100">
+                        <!-- Верхняя часть с картинкой и текстом -->
+                        <div class="card-image-header">
+                            <div class="d-flex justify-content-between w-100">
+                                <span class="image-badge" style="background: var(--light-color);">БЮДЖЕТНЫЕ</span>
+                                <span class="image-badge new-badge bg-danger">НОВИНКА</span>
+                            </div>
+                            <div class="card-image-content">
+                                <h3 class="h3 fw-bold mb-2">Термоблоки "Лайт"</h3>
+                                <p class="mb-1 opacity-90">Гибридная технология</p>
+                                <p class="mb-0 opacity-80">Блочное строительство с элементами ThermoBlock</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Основной контент -->
+                        <div class="card-body-tech">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-lightbulb-fill me-2"></i>Особенности технологии:</h5>
+                            <ul class="tech-specs">
+                                <li><strong>Блочное строительство</strong> — как газобетон или пенополистиролбетон</li>
+                                <li><strong>Использование блоков серии 300</strong> в угловых узлах и перекрытиях</li>
+                                <li><strong>Колонны и перекрытия</strong> из блоков серии 300</li>
+                                <li><strong>Технология без ригельности и каркасности</strong></li>
+                                <li><strong>Конкуренция с традиционными блочными стенами</strong></li>
+                            </ul>
+                            
+                            <div class="tech-tags">
+                                <span class="tag tag-light">
+                                    <i class="bi bi-cash-stack"></i> Бюджетное решение
+                                </span>
+                                <span class="tag tag-light">
+                                    <i class="bi bi-puzzle"></i> Гибридная технология
+                                </span>
+                                <span class="tag tag-light">
+                                    <i class="bi bi-trophy"></i> Конкурент блочным стенам
+                                </span>
+                            </div>
+                            
+                            <button class="btn btn-light btn-tech mt-2">
+                                Узнать о новинке <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Дополнительная информация -->
+        <section class="tech-highlight">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <h2 class="h2 fw-bold mb-3">Технология будущего уже здесь</h2>
+                        <p class="lead mb-4">
+                            ThermoBlock сочетает преимущества монолитного и каркасного строительства, 
+                            обеспечивая скорость возведения, энергоэффективность и долговечность.
+                        </p>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-start">
+                                    <div class="bg-warning p-2 rounded me-3">
+                                        <i class="bi bi-thermometer-snow fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold">Тепло зимой, прохладно летом</h5>
+                                        <p class="mb-0">Стены сохраняют комфортную температуру круглый год</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-start">
+                                    <div class="bg-primary p-2 rounded me-3">
+                                        <i class="bi bi-speedometer fs-4 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold">В 2 раза быстрее</h5>
+                                        <p class="mb-0">Сокращение сроков строительства благодаря технологии</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <div class="bg-dark text-white p-4 rounded-3">
+                            <i class="bi bi-house-heart-fill display-1 text-warning"></i>
+                            <h4 class="h3 mt-3">Готовы начать?</h4>
+                            <button class="btn btn-warning btn-lg mt-3" onclick="scrollToContacts()">
+                                <i class="bi bi-chat-dots me-2"></i> Получить консультацию
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer id="contacts" class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h3 class="h4 mb-3">
+                        <i class="bi bi-house-heart-fill text-warning"></i>
+                        <span class="text-warning ms-2">Thermo</span><span class="text-white">Block</span>
+                    </h3>
+                    <p class="mb-4">Инновационные строительные технологии для энергоэффективного и быстрого строительства.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white fs-4"><i class="bi bi-telephone"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="bi bi-envelope"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="text-white fs-4"><i class="bi bi-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-4 mt-lg-0">
+                    <div class="card bg-dark border-secondary">
+                        <div class="card-body">
+                            <h4 class="h5 mb-3"><i class="bi bi-chat-square-text me-2"></i>Свяжитесь с нами</h4>
+                            <p class="mb-2"><i class="bi bi-telephone me-2"></i>+7 (XXX) XXX-XX-XX</p>
+                            <p class="mb-2"><i class="bi bi-envelope me-2"></i>info@thermoblock.ru</p>
+                            <p class="mb-0"><i class="bi bi-geo-alt me-2"></i>г. Москва, ул. Строителей, 15</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4 pt-4 border-top border-secondary">
+                <p class="mb-0">© 2024 ThermoBlock. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Плавная прокрутка к секциям
+        function scrollToContacts() {
+            const contacts = document.getElementById('contacts');
+            window.scrollTo({
+                top: contacts.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Эффект при наведении на кнопки карточек
+        document.querySelectorAll('.btn-tech').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

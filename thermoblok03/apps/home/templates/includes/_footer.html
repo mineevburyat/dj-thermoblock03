@@ -2,18 +2,17 @@
 
 <footer class="footer bg-dark text-white pt-5 pb-4">
     <div class="container">
-        <h3 class="text-center hotlogo display-6">Мы идеальны для качественного малоэтажного строительства!</h3>
+        <h3 class="text-center coollogo display-6"><strong>Мы идеальны для качественного малоэтажного строительства!</strong></h3>
         <div class="row">
             <!-- Колонка 1: Логотип и описание -->
             <div class="col-lg-3 mb-4">
                 <div class="footer-brand mb-3">
                     <div class="d-flex align-items-center">
                         <div class="w-25">
-                        <img src="{% static '/img/logograph.png'%}" alt="logo graph termoblock" class="img-fluid">
+                        <img src="{% static '/img/logofull.png'%}" alt="logo graph termoblock" class="img-fluid">
                         </div>
                         <h4 class="logo-text p-3">
-                            <span class="hotlogo">Термо</span>
-                            <span class="coollogo">Блок</span>
+                            <span class="hotlogo">Термо</span><span class="coollogo">Блок</span>
                             <br>
                             <span class="greytext small">строительные технологии</span>
                         </h4>
@@ -44,7 +43,7 @@
             </div>
             <!-- Колонка 3: Контакты -->
             <div class="col-lg-3 col-md-6 mb-4">
-                <h5 class="text-white mb-3">Контакты</h5>
+                <h5 class="text-white mb-3"><a href="{% url 'about:contact' %}" title="контакты">Контакты</a></h5>
                 <div itemscope itemtype="https://schema.org/LocalBusiness" class="office-info">
                     <!-- Название бизнеса -->
                     <h4 class="" itemprop="name">ООО "Строй Тех"</h4>

@@ -5,12 +5,11 @@ from .models import Products
 
 
 class IndexView(TemplateView):
-    template_name = 'products/index.html'
+    template_name = 'products/index4.html'
 
-class ProductListView(ListView):
+class ProductAllView(TemplateView):
     model = Products
-    template_name = 'products/list.html'
-    context_object_name = 'products'
+    template_name = 'products/product.html'
     
 class ProductDetailView(DetailView):
     model = Products
@@ -19,14 +18,16 @@ class ProductDetailView(DetailView):
     context_object_name = "product"
     ordering = ("pk",)
     
-def yandex_feed(request):
-    products = Products.objects.all()
-    context = {
-        'products': products,
-        'now': now().strftime("%Y-%m-%dT%H:%M"),
-        'url': 'https://thermoblock03.ru'
-    }
-    return render(request,
-                  template_name='products/yandex_feed.xml',
-                  context=context,
-                  content_type='application/xml')
+# def yandex_feed(request):
+#     products = Products.objects.all()
+#     context = {
+#         'products': products,
+#         'now': now().strftime("%Y-%m-%dT%H:%M"),
+#         'url': 'https://thermoblock03.ru'
+#     }
+#     return render(request,
+#                   template_name='products/yandex_feed.xml',
+#                   context=context,
+#                   content_type='application/xml')
+
+
