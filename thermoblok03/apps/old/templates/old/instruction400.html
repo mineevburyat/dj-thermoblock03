@@ -1,0 +1,57 @@
+{% extends "index.html" %}
+
+{% load static %}
+
+{% block title %}<title>Главная страница | ThermoBlock</title>{%endblock%}
+    {% block meta_description %}<meta name="description" content="Теплые дома из термоблока">{%endblock%}
+    {% block meta_keywords %}<meta name="keywords" content="термоблок, энергоэффективные дома, экономичное строительство">{%endblock%}
+    
+{% block content %}
+
+<section class="instruction">
+    <div class="top">
+        <h1 class="title">Инструкция по производству работ из теплоизоляционных блоков ТБ400</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="wrapper">
+                    <a href="{% static 'img_instruction/tb400_0.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_0.png' %}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{% static 'img_instruction/tb400_01.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_01.png' %}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{% static 'img_instruction/tb400_1.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_1.png' %}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{% static 'img_instruction/tb400_2.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_2.png' %}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{% static 'img_instruction/tb400_3.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_3.png' %}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{% static 'img_instruction/tb400_4.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_4.png' %}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{% static 'img_instruction/tb400_5.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_5.png' %}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{% static 'img_instruction/tb400_6.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_6.png' %}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{% static 'img_instruction/tb400_7.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_7.png' %}" alt="" class="img-fluid">
+                    </a>
+                    <a href="{% static 'img_instruction/tb400_8.png' %}" download>
+                        <img src="{% static 'img_instruction/tb400_8.png' %}" alt="" class="img-fluid">
+                    </a>
+                    {% comment %} <a href="https://thermoblock03.ru/assets/manager/instruction/9.png" download>
+                        <img src="https://thermoblock03.ru/assets/manager/instruction/9.png" alt="" class="img-fluid">
+                    </a> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
