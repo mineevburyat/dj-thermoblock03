@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'captcha',
+    'apps.old',
     'apps.home',
     'apps.about',
     'apps.feedback',

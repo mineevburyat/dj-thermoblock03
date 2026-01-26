@@ -6,7 +6,7 @@ from django.template import engines
 
 class HomeView(TemplateView):
     """Главная страница"""
-    template_name = 'home/index.html'
+    template_name = 'index.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

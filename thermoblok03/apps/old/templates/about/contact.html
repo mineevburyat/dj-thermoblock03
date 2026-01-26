@@ -1,0 +1,949 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+ThermoBlock | Контакты
+{% endblock %}
+
+{% block meta_description %}
+ThermoBlock - реквизиты, адреса, ключевые сотрудники
+{% endblock meta_description %}
+
+{% block meta_keywords %}
+ThermoBlock, Термоблок, Строй Тех, контакты, реквизиты, производство, строительство
+{% endblock meta_keywords %}
+
+{% block extra_css %}
+<style>
+    .card {
+        border-radius: 10px;
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+    
+    .list-unstyled li {
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .list-unstyled li:last-child {
+        border-bottom: none;
+    }
+    
+    a.text-decoration-none:hover {
+        text-decoration: underline !important;
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .display-5 {
+            font-size: 2rem;
+        }
+        
+        .fs-5 {
+            font-size: 1.25rem !important;
+        }
+        
+        .fs-6 {
+            font-size: 1rem !important;
+        }
+    }
+       @media print {
+        body * {
+            visibility: hidden;
+        }
+        
+        #company-info-print,
+        #company-info-print * {
+            visibility: visible;
+        }
+        
+        #company-info-print {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .print-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #000;
+        }
+        
+        .print-header h1 {
+            font-size: 20px;
+            margin: 0 0 5px 0;
+            color: #000;
+        }
+        
+        .print-section {
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+        }
+        
+        .print-section h3 {
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            color: #000;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        
+        .print-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .print-list li {
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .print-footer {
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #000;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Скрыть элементы при печати */
+        .no-print,
+        button,
+        .breadcrumb,
+        .card-header,
+        .card-footer {
+            display: none !important;
+        }
+    }
+    
+    /* Стили для кнопки печати */
+    .print-btn {
+        transition: all 0.3s;
+    }
+    
+    .print-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-2">
+    <!-- Хлебные крошки -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home:index' %}">Главная</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Контакты</li>
+        </ol>
+    </nav>
+
+    <!-- Заголовок -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-primary mb-3">Контакты и карточка предприятия</h1>
+        <p class="lead">Свяжитесь с нами любым удобным способом</p>
+    </div>
+
+    <div class="row">
+        <!-- Левая колонка: Карточка предприятия -->
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="h5 mb-0">
+                            <i class="fas fa-building me-2"></i>ООО "Строй Тех"
+                        </h3>
+                        <div>
+                            <button onclick="printSimple()" class="btn btn-sm btn-light" title="Печать реквизитов">
+                                <i class="fas fa-print me-1"></i> Печать
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" id="company-info">
+                    <!-- Логотип и название -->
+                    <div class="text-center mb-4">
+                        <h4 class="mb-3">
+                            <span class="fs-2 fw-bold hotlogo">Thermo</span><span class="fs-2 fw-bold coollogo">Block</span>
+                        </h4>
+                        <p class="text-muted mb-0">Производитель несъемной опалубки для теплых монолитных стен</p>
+                        <p class="text-muted mb-0">Строительство малоэтажных домов и зданий по технологии ThermoBlock</p>
+                    </div>
+
+                    <!-- Реквизиты -->
+                    <div class="mb-4">
+                        <h5 class="h6 fw-bold mb-3">
+                            <i class="fas fa-file-invoice me-2 text-primary"></i>Реквизиты компании
+                        </h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-barcode me-2 text-muted"></i>
+                                <span class="fw-medium">ИНН/КПП:</span> 0326560590/032601001
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-id-card me-2 text-muted"></i>
+                                <span class="fw-medium">ОГРН:</span> 1180327006221
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-university me-2 text-muted"></i>
+                                <span class="fw-medium">ОКПО:</span> 28793309
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-credit-card me-2 text-muted"></i>
+                                <span class="fw-medium">Расчетный счет:</span> 40702810109160004605
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-landmark me-2 text-muted"></i>
+                                <span class="fw-medium">Банк:</span> Бурятское отделение №8601 ПАО Сбербанк г. Улан-Удэ
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-hashtag me-2 text-muted"></i>
+                                <span class="fw-medium">БИК:</span> 048142604
+                            </li>
+                            <li>
+                                <i class="fas fa-hashtag me-2 text-muted"></i>
+                                <span class="fw-medium">К/с:</span> 30101810400000000604
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Юридический адрес -->
+                    <div class="mb-4">
+                        <h5 class="h6 fw-bold mb-3">
+                            <i class="fas fa-map-marker-alt me-2 text-primary"></i>Юридический адрес
+                        </h5>
+                        <p class="mb-0">
+                            670000, Россия, Республика Бурятия, г. Улан-Удэ, ул. Грачевская 49 офис 1
+                        </p>
+                    </div>
+
+                    <!-- Фактический адрес -->
+                    <div>
+                        <h5 class="h6 fw-bold mb-3">
+                            <i class="fas fa-warehouse me-2 text-primary"></i>Производство и склад
+                        </h5>
+                        <p class="mb-0">
+                            670045, Россия, Республика Бурятия, г. Улан-Удэ, ул. Николая Петрова 70 офис 309
+                        </p>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="text-center">
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Реквизиты актуальны на {% now "d.m.Y" %}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Правая колонка: Контактная информация -->
+        <div class="col-lg-8">
+            <div class="row g-4">
+                <!-- Телефоны -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-4">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3">
+                                    <i class="fas fa-phone fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <h4 class="h5 fw-bold mb-3">Телефоны</h4>
+                            <div class="mb-3">
+                                <a href="tel:+79644106320" class="text-decoration-none">
+                                    <div class="d-flex align-items-center justify-content-center mb-2">
+                                        <i class="fas fa-phone-alt me-2 text-primary"></i>
+                                        <span class="fs-5 fw-bold">+7 (3012) 20-63-20</span>
+                                    </div>
+                                </a>
+                                <p class="text-muted small mb-0">Многоканальный</p>
+                            </div>
+                            <div class="mb-3">
+                                <a href="tel:+79644106320" class="text-decoration-none">
+                                    <div class="d-flex align-items-center justify-content-center mb-2">
+                                        <i class="fab fa-whatsapp me-2 text-success"></i>
+                                        <span class="fs-6 fw-bold">+7 (3012) 20-63-20</span>
+                                    </div>
+                                </a>
+                                <p class="text-muted small mb-0">WhatsApp / Telegram</p>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-top text-center py-3">
+                            <p class="mb-0 small text-muted">
+                                <i class="fas fa-clock me-1"></i>
+                                Пн-Пт: 9:00-18:00, Сб: 10:00-15:00
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email и сайт -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="mb-4">
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3">
+                                    <i class="fas fa-envelope fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <h4 class="h5 fw-bold mb-3">Электронная почта</h4>
+                            <div class="mb-4">
+                                <a href="mailto:info@thermoblock.ru" class="text-decoration-none">
+                                    <div class="d-flex align-items-center justify-content-center mb-2">
+                                        <i class="fas fa-at me-2 text-primary"></i>
+                                        <span class="fs-6 fw-bold">info@thermoblock.ru</span>
+                                    </div>
+                                </a>
+                                <p class="text-muted small mb-0">Общие вопросы</p>
+                            </div>
+                            <div class="mb-4">
+                                <a href="mailto:sales@thermoblock.ru" class="text-decoration-none">
+                                    <div class="d-flex align-items-center justify-content-center mb-2">
+                                        <i class="fas fa-shopping-cart me-2 text-primary"></i>
+                                        <span class="fs-6 fw-bold">sales@thermoblock.ru</span>
+                                    </div>
+                                </a>
+                                <p class="text-muted small mb-0">Отдел продаж</p>
+                            </div>
+                            <div>
+                                <a href="mailto:project@thermoblock.ru" class="text-decoration-none">
+                                    <div class="d-flex align-items-center justify-content-center mb-2">
+                                        <i class="fas fa-drafting-compass me-2 text-primary"></i>
+                                        <span class="fs-6 fw-bold">project@thermoblock.ru</span>
+                                    </div>
+                                </a>
+                                <p class="text-muted small mb-0">Проектирование</p>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-top text-center py-3">
+                            <a href="https://thermoblock.ru" class="text-decoration-none">
+                                <i class="fas fa-globe me-1 text-primary"></i>
+                                <span class="fw-medium">thermoblock.ru</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Блок карты -->
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-light py-3">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-map-marked-alt me-2 text-primary"></i>
+                                Наши адреса
+                            </h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="row g-0">
+                                <div class="col-md-8">
+                                    <div class="ratio ratio-16x9">
+                                        <!-- Контейнер для карты -->
+                                        <div id="yandex-map" style="width: 100%; height: 400px;"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-4">
+                                        <h5 class="h6 fw-bold mb-3">Выберите объект:</h5>
+                                        
+                                        <!-- Переключатель между метками -->
+                                        <div class="mb-4">
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="radio" name="locationType" 
+                                                    id="officeLocation" value="office" checked 
+                                                    onchange="showLocation('office')">
+                                                <label class="form-check-label" for="officeLocation">
+                                                    <i class="fas fa-building me-2 text-primary"></i>
+                                                    <strong>Офис в Улан-Удэ</strong>
+                                                </label>
+                                                <div class="small text-muted ms-4 mt-1">
+                                                    Улан-Удэ, ул. Н. Петрова, д. 70, офис 309, "БизнесЛайф"
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="locationType" 
+                                                    id="factoryLocation" value="factory"
+                                                    onchange="showLocation('factory')">
+                                                <label class="form-check-label" for="factoryLocation">
+                                                    <i class="fas fa-warehouse me-2 text-warning"></i>
+                                                    <strong>Производство и склад</strong>
+                                                </label>
+                                                <div class="small text-muted ms-4 mt-1">
+                                                    Республика Бурятия, г. Улан-Удэ, ул. Н. Нищенко, д. 19а
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Информация о текущем местоположении -->
+                                        <div id="locationInfo">
+                                            <!-- Контент будет обновляться JavaScript -->
+                                        </div>
+                                        
+                                        <!-- Кнопки для построения маршрута -->
+                                        <div class="mt-4">
+                                            <h6 class="fw-bold mb-2">Построить маршрут:</h6>
+                                            <div class="btn-group w-100" role="group">
+                                                <button type="button" class="btn btn-outline-primary btn-sm" 
+                                                        onclick="buildRoute('car')">
+                                                    <i class="fas fa-car"></i> На машине
+                                                </button>
+                                                <button type="button" class="btn btn-outline-primary btn-sm" 
+                                                        onclick="buildRoute('pedestrian')">
+                                                    <i class="fas fa-walking"></i> Пешком
+                                                </button>
+                                                <button type="button" class="btn btn-outline-primary btn-sm" 
+                                                        onclick="buildRoute('public')">
+                                                    <i class="fas fa-bus"></i> Общественный транспорт
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Отделы и сотрудники -->
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-light py-3">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-users me-2 text-primary"></i>
+                                Ключевые сотрудники
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div class="text-center p-3">
+                                        <div class="mb-3">
+                                            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3">
+                                                <i class="fas fa-user-tie fa-2x text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <h5 class="h6 fw-bold mb-1">Жаргалов Алдар</h5>
+                                        <p class="text-muted small mb-2">директор</p>
+                                        <div class="small">
+                                            <a href="mailto:director@thermoblock.ru" class="text-decoration-none d-block mb-1">
+                                                <i class="fas fa-envelope me-1"></i>
+                                                director@thermoblock.ru
+                                            </a>
+                                            <a href="tel:+79644106320" class="text-decoration-none">
+                                                <i class="fas fa-phone me-1"></i>
+                                                +7 (964) 410-63-20
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="text-center p-3">
+                                        <div class="mb-3">
+                                            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3">
+                                                <i class="fas fa-chart-line fa-2x text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <h5 class="h6 fw-bold mb-1">Содномов Михаил</h5>
+                                        <p class="text-muted small mb-2">Начальник отдела продаж</p>
+                                        <div class="small">
+                                            <a href="mailto:sales@thermoblock.ru" class="text-decoration-none d-block mb-1">
+                                                <i class="fas fa-envelope me-1"></i>
+                                                sales@thermoblock.ru
+                                            </a>
+                                            <a href="tel:+79644106320" class="text-decoration-none">
+                                                <i class="fas fa-phone me-1"></i>
+                                                +7 (964) 410-63-20
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="text-center p-3">
+                                        <div class="mb-3">
+                                            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex p-3">
+                                                <i class="fas fa-drafting-compass fa-2x text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <h5 class="h6 fw-bold mb-1">Степанов Олег</h5>
+                                        <p class="text-muted small mb-2">Прораб</p>
+                                        <div class="small">
+                                            <a href="mailto:develop@thermoblock.ru" class="text-decoration-none d-block mb-1">
+                                                <i class="fas fa-envelope me-1"></i>
+                                                develop@thermoblock.ru
+                                            </a>
+                                            <a href="tel:+79644106320" class="text-decoration-none">
+                                                <i class="fas fa-phone me-1"></i>
+                                                +7 (964) 410-63-20
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Форма обратной связи -->
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-primary text-white py-3">
+                            <h3 class="h5 mb-0">
+                                <i class="fas fa-comment-dots me-2"></i>
+                                Написать нам
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="{% url 'feedback:ajax' %}">
+                                {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="name" class="form-label">Ваше имя *</label>
+                                        <input type="text" class="form-control" id="name" name="name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label">Телефон *</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Email *</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="subject" class="form-label">Тема сообщения</label>
+                                        <select class="form-select" id="subject" name="subject">
+                                            <option value="general">Общий вопрос</option>
+                                            <option value="sales">Запрос по продукции</option>
+                                            <option value="project">Проектирование</option>
+                                            <option value="construction">Строительство под ключ</option>
+                                            <option value="cooperation">Сотрудничество</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="message" class="form-label">Сообщение *</label>
+                                        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="privacy" required>
+                                            <label class="form-check-label" for="privacy">
+                                                Я согласен на <a href="{% url 'about:privacy' %}">обработку персональных данных</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary px-4">
+                                            <i class="fas fa-paper-plane me-2"></i>Отправить сообщение
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Простая функция печати
+function printSimple() {
+    // Создаем новое окно с контентом для печати
+    const printWindow = window.open('', '_blank');
+    
+    const currentDate = new Date().toLocaleDateString('ru-RU');
+    const currentTime = new Date().toLocaleTimeString('ru-RU');
+    const currentYear = new Date().getFullYear();
+    
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Реквизиты ООО "Строй Тех"</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                
+                .header {
+                    text-align: center;
+                    border-bottom: 2px solid #000;
+                    padding-bottom: 20px;
+                    margin-bottom: 30px;
+                }
+                
+                .header h1 {
+                    color: #000;
+                    margin: 0 0 10px 0;
+                    font-size: 24px;
+                }
+                
+                .header p {
+                    margin: 0;
+                    color: #666;
+                }
+                
+                .section {
+                    margin-bottom: 25px;
+                    page-break-inside: avoid;
+                }
+                
+                .section h2 {
+                    color: #000;
+                    font-size: 18px;
+                    border-bottom: 1px solid #ccc;
+                    padding-bottom: 5px;
+                    margin: 0 0 15px 0;
+                }
+                
+                .details {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                
+                .details td {
+                    padding: 8px 0;
+                    border-bottom: 1px dashed #eee;
+                    vertical-align: top;
+                }
+                
+                .details td:first-child {
+                    width: 40%;
+                    font-weight: bold;
+                }
+                
+                .footer {
+                    margin-top: 40px;
+                    padding-top: 20px;
+                    border-top: 1px solid #ccc;
+                    text-align: center;
+                    color: #666;
+                    font-size: 12px;
+                }
+                
+                @media print {
+                    body {
+                        padding: 10px;
+                    }
+                    
+                    .no-print {
+                        display: none;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>ООО "Строй Тех" (Торговая марка THERMOBLOCK)</h1>
+                <p>Производитель несъемной опалубки для монолитных энергоэффективных стен</p>
+                <p>Реквизиты актуальны на ${currentDate}</p>
+            </div>
+            
+            <div class="section">
+                <h2>Реквизиты компании</h2>
+                <table class="details">
+                    <tr>
+                        <td>Полное наименование:</td>
+                        <td>Общество с ограниченной ответственностью "Строй Тех"</td>
+                    </tr>
+                    <tr>
+                        <td>Краткое наименование:</td>
+                        <td>ООО "Строй Тех"</td>
+                    </tr>
+                    <tr>
+                        <td>Торговая марка:</td>
+                        <td>THERMOBLOCK</td>
+                    </tr>
+                    <tr>
+                        <td>ИНН/КПП:</td>
+                        <td>0326560590/032601001</td>
+                    </tr>
+                    <tr>
+                        <td>ОГРН:</td>
+                        <td>1180327006221</td>
+                    </tr>
+                    <tr>
+                        <td>ОКПО:</td>
+                        <td>28793309</td>
+                    </tr>
+                    <tr>
+                        <td>Расчетный счет:</td>
+                        <td>40702810109160004605</td>
+                    </tr>
+                    <tr>
+                        <td>Банк:</td>
+                        <td>Бурятское отделение №8601 ПАО Сбербанк г. Улан-Удэ</td>
+                    </tr>
+                    <tr>
+                        <td>БИК:</td>
+                        <td>048142604</td>
+                    </tr>
+                    <tr>
+                        <td>Корреспондентский счет:</td>
+                        <td>30101810400000000604</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>Адреса</h2>
+                <table class="details">
+                    <tr>
+                        <td>Юридический адрес:</td>
+                        <td>670000, Россия, Республика Бурятия, г. Улан-Удэ, ул. Грачевская 49 офис 1</td>
+                    </tr>
+                    <tr>
+                        <td>Производство и склад:</td>
+                        <td>670045, Россия, Республика Бурятия, г. Улан-Удэ, ул. Николая Петрова 70 офис 309</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>Контакты</h2>
+                <table class="details">
+                    <tr>
+                        <td>Телефон:</td>
+                        <td>+7 (3012) 20-63-20</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Email:</td>
+                        <td>info@thermoblock.ru</td>
+                    </tr>
+                    <tr>
+                        <td>Сайт:</td>
+                        <td>https://thermoblock.ru</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>Режим работы</h2>
+                <table class="details">
+                    <tr>
+                        <td>Понедельник-Пятница:</td>
+                        <td>9:00 - 18:00</td>
+                    </tr>
+                    <tr>
+                        <td>Суббота:</td>
+                        <td>10:00 - 16:00</td>
+                    </tr>
+                    <tr>
+                        <td>Воскресенье:</td>
+                        <td>выходной</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="footer">
+                <p>© ${new Date().getFullYear()} ООО "Строй Тех". Все права защищены.</p>
+                <p>2016 - ${currentYear} ThermoBlock - зарегестрированная торговая марка</p>
+                <p>Распечатано: ${currentDate} ${currentTime}</p>
+            </div>
+            
+            <script>
+                window.onload = function() {
+                    window.print();
+                    setTimeout(function() {
+                        window.close();
+                    }, 100);
+                };
+            <\/script>
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+}
+</script>
+
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey=5932660d-1538-4f9f-9ff0-479507bf6643&lang=ru_RU" type="text/javascript"></script>
+
+<script>
+// Координаты объектов (замените на реальные)
+const locations = {
+    office: {
+        name: "Офис ООО 'Строй Тех'",
+        address: "670045, Россия, Республика Бурятия, г. Улан-Удэ, ул. Николая Петрова 70, БЦ Бизнес-Лайф, офис 309",
+        coords: [51.843401, 107.647169], 
+        hintContent: "Наш офис",
+        balloonContent: `
+            <div style="padding: 10px;">
+                <h4 style="margin: 0 0 10px 0;">Офис ThermoBlock</h4>
+                <p style="margin: 0 0 5px 0;">г. Улан-Удэ, ул. Николая Петрова 70, БЦ Бизнес-Лайф, офис 309</p>
+                <p style="margin: 0 0 5px 0;">📞 +7 (3012) 20-63-20</p>
+                <p style="margin: 0;">🕐 Пн-Пт: 9:00-18:00</p>
+                <p style="margin: 0;">🕐 Сб: 10:00-16:00</p>
+            </div>
+        `,
+        iconColor: '#0d6efd'
+    },
+    factory: {
+        name: "Производство и склад ThermoBlock",
+        address: "г. Улан-Удэ, ул. Николая Нищенко, д. 19а",
+        coords: [51.839279, 107.698758], 
+        hintContent: "Наше производство",
+        balloonContent: `
+            <div style="padding: 10px;">
+                <h4 style="margin: 0 0 10px 0;">Производство ThermoBlock</h4>
+                <p style="margin: 0 0 5px 0;">г. Улан-Удэ, ул. Николая Нищенко, д.19а</p>
+                <p style="margin: 0 0 5px 0;">📞 +7 (3012) 20-63-20</p>
+                <p style="margin: 0;">🕐 Пн-Сб: 9:00-18:00</p>
+            </div>
+        `,
+        iconColor: '#ffc107'
+    }
+};
+
+let map, officePlacemark, factoryPlacemark;
+
+// Инициализация карты
+ymaps.ready(init);
+
+function init() {
+    // Создаем карту
+    map = new ymaps.Map('yandex-map', {
+        center: locations.office.coords,
+        zoom: 14,
+        controls: ['zoomControl', 'fullscreenControl']
+    });
+    
+    // Создаем метку офиса
+    officePlacemark = new ymaps.Placemark(locations.office.coords, {
+        hintContent: locations.office.hintContent,
+        balloonContent: locations.office.balloonContent
+    }, {
+        preset: 'islands#icon',
+        iconColor: locations.office.iconColor
+    });
+    
+    // Создаем метку производства
+    factoryPlacemark = new ymaps.Placemark(locations.factory.coords, {
+        hintContent: locations.factory.hintContent,
+        balloonContent: locations.factory.balloonContent
+    }, {
+        preset: 'islands#icon',
+        iconColor: locations.factory.iconColor
+    });
+    
+    // Добавляем метки на карту
+    map.geoObjects.add(officePlacemark);
+    map.geoObjects.add(factoryPlacemark);
+    
+    // Показываем офис по умолчанию
+    showLocation('office');
+    
+    // Добавляем кластеризатор (если меток будет много)
+    // var clusterer = new ymaps.Clusterer();
+    // clusterer.add(officePlacemark);
+    // clusterer.add(factoryPlacemark);
+    // map.geoObjects.add(clusterer);
+}
+
+// Показать конкретное местоположение
+function showLocation(type) {
+    const location = locations[type];
+    
+    // Центрируем карту на выбранном месте
+    map.setCenter(location.coords, 16);
+    
+    // Открываем балун у выбранной метки
+    if (type === 'office') {
+        officePlacemark.balloon.open();
+        factoryPlacemark.balloon.close();
+    } else {
+        factoryPlacemark.balloon.open();
+        officePlacemark.balloon.close();
+    }
+    
+    // Обновляем информацию в боковой панели
+    updateLocationInfo(type);
+}
+
+// Обновить информацию в боковой панели
+function updateLocationInfo(type) {
+    const location = locations[type];
+    const infoDiv = document.getElementById('locationInfo');
+    
+    infoDiv.innerHTML = `
+        <h5 class="fw-bold mb-2">${location.name}</h5>
+        <p class="mb-2">
+            <i class="fas fa-map-marker-alt me-2 text-danger"></i>
+            ${location.address}
+        </p>
+        <div class="small text-muted">
+            <p class="mb-1">
+                <i class="fas fa-phone me-2"></i>
+                Телефон: ${type === 'office' ? '+7 (3012) 22-63-20' : '+7 (3012) 20-63-20'}
+            </p>
+            <p class="mb-0">
+                <i class="fas fa-clock me-2"></i>
+                Часы работы: ${type === 'office' ? 'Пн-Пт: 9:00-18:00' : 'Сб: 10:00-16:00'}
+            </p>
+        </div>
+    `;
+}
+
+// Построить маршрут
+function buildRoute(type) {
+    const selectedLocation = document.querySelector('input[name="locationType"]:checked').value;
+    const coords = locations[selectedLocation].coords;
+    
+    // Открываем Яндекс.Навигатор с маршрутом
+    let yandexNavUrl = `https://yandex.ru/maps/?rtext=~${coords[0]},${coords[1]}`;
+    
+    // Добавляем тип маршрута
+    if (type === 'pedestrian') {
+        yandexNavUrl += '&rtt=pd';
+    } else if (type === 'public') {
+        yandexNavUrl += '&rtt=mt';
+    } else {
+        yandexNavUrl += '&rtt=auto';
+    }
+    
+    window.open(yandexNavUrl, '_blank');
+}
+
+// Получить координаты по адресу (если нужно геокодирование)
+function geocodeAddress(address, callback) {
+    ymaps.geocode(address).then(function (res) {
+        var firstGeoObject = res.geoObjects.get(0);
+        var coords = firstGeoObject.geometry.getCoordinates();
+        callback(coords);
+    });
+}
+</script>
+
+
+{% endblock %}
