@@ -5,7 +5,7 @@ from .models import Products
 
 
 class IndexView(TemplateView):
-    template_name = 'products/index4.html'
+    template_name = 'products/index5.html'
 
 class ProductAllView(TemplateView):
     model = Products
