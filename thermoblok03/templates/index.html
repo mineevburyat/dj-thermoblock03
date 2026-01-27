@@ -7,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block title %}<title>Главная страница | ThermoBlock</title>{%endblock%}
-    {% block meta_description %}<meta name="description" content="Теплые дома из термоблока">{%endblock%}
-    {% block meta_keywords %}<meta name="keywords" content="термоблок, энергоэффективные дома, экономичное строительство">{%endblock%}
+    <title>{% block title %}Главная страница | ThermoBlock{%endblock%}</title>
+    <meta name="description" content="{% block meta_description %}Теплые дома из термоблока{%endblock%}">
+    <meta name="keywords" content="{% block meta_keywords %}термоблок, энергоэффективные дома, экономичное строительство{%endblock%}">
     <link rel="shortcut icon" href="{% static '/favicon.ico' %}">
     <link rel="icon" href="{% static '/favicon.ico' %}" type="image/x-icon">
     <!-- <link rel="canonical" href="index.html"> -->
@@ -53,9 +53,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-12">
-                    <div class="logo">
+                    <a href={% url 'home:index' %} class="logo">
                         <img src="{% static 'old/img/logo.png' %}" alt="" class="img-fluid">
-                    </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-4">
                     <div class="wrapper">

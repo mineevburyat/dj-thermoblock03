@@ -257,7 +257,7 @@ def _send_to_crm(calculation_request):
             admin_subject,
             admin_message,
             settings.DEFAULT_FROM_EMAIL,
-            [settings.ADMIN_EMAIL],
+            settings.ADMINS_EMAILS,
             fail_silently=False,
         )
         return True

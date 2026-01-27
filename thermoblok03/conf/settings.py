@@ -18,7 +18,8 @@ env = environ.Env(
     EMAIL_PORT=(int, 587),
     EMAIL_USE_TLS=(bool, True),
     EMAIL_USE_SSL=(bool,False),
-    CSRF_TRUSTED_ORIGINS=(list,[])
+    CSRF_TRUSTED_ORIGINS=(list,[]),
+    ADMINS_EMAILS = (list, ["mineevburyat@yandex.ru"])
 )
 env.read_env(BASE_DIR / '.env')
 
@@ -161,7 +162,7 @@ EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
-ADMIN_EMAIL = env('ADMIN_EMAIL')
+ADMINS_EMAILS = env('ADMINS_EMAILS')
 
 # CSRF
 CSRF_TRUSTED_ORIGINS = env('CSRF_TRUSTED_ORIGINS')
