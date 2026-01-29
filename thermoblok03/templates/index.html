@@ -177,7 +177,7 @@
                 "Wednesday",
                 "Thursday",
                 "Friday"
-            ],
+                ],
             "opens": "09:00",
             "closes": "18:00"
             },
@@ -218,45 +218,45 @@
             "description": "Производство бетонной несъемной опалубки ThermoBlock"
             }
         ],
-    "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Услуги строительной компании",
-        "itemListElement": [
-        {
+        "hasOfferCatalog": {
             "@type": "OfferCatalog",
-            "name": "Строительство домов",
+            "name": "Услуги строительной компании",
             "itemListElement": [
-            {"@type": "Offer", "name": "дома"},
-            {"@type": "Offer", "name": "коттетжи"},
-            {"@type": "Offer", "name": "гаражи"},
-            {"@type": "Offer", "name": "промышленные здания"},
-            {"@type": "Offer", "name": "отдельные офисы"},
-            {"@type": "Offer", "name": "элементы ландшафтного дизайна"}
+            {
+                "@type": "OfferCatalog",
+                "name": "Строительство домов",
+                "itemListElement": [
+                {"@type": "Offer", "name": "дома"},
+                {"@type": "Offer", "name": "коттетжи"},
+                {"@type": "Offer", "name": "гаражи"},
+                {"@type": "Offer", "name": "промышленные здания"},
+                {"@type": "Offer", "name": "отдельные офисы"},
+                {"@type": "Offer", "name": "элементы ландшафтного дизайна"}
+                ]
+            },
+            {
+                "@type": "OfferCatalog",
+                "name": "Ремонтные работы",
+                "itemListElement": [
+                {"@type": "Offer", "name": "Капитальный ремонт"}
+                ]
+            }
             ]
         },
-        {
-            "@type": "OfferCatalog",
-            "name": "Ремонтные работы",
-            "itemListElement": [
-            {"@type": "Offer", "name": "Капитальный ремонт"},
-            ]
-        }
-        ]
-    },
-    "keywords": "строительство, ремонт, отделка, дом под ключ, строительная компания, Улан-Удэ",
-    "knowsAbout": [
-        "Строительство",
-        "Архитектура",
-        "Дизайн интерьеров",
-        "Инженерные системы",
-        "Сметное дело",
-        "Проектирование"
-    ],
-    "award": [
-        "Золотая медаль выставки стройиндустрия 2018",
-        "Диплом за участие в выставке Стройка 2016",
-        "Награда за продвижение бетонных блоков Байкал Экспо 2017"
-    ],
+        "keywords": "строительство, ремонт, отделка, дом под ключ, строительная компания, Улан-Удэ",
+        "knowsAbout": [
+            "Строительство",
+            "Архитектура",
+            "Дизайн интерьеров",
+            "Инженерные системы",
+            "Сметное дело",
+            "Проектирование"
+        ],
+        "award": [
+            "Золотая медаль выставки стройиндустрия 2018",
+            "Диплом за участие в выставке Стройка 2016",
+            "Награда за продвижение бетонных блоков Байкал Экспо 2017"
+        ],
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.8",
@@ -314,9 +314,7 @@
             "longitude": "107.647169"
             },
             "geoRadius": "1950000"
-        }
-        }
-        
+            },
         "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+7 (3012) 20-63-20",
@@ -324,17 +322,18 @@
             "availableLanguage": ["Russian"],
             "contactOption": "TollFree",
             "areaServed": ["RU"],
-            "description": "Телефон приёмной",
-
+            "description": "Телефон приёмной"
+        },
+        "BreadcrumbList": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Главная",
+                "item": "https://thermoblock.ru/"
+            }]
         }
-    
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Главная",
-            "item": "https://thermoblock.ru/"
-        }]
+    }
     </script>
 </head>
 
