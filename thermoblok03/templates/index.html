@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{% block title %}Главная страница | ThermoBlock{%endblock%}</title>
-    <meta name="description" content="{% block meta_description %}Теплые дома из термоблока{%endblock%}">
-    <meta name="keywords" content="{% block meta_keywords %}термоблок, энергоэффективные дома, экономичное строительство{%endblock%}">
+    <meta name="description" content="{% block meta_description %}Строительные блоки ThermoBlock в Улан-Удэ. Проектирование и строительство теплых и надежных домов, коттеджей и производственные строений из термоблока.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}строительство домов, построить дом, коттедж, dom, проекты домов, построить дом, строение, какой дом построить{% endblock %}">
     <link rel="shortcut icon" href="{% static '/favicon.ico' %}">
     <link rel="icon" href="{% static '/favicon.ico' %}" type="image/x-icon">
     <!-- <link rel="canonical" href="index.html"> -->
-
+    <link rel="canonical" href="https://thermoblock.ru/">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css" />
@@ -27,6 +27,41 @@
     <link href="{% static 'old/css/media.css' %}" rel="stylesheet">
     <link href="{% static 'old/css/animate.css' %} " rel="stylesheet">
     {% block extra_css %}
+    <style>
+    /* Наклонная движущаяся полоска */
+    .btn-diagonal-stripe {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-diagonal-stripe::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -60%;
+        width: 40%;
+        height: 200%;
+        background: linear-gradient(
+            to right,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            rgba(255, 255, 255, 0.5),
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        transform: rotate(30deg);
+        animation: diagonal-shine 3s infinite linear;
+    }
+    
+    @keyframes diagonal-shine {
+        0% {
+            left: -60%;
+        }
+        100% {
+            left: 120%;
+        }
+    }
+    </style>
     {% endblock %}
     <script src="{% static 'old/feedback/form-processing.js' %}"></script>
     <!-- Yandex.Metrika counter -->
@@ -45,7 +80,262 @@
         });
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/100570341" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-   
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Строительные блоки ThermoBlock в Улан-Удэ. Строительство домов, коттеджей и производственных строений из термоблока."/>
+    <meta property="og:url" content="https://thermoblock/"/>
+    <meta property="og:image" content="https://thermoblock.ru{% static 'logo.svg'%}"/>
+    <meta property="og:description" content="Строительная технология ThermoBlock позволяет контролировать основные этапы строительства теплой и надежной монолитной стены. ThermoBlock зарегистрированная торговая марка. Время строить из Thermoblock!"/>
+    <meta property="og:image:width" content="355">
+    <meta property="og:image:height" content="253">
+    <meta property="og:image:alt" content="логотип ThermoBlock">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="ООО 'Строй Тех'">
+    <meta property="business:contact_data:street_address" content="Улан-Удэ, ул. Н. Петрова, д. 70, офис 309, 'БизнесЛайф'">
+    <meta property="business:contact_data:locality" content="Улан-Удэ">
+    <meta property="business:contact_data:postal_code" content="670000">
+    <meta property="business:contact_data:country_name" content="Россия">
+    <meta property="business:contact_data:email" content="info@thermoblock.ru">
+    <meta property="business:contact_data:phone_number" content="+7 (3012) 20-63-20">
+    <meta property="business:contact_data:website" content="https://thermoblock.ru">
+    <meta property="og:latitude" content="51.843401"> <!-- координаты -->
+    <meta property="og:longitude" content="107.647169">
+    <meta property="og:street-address" content="ул. Н. Петрова, д. 70, офис 309,">
+    <meta property="og:locality" content="Улан-Удэ">
+    <meta property="og:region" content="Республика Бурятия">
+    <meta property="og:postal-code" content="670000">
+    <meta property="og:country-name" content="Россия">
+    <meta property="business:hours:day" content="понедельник">
+    <meta property="business:hours:start" content="09:00">
+    <meta property="business:hours:end" content="18:00">
+    <meta property="business:hours:day" content="вторник">
+    <meta property="business:hours:start" content="09:00">
+    <meta property="business:hours:end" content="18:00">
+    <meta property="business:hours:day" content="среда">
+    <meta property="business:hours:start" content="09:00">
+    <meta property="business:hours:end" content="18:00">
+    <meta property="business:hours:day" content="четверг">
+    <meta property="business:hours:start" content="09:00">
+    <meta property="business:hours:end" content="18:00">
+    <meta property="business:hours:day" content="пятница">
+    <meta property="business:hours:start" content="09:00">
+    <meta property="business:hours:end" content="18:00">
+    <meta property="business:hours:day" content="суббота">
+    <meta property="business:hours:start" content="10:00">
+    <meta property="business:hours:end" content="16:00">
+    <!-- JSON-LD структурированные данные (ОБЯЗАТЕЛЬНО для Яндекса и Google) -->
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Строй Тех | ThermoBlock",
+        "alternateName": "ThermoBlock",
+        "legalName": "ООО 'Строй Тех'",
+        "logo": "https://thermoblock.ru/{% static 'logo.svg' %}",
+        "image": "https://thermoblock.ru/{% static 'blocks_img/assortiment.jpg' %}",
+        "url": "https://thermoblock.ru/",
+        "telephone": "+7 (3012) 20-63-20",
+        "email": "info@еthermoblock.ru",
+        "foundingDate": "2015",
+        "foundingLocation": "Улан-Удэ",
+        "founder": {
+            "@type": "Person",
+            "name": "Жаргалов Алдар Олегович",
+            "jobTitle": "Генеральный директор",
+            "description": "Основатель компании, опыт в строительстве более 20 лет"
+        },
+        "employees": {
+            "@type": "Person",
+            "name": "Содномов Михаил",
+            "jobTitle": "начальник отдела продаж",
+            "description": "Опыт работы 15 лет, менеджмент организации"
+        },
+        "brand": {
+            "@type": "Brand",
+            "name": "ThermoBlock",
+            "logo": "https://thermoblock.ru/img/logo.png",
+            "slogan": "Максимально эффективное строительное решение!"
+        },
+        "priceRange": "₽₽",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "ул. Н. Петрова, д. 70, офис 309",
+            "addressLocality": "Улан-Удэ",
+            "postalCode": "670000",
+            "addressCountry": "RU"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "51.843401",
+            "longitude": "107.647169"
+        },
+        "openingHoursSpecification": [
+            {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "18:00"
+            },
+            {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "10:00",
+            "closes": "16:00"
+            }
+        ],
+        "numberOfEmployees": {
+            "@type": "QuantitativeValue",
+            "value": "23"
+        },
+        "owns": {
+            "@type": "Product",
+            "name": "Собственный парк строительной техники"
+        },
+        "makesOffer": [
+            {
+            "@type": "Offer",
+            "name": "Строительство коттеджей под ключ",
+            "description": "Полный цикл строительства малоэтажных домов и зданий"
+            },
+            {
+            "@type": "Offer",
+            "name": "Капитальный ремонт",
+            "description": "Ремонт малоэтажных домов и зданий"
+            },
+            {
+            "@type": "Offer",
+            "name": "Проектирование",
+            "description": "Архитектурное проектирование и дизайн"
+            },
+            {
+            "@type": "Offer",
+            "name": "Производство строительных материалов",
+            "description": "Производство бетонной несъемной опалубки ThermoBlock"
+            }
+        ],
+    "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Услуги строительной компании",
+        "itemListElement": [
+        {
+            "@type": "OfferCatalog",
+            "name": "Строительство домов",
+            "itemListElement": [
+            {"@type": "Offer", "name": "дома"},
+            {"@type": "Offer", "name": "коттетжи"},
+            {"@type": "Offer", "name": "гаражи"},
+            {"@type": "Offer", "name": "промышленные здания"},
+            {"@type": "Offer", "name": "отдельные офисы"},
+            {"@type": "Offer", "name": "элементы ландшафтного дизайна"}
+            ]
+        },
+        {
+            "@type": "OfferCatalog",
+            "name": "Ремонтные работы",
+            "itemListElement": [
+            {"@type": "Offer", "name": "Капитальный ремонт"},
+            ]
+        }
+        ]
+    },
+    "keywords": "строительство, ремонт, отделка, дом под ключ, строительная компания, Улан-Удэ",
+    "knowsAbout": [
+        "Строительство",
+        "Архитектура",
+        "Дизайн интерьеров",
+        "Инженерные системы",
+        "Сметное дело",
+        "Проектирование"
+    ],
+    "award": [
+        "Золотая медаль выставки стройиндустрия 2018",
+        "Диплом за участие в выставке Стройка 2016",
+        "Награда за продвижение бетонных блоков Байкал Экспо 2017"
+    ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "25",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "review": [
+            {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Алексей Попов"
+            },
+            "datePublished": "2025-01-15",
+            "reviewBody": "Доволен построенным домом, быстро и качественно. Рекомендую всем кто выбирает строительный материал!",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5",
+                "worstRating": "1"
+            }
+            },
+            {
+            "@type": "Review",
+            "author": {
+                "@type": "Person",
+                "name": "Шмаков Александр"
+            },
+            "datePublished": "2026-01-10",
+            "reviewBody": "Моя мечта исполнилась, мы с женой построили дом! Довольны результатом.",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "5",
+                "bestRating": "5",
+                "worstRating": "1"
+            }
+            }
+        ],
+        "sameAs": [
+            "https://vk.com/thermoblock",
+            "https://rutube.ru/channel/43940309/",
+            "https://www.instagram.com/thermoblock03/",
+            "https://dzen.ru/thermoblock",
+            "https://ok.ru/group/57676644155440",
+            "https://www.youtube.com/channel/UCu5c3oxdMWvgyRwli_pokkw",
+            "https://t.me/thermoblock",
+            "https://vkvideo.ru/@thermoblock"
+        ],
+        "areaServed": {
+            "@type": "GeoCircle",
+            "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": "51.843401",
+            "longitude": "107.647169"
+            },
+            "geoRadius": "1950000"
+        }
+        }
+        
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+7 (3012) 20-63-20",
+            "contactType": "customer service",
+            "availableLanguage": ["Russian"],
+            "contactOption": "TollFree",
+            "areaServed": ["RU"],
+            "description": "Телефон приёмной",
+
+        }
+    
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://ваш-сайт.ru/"
+        }]
+    </script>
 </head>
 
 <body>
@@ -61,9 +351,14 @@
                     <div class="wrapper">
                         <div class="icon"><i class="fa fa-map-marker"></i></div>
                         <div class="address_wrapper">
-                            <div class="title">Адреса офисов</div>
+                            <div class="title">Адрес офиса</div>
                             <div class="address">Улан-Удэ, Н.Петрова 70 офис 309, "Бизнес Лайф"</div>
-                            <br>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="icon"><i class="fa fa-map-marker"></i></div>
+                        <div class="address_wrapper">
+                            <div class="title">Адрес производства</div>
                             <div class="address">ул. Николая Нищенко 19а</div>
                         </div>
                     </div>
@@ -74,15 +369,15 @@
                         <div class="phone_wrapper">
                             <div class="title">Телефоны</div>
                             <div class="phone"></div>
-                            <div class="phone">+7 3012 206320</div>
-                            <div class="phone">+7 3012 392848</div>
-                            <div class="phone">+7 3012 392868</div>
+                            <a href="tel:+79644106320" class="phone">+7 3012 206320</a>
+                            <div class="phone">многоканальный</div>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-3">
                     <div class="form_btn_wrapper">
-                        <a class="form_btn" href="{% url 'feedback:question'%}">Обратная связь</a>
+                        <a class="form_btn btn-diagonal-stripe" href="{% url 'feedback:question'%}">Расчитать стоимость</a>
                     </div>
                 </div>
                 <div class="modal fade protectedForm" id="header_form" tabindex="-1" role="dialog"
@@ -147,23 +442,23 @@
             </div>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul id="menu" class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item active mr-4">
                         <a class="nav-link" href="{% url 'home:index' %}">Главная <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mr-4">
                         <a class="nav-link" href="{% url 'home:index' %}#productions">Продукция</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'old:index'%}">Готовые проекты</a>
+                    <li class="nav-item mr-4">
+                        <a class="nav-link" href="{% url 'old:index'%}">Проекты</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home:index' %}#portfolio">Наши дома</a>
+                    <li class="nav-item mr-4">
+                        <a class="nav-link" href="{% url 'home:index' %}#portfolio">Портфолио</a>
                     </li>
                     
-                    <li class="nav-item dropdown d-md-none d-xl-block">
+                    <li class="nav-item dropdown d-md-none d-xl-block mr-4">
                         <a class="nav-link dropdown-toggle" href="#" id="instructionDropDown"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Инструкция
+                            Инструкции
                         </a>
                         <div class="dropdown-menu" aria-labelledby="instructionDropDown">
                             <!--a class="dropdown-item d-none d-md-block d-lg-none" href="stati-i-videomaterialyi/">Статьи и видеоматериалы</a-->
@@ -172,23 +467,11 @@
                         </div>
                     </li>
                     
-                    <li class="nav-item d-md-none d-xl-block">
+                    <li class="nav-item d-md-none d-xl-block mr-4">
                         <a class="nav-link" href="{% url 'home:index' %}#ex5">Контакты</a>
                     </li>
                     
-                    <li class="nav-item dropdown d-none d-md-block d-xl-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Еще
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <!--a class="dropdown-item d-none d-md-block d-lg-none" href="stati-i-videomaterialyi/">Статьи и видеоматериалы</a-->
-                            <a class="dropdown-item" href="#ex5">Контакты</a>
-                            <!-- <a class="dropdown-item" href="partneram.html">Партнерам</a> -->
-                            <a class="dropdown-item" href="instrukcziya-po-proizvodstvu-rabot-iz-teploizolyaczionnyix-blokov.html">Инструкция ТБ400</a>
-                            <a class="dropdown-item" href="instrukcziya-po-proizvodstvu-rabot-iz-teploizolyaczionnyix-blokov-tb300.html">Инструкция ТБ300</a>
-                        </div>
-                    </li>
+                    
                     <div class="icons_wrapper d-none d-md-block">
                         <div class="icon"><a href="https://www.instagram.com/thermoblock03/"><i
                                     class="fa fa-instagram"></i></a></div>
@@ -249,8 +532,8 @@
                 <div class="text2 animated" data-animation="fadeInTop" data-delay="0.6s">Дом из THERMOBLOCK за 2 месяца!
                 </div>
                 <!-- <a href="katalog.html" class="btn animated" data-animation="fadeInTop" data-delay="0.3s">Выбрать дом</a> -->
-                <a href="{% url 'feedback:question'%}" class="btn animated" data-animation="fadeInTop" data-delay="0.3s"
-                    >Запросить расчет</a>
+                <a href="{% url 'feedback:question'%}" class="btn animated btn-diagonal-stripe" data-animation="fadeInTop" data-delay="0.3s"
+                    >Расчитать стоимость</a>
             </div>
         </div>
         <div class="item">
@@ -261,8 +544,8 @@
                     МЕЧТЫ!</div>
                 <div class="text2 animated" data-animation="fadeInTop" data-delay="0.6s">Дом из THERMOBLOCK это
                     экономично!</div>
-                <a href="{% url 'feedback:question'%}" class="btn animated" data-animation="fadeInTop" data-delay="0.3s"
-                    >Запросить расчет</a>
+                <a href="{% url 'feedback:question'%}" class="btn animated btn-diagonal-stripe" data-animation="fadeInTop" data-delay="0.3s"
+                    >Расчитать стоимость</a>
             </div>
         </div>
         <div class="item">
@@ -273,8 +556,8 @@
                     СЕБЕСТОИМОСТЬ СТРОИТЕЛЬСТВА!</div>
                 <div class="text2 animated" data-animation="fadeInTop" data-delay="0.6s">Строительство для бизнеса!
                 </div>
-                <a href="{% url 'feedback:question'%}" class="btn animated" data-animation="fadeInTop" data-delay="0.3s"
-                    >Запросить расчет</a>
+                <a href="{% url 'feedback:question'%}" class="btn animated btn-diagonal-stripe" data-animation="fadeInTop" data-delay="0.3s"
+                    >Расчитать стоимость</a>
             </div>
         </div>
     </section>
@@ -851,6 +1134,7 @@
         });
 
     </script>
+    <script type="text/javascript" src="https://cloudpbx.beeline.ru/app/cabinet/app/pub/callmenow/mpbx-cmn-frame.js?externalId=54d40a58-7efc-4d78-91cc-53815501a819-405019378&theme=2&color=2"></script>
     {% block extra_js %}
     
     {% endblock extra_js %}
