@@ -22,7 +22,7 @@ urlpatterns = [
     path('about/', include('apps.about.urls', namespace='about')),
     path('feedback/', include('apps.feedback.urls', namespace='feedback')),
     path('instructions/', include('apps.instructions.urls', namespace='instructions')),
-    path('constructs/', include('apps.house_projects.urls', namespace='constructs')),
+    path('constructs/', include('apps.constructs.urls', namespace='constructs')),
     path('products/', include('apps.products.urls', namespace='products')),
     path('captcha/', include('captcha.urls')),
     path('faq/', include('apps.faq.urls', namespace='faq')),

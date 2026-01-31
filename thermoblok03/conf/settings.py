@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'apps.about',
     'apps.feedback',
     'apps.instructions',
-    'apps.house_projects',
+    'apps.constructs',
     'apps.products',
     'apps.faq',
     'apps.review',

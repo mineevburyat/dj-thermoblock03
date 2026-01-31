@@ -2,23 +2,23 @@ from django.contrib import sitemaps
 from django.urls import reverse
 from django.utils import timezone
 from django.conf import settings 
+from datetime import date
 
 
 class StaticViewSitemap(sitemaps.Sitemap):
     priority = 1
-    changefreq = "daily"
+    changefreq = "weekly"
     protocol = 'https'
     
 
     def items(self):
-        return ["home:index"]
+        return ["home:index", "about:contact", "about:privacy"]
 
     def location(self, item):
         return reverse(item)
     
     def lastmod(self, item):
-        print(timezone.now())
-        return timezone.now()
+        return date(2026,1, 14)
         
     # def get_urls(self, **kwargs):
     #     # Формируем базовый URL
