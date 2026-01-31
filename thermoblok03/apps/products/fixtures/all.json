@@ -1,0 +1,150 @@
+[
+{
+  "model": "products.products",
+  "pk": 1,
+  "fields": {
+    "slug": "tb300",
+    "title": "ThermoBlock ТБ400",
+    "subtitle": "Линейка продукции для стен толщиной 400 мм. (рядовой блок)",
+    "length": 600,
+    "width": 400,
+    "height": 200,
+    "block_weight": 30,
+    "blocks_in_paddon": 20,
+    "soundproofing": "51.00",
+    "concrete": "0.125",
+    "block_consumption": "8.33",
+    "images": "img_products/tb400.png"
+  }
+},
+{
+  "model": "products.products",
+  "pk": 2,
+  "fields": {
+    "slug": "tb300",
+    "title": "ThermoBlock ТБУ400",
+    "subtitle": "Линейка продукции для стен толщиной 400 мм. (угловой блок)",
+    "length": 600,
+    "width": 400,
+    "height": 200,
+    "block_weight": 30,
+    "blocks_in_paddon": 20,
+    "soundproofing": "51.00",
+    "concrete": "0.125",
+    "block_consumption": "8.33",
+    "images": "img_products/tbu400.png"
+  }
+},
+{
+  "model": "products.products",
+  "pk": 3,
+  "fields": {
+    "slug": "tb300",
+    "title": "ThermoBlock ТБ300",
+    "subtitle": "Линейка продукции для стен толщиной 300 мм. (рядовой блок)",
+    "length": 400,
+    "width": 300,
+    "height": 200,
+    "block_weight": 21,
+    "blocks_in_paddon": 40,
+    "soundproofing": "51.00",
+    "concrete": "0.080",
+    "block_consumption": "12.50",
+    "images": "img_products/tb300.png"
+  }
+},
+{
+  "model": "products.products",
+  "pk": 4,
+  "fields": {
+    "slug": "tb300",
+    "title": "ThermoBlock ТБУ300",
+    "subtitle": "Линейка продукции для стен толщиной 300 мм. (угловой блок)",
+    "length": 500,
+    "width": 300,
+    "height": 200,
+    "block_weight": 21,
+    "blocks_in_paddon": 40,
+    "soundproofing": "51.00",
+    "concrete": "0.080",
+    "block_consumption": "12.50",
+    "images": "img_products/tbu300.png"
+  }
+},
+{
+  "model": "products.products",
+  "pk": 5,
+  "fields": {
+    "slug": "tb300",
+    "title": "ПБ200",
+    "subtitle": "устройства внутренних несущих и не несущих стен (толщиной 200 мм.)",
+    "length": 600,
+    "width": 200,
+    "height": 200,
+    "block_weight": 24,
+    "blocks_in_paddon": 40,
+    "soundproofing": "38.00",
+    "concrete": "0.110",
+    "block_consumption": "8.33",
+    "images": "img_products/pb200.png"
+  }
+},
+{
+  "model": "products.products",
+  "pk": 6,
+  "fields": {
+    "slug": "tb300",
+    "title": "ПБ100",
+    "subtitle": "устройства внутренних несущих и не несущих стен (толщиной 100 мм.)",
+    "length": 600,
+    "width": 100,
+    "height": 200,
+    "block_weight": 15,
+    "blocks_in_paddon": 60,
+    "soundproofing": "38.00",
+    "concrete": "0.040",
+    "block_consumption": "8.33",
+    "images": "img_products/pb100.png"
+  }
+},
+{
+  "model": "products.characteristics",
+  "pk": 1,
+  "fields": {
+    "name": "Термическое сопротивление R",
+    "value": "5.45",
+    "unit": "м2 °C/Вт",
+    "product": 1
+  }
+},
+{
+  "model": "products.characteristics",
+  "pk": 2,
+  "fields": {
+    "name": "Термическое сопротивление R",
+    "value": "5.45",
+    "unit": "м2 °C/Вт",
+    "product": 2
+  }
+},
+{
+  "model": "products.characteristics",
+  "pk": 3,
+  "fields": {
+    "name": "Термическое сопротивление R",
+    "value": "3.94",
+    "unit": "м2 °C/Вт",
+    "product": 3
+  }
+},
+{
+  "model": "products.characteristics",
+  "pk": 4,
+  "fields": {
+    "name": "Термическое сопротивление R",
+    "value": "3.94",
+    "unit": "м2 °C/Вт",
+    "product": 4
+  }
+}
+]

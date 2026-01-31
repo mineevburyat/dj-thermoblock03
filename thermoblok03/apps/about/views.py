@@ -27,7 +27,7 @@ class AgreementView(TemplateView):
 
 class ContactView(TemplateView):
     """Карточка предприятия"""
-    template_name = 'about/contact.html'
+    template_name = 'about/contact_old.html'
 
 
 def contacts_view(request):
