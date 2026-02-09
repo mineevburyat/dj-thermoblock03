@@ -7,7 +7,13 @@ from django.http import  HttpResponse
 from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 
-class IndexView(TemplateView):
+
+
+class HomeView(TemplateView):
+    """Главная страница"""
+    template_name = 'old/index.html'
+
+class CatalogView(TemplateView):
     """Главная страница"""
     template_name = 'old/katalog.html'
 

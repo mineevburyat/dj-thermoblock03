@@ -1,0 +1,75 @@
+   {% load static %}
+   
+   <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-12">
+                    <a href={% url 'home:index' %} class="logo">
+                        <img src="{% static 'old/img/logo.png' %}" alt="" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4">
+                    <div class="wrapper">
+                        <div class="icon"><i class="fa fa-map-marker"></i></div>
+                        <div class="address_wrapper">
+                            <div class="title">Адрес офиса</div>
+                            <div class="address">Улан-Удэ, Н.Петрова 70 офис 309, "Бизнес Лайф"</div>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="icon"><i class="fa fa-map-marker"></i></div>
+                        <div class="address_wrapper">
+                            <div class="title">Адрес производства</div>
+                            <div class="address">ул. Николая Нищенко 19а</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-5">
+                    <div class="wrapper">
+                        <div class="icon"><i class="fa fa-phone"></i></div>
+                        <div class="phone_wrapper">
+                            <div class="title">Телефоны</div>
+                            <div class="phone"></div>
+                            <a href="tel:+79644106320" class="phone">+7 3012 206320</a>
+                            <div class="phone">многоканальный</div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-3">
+                    <div class="form_btn_wrapper">
+                        <a class="form_btn btn-diagonal-stripe" href="{% url 'feedback:question'%}">Расчитать стоимость</a>
+                    </div>
+                </div>
+                <div class="modal fade protectedForm" id="header_form" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="modal_header_wrapper">
+                                    <div class="modal_title">Сколько будет стоит ваш дом из ThermoBlock?</div>
+                                    <div class="modal_subtitle">Заполните форму, и наш специалист проконсультирует вас!
+                                    </div>
+                                </div>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="form" action="" enctype="multipart/form-data" novalidate class="ajax_form form-horizontal">
+                           
+                                        <div class="form-group col-sm-6">
+                                            <button type="submit" class="btn_submit">Получить расчет</button>
+                                        </div>
+                                    </div>
+                                   
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </header>
