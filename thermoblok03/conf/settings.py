@@ -127,6 +127,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+X_FRAME_OPTIONS = 'ALLOWALL'
 
 # STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = 'static/'
