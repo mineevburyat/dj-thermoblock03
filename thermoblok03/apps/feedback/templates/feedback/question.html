@@ -113,6 +113,7 @@ ThermoBlock - расчет стоимости дома из монолитных
     </style>
 {% endblock %}
 {% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
     <section class="calculation-section" id="calculation-form">
         <div class="container">
             <div class="form-card">
@@ -222,10 +223,9 @@ ThermoBlock - расчет стоимости дома из монолитных
                         </div>
                         
                         <select class="form-select mb-4" id="contact_method" name="contact_method" required>
-                            <option value="" selected disabled>Выберите способ связи...</option>
-                            <option value="whatsapp">WhatsApp</option>
                             <option value="telegram">Telegram</option>
-                            <option value="viber">MAX</option>
+                            <option value="whatsapp">WhatsApp</option>
+                            <option value="max">MAX</option>
                         </select>
                         <div class="error-message" id="error-contact_method"></div>
                         
@@ -238,7 +238,7 @@ ThermoBlock - расчет стоимости дома из монолитных
                                 <input type="text" class="form-control" id="surname" name="surname" placeholder="Фамилия (необязательно)">
                             </div>
                             <div class="col-md-6">
-                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Телефон *" required>
+                                <input type="tel" class="form-control" id="phone" name="phone" ppattern="\+7\s?\(?\d{3}\)?\s?\d{3}[-\s]?\d{2}[-\s]?\d{2}" placeholder="Телефон *" required>
                                 <div class="error-message" id="error-phone"></div>
                             </div>
                             <div class="col-md-6 d-none">
@@ -276,6 +276,10 @@ ThermoBlock - расчет стоимости дома из монолитных
                     </div>
                     
                 </form>
+                <script>
+                    // Применяем маску для российского номера
+                    Inputmask('+7 (999) 999-99-99').mask(document.getElementById('phone'));
+                </script>
                 
                 <!-- Сообщение об успехе -->
                 <div class="thank-you-message hidden" id="thankYou">

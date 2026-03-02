@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио построенных домов</title>
+    <!-- Подключение стилей слайдера (например, OwlCarousel) и ваших основных стилей -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="{% static 'old/css/portfolio.css'%}">
+</head>
+<body>
+    {{portfolioData}}
+    <div class="portfolio-grid">
+        <!-- Карточка дома 1 -->
+        <div class="portfolio-card" data-id="1">
+            <img src="{% static 'old/portfolio/dom1-render.webp' %}" alt="Дом №1">
+            <h3>Название проекта</h3>
+            <p>Краткое описание</p>
+            <span class="card-price">от 5 500 000 ₽</span>
+        </div>
+        <!-- Карточка дома 2 -->
+        <div class="portfolio-card" data-id="2">
+            <img src="{% static 'old/portfolio/dom2-render.webp' %}" alt="Дом №2">
+            <h3>Название проекта</h3>
+            <p>Краткое описание</p>
+            <span class="card-price">от 7 200 000 ₽</span>
+        </div>
+        <!-- Добавьте остальные карточки -->
+        <div class="portfolio-card" data-id="3">
+            <img src="{% static 'old/portfolio/dom3-render.webp' %}" alt="Дом №3">
+            <h3>Название проекта</h3>
+            <p>Краткое описание</p>
+            <span class="card-price">от 7 200 000 ₽</span>
+        </div>z yt 
+    </div>
+
+    <!-- Модальное окно (скрыто по умолчанию) -->
+    <div id="portfolioModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="modal-body">
+                <!-- Заголовок -->
+                <h2 id="modalTitle">Название дома</h2>
+                
+                <!-- Слайдер (OwlCarousel) -->
+                <div id="modalSlider" class="owl-carousel">
+                    <!-- Сюда будут динамически подставляться фото из JavaScript -->
+                </div>
+
+                <!-- Описание -->
+                <p id="modalDescription">Полное описание проекта...</p>
+
+                <!-- Футер с характеристиками -->
+                <div class="modal-footer">
+                    <div class="house-specs">
+                        <span>Площадь: <strong id="modalArea">150 м²</strong></span>
+                        <span>Стоимость: <strong id="modalPrice">5 500 000 ₽</strong></span>
+                        <!-- Здесь можно добавить и другие характеристики: материал, этажность и т.д. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Передаем данные из Django в глобальную переменную
+        window.portfolioData = {{ portfolioData|safe }};
+        // Или для конкретного случая с медиа
+        window.mediaUrl = "{{ MEDIA_URL }}";
+    </script>
+    <!-- Подключение библиотек (jQuery, OwlCarousel) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- Подключение вашего скрипта -->
+    <script src="{% static 'old/js/portfolio.js' %}"></script>
+    
+</body>
+</html>
