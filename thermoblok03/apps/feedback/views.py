@@ -247,6 +247,7 @@ def _send_to_crm(calculation_request):
     Проект: {calculation_request.get_project_status_display()}
     Сроки: {calculation_request.get_timeline_display()}
     Оплата: {calculation_request.get_payment_method_display()}
+    Площадь: {calculation_request.get_square_display()}
 
     Комментарии: {calculation_request.comments or 'нет'}
 

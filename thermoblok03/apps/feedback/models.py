@@ -70,6 +70,13 @@ class CalculationRequest(models.Model):
         ('viber', 'Viber'),
         ('email', 'Email'),
     ]
+
+    SQUARE = [
+        ('less50', 'до 50 м.кв.'),
+        ('from50to100', 'от 50 м.кв. до 100 м.кв.'),
+        ('from100to150', 'от 100 м.кв. до 150 м.кв.'),
+        ('more150', 'более 150 м.кв.'),
+    ]
     
     house_type = models.CharField(max_length=50, choices=HOUSE_TYPES)
     land_status = models.CharField(max_length=50, choices=LAND_STATUSES)
@@ -77,6 +84,7 @@ class CalculationRequest(models.Model):
     timeline = models.CharField(max_length=50, choices=TIMELINES)
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHODS)
     contact_method = models.CharField(max_length=50, choices=CONTACT_METHODS)
+    square = models.CharField(max_length=50, choices=SQUARE, default='less50')
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100, blank=True)
     phone = models.CharField(max_length=20)
