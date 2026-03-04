@@ -238,7 +238,6 @@ def _send_to_crm(calculation_request):
     Контактная информация:
     Имя: {calculation_request.name} {calculation_request.surname}
     Телефон: {calculation_request.phone}
-    Email: {calculation_request.email or 'не указан'}
     Способ связи: {calculation_request.get_contact_method_display()}
 
     Детали проекта:

@@ -113,7 +113,6 @@ ThermoBlock - расчет стоимости дома из монолитных
     </style>
 {% endblock %}
 {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
     <section class="calculation-section" id="calculation-form">
         <div class="container">
             <div class="form-card">
@@ -504,33 +503,116 @@ ThermoBlock - расчет стоимости дома из монолитных
             }
             
             // Маска для телефона
-            const phoneInput = document.getElementById('phone');
-            if (phoneInput) {
-                phoneInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.startsWith('7')) {
-                        value = value.substring(1);
-                    }
-                    value = value.substring(0, 10);
-                    
-                    if (value.length > 0) {
-                        let formatted = '+7 ';
-                        if (value.length > 0) {
-                            formatted += '(' + value.substring(0, 3);
-                        }
-                        if (value.length > 3) {
-                            formatted += ') ' + value.substring(3, 6);
-                        }
-                        if (value.length > 6) {
-                            formatted += '-' + value.substring(6, 8);
-                        }
-                        if (value.length > 8) {
-                            formatted += '-' + value.substring(8, 10);
-                        }
-                        e.target.value = formatted;
-                    }
-                });
+const phoneInput = document.getElementById('phone');
+if (phoneInput) {
+    phoneInput.addEventListener('input', function(e) {
+        // Сохраняем позицию курсора
+        const cursorPos = e.target.selectionStart;
+        const oldLength = e.target.value.length;
+        
+        let value = e.target.value.replace(/\D/g, '');
+        
+        // Обработка первой цифры
+        if (value.length > 0) {
+            // Если первая цифра 8 или 7, заменяем на 7 (код России)
+            if (value[0] === '8' || value[0] === '7') {
+                value = '7' + value.substring(1);
+            } else {
+                // Если первая цифра не 7 или 8, добавляем 7 в начало
+                value = '7' + value;
             }
+        }
+        
+        // Ограничиваем до 11 цифр (7 + 10 цифр номера)
+        value = value.substring(0, 11);
+        
+        if (value.length > 0) {
+            let formatted = '+7 ';
+            
+            // Форматируем оставшиеся цифры (после первой семерки)
+            const numberPart = value.substring(1); // убираем первую семерку
+            
+            if (numberPart.length > 0) {
+                formatted += '(' + numberPart.substring(0, 3);
+            }
+            if (numberPart.length > 3) {
+                formatted += ') ' + numberPart.substring(3, 6);
+            }
+            if (numberPart.length > 6) {
+                formatted += '-' + numberPart.substring(6, 8);
+            }
+            if (numberPart.length > 8) {
+                formatted += '-' + numberPart.substring(8, 10);
+            }
+            
+            e.target.value = formatted;
+            
+            // Восстанавливаем позицию курсора с учетом изменений форматирования
+            const newLength = e.target.value.length;
+            const newCursorPos = cursorPos + (newLength - oldLength);
+            e.target.setSelectionRange(newCursorPos, newCursorPos);
+        } else {
+            e.target.value = '';
+        }
+    });
+    
+    // Добавляем обработку вставки
+    phoneInput.addEventListener('paste', function(e) {
+        e.preventDefault();
+        const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+        const cleanedText = pastedText.replace(/\D/g, '');
+        
+        let startPos = this.selectionStart;
+        let endPos = this.selectionEnd;
+        let currentValue = this.value.replace(/\D/g, '');
+        
+        // Вставляем текст в текущую позицию
+        let newValue = currentValue.substring(0, startPos) + 
+                      cleanedText + 
+                      currentValue.substring(endPos);
+        
+        // Обрабатываем первую цифру
+        if (newValue.length > 0) {
+            if (newValue[0] === '8' || newValue[0] === '7') {
+                newValue = '7' + newValue.substring(1);
+            } else {
+                newValue = '7' + newValue;
+            }
+        }
+        
+        newValue = newValue.substring(0, 11);
+        
+        // Обновляем поле
+        this.value = formatPhoneNumber(newValue);
+        
+        // Устанавливаем курсор в конец вставленного текста
+        const newCursorPos = startPos + cleanedText.length;
+        this.setSelectionRange(newCursorPos, newCursorPos);
+    });
+}
+
+// Функция для форматирования номера
+function formatPhoneNumber(value) {
+    if (!value || value.length === 0) return '';
+    
+    let formatted = '+7 ';
+    const numberPart = value.substring(1); // убираем первую семерку
+    
+    if (numberPart.length > 0) {
+        formatted += '(' + numberPart.substring(0, 3);
+    }
+    if (numberPart.length > 3) {
+        formatted += ') ' + numberPart.substring(3, 6);
+    }
+    if (numberPart.length > 6) {
+        formatted += '-' + numberPart.substring(6, 8);
+    }
+    if (numberPart.length > 8) {
+        formatted += '-' + numberPart.substring(8, 10);
+    }
+    
+    return formatted;
+}
             
             // Инициализация
             updateButtons();
