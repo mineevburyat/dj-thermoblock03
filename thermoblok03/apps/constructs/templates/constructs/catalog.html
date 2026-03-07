@@ -558,30 +558,49 @@
             {% endfor %}
         </div>
         
-        <!-- Пагинация -->
-        {% if page_obj.paginator.num_pages > 1 %}
-        <div class="pagination">
-            {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}" class="pagination-btn">←</a>
-            {% else %}
-            <span class="pagination-btn disabled">←</span>
-            {% endif %}
-            
-            {% for num in page_obj.paginator.page_range %}
-                {% if num == page_obj.number %}
-                <span class="pagination-btn active">{{ num }}</span>
-                {% else %}
-                <a href="?page={{ num }}" class="pagination-btn">{{ num }}</a>
-                {% endif %}
-            {% endfor %}
-            
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" class="pagination-btn">→</a>
-            {% else %}
-            <span class="pagination-btn disabled">→</span>
-            {% endif %}
-        </div>
-        {% endif %}
+<!-- Минималистичная пагинация -->
+{% if page_obj.paginator.num_pages > 1 %}
+<div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 40px 0 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" style="
+            color: #007bff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px 15px;
+            border-radius: 30px;
+            background: #f8f9fa;
+        ">←</a>
+    {% endif %}
+    
+    <span style="font-weight: 500; color: #333;">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+    
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" style="
+            color: #007bff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 5px 15px;
+            border-radius: 30px;
+            background: #f8f9fa;
+        ">→</a>
+    {% endif %}
+</div>
+{% endif %}
     </div>
 
     <!-- Модальное окно на весь экран -->

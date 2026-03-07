@@ -2,6 +2,7 @@
 import os
 import json
 import shutil
+from PIL import Image
 from pathlib import Path
 from django.core.management.base import BaseCommand
 from django.core.files import File
@@ -16,12 +17,20 @@ class Command(BaseCommand):
         parser.add_argument('json_file', type=str, help='Путь к JSON файлу с данными')
         parser.add_argument('--images_dir', type=str, help='Директория с изображениями', default=None)
         parser.add_argument('--clear', action='store_true', help='Очистить существующие товары перед импортом')
-    
+        parser.add_argument('--min-width', type=int, default=300, 
+                          help='Минимальная ширина для оригинала в пикселях (по умолчанию 300)')
+        parser.add_argument('--min-height', type=int, default=300,
+                          help='Минимальная высота для оригинала в пикселях (по умолчанию 300)')
     def handle(self, *args, **options):
         json_path = options['json_file']
         images_base_dir = options.get('images_dir')
         clear_existing = options['clear']
-        
+        min_width = options['min_width']
+        min_height = options['min_height']
+
+        self.stdout.write(f'Критерии для оригиналов:')
+        self.stdout.write(f'  Минимальная ширина: {min_width}px')
+        self.stdout.write(f'  Минимальная высота: {min_height}px')
         # Очистка если нужно
         if clear_existing:
             self.stdout.write('Очистка существующих товаров...')
@@ -42,12 +51,13 @@ class Command(BaseCommand):
             if not os.path.exists(images_base_dir):
                 images_base_dir = os.path.join(json_dir, 'images')
         
+        self.stdout.write(f'Базовая директория изображений: {images_base_dir}')
         # Создаем базовые типы товаров (можно вынести в отдельную фикстуру)
         self.create_base_types()
         self.create_roof_types()
                 
         # Импортируем товары
-        self.import_products(products_data, images_base_dir)
+        self.import_products(products_data, images_base_dir, min_width, min_height)
         
         self.stdout.write(self.style.SUCCESS(f'Успешно импортировано {len(products_data)} товаров'))
     
@@ -83,10 +93,64 @@ class Command(BaseCommand):
         
         self.stdout.write('Базовые типы крыш созданы')
 
-    def import_products(self, products_data, images_base_dir):
+    def is_original_image(self, image_path, min_width, min_height, max_thumb_dim):
+        """
+        Определяет, является ли файл оригинальным изображением по размерам в пикселях
+        Возвращает (is_original, width, height, reason)
+        """
+        
+        try:
+            with Image.open(image_path) as img:
+                width, height = img.size
+                
+                # Проверка на превью (если любой размер меньше или равен max_thumb_dim)
+                if width <= max_thumb_dim or height <= max_thumb_dim:
+                    return False, width, height, f'Превью ({width}x{height})'
+                
+                # Проверка минимальных требований к оригиналу
+                if width < min_width or height < min_height:
+                    return False, width, height, f'Маловат для оригинала ({width}x{height})'
+                
+                # Проходит все проверки - это оригинал
+                return True, width, height, f'ОРИГИНАЛ ({width}x{height})'
+                
+        except Exception as e:
+            return False, 0, 0, f'Ошибка чтения: {e}'
+
+    def find_image_files(self, base_dir, filename_pattern):
+        """Ищет все файлы, соответствующие паттерну"""
+        matching_files = []
+        
+        # Ищем во всех поддиректориях
+        for root, dirs, files in os.walk(base_dir):
+            for file in files:
+                if filename_pattern in file:
+                    full_path = os.path.join(root, file)
+                    matching_files.append(full_path)
+        
+        return matching_files
+
+    def import_products(self, products_data, images_base_dir,  min_width, min_height):
         """Импортирует товары из JSON"""
+        max_thumb_dim = 110
+        stats = {
+            'total': len(products_data),
+            'with_images': 0,
+            'total_originals': 0,
+            'total_thumbnails': 0,
+            'skipped_errors': 0
+        }
+        
+        # Статистика по размерам
+        size_stats = {
+            'small_thumbs': 0,  # <=300px
+            'medium': 0,         # 301-800px
+            'large': 0,          # 801-1200px
+            'xlarge': 0,         # >1200px
+            'errors': 0
+        }
         for idx, item in enumerate(products_data, 1):
-            self.stdout.write(f'Импорт {idx}/{len(products_data)}: {item["title"]}')
+            self.stdout.write(f'Импорт {idx}/{stats["total"]}: {item["title"]}')
             
             # Создаем или обновляем товар
             product, created = Product.objects.update_or_create(
@@ -104,77 +168,145 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(f'  Обновлен существующий товар')
 
-            # Пытаемся определить тип товара из названия
-            self.guess_product_type(product)
-
-            # Импортируем изображения
+            # Ищем изображения для этого товара
             if 'images' in item and item['images']:
-                self.import_product_images(product, item['images'], images_base_dir)
+                product_stats = self.import_product_images(
+                    product, item['images'], images_base_dir, 
+                    min_width, min_height, max_thumb_dim
+                )
+                
+                # Обновляем общую статистику
+                stats['total_originals'] += product_stats['originals']
+                stats['total_thumbnails'] += product_stats['thumbnails']
+                stats['skipped_errors'] += product_stats['errors']
+                
+                size_stats['small_thumbs'] += product_stats['sizes']['small']
+                size_stats['medium'] += product_stats['sizes']['medium']
+                size_stats['large'] += product_stats['sizes']['large']
+                size_stats['xlarge'] += product_stats['sizes']['xlarge']
+                size_stats['errors'] += product_stats['sizes']['errors']
+                
+                if product_stats['originals'] > 0:
+                    stats['with_images'] += 1
+                    
+                self.stdout.write(f'  Найдено оригиналов: {product_stats["originals"]}, '
+                                 f'превью: {product_stats["thumbnails"]}')
             else:
-                self.stdout.write(self.style.WARNING('  Нет изображений для импорта'))
+                self.stdout.write(self.style.WARNING('  Нет изображений в JSON'))
             
-            
-            # Генерируем alt для изображений если их нет
-            self.update_images_alt(product)
+
+        # Итоговая статистика
+        self.stdout.write('\n' + '='*60)
+        self.stdout.write(self.style.SUCCESS('СТАТИСТИКА ИМПОРТА:'))
+        self.stdout.write('='*60)
+        self.stdout.write(f'Всего товаров: {stats["total"]}')
+        self.stdout.write(f'Товаров с изображениями: {stats["with_images"]}')
+        self.stdout.write(f'Загружено оригиналов: {stats["total_originals"]}')
+        self.stdout.write(f'Пропущено превью: {stats["total_thumbnails"]}')
+        self.stdout.write(f'Ошибок: {stats["skipped_errors"]}')
+        
+        self.stdout.write('\n' + '-'*60)
+        self.stdout.write('РАСПРЕДЕЛЕНИЕ ПО РАЗМЕРАМ:')
+        self.stdout.write(f'  Превью (<=300px): {size_stats["small_thumbs"]}')
+        self.stdout.write(f'  Средние (301-800px): {size_stats["medium"]}')
+        self.stdout.write(f'  Большие (801-1200px): {size_stats["large"]}')
+        self.stdout.write(f'  Очень большие (>1200px): {size_stats["xlarge"]}')
+        self.stdout.write(f'  Ошибки определения: {size_stats["errors"]}')
+        self.stdout.write('='*60)
     
-    def import_product_images(self, product, images_data, images_base_dir):
-        """Импортирует изображения для товара"""
-        imported_count = 0
+    def import_product_images(self, product, images_data, images_base_dir, 
+                             min_width, min_height, max_thumb_dim):
+        """Импортирует только оригинальные изображения для товара"""
+        stats = {
+            'originals': 0,
+            'thumbnails': 0,
+            'errors': 0,
+            'sizes': {
+                'small': 0,
+                'medium': 0,
+                'large': 0,
+                'xlarge': 0,
+                'errors': 0
+            }
+        }
+        
+        # Создаем директорию для товара, если её нет
+        product_slug = slugify(product.title)
         
         for order, img_info in enumerate(images_data, 1):
-            # Получаем путь к изображению из local_path
-            local_path = img_info.get('local_path')
-            if not local_path:
-                self.stdout.write(self.style.WARNING(f'    Нет local_path для изображения {order}'))
-                continue
-            
-            # Формируем полный путь к файлу
-            # Если local_path уже абсолютный, используем его
-            if os.path.isabs(local_path):
-                source_path = local_path
-            else:
-                # Иначе ищем относительно базовой директории
-                source_path = os.path.join(images_base_dir, local_path)
-            
-            # Также пробуем искать просто имя файла в базовой директории
+            # Получаем путь к файлу из local_path
+            local_path = img_info.get('local_path', '')
             filename = os.path.basename(local_path)
-            alt_source_path = os.path.join(images_base_dir, filename)
             
-            # Проверяем существование файла
-            if os.path.exists(source_path):
-                final_source_path = source_path
-            elif os.path.exists(alt_source_path):
-                final_source_path = alt_source_path
-                self.stdout.write(f'    Найден файл по имени: {alt_source_path}')
-            else:
-                self.stdout.write(self.style.WARNING(f'    Файл не найден:\n      {source_path}\n      {alt_source_path}'))
+            self.stdout.write(f'    [{order}] Поиск: {filename}')
+            
+            # Ищем файл в разных местах
+            found_files = self.find_image_files(images_base_dir, filename)
+            
+            if not found_files:
+                self.stdout.write(self.style.WARNING(f'      Файл не найден'))
+                stats['errors'] += 1
                 continue
             
-            self.stdout.write(f'    Импорт изображения {order}: {filename}')
+            # Берем первый найденный файл
+            source_path = found_files[0]
             
-            # Открываем файл и сохраняем в модель
+            # Определяем, оригинал ли это по размерам
+            is_original, width, height, reason = self.is_original_image(
+                source_path, min_width, min_height, max_thumb_dim
+            )
+            
+            # Считаем статистику по размерам
+            if width > 0:
+                max_dim = max(width, height)
+                if max_dim <= 300:
+                    stats['sizes']['small'] += 1
+                elif max_dim <= 800:
+                    stats['sizes']['medium'] += 1
+                elif max_dim <= 1200:
+                    stats['sizes']['large'] += 1
+                else:
+                    stats['sizes']['xlarge'] += 1
+            else:
+                stats['sizes']['errors'] += 1
+            
+            if not is_original:
+                self.stdout.write(f'      Пропущен: {reason}')
+                stats['thumbnails'] += 1
+                continue
+            
+            self.stdout.write(f'      Найден: {reason}')
+            
             try:
-                with open(final_source_path, 'rb') as f:
+                # Проверяем, существует ли уже такое изображение
+
+                
+                # Открываем файл
+                with open(source_path, 'rb') as f:
                     # Создаем новое изображение
                     image = ProductImage(
                         product=product,
                         order=order,
-                        is_main=(order == 1)  # Первое изображение - главное
+                        is_main=(order == 1 and stats['originals'] == 0),  # Первый импортированный - главный
+                        alt=self.generate_alt(product.title, order, len(images_data))
                     )
                     
-                    # Сохраняем файл с уникальным именем в media
-                    # Django сам создаст уникальное имя если файл с таким именем уже есть
+                    # Генерируем alt
+                    image.alt = f"{product.title} - фото {order}"
+                    
+                    # Сохраняем файл
                     image.image.save(filename, File(f), save=False)
                     image.save()
                     
-                    imported_count += 1
-                    self.stdout.write(self.style.SUCCESS(f'      Импортировано'))
+                    stats['originals'] += 1
+                    self.stdout.write(self.style.SUCCESS(f'      ✅ Импортирован ({width}x{height})'))
                     
             except Exception as e:
-                self.stdout.write(self.style.ERROR(f'      Ошибка при импорте: {e}'))
+                self.stdout.write(self.style.ERROR(f'      ❌ Ошибка при импорте: {e}'))
+                stats['errors'] += 1
         
-        self.stdout.write(f'  Импортировано изображений: {imported_count}/{len(images_data)}')
-    
+        return stats
+
     def guess_product_type(self, product):
         """Пытается определить тип товара по названию"""
         title_lower = product.title.lower()
@@ -197,12 +329,10 @@ class Command(BaseCommand):
             product.product_type = product_type
             product.save(update_fields=['product_type'])
     
-    def update_images_alt(self, product):
-        """Обновляет alt текст для всех изображений товара"""
-        for idx, image in enumerate(product.images.all(), 1):
-            if not image.alt:
-                image.alt = f"{product.title} - фото {idx}"
-                image.save(update_fields=['alt'])
+    def generate_alt(self, product_title, image_number, total_images):
+        """Генерирует alt текст для изображения"""
+        # Вариант 1: Простой
+        return f"{product_title} - фото {image_number}"
 
 
 # Дополнительная утилита для ручного заполнения характеристик
