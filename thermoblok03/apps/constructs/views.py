@@ -1,13 +1,15 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView
 
-
+from django.views.decorators.http import require_POST
 # views.py для простого API
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
-from apps.constructs.models import Product, ProductImage
+from apps.constructs.models import Product, ProductImage, ProductType, RoofType
 import json
+from django.db.models import Prefetch, Max
+from django.contrib import messages
 
 
 class IndexViews(TemplateView):
@@ -138,3 +140,154 @@ def product_detail(request, product_id):
         
     except Product.DoesNotExist:
         return JsonResponse({'error': 'Product not found'}, status=404)
+    
+def product_edit(request, product_id):
+    """Страница редактирования проекта"""
+    product = get_object_or_404(
+        Product.objects.prefetch_related(
+            Prefetch('images', queryset=ProductImage.objects.order_by('order'))
+        ),
+        id=product_id
+    )
+    
+    # Получаем следующий и предыдущий проекты для навигации
+    prev_product = Product.objects.filter(
+        id__lt=product_id, 
+        is_active=True
+    ).order_by('-id').first()
+    
+    next_product = Product.objects.filter(
+        id__gt=product_id, 
+        is_active=True
+    ).order_by('id').first()
+    
+    if request.method == 'POST':
+        # Обновляем основные поля
+        product.title = request.POST.get('title')
+        product.article = request.POST.get('article')
+        product.description = request.POST.get('description')
+        product.short_description = request.POST.get('short_description')
+        
+        # Типы
+        product_type_id = request.POST.get('product_type')
+        product.product_type_id = product_type_id if product_type_id else None
+        
+        roof_type_id = request.POST.get('roof_type')
+        product.roof_type_id = roof_type_id if roof_type_id else None
+        
+        # Характеристики
+        product.area = request.POST.get('area') or None
+        product.floors_count = request.POST.get('floors_count') or None
+        product.rooms_count = request.POST.get('rooms_count') or None
+        product.bedrooms_count = request.POST.get('bedrooms_count') or None
+        product.bathrooms_count = request.POST.get('bathrooms_count') or None
+        
+        # Булевы поля
+        product.garage = request.POST.get('garage') == 'on'
+        product.terrace = request.POST.get('terrace') == 'on'
+        
+        # Статусы
+        product.is_active = request.POST.get('is_active') == 'on'
+        product.is_popular = request.POST.get('is_popular') == 'on'
+        product.is_new = request.POST.get('is_new') == 'on'
+        
+        product.save()
+        
+        # Обработка новых изображений
+        if request.FILES.getlist('new_images'):
+            max_order = product.images.aggregate(Max('order'))['order__max'] or 0
+            
+            for idx, image_file in enumerate(request.FILES.getlist('new_images')):
+                ProductImage.objects.create(
+                    product=product,
+                    image=image_file,
+                    order=max_order + idx + 1,
+                    alt=f"{product.title} - фото {max_order + idx + 1}"
+                )
+        
+        messages.success(request, 'Проект успешно обновлен')
+        return redirect('constructs:product-edit', product_id=product.id)
+    
+    context = {
+        'product': product,
+        'images': product.images.all(),
+        'prev_product': prev_product,
+        'next_product': next_product,
+        'product_types': ProductType.objects.all(),
+        'roof_types': RoofType.objects.all(),
+    }
+    return render(request, 'constructs/edit_detail.html', context)
+
+@require_POST
+def toggle_active(request, product_id):
+    """Включение/выключение проекта"""
+    product = get_object_or_404(Product, id=product_id)
+    product.is_active = not product.is_active
+    product.save()
+    
+    # Определяем следующий проект для редиректа
+    if not product.is_active:
+        next_product = Product.objects.filter(
+            id__gt=product_id, 
+            is_active=True
+        ).order_by('id').first()
+        
+        if next_product:
+            redirect_id = next_product.id
+        else:
+            prev_product = Product.objects.filter(
+                id__lt=product_id, 
+                is_active=True
+            ).order_by('-id').first()
+            redirect_id = prev_product.id if prev_product else None
+    else:
+        redirect_id = product_id
+    
+    if redirect_id:
+        return JsonResponse({
+            'success': True,
+            'redirect_url': f'/project/{redirect_id}/'
+        })
+    else:
+        return JsonResponse({
+            'success': True,
+            'redirect_url': '/catalog/'  # Вернуться в каталог
+        })
+
+@require_POST
+def set_main_image(request, product_id, image_id):
+    """Установка главного изображения"""
+    image = get_object_or_404(ProductImage, id=image_id, product_id=product_id)
+    
+    # Сбрасываем главное у всех
+    ProductImage.objects.filter(product_id=product_id).update(is_main=False)
+    
+    # Устанавливаем новое главное
+    image.is_main = True
+    image.save()
+    
+    return JsonResponse({'success': True})
+
+@require_POST
+def delete_image(request, product_id, image_id):
+    """Удаление изображения"""
+    image = get_object_or_404(ProductImage, id=image_id, product_id=product_id)
+    image.delete()
+    
+    # Перенумеровываем порядок
+    images = ProductImage.objects.filter(product_id=product_id).order_by('order')
+    for idx, img in enumerate(images, 1):
+        img.order = idx
+        img.save()
+    
+    return JsonResponse({'success': True})
+
+@require_POST
+def reorder_images(request, product_id):
+    """Изменение порядка изображений"""
+    order_data = request.POST.getlist('order[]')
+    
+    for idx, image_id in enumerate(order_data, 1):
+        ProductImage.objects.filter(id=image_id, product_id=product_id).update(order=idx)
+    
+    return JsonResponse({'success': True})
