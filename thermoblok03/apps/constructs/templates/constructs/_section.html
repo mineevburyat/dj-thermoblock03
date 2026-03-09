@@ -1,0 +1,550 @@
+{% load static %}
+<section class="projects-preview">
+    <div class="container">
+        <!-- Заголовок секции -->
+        <div class="section-header">
+            <h2 class="section-title">Наши проекты домов и зданий из ThermoBlock</h2>
+            <p class="section-subtitle">Стройте с умом - живите с комфортом!</p>
+        </div>
+
+        <!-- Сетка с тремя проектами -->
+        <div class="projects-grid">
+            {% for project in projects|slice:":3" %}
+            <a href="{% url 'constructs:index' %}" class="project-card">
+                <div class="project-card__inner" style="background-image: url('{% if project.get_first_image %}{{ project.get_first_image.image.url }}{% else %}/static/img/placeholder.jpg{% endif %}');">
+                    <div class="project-card__overlay"></div>
+                    
+                    <!-- Верхняя часть: бейджи слева, иконки и лайк справа -->
+                    <div class="project-card__top">
+                        <!-- Бейджи слева -->
+                        <div class="project-badges">
+                            {% if project.is_popular %}
+                            <span class="badge popular"><i class="fas fa-fire"></i> Популярное</span>
+                            {% endif %}
+                            {% if project.is_new %}
+                            <span class="badge new"><i class="fas fa-star"></i> Новинка</span>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Правый блок: иконки гаража/террасы + лайк -->
+                        <div class="project-actions">
+                            <!-- Иконки дополнительных опций -->
+                            <div class="project-features">
+                                {% if project.garage %}
+                                <span class="feature-icon" title="Гараж">
+                                    <i class="fas fa-warehouse"></i>
+                                </span>
+                                {% endif %}
+                                {% if project.terrace %}
+                                <span class="feature-icon" title="Терраса">
+                                    <i class="fas fa-umbrella-beach"></i>
+                                </span>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Кнопка лайка (для главной можно убрать или оставить) -->
+                            <button class="like-btn" onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite(this, {{ project.id }})">
+                                <i class="{% if project.id in favorites %}fas{% else %}far{% endif %} fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Нижняя часть: название, характеристики и бейджи -->
+                    <div class="project-card__content">
+                        <h3 class="project-title">{{ project.title }}</h3>
+                        
+                        <!-- Строка с характеристиками и бейджами -->
+                        <div class="project-info-row">
+                            <!-- Характеристики слева -->
+                            <div class="project-specs">
+                                {% if project.area %}
+                                <span class="spec-badge"><i class="fas fa-arrows-alt"></i> {{ project.area }} м²</span>
+                                {% endif %}
+                                {% if project.rooms_count %}
+                                <span class="spec-badge"><i class="fas fa-door-open"></i> {{ project.rooms_count }} комн.</span>
+                                {% endif %}
+                                {% if project.bedrooms_count %}
+                                <span class="spec-badge"><i class="fas fa-bed"></i> {{ project.bedrooms_count }} спал.</span>
+                                {% endif %}
+                                {% if project.bathrooms_count %}
+                                <span class="spec-badge"><i class="fas fa-toilet"></i> {{ project.bathrooms_count }} сан.</span>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Бейджи справа -->
+                            <div class="info-badges">
+                                <span class="info-badge mortgage">
+                                    <i class="fas fa-credit-card"></i> Ипотека
+                                </span>
+                                <span class="info-badge escrow">
+                                    <i class="fas fa-shield-alt"></i> Эскроу
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Секция категорий домов -->
+        <div class="categories-section">
+            <h3 class="categories-title">Категории зданий</h3>
+            
+            <div class="categories-grid">
+                {% for category in categories %}
+                <a href="{% url 'constructs:index' %}?product_type={{ category.id }}" class="category-card">
+                    <div class="category-card__inner" style="background-image: url('{{ category.get_image_url }}');">
+                        <div class="category-card__overlay"></div>
+                        <div class="category-card__content">
+                            <h4 class="category-title">{{ category.name }}</h4>
+                            <span class="category-count">{{ category.products_count }} проектов</span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Кнопка "Смотреть все проекты" -->
+        <div class="view-all">
+            <a href="{% url 'constructs:index' %}" class="view-all-btn">
+                Смотреть все проекты
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .projects-preview {
+        padding: 60px 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Заголовки секции */
+    .section-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: #64748b;
+    }
+
+    /* Сетка проектов (3 колонки) */
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin-bottom: 60px;
+    }
+
+    /* Карточка проекта */
+    .project-card {
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        aspect-ratio: 3/4;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 45px rgba(0,0,0,0.15);
+    }
+
+    .project-card__inner {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .project-card__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, 
+            rgba(0,0,0,0.1) 0%, 
+            rgba(0,0,0,0.3) 40%,
+            rgba(0,0,0,0.7) 100%);
+        z-index: 1;
+    }
+
+    /* Верхняя часть карточки */
+    .project-card__top {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .project-badges {
+        display: flex;
+        gap: 10px;
+    }
+
+    .badge {
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+    }
+
+    .badge.popular {
+        background: rgba(239, 68, 68, 0.9);
+    }
+
+    .badge.new {
+        background: rgba(34, 197, 94, 0.9);
+    }
+
+    .project-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .project-features {
+        display: flex;
+        gap: 8px;
+    }
+
+    .feature-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+        transition: all 0.2s;
+    }
+
+    .feature-icon:hover {
+        background: rgba(255,255,255,0.4);
+        transform: scale(1.1);
+    }
+
+    .like-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: white;
+        font-size: 1.2rem;
+        transition: all 0.2s;
+        border: none;
+    }
+
+    .like-btn:hover {
+        background: rgba(255,255,255,0.4);
+        transform: scale(1.1);
+    }
+
+    .like-btn.active {
+        color: #ef4444;
+    }
+
+    /* Нижняя часть карточки */
+    .project-card__content {
+        position: relative;
+        z-index: 2;
+        padding: 25px 20px;
+        color: white;
+    }
+
+    .project-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        line-height: 1.2;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .project-info-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .project-specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .spec-badge {
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(8px);
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+    }
+
+    .info-badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .info-badge {
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(8px);
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+    }
+
+    .info-badge.mortgage {
+        background: rgba(52, 152, 219, 0.8);
+    }
+
+    .info-badge.escrow {
+        background: rgba(46, 204, 113, 0.8);
+    }
+
+    /* Секция категорий */
+    .categories-section {
+        margin: 60px 0;
+    }
+
+    .categories-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+
+    .category-card {
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        aspect-ratio: 16/9;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 35px rgba(0,0,0,0.15);
+    }
+
+    .category-card__inner {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .category-card__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, 
+            rgba(0,0,0,0.2) 0%, 
+            rgba(0,0,0,0.6) 100%);
+        z-index: 1;
+    }
+
+    .category-card__content {
+        position: relative;
+        z-index: 2;
+        padding: 25px;
+        color: white;
+        width: 100%;
+    }
+
+    .category-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .category-count {
+        font-size: 1rem;
+        opacity: 0.9;
+        display: block;
+    }
+
+    /* Кнопка "Смотреть все" */
+    .view-all {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .view-all-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 32px;
+        background: #1e293b;
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .view-all-btn:hover {
+        background: #0f172a;
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        gap: 15px;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 900px) {
+        .projects-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .projects-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+        }
+        
+        .categories-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .project-card__top {
+            top: 15px;
+            left: 15px;
+            right: 15px;
+        }
+        
+        .feature-icon, .like-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 1rem;
+        }
+        
+        .project-card__content {
+            padding: 20px;
+        }
+        
+        .project-title {
+            font-size: 1.3rem;
+        }
+    }
+</style>
+
+<script>
+    function toggleFavorite(btn, projectId) {
+        btn.classList.toggle('active');
+        const icon = btn.querySelector('i');
+        
+        fetch(`/toggle-favorite/${projectId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.is_favorite) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            btn.classList.toggle('active');
+        });
+        
+        event.preventDefault();
+        event.stopPropagation();
+    }
+</script>

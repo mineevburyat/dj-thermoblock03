@@ -8,6 +8,9 @@ from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 
 
+class HomeNewView(TemplateView):
+    """Главная новая страница на утверждение"""
+    template_name = 'old/index_new.html'
 
 class HomeView(TemplateView):
     """Главная страница"""

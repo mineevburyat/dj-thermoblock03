@@ -23,6 +23,30 @@ class ProductType(models.Model):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+    def get_first_project_image(self):
+        """
+        Возвращает первое изображение из первого активного проекта этой категории.
+        Используется для отображения карточек категорий на главной странице.
+        """
+        # Получаем первый активный проект в этой категории
+        first_project = self.products.filter(is_active=True).first()
+        
+        if first_project:
+            # Возвращаем главное изображение проекта или первое попавшееся
+            return first_project.get_first_image()
+        return None
+    
+    def get_image_url(self):
+        """
+        Возвращает URL изображения для категории.
+        Сначала проверяет, есть ли у категории собственное изображение,
+        если нет - берет из первого проекта.
+        """
+        
+        first_image = self.get_first_project_image()
+        if first_image and first_image.image:
+            return first_image.image.url
+        return None
 
 class RoofType(models.Model):
     """Тип крыши"""

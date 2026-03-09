@@ -1,0 +1,667 @@
+{% load static %}
+{% load catalog_tags %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог проектов домов</title>
+    <!-- Подключаем Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+        }
+
+        .catalog {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        /* Сайдбар с фильтрами */
+        .filters-sidebar {
+            flex: 0 0 280px;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            height: fit-content;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 20px;
+        }
+
+        .filters-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-label {
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        /* Диапазон (от - до) */
+        .range-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .range-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+
+        .range-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+        }
+
+        /* Чекбоксы */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            flex: 1 0 calc(33.33% - 7px);
+            min-width: 60px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkbox-item label {
+            display: block;
+            text-align: center;
+            padding: 10px 5px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + label {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        .apply-filters-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1e293b;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+
+        .apply-filters-btn:hover {
+            background: #0f172a;
+        }
+
+        .clear-filters {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .clear-filters:hover {
+            color: #1e293b;
+        }
+
+        /* Основной контент */
+        .content-right {
+            flex: 1;
+        }
+
+        /* Сетка карточек - одна колонка */
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Карточка проекта - широкая */
+        .project-card {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            aspect-ratio: 16/9;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            width: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.15);
+        }
+
+        .project-card__inner {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        /* Затемняющий градиент */
+        .project-card__overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(0,0,0,0.2) 0%, 
+                rgba(0,0,0,0.4) 40%,
+                rgba(0,0,0,0.8) 100%);
+            z-index: 1;
+        }
+
+        /* Бейдж "Популярное" и "Новинка" */
+        .project-badges {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 3;
+            display: flex;
+            gap: 10px;
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .badge.popular {
+            background: rgba(239, 68, 68, 0.9);
+        }
+
+        .badge.new {
+            background: rgba(34, 197, 94, 0.9);
+        }
+
+        /* Кнопка лайка */
+        .like-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.3rem;
+            transition: all 0.2s;
+            z-index: 3;
+        }
+
+        .like-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.1);
+        }
+
+        .like-btn.active {
+            color: #ef4444;
+        }
+
+        /* Контент карточки */
+        .project-card__content {
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+            color: white;
+        }
+
+        .project-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .project-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .spec-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spec-badge i {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Пагинация */
+        .pagination {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pagination-item {
+            min-width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 12px;
+            color: #1e293b;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .pagination-item:hover {
+            background: #f1f5f9;
+            transform: translateY(-2px);
+        }
+
+        .pagination-item.active {
+            background: #1e293b;
+            color: white;
+        }
+
+        .pagination-item.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .pagination-dots {
+            color: #64748b;
+            padding: 0 8px;
+        }
+
+        /* Состояние загрузки/заглушка */
+        .no-projects {
+            text-align: center;
+            padding: 80px;
+            background: white;
+            border-radius: 24px;
+            color: #64748b;
+        }
+
+        .results-info {
+            margin-bottom: 20px;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 900px) {
+            .catalog {
+                flex-direction: column;
+            }
+            
+            .filters-sidebar {
+                position: static;
+                width: 100%;
+            }
+
+            .project-card {
+                aspect-ratio: 4/3;
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .checkbox-item {
+                flex: 1 0 calc(33.33% - 7px);
+            }
+
+            .project-card__content {
+                padding: 20px;
+            }
+
+            .project-title {
+                font-size: 1.3rem;
+            }
+
+            .spec-badge {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="catalog">
+        <!-- Сайдбар с фильтрами -->
+        <aside class="filters-sidebar">
+            <div class="filters-title">
+                <i class="fas fa-sliders-h"></i>
+                Фильтры
+            </div>
+
+            <form method="get" action="." id="filterForm">
+                <!-- Фильтр по площади (диапазон) -->
+                <div class="filter-group">
+                    <span class="filter-label">Площадь, м²</span>
+                    <div class="range-inputs">
+                        <input type="number" class="range-input" name="area_min" placeholder="От" min="0" value="{{ request.GET.area_min }}">
+                        <input type="number" class="range-input" name="area_max" placeholder="До" min="0" value="{{ request.GET.area_max }}">
+                    </div>
+                </div>
+
+                <!-- Фильтр по комнатам -->
+                <div class="filter-group">
+                    <span class="filter-label">Комнаты</span>
+                    <div class="checkbox-group">
+                        {% for i in "1234" %}
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="rooms" value="{{ i }}" id="rooms{{ i }}" 
+                                   {% if i == '4' %}data-plus="true"{% endif %}
+                                   {% if i in selected_rooms %}checked{% endif %}>
+                            <label for="rooms{{ i }}">{{ i }}{% if i == '4' %}+{% endif %}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Фильтр по санузлам -->
+                <div class="filter-group">
+                    <span class="filter-label">Санузлы</span>
+                    <div class="checkbox-group">
+                        {% for i in "123" %}
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="bathrooms" value="{{ i }}" id="bath{{ i }}"
+                                   {% if i == '3' %}data-plus="true"{% endif %}
+                                   {% if i in selected_bathrooms %}checked{% endif %}>
+                            <label for="bath{{ i }}">{{ i }}{% if i == '3' %}+{% endif %}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Фильтр по этажности -->
+                <div class="filter-group">
+                    <span class="filter-label">Этажность</span>
+                    <div class="checkbox-group">
+                        {% for i in "123" %}
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="floors" value="{{ i }}" id="floor{{ i }}"
+                                   {% if i == '3' %}data-plus="true"{% endif %}
+                                   {% if i in selected_floors %}checked{% endif %}>
+                            <label for="floor{{ i }}">{{ i }}{% if i == '3' %}+{% endif %}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Сохраняем параметры пагинации -->
+                <input type="hidden" name="page" value="1">
+                <input type="hidden" name="sort" value="{{ request.GET.sort }}">
+
+                <button type="submit" class="apply-filters-btn">
+                    <i class="fas fa-search" style="margin-right: 8px;"></i>
+                    Применить фильтры
+                </button>
+
+                {% if request.GET %}
+                <a href="." class="clear-filters">
+                    <i class="fas fa-times"></i> Сбросить все фильтры
+                </a>
+                {% endif %}
+            </form>
+        </aside>
+
+        <!-- Основной контент -->
+        <div class="content-right">
+            <!-- Информация о результатах -->
+            <div class="results-info">
+                Найдено проектов: <strong>{{ page_obj.paginator.count }}</strong>
+            </div>
+
+            <!-- Сетка проектов (одна колонка) -->
+            <div class="projects-grid">
+                {% for project in page_obj %}
+                <a href="{% url 'constructs:project_detail' project.slug %}" class="project-card">
+                    <div class="project-card__inner" style="background-image: url('{% if project.get_first_image %}{{ project.get_first_image.image.url }}{% else %}/static/img/placeholder.jpg{% endif %}');">
+                        <div class="project-card__overlay"></div>
+                        
+                        <!-- Бейджи популярное/новинка -->
+                        {% if project.is_popular or project.is_new %}
+                        <div class="project-badges">
+                            {% if project.is_popular %}
+                            <span class="badge popular"><i class="fas fa-fire"></i> Популярное</span>
+                            {% endif %}
+                            {% if project.is_new %}
+                            <span class="badge new"><i class="fas fa-star"></i> Новинка</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Кнопка лайка -->
+                        <button class="like-btn" onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite(this, {{ project.id }})">
+                            <i class="{% if project.id in favorites %}fas{% else %}far{% endif %} fa-heart"></i>
+                        </button>
+                        
+                        <!-- Только название и характеристики -->
+                        <div class="project-card__content">
+                            <h3 class="project-title">{{ project.title }}</h3>
+                            <div class="project-specs">
+                                {% if project.area %}
+                                <span class="spec-badge"><i class="fas fa-arrows-alt"></i> {{ project.area }} м²</span>
+                                {% endif %}
+                                {% if project.rooms_count %}
+                                <span class="spec-badge"><i class="fas fa-bed"></i> {{ project.rooms_count }}</span>
+                                {% endif %}
+                                {% if project.bathrooms_count %}
+                                <span class="spec-badge"><i class="fas fa-toilet"></i> {{ project.bathrooms_count }}</span>
+                                {% endif %}
+                                {% if project.floors_count %}
+                                <span class="spec-badge"><i class="fas fa-building"></i> {{ project.floors_count|floatformat }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <div class="project-specs">
+                                <span class="spec-badge"><i class="fas fa-arrows-alt"></i> Ипотека</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% empty %}
+                <div class="no-projects">
+                    <i class="fas fa-home" style="font-size: 48px; opacity: 0.5; margin-bottom: 20px;"></i>
+                    <h3>Проекты не найдены</h3>
+                    <p>Попробуйте изменить параметры фильтра</p>
+                    <a href="." style="display: inline-block; margin-top: 20px; padding: 12px 24px; background: #1e293b; color: white; text-decoration: none; border-radius: 12px;">Сбросить фильтры</a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Пагинация -->
+            {% if page_obj.paginator.num_pages > 1 %}
+            <div class="pagination">
+                <!-- Первая страница -->
+                {% if page_obj.has_previous %}
+                <a href="?{% url_replace page=1 %}" class="pagination-item">
+                    <i class="fas fa-angle-double-left"></i>
+                </a>
+                {% else %}
+                <span class="pagination-item disabled">
+                    <i class="fas fa-angle-double-left"></i>
+                </span>
+                {% endif %}
+
+                <!-- Предыдущая страница -->
+                {% if page_obj.has_previous %}
+                <a href="?{% url_replace page=page_obj.previous_page_number %}" class="pagination-item">
+                    <i class="fas fa-angle-left"></i>
+                </a>
+                {% else %}
+                <span class="pagination-item disabled">
+                    <i class="fas fa-angle-left"></i>
+                </span>
+                {% endif %}
+
+                <!-- Номера страниц -->
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <span class="pagination-item active">{{ num }}</span>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?{% url_replace page=num %}" class="pagination-item">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- Следующая страница -->
+                {% if page_obj.has_next %}
+                <a href="?{% url_replace page=page_obj.next_page_number %}" class="pagination-item">
+                    <i class="fas fa-angle-right"></i>
+                </a>
+                {% else %}
+                <span class="pagination-item disabled">
+                    <i class="fas fa-angle-right"></i>
+                </span>
+                {% endif %}
+
+                <!-- Последняя страница -->
+                {% if page_obj.has_next %}
+                <a href="?{% url_replace page=page_obj.paginator.num_pages %}" class="pagination-item">
+                    <i class="fas fa-angle-double-right"></i>
+                </a>
+                {% else %}
+                <span class="pagination-item disabled">
+                    <i class="fas fa-angle-double-right"></i>
+                </span>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <script>
+        // Функция для добавления в избранное
+        function toggleFavorite(btn, projectId) {
+            btn.classList.toggle('active');
+            const icon = btn.querySelector('i');
+            
+            fetch(`/toggle-favorite/${projectId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.is_favorite) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                btn.classList.toggle('active');
+            });
+            
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        // Автоматическая отправка формы при изменении чекбоксов
+        document.querySelectorAll('#filterForm input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                document.getElementById('filterForm').submit();
+            });
+        });
+
+        // Отправка при изменении полей ввода (с задержкой)
+        let timeoutId;
+        document.querySelectorAll('#filterForm input[type="number"]').forEach(input => {
+            input.addEventListener('input', function() {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    document.getElementById('filterForm').submit();
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

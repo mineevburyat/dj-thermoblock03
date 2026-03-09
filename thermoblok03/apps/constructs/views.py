@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from django.views.decorators.http import require_POST
 # views.py для простого API
@@ -10,15 +10,78 @@ from apps.constructs.models import Product, ProductImage, ProductType, RoofType
 import json
 from django.db.models import Prefetch, Max
 from django.contrib import messages
+from django.db.models import Q
 
+class IndexViews(ListView):
+    template_name = 'constructs/home.html'
+    model = Product
+    context_object_name = 'products'
 
-class IndexViews(TemplateView):
-    template_name = 'constructs/index.html'
-
+def project_list(request):
+    projects = Product.objects.filter(is_active=True)
+    
+    # Фильтр по площади
+    area_min = request.GET.get('area_min')
+    area_max = request.GET.get('area_max')
+    if area_min:
+        projects = projects.filter(area__gte=area_min)
+    if area_max:
+        projects = projects.filter(area__lte=area_max)
+    
+    # Фильтр по комнатам
+    rooms = request.GET.getlist('rooms')
+    if rooms:
+        rooms_q = Q()
+        for room in rooms:
+            if room == '4':
+                rooms_q |= Q(rooms_count__gte=4)
+            else:
+                rooms_q |= Q(rooms_count=room)
+        projects = projects.filter(rooms_q)
+    
+    # Фильтр по санузлам
+    bathrooms = request.GET.getlist('bathrooms')
+    if bathrooms:
+        baths_q = Q()
+        for bath in bathrooms:
+            if bath == '3':
+                baths_q |= Q(bathrooms_count__gte=3)
+            else:
+                baths_q |= Q(bathrooms_count=bath)
+        projects = projects.filter(baths_q)
+    
+    # Фильтр по этажности
+    floors = request.GET.getlist('floors')
+    if floors:
+        floors_q = Q()
+        for floor in floors:
+            if floor == '3':
+                floors_q |= Q(floors_count__gte=3)
+            else:
+                floors_q |= Q(floors_count=floor)
+        projects = projects.filter(floors_q)
+    # print(area_max, area_min, bathrooms, rooms, floors)
+    # Сортировка
+    sort = request.GET.get('sort', 'id')
+    # projects = projects.order_by(sort)
+    # print(len(projects))
+    # Пагинация - по 6 проектов на страницу
+    paginator = Paginator(projects, 6)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+        'selected_rooms': request.GET.getlist('rooms'),
+        'selected_bathrooms': request.GET.getlist('bathrooms'),
+        'selected_floors': request.GET.getlist('floors'),
+        'favorites': request.session.get('favorites', []),
+    }
+    return render(request, 'constructs/home1.html', context)
 
 def catalog_view(request):
     """Отображение каталога с пагинацией по 8 товаров"""
-    products = Product.objects.filter(is_active=True).prefetch_related('images')
+    products = Product.objects.all().prefetch_related('images')
     paginator = Paginator(products, 8)  # 8 товаров на страницу
     
     page_number = request.GET.get('page', 1)
