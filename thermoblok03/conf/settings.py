@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'sorl.thumbnail',
     'corsheaders',
     'captcha',
     'apps.old',

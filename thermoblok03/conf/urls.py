@@ -23,7 +23,7 @@ urlpatterns = [
     path('feedback/', include('apps.feedback.urls', namespace='feedback')),
     # path('instructions/', include('apps.instructions.urls', namespace='instructions')),
     path('constructs/', include('apps.constructs.urls', namespace='constructs')),
-    # path('products/', include('apps.products.urls', namespace='products')),
+    path('products/', include('apps.products.urls', namespace='products')),
     # path('captcha/', include('captcha.urls')),
     # path('faq/', include('apps.faq.urls', namespace='faq')),
     # path('review/', include('apps.review.urls', namespace='review')),

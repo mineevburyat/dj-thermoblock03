@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Серии термоблоков</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .series-card {
+            position: relative;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;  /* Фоновый цвет */
+        }
+
+        .series-card__image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;  /* Вся картинка целиком */
+            object-position: center;  /* Центрирование */
+            padding: 10px;  /* Небольшой отступ от краев */
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);  /* Градиентный фон */
+            transition: transform 0.5s ease;
+        }
+
+        /* Для очень широких картинок */
+        @media (min-aspect-ratio: 16/9) {
+            .series-card__image {
+                object-fit: scale-down;  /* Масштабирование с сохранением пропорций */
+            }
+        }
+
+        /* Добавляем затемнение поверх картинки */
+        .series-card__overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.7) 100%
+            );
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            z-index: 2;  /* Поверх картинки */
+        }
+        .series-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        .series-card:hover .series-card__image {
+            transform: scale(1.05);
+        }
+
+
+
+        .series-card__type {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            width: fit-content;
+        }
+
+        .series-card__title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .series-card__stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .series-card__stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .series-card__description {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.8;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .series-card__thicknesses {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .thickness-badge {
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Стили для случая, когда нет изображения */
+        .series-card--no-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .series-card--no-image .series-card__image {
+            display: none;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            
+            .series-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .series-card {
+                height: 400px;
+            }
+            
+            .series-card__title {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Анимация загрузки */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Счетчик блоков */
+        .blocks-count {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .blocks-count::before {
+            content: "🧱";
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Серии термоблоков</h1>
+        
+        {% if series_list %}
+            <div class="series-grid">
+                {% for series in series_list %}
+                    <a href="{% url 'products:series_detail' series.slug %}" class="series-card">
+                        {% if series.main_image and series.main_image.image %}
+                            <img src="{{ series.main_image.image.url }}" 
+                                 alt="{{ series.main_image.alt_text|default:series.name }}"
+                                 class="series-card__image">
+                        {% else %}
+                            <div class="series-card__image" style="display: none;"></div>
+                        {% endif %}
+                        
+                        <div class="series-card__overlay">
+                            <span class="series-card__type">
+                                {{ series.get_series_type_display }}
+                            </span>
+                            
+                            <h2 class="series-card__title">{{ series.name }}</h2>
+                            
+                            <div class="series-card__stats">
+                                <div class="series-card__stat blocks-count">
+                                    {{ series.blocks.count }} блоков
+                                </div>
+                                
+                                {% with groups=series.characteristic_groups.all %}
+                                    {% if groups %}
+                                        <div class="series-card__stat">
+                                            {% if groups.count == 1 %}
+                                                {{ groups.first.wall_thickness }}мм
+                                            {% else %}
+                                                {{ groups.first.wall_thickness }}-{{ groups.last.wall_thickness }}мм
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            
+                            {% if series.description %}
+                                <div class="series-card__description">
+                                    {{ series.description|truncatechars:120 }}
+                                </div>
+                            {% endif %}
+                            
+                            {% with groups=series.characteristic_groups.all %}
+                                {% if groups.count > 0 %}
+                                    <div class="series-card__thicknesses">
+                                        {% for group in groups|slice:":3" %}
+                                            <span class="thickness-badge">
+                                                {{ group.wall_thickness }}мм
+                                                {% if group.weight_per_sqm %}
+                                                    ({{ group.weight_per_sqm }} кг/м²)
+                                                {% endif %}
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="loading">
+                <p>Нет доступных серий блоков</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

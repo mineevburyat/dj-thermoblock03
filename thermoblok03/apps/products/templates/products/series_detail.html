@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ series.name }} - блоки серии</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: #f0f0f0;
+            transition: background 0.2s;
+        }
+
+        .back-link:hover {
+            background: #e0e0e0;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .series-hero {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .series-hero__image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .series-hero__content {
+            padding: 30px;
+        }
+
+        .series-hero__title {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .series-hero__meta {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .series-hero__description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #444;
+            max-width: 800px;
+        }
+
+        .characteristics-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+        }
+
+        .characteristics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .characteristic-card {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .characteristic-card__title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .characteristic-card__value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .characteristic-card__unit {
+            font-size: 0.9rem;
+            color: #999;
+            margin-left: 5px;
+        }
+
+        .blocks-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .blocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .block-card {
+            background: #f8f8f8;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .block-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .block-card__image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .block-card__content {
+            padding: 20px;
+        }
+
+        .block-card__type {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #e0e0e0;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .block-card__title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .block-card__article {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .block-card__specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .block-card__spec {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .block-card__spec-label {
+            display: block;
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        .block-card__thickness {
+            background: #007bff;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .series-hero__image {
+                height: 250px;
+            }
+            
+            .series-hero__title {
+                font-size: 2rem;
+            }
+            
+            .characteristics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .blocks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="{% url 'products:series_list' %}" class="back-link">← Назад</a>
+            <span class="header-title">/ {{ series.name }}</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Герой-секция -->
+        <div class="series-hero">
+            {% if series.main_image and series.main_image.image %}
+                <img src="{{ series.main_image.image.url }}" 
+                     alt="{{ series.main_image.alt_text|default:series.name }}"
+                     class="series-hero__image">
+            {% endif %}
+            
+            <div class="series-hero__content">
+                <h1 class="series-hero__title">{{ series.name }}</h1>
+                
+                <div class="series-hero__meta">
+                    <span>Тип: {{ series.get_series_type_display }}</span>
+                    <span>Блоков в серии: {{ series.blocks.count }}</span>
+                </div>
+                
+                {% if series.description %}
+                    <div class="series-hero__description">
+                        {{ series.description }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Характеристики серии по группам -->
+        {% if characteristic_groups %}
+            <div class="characteristics-section">
+                <h2 class="section-title">Характеристики</h2>
+                
+                {% for group in characteristic_groups %}
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="margin-bottom: 15px; color: #333;">
+                            Толщина стены: {{ group.wall_thickness }} мм
+                        </h3>
+                        
+                        <div class="characteristics-grid">
+                            {% if group.thermal_conductivity %}
+                                <div class="characteristic-card">
+                                    <div class="characteristic-card__title">Теплопроводность</div>
+                                    <div class="characteristic-card__value">
+                                        {{ group.thermal_conductivity }}
+                                        <span class="characteristic-card__unit">Вт/(м·К)</span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            {% if group.sound_insulation %}
+                                <div class="characteristic-card">
+                                    <div class="characteristic-card__title">Звукоизоляция</div>
+                                    <div class="characteristic-card__value">
+                                        {{ group.sound_insulation }}
+                                        <span class="characteristic-card__unit">дБ</span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            {% if group.concrete_consumption %}
+                                <div class="characteristic-card">
+                                    <div class="characteristic-card__title">Расход бетона</div>
+                                    <div class="characteristic-card__value">
+                                        {{ group.concrete_consumption }}
+                                        <span class="characteristic-card__unit">м³/м²</span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            <div class="characteristic-card">
+                                <div class="characteristic-card__title">Вес 1 м² стены</div>
+                                <div class="characteristic-card__value">
+                                    {{ group.weight_per_sqm }}
+                                    <span class="characteristic-card__unit">кг</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Блоки серии -->
+        <div class="blocks-section">
+            <h2 class="section-title">Блоки серии {{ series.name }}</h2>
+            
+            {% if blocks_by_type %}
+                {% for block_type, blocks in blocks_by_type.items %}
+                    <div style="margin-bottom: 40px;">
+                        <h3 style="margin-bottom: 20px; color: #333;">{{ block_type }}</h3>
+                        
+                        <div class="blocks-grid">
+                            {% for block in blocks %}
+                                <div class="block-card">
+                                    {% if block.main_image and block.main_image.image %}
+                                        <img src="{{ block.main_image.image.url }}" 
+                                             alt="{{ block.main_image.alt_text|default:block.name }}"
+                                             class="block-card__image">
+                                    {% else %}
+                                        <div class="block-card__image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                                    {% endif %}
+                                    
+                                    <div class="block-card__content">
+                                        <span class="block-card__type">{{ block.get_block_type_display }}</span>
+                                        
+                                        <h4 class="block-card__title">{{ block.name }}</h4>
+                                        
+                                        <div class="block-card__article">
+                                            Арт: {{ block.article }}
+                                        </div>
+                                        
+                                        <div class="block-card__specs">
+                                            <div class="block-card__spec">
+                                                <span class="block-card__spec-label">Длина</span>
+                                                {{ block.length }} мм
+                                            </div>
+                                            <div class="block-card__spec">
+                                                <span class="block-card__spec-label">Ширина</span>
+                                                {{ block.width }} мм
+                                            </div>
+                                            <div class="block-card__spec">
+                                                <span class="block-card__spec-label">Высота</span>
+                                                {{ block.height }} мм
+                                            </div>
+                                            <div class="block-card__spec">
+                                                <span class="block-card__spec-label">Вес</span>
+                                                {{ block.weight }} кг
+                                            </div>
+                                            <div class="block-card__spec">
+                                                <span class="block-card__spec-label">На поддоне</span>
+                                                {{ block.pallet_quantity }} шт
+                                            </div>
+                                            <div class="block-card__spec">
+                                                <span class="block-card__spec-label">Вес поддона</span>
+                                                {{ block.pallet_weight }} кг
+                                            </div>
+                                        </div>
+                                        
+                                        {% if block.characteristic_group %}
+                                            <span class="block-card__thickness">
+                                                Для стен {{ block.characteristic_group.wall_thickness }} мм
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center; color: #666; padding: 40px;">
+                    В этой серии пока нет блоков
+                </p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
