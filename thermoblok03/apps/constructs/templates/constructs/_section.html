@@ -3,7 +3,7 @@
     <div class="container">
         <!-- Заголовок секции -->
         <div class="section-header">
-            <h2 class="section-title">Наши проекты домов и зданий из ThermoBlock</h2>
+            <h2 class="section-title">Популярные проекты домов из ThermoBlock</h2>
             <p class="section-subtitle">Стройте с умом - живите с комфортом!</p>
         </div>
 
@@ -98,7 +98,7 @@
                         <div class="category-card__overlay"></div>
                         <div class="category-card__content">
                             <h4 class="category-title">{{ category.name }}</h4>
-                            <span class="category-count">{{ category.products_count }} проектов</span>
+                            <span class="category-count">{{ category.products_count }} проекта</span>
                         </div>
                     </div>
                 </a>
@@ -377,7 +377,7 @@
 
     .categories-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: 25% 25% 25% 25% ;
         gap: 25px;
     }
 

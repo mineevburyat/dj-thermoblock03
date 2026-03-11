@@ -17,13 +17,13 @@ def show_projects_preview(context, limit=3, show_categories=True):
     """Универсальный тег для показа превью проектов"""
     request = context.get('request')
     
-    projects = Product.objects.filter(is_active=True).order_by('id')[:limit]
+    projects = Product.objects.filter(is_active=True).order_by('order')[:limit]
     
     categories = None
     if show_categories:
         categories = ProductType.objects.annotate(
             products_count=Count('products', filter=Q(products__is_active=True))
-        ).filter(products_count__gt=0)
+        ).filter(products_count__gt=0).order_by('order')
     
     return {
         'projects': projects,

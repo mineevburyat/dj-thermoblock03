@@ -72,7 +72,7 @@ class Product(models.Model):
     title = models.CharField('Название', max_length=200)
     slug = models.SlugField('URL', max_length=250, unique=True, db_index=True)
     article = models.CharField('Артикул', max_length=50, blank=True, db_index=True)
-    
+    order = models.PositiveIntegerField('Порядок', default=1000)
     # Связи
     product_type = models.ForeignKey(
         ProductType, 

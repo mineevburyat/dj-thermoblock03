@@ -76,7 +76,8 @@ class RoofTypeAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     # Отображение в списке
     list_display = [
-        'id', 
+        'id',
+        'order',
         'main_image_thumb', 
         'title', 
         'product_type', 
@@ -108,10 +109,10 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['title', 'article', 'description']
     
     # Редактирование в списке
-    list_editable = ['is_active', 'is_popular', 'is_new']
+    list_editable = ['order', 'is_active', 'is_popular', 'is_new']
     
     # Порядок сортировки
-    ordering = ['id']
+    ordering = ['order', '-created_at']
     
     # Количество записей на странице
     list_per_page = 25
@@ -120,7 +121,7 @@ class ProductAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Основная информация', {
             'fields': (
-                ('title', 'article'),
+                ('title', 'article', 'order'),
                 ('slug',),
                 ('product_type', 'roof_type'),
                 ('description', 'short_description'),
