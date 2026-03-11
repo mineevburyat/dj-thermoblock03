@@ -281,6 +281,37 @@ def product_edit(request, product_id):
     }
     return render(request, 'constructs/edit_detail.html', context)
 
+def product_detail_1(request, product_slug):
+    """Страница редактирования проекта"""
+    product = get_object_or_404(
+        Product.objects.prefetch_related(
+            Prefetch('images', queryset=ProductImage.objects.order_by('order'))
+        ),
+        slug=product_slug
+    )
+    id = product.pk
+    # Получаем следующий и предыдущий проекты для навигации
+    prev_product = Product.objects.filter(
+        id__lt=id, 
+        is_active=True
+    ).order_by('-id').first()
+    
+    next_product = Product.objects.filter(
+        id__gt=id, 
+        is_active=True
+    ).order_by('id').first()
+    
+    
+    context = {
+        'product': product,
+        'images': product.images.all(),
+        'prev_product': prev_product,
+        'next_product': next_product,
+        'product_types': ProductType.objects.all(),
+        'roof_types': RoofType.objects.all(),
+    }
+    return render(request, 'constructs/detail.html', context)
+
 @require_POST
 def toggle_active(request, product_id):
     """Включение/выключение проекта"""

@@ -815,7 +815,7 @@
             <!-- Сетка проектов -->
             <div class="projects-grid">
                 {% for project in page_obj %}
-                <a href="{% url 'constructs:product-edit' project.id %}" class="project-card">
+                <a href="{% url 'constructs:project_detail' project.slug %}" class="project-card">
                     <div class="project-card__inner" style="background-image: url('{% if project.get_first_image %}{{ project.get_first_image.image.url }}{% else %}/static/img/placeholder.jpg{% endif %}');">
                         <div class="project-card__overlay"></div>
                         

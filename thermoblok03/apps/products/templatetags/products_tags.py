@@ -4,6 +4,54 @@ from ..models import BlockSeries
 
 register = template.Library()
 
+@register.inclusion_tag('products/series_list.html', takes_context=True)
+def show_section_products(context, limit=None, series_type=None):
+    """
+    Шаблонный тег для секции на главной странице
+    
+    Параметры:
+    - limit: ограничение количества выводимых серий
+    - series_type: фильтр по типу серии ('monolithic' или 'block')
+    
+    
+    Пример использования:
+    {% load catalog_tags %}
+    {% show_section_products limit=6 %}
+    """
+    queryset = BlockSeries.objects.filter(is_active=True).prefetch_related(
+            'blocks', 'characteristic_groups', 'linked_media'
+        ).select_related('main_image')
+    queryset = BlockSeries.objects.filter(is_active=True).prefetch_related(
+        'blocks', 'characteristic_groups', 'linked_media'
+    ).select_related('main_image')
+    
+    if series_type:
+        queryset = queryset.filter(series_type=series_type)
+    
+    if limit:
+        queryset = queryset[:limit]
+    
+    # Добавляем дополнительные данные для каждой серии
+    series_list = BlockSeries.objects.filter(is_active=True).prefetch_related(
+            'blocks', 'characteristic_groups', 'linked_media'
+        ).select_related('main_image')
+    # for series in queryset:
+    #     groups = series.characteristic_groups.all()
+    #     series_data = {
+    #         'series': series,
+    #         'blocks_count': series.blocks.count(),
+    #         'thickness_range': get_thickness_range(groups),
+    #         'first_thickness': groups.first().wall_thickness if groups else None,
+    #         'last_thickness': groups.last().wall_thickness if groups.count() > 1 else None,
+    #         'has_multiple_thickness': groups.count() > 1,
+    #     }
+    #     series_list.append(series_data)
+    
+    return {
+        'series_list': series_list,
+        'request': context.get('request'),
+    }
+
 @register.inclusion_tag('products/_products_section.html', takes_context=True)
 def show_series_cards(context, limit=None, series_type=None, show_title=True):
     """

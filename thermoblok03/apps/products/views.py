@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from .models import BlockSeries, Block, CharacteristicGroup, MediaLibrary
 
 class SeriesListView(ListView):
@@ -44,5 +44,48 @@ class SeriesDetailView(DetailView):
         context['blocks_by_type'] = blocks_by_type
         context['characteristic_groups'] = series.characteristic_groups.all()
         context['media_files'] = series.linked_media.all()
+        
+        return context
+    
+class CatalogView(TemplateView):
+    """Основная страница каталога"""
+    template_name = 'products/catalog.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Получаем все активные серии
+        series_list = BlockSeries.objects.all()
+        
+        # Получаем ID выбранной серии из GET параметра
+        selected_series_id = self.request.GET.get('series')
+        
+        # Если выбрана конкретная серия, получаем её блоки
+        blocks = Block.objects.all()
+        selected_series = None
+        if selected_series_id:
+            try:
+                selected_series = BlockSeries.objects.get(
+                    id=selected_series_id, 
+                    is_active=True
+                )
+                blocks = Block.objects.filter(
+                    series=selected_series,
+                    is_active=True
+                ).select_related(
+                    'main_image', 
+                    'characteristic_group'
+                ).prefetch_related(
+                    'linked_media'
+                )
+            except BlockSeries.DoesNotExist:
+                pass
+        
+        context.update({
+            'series_list': series_list,
+            'selected_series': selected_series,
+            'blocks': blocks,
+            'media_types': dict(MediaLibrary.MEDIA_TYPES),
+        })
         
         return context
