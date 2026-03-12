@@ -1,36 +1,11 @@
 {% extends "old/base.html" %}
 {% load static thumbnail %}
-
-{% block title %}Каталог термоблоков{% endblock %}
-
+{% block title %}Каталог строительных термоблоков c маркой ThermoBlock{% endblock %}
+{% block meta_descriptions %}{% endblock  %}
 {% block extra_css %}
 <style>
-    /* Основные переменные */
-    :root {
-        --primary: #2c3e50;
-        --secondary: #34495e;
-        --accent: #3498db;
-        --light: #ecf0f1;
-        --dark: #2c3e50;
-        --success: #27ae60;
-        --warning: #f39c12;
-        --danger: #e74c3c;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: #f8f9fa;
-        color: #333;
-    }
-
     .catalog-container {
-        max-width: 1600px;
+        max-width: 1200px;
         margin: 0 auto;
         padding: 30px 20px;
     }
@@ -655,7 +630,7 @@
             <div class="series-card__content">
                 <h3 class="series-card__title">{{ series.name }}</h3>
                 <div class="series-card__stats">
-                    <span>🧱 {{ series.blocks.count }} блоков</span>
+                    <span>🧱 {{ series.blocks.count }} вида блоков</span>
                     {% with groups=series.characteristic_groups.all %}
                         {% if groups %}
                             <span>📏 
@@ -670,7 +645,7 @@
                 </div>
                 <div class="series-card__thickness">
                     {% for group in series.characteristic_groups.all|slice:":3" %}
-                        <span class="thickness-badge">{{ group.wall_thickness }} мм</span>
+                        <span class="thickness-badge"> стена {{ group.wall_thickness }} мм</span>
                     {% endfor %}
                 </div>
             </div>
@@ -750,64 +725,14 @@
                 </div>
             </div>
         </div>
-
-        <!-- Калькулятор -->
-        <div class="calculator-panel" id="calculator">
-            <h3 class="calculator-title">🧮 Калькулятор материалов и теплопотерь</h3>
-            <div class="calculator-grid">
-                <div class="calculator-form">
-                    <div class="form-group">
-                        <label>Длина стены (м):</label>
-                        <input type="number" id="wall_length" class="form-control" value="10" min="1" step="0.1">
-                    </div>
-                    <div class="form-group">
-                        <label>Высота стены (м):</label>
-                        <input type="number" id="wall_height" class="form-control" value="3" min="1" step="0.1">
-                    </div>
-                    <div class="form-group">
-                        <label>Тип блока:</label>
-                        <select id="block_type" class="form-control">
-                            <option value="">Выберите тип блока</option>
-                            {% for block in blocks %}
-                                <option value="{{ block.id }}">{{ block.get_block_type_display }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" onclick="calculate()">Рассчитать</button>
-                </div>
-                <div class="calculator-result" id="calculator_result">
-                    <div class="result-item">
-                        <span class="result-label">Площадь стены:</span>
-                        <span class="result-value" id="result_area">30 м²</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Количество блоков:</span>
-                        <span class="result-value" id="result_blocks">0 шт</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Поддонов:</span>
-                        <span class="result-value" id="result_pallets">0 шт</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Вес стены:</span>
-                        <span class="result-value" id="result_weight">0 кг</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Расход бетона:</span>
-                        <span class="result-value" id="result_concrete">0 м³</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Теплопотери:</span>
-                        <span class="result-value" id="result_heatloss">0 Вт</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    {% endif %}
         <!-- Блоки серии -->
         <div class="blocks-section">
-            <h2 class="blocks-title">Блоки серии {{ selected_series.name }}</h2>
-            
+            {% if not selected_series %}
+            <h2 class="blocks-title">Весь ассортимент ThermoBlock</h2>
+            {% else %}
+            <h2 class="blocks-title">ThermoBlock {{ selected_series.name }}</h2>
+            {% endif %}
             {% if blocks %}
                 <div class="blocks-grid">
                     {% for block in blocks %}
@@ -1005,12 +930,7 @@
                 </div>
             {% endif %}
         </div>
-    {% else %}
-        <div class="empty-state">
-            <h3>Выберите серию блоков</h3>
-            <p>Кликните на интересующую вас серию, чтобы увидеть доступные блоки и рассчитать материалы</p>
-        </div>
-    {% endif %}
+    
 </div>
 
 <!-- Модальное окно для медиа -->

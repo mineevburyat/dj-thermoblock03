@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'corsheaders',
     'captcha',
+    'apps.utils',
     'apps.old',
     'apps.home',
     'apps.about',
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'breadcrumbs.middleware.BreadcrumbsMiddleware',
 ]
 
 ROOT_URLCONF = 'conf.urls'

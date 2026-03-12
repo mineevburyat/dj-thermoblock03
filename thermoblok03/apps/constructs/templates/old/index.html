@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея проектов домов</title>
+    <link rel="stylesheet" href="{% static 'constructs/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Проекты домов</h1>
+        
+        <!-- Контейнер для горизонтальной ленты -->
+        <div class="projects-scroll" id="projectsScroll">
+            <div class="projects-track" id="projectsTrack">
+                <!-- Карточки будут добавляться сюда динамически -->
+            </div>
+            <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для детального просмотра -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <div class="modal-layout" id="modalLayout">
+                <!-- Контент будет загружаться динамически -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Полноэкранный режим изображения -->
+    <div class="fullscreen-modal" id="fullscreenModal">
+        <button class="fullscreen-close" id="closeFullscreen">&times;</button>
+        <img src="" alt="Fullscreen" class="fullscreen-image" id="fullscreenImage">
+    </div>
+
+    <script src="{% static 'constructs/gallery.js' %}"></script>
+</body>
+</html>

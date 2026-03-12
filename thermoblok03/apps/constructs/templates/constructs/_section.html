@@ -10,7 +10,7 @@
         <!-- Сетка с тремя проектами -->
         <div class="projects-grid">
             {% for project in projects|slice:":3" %}
-            <a href="{% url 'constructs:index' %}" class="project-card">
+            <a href="{% url 'constructs:project_detail' project.slug%}" class="project-card">
                 <div class="project-card__inner" style="background-image: url('{% if project.get_first_image %}{{ project.get_first_image.image.url }}{% else %}/static/img/placeholder.jpg{% endif %}');">
                     <div class="project-card__overlay"></div>
                     
@@ -123,23 +123,6 @@
     }
 
 
-    /* Заголовки секции */
-    .section-header {
-        text-align: center;
-        margin-bottom: 40px;
-    }
-
-    .section-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #1e293b;
-        margin-bottom: 10px;
-    }
-
-    .section-subtitle {
-        font-size: 1.1rem;
-        color: #64748b;
-    }
 
     /* Сетка проектов (3 колонки) */
     .projects-grid {

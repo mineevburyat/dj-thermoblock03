@@ -1,10 +1,10 @@
-{% extends "old/base.html" %}
-{% load static %}
-{% load construct_tags %}
-{% block title %}Редактирование проекта {{product.slug}}{% endblock  %}
-{% block meta_description %}Редактирование {{product.short_description}}{% endblock  %}
-{% block meta_keywords %}{% endblock  %}
-{% block extra_css %}
+<!-- templates/project_edit.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование проекта: {{ product.title }}</title>
     <style>
         * {
             margin: 0;
@@ -554,20 +554,19 @@
             }
         }
     </style>
-{% endblock  %}
-{% block content %}
+</head>
+<body>
     <div class="edit-container">
         <!-- Навигационная панель -->
-        <nav class="nav-bar">
+        <div class="nav-bar">
             <div class="nav-title">
-                <span>Редактирование проекта #{{ product.id }}</span>
+                <a href="/constructs/" class="back-link">← Вернуться в каталог</a>
+                <a href="/catalog/" class="back-link">← Текущий сайт</a>
+                <span>проекта #{{ product.title }}</span>
             </div>
             <div class="nav-buttons">
-                <a href="{% url 'constructs:index' %}" class="back-link">
-                    Вернуться в каталог
-                </a>
                 {% if prev_product %}
-                <a href="{% url 'constructs:product-edit' prev_product.id %}" class="nav-btn">
+                <a href="{% url 'constructs:project_detail' prev_product.slug %}" class="nav-btn">
                     ← Предыдущий
                 </a>
                 {% else %}
@@ -575,28 +574,17 @@
                 {% endif %}
                 
                 {% if next_product %}
-                <a href="{% url 'constructs:product-edit' next_product.id %}" class="nav-btn">
+                <a href="{% url 'constructs:project_detail' next_product.slug %}" class="nav-btn">
                     Следующий →
                 </a>
                 {% else %}
                 <span class="nav-btn disabled">Следующий →</span>
                 {% endif %}
             </div>
-        </nav>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {{ message }}
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+        </div>
+
         <!-- Статус бар -->
         <div class="status-bar">
-            <span class="status-badge {% if product.is_active %}badge-active{% else %}badge-inactive{% endif %}">
-                {% if product.is_active %}✅ Активен{% else %}❌ Неактивен{% endif %}
-            </span>
             {% if product.is_popular %}
             <span class="status-badge badge-popular">⭐ Популярный</span>
             {% endif %}
@@ -611,10 +599,6 @@
             {% endif %}
         </div>
 
-        <!-- Форма редактирования -->
-        <form method="post" enctype="multipart/form-data" id="editForm">
-            {% csrf_token %}
-            
             <div class="edit-grid">
                 <!-- Левая колонка - Галерея -->
                 <div class="gallery-section">
@@ -654,33 +638,19 @@
                         </div>
                         {% endfor %}
                     </div>
-
-                    <!-- Загрузка новых изображений -->
-                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                        <input type="file" name="new_images" id="fileInput" multiple accept="image/*" style="display: none;">
-                        <div class="upload-icon">📤</div>
-                        <div style="font-weight: 500; margin-bottom: 5px;">Загрузить изображения</div>
-                        <div style="font-size: 13px; color: #6c757d;">PNG, JPG, JPEG (можно несколько)</div>
-                    </div>
                 </div>
 
                 <!-- Правая колонка - Форма -->
                 <div class="form-section">
-                    <div class="section-title">
-                        <span>📋 Информация о проекте</span>
-                    </div>
-
-                    <!-- Основная информация -->
-                    <div class="form-group">
-                        <label class="form-label">Название проекта *</label>
-                        <input type="text" name="title" class="form-control" value="{{ product.title }}" required>
-                    </div>
+                    </h3 class="section-title">
+                        <span>📋 {{product.title}}</span>
+                    </h3>
 
                     <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Артикул</label>
-                            <input type="text" name="article" class="form-control" value="{{ product.article|default:'' }}">
-                        </div>
+                        <p class="form-group">
+                            <span class="form-label">Артикул</span>
+                            <span class="form-control">{{ product.article|default:'' }}</span>
+                        </p>
                         <div class="form-group">
                             <label class="form-label">Тип проекта</label>
                             <select name="product_type" class="form-control">
@@ -864,7 +834,7 @@
                 'Подтверждение',
                 `Вы уверены, что хотите ${action} этот проект?`,
                 function() {
-                    fetch(`/construct/edit/{{ product.id }}/toggle-active/`, {
+                    fetch(`/project/{{ product.id }}/toggle-active/`, {
                         method: 'POST',
                         headers: {
                             'X-CSRFToken': '{{ csrf_token }}'
@@ -883,7 +853,7 @@
 
         // Управление изображениями
         function setMainImage(imageId) {
-            fetch(`/constructs/edit/{{ product.id }}/set-main-image/${imageId}/`, {
+            fetch(`/project/{{ product.id }}/set-main-image/${imageId}/`, {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': '{{ csrf_token }}'
@@ -910,7 +880,7 @@
                 'Удаление изображения',
                 'Вы уверены, что хотите удалить это изображение?',
                 function() {
-                    fetch(`/constructs/edit/{{ product.id }}/delete-image/${imageId}/`, {
+                    fetch(`/project/{{ product.id }}/delete-image/${imageId}/`, {
                         method: 'POST',
                         headers: {
                             'X-CSRFToken': '{{ csrf_token }}'
@@ -934,107 +904,68 @@
 
         // Drag & drop для переупорядочивания изображений
         const imagesGrid = document.getElementById('imagesGrid');
-        if (imagesGrid) {
-            let draggedItem = null;
+        let draggedItem = null;
 
-            imagesGrid.addEventListener('dragstart', (e) => {
-                const item = e.target.closest('.image-item');
-                if (item) {
-                    draggedItem = item;
-                    item.classList.add('dragging');
-                    e.dataTransfer.setData('text/plain', item.dataset.id);
-                }
-            });
-
-            imagesGrid.addEventListener('dragend', (e) => {
-                const item = e.target.closest('.image-item');
-                if (item) {
-                    item.classList.remove('dragging');
-                }
-                draggedItem = null;
-            });
-
-            imagesGrid.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                const afterElement = getDragAfterElement(imagesGrid, e.clientY);
-                const draggable = document.querySelector('.dragging');
-                
-                if (draggable && afterElement) {
-                    if (afterElement.element) {
-                        imagesGrid.insertBefore(draggable, afterElement.element);
-                    } else {
-                        imagesGrid.appendChild(draggable);
-                    }
-                }
-            });
-
-            // Сохранение порядка после перетаскивания
-            imagesGrid.addEventListener('dragend', function() {
-                saveImageOrder();
-            });
-
-            function getDragAfterElement(container, y) {
-                const draggableElements = [...container.querySelectorAll('.image-item:not(.dragging)')];
-                
-                return draggableElements.reduce((closest, child) => {
-                    const box = child.getBoundingClientRect();
-                    const offset = y - box.top - box.height / 2;
-                    if (offset < 0 && offset > closest.offset) {
-                        return { offset: offset, element: child };
-                    } else {
-                        return closest;
-                    }
-                }, { offset: Number.NEGATIVE_INFINITY, element: null });
+        imagesGrid.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('image-item')) {
+                draggedItem = e.target;
+                e.target.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', e.target.dataset.id);
             }
+        });
 
-            function saveImageOrder() {
-                const items = [...document.querySelectorAll('.image-item')];
-                
-                // Проверяем, что есть элементы для сортировки
-                if (items.length === 0) {
-                    console.log('Нет изображений для сортировки');
-                    return;
-                }
-                
-                // Получаем ID элементов в правильном порядке
-                const orderIds = items.map(item => item.dataset.id).filter(id => id);
-                
-                console.log('Отправляемый порядок:', orderIds);
-                
-                if (orderIds.length === 0) {
-                    showToast('Нет изображений для сортировки', true);
-                    return;
-                }
-                
-                // Отправляем на сервер
-                fetch(`/constructs/edit/{{ product.id }}/reorder-images/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `order=${orderIds.join(',')}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showToast('Порядок изображений сохранен');
-                        formChanged = true;
-                        
-                        // Обновляем data-order атрибуты
-                        items.forEach((item, index) => {
-                            item.dataset.order = index + 1;
-                        });
-                    } else {
-                        showToast('Ошибка при сохранении порядка', true);
-                    }
-                })
-                .catch(error => {
-                    console.error('Ошибка:', error);
-                    showToast('Ошибка при сохранении порядка', true);
-                });
+        imagesGrid.addEventListener('dragend', (e) => {
+            if (e.target.classList.contains('image-item')) {
+                e.target.classList.remove('dragging');
             }
+        });
+
+        imagesGrid.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(imagesGrid, e.clientY);
+            const draggable = document.querySelector('.dragging');
+            if (afterElement == null) {
+                imagesGrid.appendChild(draggable);
+            } else {
+                imagesGrid.insertBefore(draggable, afterElement);
+            }
+        });
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.image-item:not(.dragging)')];
+            
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
+
+        // Сохранение порядка после перетаскивания
+        imagesGrid.addEventListener('dragend', (e) => {
+            const items = [...document.querySelectorAll('.image-item')];
+            const order = items.map(item => item.dataset.id);
+            
+            fetch(`/project/{{ product.id }}/reorder-images/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `order=${order.join(',')}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    formChanged = true;
+                }
+            });
+        });
+
         // Отслеживание изменений в форме
         document.getElementById('editForm').addEventListener('change', function() {
             formChanged = true;
@@ -1061,10 +992,11 @@
         });
 
         document.querySelectorAll('.image-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const originalUrl = this.dataset.originalUrl; // Берем URL оригинала
-                document.getElementById('mainImage').src = originalUrl;
-            });
-        });
+    item.addEventListener('click', function() {
+        const originalUrl = this.dataset.originalUrl; // Берем URL оригинала
+        document.getElementById('mainImage').src = originalUrl;
+    });
+});
     </script>
-{% endblock  %}
+</body>
+</html>

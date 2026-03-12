@@ -194,12 +194,12 @@ class MediaLibraryAdmin(BaseAdmin):
 
 @admin.register(BlockSeries)
 class BlockSeriesAdmin(BaseAdmin):
-    list_display = ['name', 'series_type', 'groups_count', 'blocks_count', 
+    list_display = ['name', 'order', 'series_type', 'groups_count', 'blocks_count', 
                    'media_count', 'is_active']
     list_filter = ['series_type', 'is_active']
     search_fields = ['name', 'description']
     prepopulated_fields = {'slug': ('name',)}
-    
+    list_editable = ('order', )
     fieldsets = (
         ('Основное', {
             'fields': ('name', 'slug', 'series_type', 'description')

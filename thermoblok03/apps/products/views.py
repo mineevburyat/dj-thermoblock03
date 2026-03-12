@@ -53,15 +53,18 @@ class CatalogView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
         # Получаем все активные серии
-        series_list = BlockSeries.objects.all()
-        
+        series_list = BlockSeries.objects.all().order_by('order')
         # Получаем ID выбранной серии из GET параметра
         selected_series_id = self.request.GET.get('series')
         
+        blocks = Block.objects.all().select_related(
+                    'main_image', 
+                    'characteristic_group'
+                ).prefetch_related(
+                    'linked_media'
+                )
         # Если выбрана конкретная серия, получаем её блоки
-        blocks = Block.objects.all()
         selected_series = None
         if selected_series_id:
             try:
@@ -80,7 +83,6 @@ class CatalogView(TemplateView):
                 )
             except BlockSeries.DoesNotExist:
                 pass
-        
         context.update({
             'series_list': series_list,
             'selected_series': selected_series,

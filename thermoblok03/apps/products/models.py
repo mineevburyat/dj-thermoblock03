@@ -243,7 +243,7 @@ class BlockSeries(models.Model):
     slug = models.SlugField('URL', max_length=120, unique=True, blank=True)
     series_type = models.CharField('Тип', max_length=20, choices=SERIES_TYPES)
     description = models.TextField('Описание', blank=True)
-    
+    order = models.SmallIntegerField('Порядок', default=10)
     # Главное изображение серии
     main_image = models.ForeignKey(
         MediaLibrary,

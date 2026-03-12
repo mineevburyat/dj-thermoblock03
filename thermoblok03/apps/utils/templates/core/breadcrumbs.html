@@ -1,0 +1,26 @@
+{% if breadcrumbs %}
+<nav aria-label="breadcrumb" class="breadcrumbs">
+    <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+        {% for crumb in breadcrumbs %}
+            <li itemprop="itemListElement" itemscope
+                itemtype="https://schema.org/ListItem"
+                class="breadcrumb-item{% if crumb.is_active %} active{% endif %}" 
+                {% if crumb.is_active %}aria-current="page"{% endif %}>
+                {% if crumb.url and not crumb.is_active %}
+                    <a itemprop="item" href="https://example.com/dresses"
+                        href="{{ crumb.url }}">
+                        <span itemprop="name">{{ crumb.title }}</span>
+                    </a>
+                {% else %}
+                    <span itemprop="name">{{ crumb.title }}</span>
+                {% endif %}
+                <meta itemprop="position" content="1" />
+            </li>
+            
+            {% if not forloop.last and separator %}
+                <li class="breadcrumb-separator" aria-hidden="true">{{ separator }}</li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+</nav>
+{% endif %}
