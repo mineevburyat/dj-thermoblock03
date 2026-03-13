@@ -91,3 +91,61 @@ class CatalogView(TemplateView):
         })
         
         return context
+
+
+class SeriesDetailViewNew(DetailView):
+    """Детальная страница серии"""
+    model = BlockSeries
+    template_name = 'products/series_detail.html'
+    context_object_name = 'series'
+    
+    def get_queryset(self):
+        return BlockSeries.objects.filter(is_active=True).prefetch_related(
+            'blocks',
+            'blocks__main_image',
+            'blocks__linked_media',
+            'blocks__characteristic_group',
+            'characteristic_groups',
+            'linked_media'
+        ).select_related('main_image')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        series = self.get_object()
+        
+        # Получаем все блоки серии
+        blocks = series.blocks.filter(is_active=True).select_related(
+            'main_image', 'characteristic_group'
+        ).prefetch_related('linked_media')
+        
+        # Группируем блоки по типу
+        blocks_by_type = {}
+        for block in blocks:
+            block_type = block.get_block_type_display()
+            if block_type not in blocks_by_type:
+                blocks_by_type[block_type] = []
+            blocks_by_type[block_type].append(block)
+        
+        # Получаем все медиа серии
+        media_items = list(series.linked_media.all())
+        if series.main_image:
+            # Добавляем главное изображение в начало списка
+            media_items.insert(0, series.main_image)
+        
+        # Получаем документы и чертежи
+        documents = series.linked_media.filter(media_type='document')
+        drawings = series.linked_media.filter(media_type='drawing')
+        videos = series.linked_media.filter(media_type__in=['video_file', 'video_link'])
+        
+        context.update({
+            'blocks': blocks,
+            'blocks_by_type': blocks_by_type,
+            'media_items': media_items,
+            'documents': documents,
+            'drawings': drawings,
+            'videos': videos,
+            'characteristic_groups': series.characteristic_groups.all(),
+            'media_count': len(media_items),
+        })
+        
+        return context

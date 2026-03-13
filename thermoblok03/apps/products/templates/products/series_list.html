@@ -229,7 +229,7 @@
                             
                             <div class="series-card__stats">
                                 <div class="series-card__stat blocks-count">
-                                    {{ series.blocks.count }} блоков
+                                    {{ series.blocks.count }} вида блоков
                                 </div>
                                 
                                 {% with groups=series.characteristic_groups.all %}
@@ -274,4 +274,11 @@
                 <p>Нет доступных серий блоков</p>
             </div>
         {% endif %}
+         <!-- Кнопка "Смотреть все проекты" -->
+        <div class="view-all">
+            <a href="{% url 'products:catalog' %}" class="view-all-btn">
+                смотреть все строительные блоки с торговой маркой ThermoBlock
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
 </section>

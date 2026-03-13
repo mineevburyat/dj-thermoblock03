@@ -48,7 +48,7 @@ def show_section_products(context, limit=None, series_type=None):
     #     series_list.append(series_data)
     
     return {
-        'series_list': series_list,
+        'series_list': series_list.order_by('order'),
         'request': context.get('request'),
     }
 

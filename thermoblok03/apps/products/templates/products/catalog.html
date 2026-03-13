@@ -183,76 +183,6 @@
         background: #bdc3c7;
     }
 
-    /* Калькулятор */
-    .calculator-panel {
-        background: white;
-        border-radius: 16px;
-        padding: 30px;
-        margin-bottom: 30px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    .calculator-title {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-        color: var(--dark);
-    }
-
-    .calculator-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-    }
-
-    .calculator-form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .form-group label {
-        font-weight: 500;
-        color: #555;
-    }
-
-    .form-control {
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 1rem;
-    }
-
-    .calculator-result {
-        background: var(--light);
-        padding: 20px;
-        border-radius: 12px;
-    }
-
-    .result-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .result-item:last-child {
-        border-bottom: none;
-    }
-
-    .result-label {
-        color: #666;
-    }
-
-    .result-value {
-        font-weight: 600;
-        color: var(--dark);
-    }
 
     /* Блоки */
     .blocks-section {
@@ -287,91 +217,233 @@
         box-shadow: 0 15px 40px rgba(0,0,0,0.15);
     }
 
-    /* Медиа галерея блока */
+/* Стили для медиа галереи */
+.block-media {
+    position: relative;
+    background: #1a1a1a;
+    height: 100%;
+    min-height: 450px;
+    overflow: hidden;
+}
+
+.block-media__main {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+}
+
+.block-media__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+}
+
+.block-media__video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+
+.block-media__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+/* Счетчик медиа */
+.block-media__counter {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    z-index: 15;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Кнопки навигации */
+.block-media__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.block-card:hover .block-media__nav {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.block-media__nav:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.block-media__nav--prev {
+    left: 20px;
+}
+
+.block-media__nav--next {
+    right: 20px;
+}
+
+/* Миниатюры */
+.block-media__thumbs {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+    z-index: 15;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.5) rgba(0,0,0,0.3);
+}
+
+.block-media__thumbs::-webkit-scrollbar {
+    height: 4px;
+}
+
+.block-media__thumbs::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.block-media__thumbs::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+}
+
+.block-media__thumb {
+    flex: 0 0 70px;
+    height: 70px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+    background: #333;
+}
+
+.block-media__thumb:hover {
+    transform: translateY(-2px);
+}
+
+.block-media__thumb.active {
+    border-color: var(--accent);
+    transform: scale(1.05);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+}
+
+.block-media__thumb img,
+.block-media__thumb video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.block-media__thumb-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.block-media__thumb-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: white;
+    font-size: 1.5rem;
+}
+
+/* Индикатор загрузки */
+.block-media__loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 25;
+}
+
+.block-media__loading::after {
+    content: "";
+    width: 40px;
+    height: 40px;
+    border: 3px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
     .block-media {
-        position: relative;
-        background: #1a1a1a;
-        height: 100%;
-        min-height: 400px;
+        min-height: 350px;
     }
-
-    .block-media__main {
-        width: 100%;
-        height: 100%;
-        position: relative;
-    }
-
-    .block-media__image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .block-media__video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
+    
     .block-media__nav {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        gap: 10px;
-        z-index: 10;
+        width: 36px;
+        height: 36px;
+        opacity: 1;
+        background: rgba(255,255,255,0.8);
     }
-
-    .block-media__btn {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.9);
-        border: none;
-        cursor: pointer;
-        font-size: 1.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s;
-    }
-
-    .block-media__btn:hover {
-        background: white;
-        transform: scale(1.1);
-    }
-
+    
     .block-media__thumbs {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        display: flex;
-        gap: 10px;
-        z-index: 10;
+        bottom: 10px;
     }
-
+    
     .block-media__thumb {
-        width: 60px;
-        height: 60px;
-        border-radius: 8px;
-        overflow: hidden;
-        cursor: pointer;
-        border: 2px solid transparent;
-        transition: all 0.2s;
+        flex: 0 0 50px;
+        height: 50px;
     }
-
-    .block-media__thumb.active {
-        border-color: var(--accent);
-        transform: scale(1.05);
-    }
-
-    .block-media__thumb img,
-    .block-media__thumb video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
+}
     /* Контент блока */
     .block-content {
         padding: 30px;
@@ -524,47 +596,221 @@
         color: #999;
     }
 
-    /* Модальное окно для медиа */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.9);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-    }
+    /* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
 
-    .modal.active {
-        display: flex;
-    }
+.modal.active {
+    display: flex;
+}
 
-    .modal-content {
-        max-width: 90%;
-        max-height: 90%;
-    }
+.modal-content {
+    position: relative;
+    max-width: 95vw;
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-    .modal-content img,
-    .modal-content video {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
+.modal-media-container {
+    max-width: 100%;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    .modal-close {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
-        background: none;
-        border: none;
-    }
+.modal-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
 
+.modal-video {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.modal-iframe {
+    width: 90vw;
+    height: 90vh;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.modal-document {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    min-width: 300px;
+}
+
+.modal-document-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.modal-document-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.modal-document-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.modal-document-link:hover {
+    background: #2980b9;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 10010;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.modal-close:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1) rotate(90deg);
+}
+
+.modal-counter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 1rem;
+    z-index: 10010;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 10010;
+    pointer-events: none;
+}
+
+.modal-nav-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    pointer-events: auto;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.modal-nav-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+}
+
+/* Подсказка для клика */
+.block-media__click-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+    pointer-events: none;
+}
+
+.block-media__main:hover .block-media__click-hint {
+    opacity: 1;
+}
+
+/* Иконка воспроизведения для видео */
+.block-media__play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+    z-index: 5;
+    pointer-events: none;
+    border: 2px solid rgba(255,255,255,0.3);
+}
     /* Адаптивность */
     @media (max-width: 1200px) {
         .block-card {
@@ -622,8 +868,8 @@
     <!-- Сетка серий -->
     <div class="series-grid">
         {% for series in series_list %}
-        <div class="series-card {% if selected_series and selected_series.id == series.id %}active{% endif %}" 
-             onclick="location.href='?series={{ series.id }}'">
+        <a class="series-card {% if selected_series and selected_series.id == series.id %}active{% endif %}" 
+            href="{% url 'products:series_detail' series.slug%}">
             <div class="series-card__image" style="background-image: url('{% if series.main_image and series.main_image.image %}{{ series.main_image.image.url }}{% else %}https://via.placeholder.com/400x200{% endif %}')">
                 <span class="series-card__type">{{ series.get_series_type_display }}</span>
             </div>
@@ -649,300 +895,400 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
+        </a>
         {% endfor %}
     </div>
 
     {% if selected_series %}
-        <!-- Панель информации о выбранной серии -->
-        <div class="series-info-panel">
-            <div class="series-info">
-                <div>
-                    <h2 style="font-size: 2rem; margin-bottom: 15px;">{{ selected_series.name }}</h2>
-                    <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">{{ selected_series.description }}</p>
+    <!-- Панель информации о выбранной серии -->
+    <div class="series-info-panel">
+        <div class="series-info">
+            <div>
+                <h2 style="font-size: 2rem; margin-bottom: 15px;">{{ selected_series.name }}</h2>
+                <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">{{ selected_series.description }}</p>
+                
+                <!-- Характеристики серии -->
+                {% for group in selected_series.characteristic_groups.all %}
+                <div style="background: var(--light); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <h4 style="margin-bottom: 10px;">Для стен толщиной {{ group.wall_thickness }} мм</h4>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                        {% if group.thermal_conductivity %}
+                        <div>🔥 Теплопроводность: {{ group.thermal_conductivity }} Вт/(м·К)</div>
+                        {% endif %}
+                        {% if group.sound_insulation %}
+                        <div>🔊 Звукоизоляция: {{ group.sound_insulation }} дБ</div>
+                        {% endif %}
+                        <div>⚖️ Вес стены: {{ group.weight_per_sqm }} кг/м²</div>
+                        {% if group.concrete_consumption %}
+                        <div>🧪 Расход бетона: {{ group.concrete_consumption }} м³/м²</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Медиа серии -->
+            <div>
+                <h3 style="margin-bottom: 15px;">Медиа материалы</h3>
+                <div class="series-media">
+                    {% if selected_series.main_image %}
+                    <div class="series-media__item" onclick="openMedia('{{ selected_series.main_image.image.url }}', 'image')">
+                        <img src="{{ selected_series.main_image.image.url }}" alt="{{ selected_series.main_image.title }}">
+                    </div>
+                    {% endif %}
                     
-                    <!-- Характеристики серии -->
-                    {% for group in selected_series.characteristic_groups.all %}
-                    <div style="background: var(--light); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                        <h4 style="margin-bottom: 10px;">Для стен толщиной {{ group.wall_thickness }} мм</h4>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                            {% if group.thermal_conductivity %}
-                            <div>🔥 Теплопроводность: {{ group.thermal_conductivity }} Вт/(м·К)</div>
-                            {% endif %}
-                            {% if group.sound_insulation %}
-                            <div>🔊 Звукоизоляция: {{ group.sound_insulation }} дБ</div>
-                            {% endif %}
-                            <div>⚖️ Вес стены: {{ group.weight_per_sqm }} кг/м²</div>
-                            {% if group.concrete_consumption %}
-                            <div>🧪 Расход бетона: {{ group.concrete_consumption }} м³/м²</div>
-                            {% endif %}
-                        </div>
+                    {% for media in selected_series.linked_media.all %}
+                    <div class="series-media__item" onclick="openMedia('{{ media.file_url }}', '{{ media.media_type }}')">
+                        {% if media.media_type == 'image' %}
+                            <img src="{{ media.file_url }}" alt="{{ media.title }}">
+                        {% elif media.media_type == 'video_file' %}
+                            <video src="{{ media.file_url }}"></video>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 2rem;">▶</div>
+                        {% elif media.media_type == 'video_link' %}
+                            <div style="background: #333; color: white; display: flex; align-items: center; justify-content: center; height: 100%;">🎥 Видео</div>
+                        {% else %}
+                            <div style="background: #333; color: white; display: flex; align-items: center; justify-content: center; height: 100%;">📄 {{ media.get_media_type_display }}</div>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </div>
                 
-                <!-- Медиа серии -->
-                <div>
-                    <h3 style="margin-bottom: 15px;">Медиа материалы</h3>
-                    <div class="series-media">
-                        {% if selected_series.main_image %}
-                        <div class="series-media__item" onclick="openMedia('{{ selected_series.main_image.image.url }}', 'image')">
-                            <img src="{{ selected_series.main_image.image.url }}" alt="{{ selected_series.main_image.title }}">
-                        </div>
-                        {% endif %}
-                        
-                        {% for media in selected_series.linked_media.all %}
-                        <div class="series-media__item" onclick="openMedia('{{ media.file_url }}', '{{ media.media_type }}')">
-                            {% if media.media_type == 'image' %}
-                                <img src="{{ media.file_url }}" alt="{{ media.title }}">
-                            {% elif media.media_type == 'video_file' %}
-                                <video src="{{ media.file_url }}"></video>
-                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 2rem;">▶</div>
-                            {% elif media.media_type == 'video_link' %}
-                                <div style="background: #333; color: white; display: flex; align-items: center; justify-content: center; height: 100%;">🎥 Видео</div>
-                            {% else %}
-                                <div style="background: #333; color: white; display: flex; align-items: center; justify-content: center; height: 100%;">📄 {{ media.get_media_type_display }}</div>
-                            {% endif %}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    
-                    <!-- Кнопки действий -->
-                    <div class="series-actions">
-                        <button class="btn btn-primary" onclick="scrollToCalculator()">
-                            🧮 Калькулятор
-                        </button>
-                        <a href="#" class="btn btn-secondary">
-                            📋 Инструкция
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            📜 Сертификаты
-                        </a>
-                        <a href="#" class="btn btn-secondary">
-                            📐 Чертежи
-                        </a>
-                    </div>
+                <!-- Кнопки действий -->
+                <div class="series-actions">
+                    <button class="btn btn-primary" onclick="scrollToCalculator()">
+                        🧮 Калькулятор
+                    </button>
+                    <a href="#" class="btn btn-secondary">
+                        📋 Инструкция
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        📜 Сертификаты
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        📐 Чертежи
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
     {% endif %}
-        <!-- Блоки серии -->
-        <div class="blocks-section">
-            {% if not selected_series %}
-            <h2 class="blocks-title">Весь ассортимент ThermoBlock</h2>
-            {% else %}
-            <h2 class="blocks-title">ThermoBlock {{ selected_series.name }}</h2>
-            {% endif %}
-            {% if blocks %}
-                <div class="blocks-grid">
-                    {% for block in blocks %}
-                    <div class="block-card" id="block-{{ block.id }}">
-                        <!-- Медиа галерея блока -->
-                        <div class="block-media" id="media-{{ block.id }}">
-                            <div class="block-media__main">
-                                {% with media_items=block.linked_media.all %}
-                                    {% if media_items %}
-                                        {% for media in media_items %}
-                                            {% if forloop.first %}
-                                                {% if media.media_type == 'image' and media.image %}
-                                                    <img src="{{ media.image.url }}" 
-                                                         alt="{{ media.title }}" 
-                                                         class="block-media__image" 
-                                                         id="main-media-{{ block.id }}">
-                                                {% elif media.media_type == 'video_file' and media.video_file %}
-                                                    <video class="block-media__video" 
-                                                           id="main-media-{{ block.id }}"
-                                                           controls>
-                                                        <source src="{{ media.video_file.url }}" type="video/mp4">
-                                                    </video>
-                                                {% elif media.media_type == 'video_link' and media.video_link %}
-                                                    <iframe class="block-media__video"
-                                                            id="main-media-{{ block.id }}"
-                                                            src="{{ media.video_link }}"
-                                                            frameborder="0"
-                                                            allowfullscreen></iframe>
-                                                {% endif %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% elif block.main_image %}
-                                        <img src="{{ block.main_image.image.url }}" 
-                                             alt="{{ block.name }}" 
-                                             class="block-media__image"
-                                             id="main-media-{{ block.id }}">
-                                    {% else %}
-                                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white;">
-                                            {{ block.name }}
-                                        </div>
+    <!-- Блоки серии -->
+    <div class="blocks-section">
+        {% if not selected_series %}
+        <h2 class="blocks-title">Весь ассортимент ThermoBlock</h2>
+        {% else %}
+        <h2 class="blocks-title">ThermoBlock {{ selected_series.name }}</h2>
+        {% endif %}
+        {% if blocks %}
+        <div class="blocks-grid">
+            {% for block in blocks %}
+            <div class="block-card" id="block-{{ block.id }}">
+                <!-- Медиа галерея блока -->
+                <div class="block-media">
+                    <!-- Основное отображение -->
+                    <div class="block-media__main" id="media-main-{{ block.id }}"
+                    onclick="event.stopPropagation(); openMediaInModal({{ block.id }}, blocksMedia[{{ block.id }}]?.currentIndex || 0)"
+                    style="cursor: pointer;">
+                        {% with media_items=block.linked_media.all %}
+                            {% if media_items %}
+                                {% with first_media=media_items.first %}
+                                    {% if first_media.media_type == 'image' and first_media.image %}
+                                        <img src="{{ first_media.image.url }}" 
+                                            alt="{{ first_media.title }}" 
+                                            class="block-media__image"
+                                            id="current-media-{{ block.id }}">
+                                    {% elif first_media.media_type == 'video_file' and first_media.video_file %}
+                                        <video class="block-media__video" 
+                                            id="current-media-{{ block.id }}"
+                                            controls>
+                                            <source src="{{ first_media.video_file.url }}" type="video/mp4">
+                                        </video>
+                                    {% elif first_media.media_type == 'video_link' and first_media.video_link %}
+                                        <iframe class="block-media__video"
+                                                id="current-media-{{ block.id }}"
+                                                src="{{ first_media.video_link }}"
+                                                frameborder="0"
+                                                allowfullscreen></iframe>
                                     {% endif %}
                                 {% endwith %}
-                            </div>
-                            
-                            <!-- Навигация по медиа -->
-                            {% with media_items=block.linked_media.all %}
-                                {% if media_items.count > 1 %}
-                                    <div class="block-media__nav">
-                                        <button class="block-media__btn" onclick="prevMedia({{ block.id }})">←</button>
-                                        <button class="block-media__btn" onclick="nextMedia({{ block.id }})">→</button>
-                                    </div>
-                                    
-                                    <div class="block-media__thumbs" id="thumbs-{{ block.id }}">
-                                        {% for media in media_items %}
-                                            <div class="block-media__thumb {% if forloop.first %}active{% endif %}" 
-                                                 onclick="showMedia({{ block.id }}, {{ forloop.counter0 }})">
-                                                {% if media.media_type == 'image' and media.image %}
-                                                    <img src="{{ media.image.url }}" alt="">
-                                                {% elif media.media_type == 'video_file' and media.video_file %}
-                                                    <video src="{{ media.video_file.url }}"></video>
-                                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.5rem;">▶</div>
-                                                {% else %}
-                                                    <div style="background: #333; color: white; display: flex; align-items: center; justify-content: center; height: 100%;">📹</div>
-                                                {% endif %}
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            {% endwith %}
-                            
-                            <!-- Счетчик медиа -->
-                            <div style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.5); color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; z-index: 10;">
-                                {{ block.linked_media.count|add:"1" }} медиа
-                            </div>
-                        </div>
-                        
-                        <!-- Контент блока -->
-                        <div class="block-content">
-                            <div class="block-header">
-                                <div>
-                                    <h3 class="block-title">{{ block.name }}</h3>
-                                    <div class="block-article">Артикул: {{ block.article }}</div>
+                            {% elif block.main_image %}
+                                <img src="{{ block.main_image.image.url }}" 
+                                    alt="{{ block.name }}" 
+                                    class="block-media__image"
+                                    id="current-media-{{ block.id }}">
+                            {% else %}
+                                <div class="block-media__placeholder">
+                                    <span>{{ block.name|first }}</span>
                                 </div>
-                                <span class="block-type">{{ block.get_block_type_display }}</span>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Индикатор текущего медиа -->
+                    <div class="block-media__counter" id="media-counter-{{ block.id }}">
+                        {% with total=block.linked_media.count|add:"1" %}
+                            <span id="current-index-{{ block.id }}">1</span> / {{ total }}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Кнопки навигации -->
+                    <button class="block-media__nav block-media__nav--prev" 
+                            onclick="prevMedia({{ block.id }})"
+                            aria-label="Предыдущее медиа">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="block-media__nav block-media__nav--next" 
+                            onclick="nextMedia({{ block.id }})"
+                            aria-label="Следующее медиа">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+
+                    <!-- Миниатюры для навигации -->
+                    {% with media_items=block.linked_media.all %}
+                        {% if media_items.count > 0 %}
+                            <div class="block-media__thumbs" id="thumbs-{{ block.id }}">
+                                <!-- Миниатюра главного изображения блока -->
+                                {% if block.main_image %}
+                                <div class="block-media__thumb {% if not media_items %}active{% endif %}" 
+                                    onclick="showMedia({{ block.id }}, 0)"
+                                    data-index="0">
+                                    {% if block.main_image.image %}
+                                        <img src="{{ block.main_image.image.url }}" alt="">
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                
+                                <!-- Миниатюры дополнительных медиа -->
+                                {% for media in media_items %}
+                                <div class="block-media__thumb {% if forloop.first and not block.main_image %}active{% endif %}" 
+                                    onclick="showMedia({{ block.id }}, {{ forloop.counter }})"
+                                    data-index="{{ forloop.counter }}">
+                                    {% if media.media_type == 'image' and media.image %}
+                                        <img src="{{ media.image.url }}" alt="">
+                                    {% elif media.media_type == 'video_file' and media.video_file %}
+                                        <video src="{{ media.video_file.url }}"></video>
+                                        <div class="block-media__thumb-play">▶</div>
+                                    {% elif media.media_type == 'video_link' %}
+                                        <div class="block-media__thumb-icon">🎥</div>
+                                    {% elif media.media_type == 'document' %}
+                                        <div class="block-media__thumb-icon">📄</div>
+                                    {% elif media.media_type == 'drawing' %}
+                                        <div class="block-media__thumb-icon">📐</div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
                             </div>
-                            
-                            {% if block.description %}
-                                <div class="block-description">{{ block.description }}</div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                
+                <!-- Контент блока -->
+                <div class="block-content">
+                    <div class="block-header">
+                        <div>
+                            <h3 class="block-title">{{ block.name }}</h3>
+                            <div class="block-article">Артикул: {{ block.article }}</div>
+                        </div>
+                        <span class="block-type">{{ block.get_block_type_display }}</span>
+                    </div>
+                    
+                    {% if block.description %}
+                        <div class="block-description">{{ block.description }}</div>
+                    {% endif %}
+                    
+                    <!-- Основные характеристики -->
+                    <div class="block-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Д×Ш×В</span>
+                            <span class="spec-value">{{ block.length }}×{{ block.width }}×{{ block.height }}</span>
+                            <span class="spec-unit">мм</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Вес блока</span>
+                            <span class="spec-value">{{ block.weight }}</span>
+                            <span class="spec-unit">кг</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">На поддоне</span>
+                            <span class="spec-value">{{ block.pallet_quantity }}</span>
+                            <span class="spec-unit">шт</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Вес поддона</span>
+                            <span class="spec-value">{{ block.pallet_weight }}</span>
+                            <span class="spec-unit">кг</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Расход на м²</span>
+                            <span class="spec-value">{{ block.blocks_per_sqm }}</span>
+                            <span class="spec-unit">шт</span>
+                        </div>
+                        {% if block.characteristic_group %}
+                        <div class="spec-item">
+                            <span class="spec-label">Толщина стены</span>
+                            <span class="spec-value">{{ block.characteristic_group.wall_thickness }}</span>
+                            <span class="spec-unit">мм</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Дополнительные характеристики -->
+                    <div class="block-features">
+                        {% if block.characteristic_group %}
+                            {% if block.characteristic_group.thermal_conductivity %}
+                            <div class="feature-item">
+                                <div class="feature-icon">🔥</div>
+                                <div class="feature-text">
+                                    Теплопроводность: {{ block.characteristic_group.thermal_conductivity }} Вт/(м·К)
+                                </div>
+                            </div>
                             {% endif %}
                             
-                            <!-- Основные характеристики -->
-                            <div class="block-specs">
-                                <div class="spec-item">
-                                    <span class="spec-label">Д×Ш×В</span>
-                                    <span class="spec-value">{{ block.length }}×{{ block.width }}×{{ block.height }}</span>
-                                    <span class="spec-unit">мм</span>
+                            {% if block.characteristic_group.sound_insulation %}
+                            <div class="feature-item">
+                                <div class="feature-icon">🔊</div>
+                                <div class="feature-text">
+                                    Звукоизоляция: {{ block.characteristic_group.sound_insulation }} дБ
                                 </div>
-                                <div class="spec-item">
-                                    <span class="spec-label">Вес блока</span>
-                                    <span class="spec-value">{{ block.weight }}</span>
-                                    <span class="spec-unit">кг</span>
-                                </div>
-                                <div class="spec-item">
-                                    <span class="spec-label">На поддоне</span>
-                                    <span class="spec-value">{{ block.pallet_quantity }}</span>
-                                    <span class="spec-unit">шт</span>
-                                </div>
-                                <div class="spec-item">
-                                    <span class="spec-label">Вес поддона</span>
-                                    <span class="spec-value">{{ block.pallet_weight }}</span>
-                                    <span class="spec-unit">кг</span>
-                                </div>
-                                <div class="spec-item">
-                                    <span class="spec-label">Расход на м²</span>
-                                    <span class="spec-value">{{ block.blocks_per_sqm }}</span>
-                                    <span class="spec-unit">шт</span>
-                                </div>
-                                {% if block.characteristic_group %}
-                                <div class="spec-item">
-                                    <span class="spec-label">Толщина стены</span>
-                                    <span class="spec-value">{{ block.characteristic_group.wall_thickness }}</span>
-                                    <span class="spec-unit">мм</span>
-                                </div>
-                                {% endif %}
                             </div>
+                            {% endif %}
                             
-                            <!-- Дополнительные характеристики -->
-                            <div class="block-features">
-                                {% if block.characteristic_group %}
-                                    {% if block.characteristic_group.thermal_conductivity %}
-                                    <div class="feature-item">
-                                        <div class="feature-icon">🔥</div>
-                                        <div class="feature-text">
-                                            Теплопроводность: {{ block.characteristic_group.thermal_conductivity }} Вт/(м·К)
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if block.characteristic_group.sound_insulation %}
-                                    <div class="feature-item">
-                                        <div class="feature-icon">🔊</div>
-                                        <div class="feature-text">
-                                            Звукоизоляция: {{ block.characteristic_group.sound_insulation }} дБ
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% if block.characteristic_group.concrete_consumption %}
-                                    <div class="feature-item">
-                                        <div class="feature-icon">🧪</div>
-                                        <div class="feature-text">
-                                            Расход бетона: {{ block.characteristic_group.concrete_consumption }} м³/м²
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    
-                                    <div class="feature-item">
-                                        <div class="feature-icon">⚖️</div>
-                                        <div class="feature-text">
-                                            Вес стены: {{ block.characteristic_group.weight_per_sqm }} кг/м²
-                                        </div>
-                                    </div>
-                                {% endif %}
+                            {% if block.characteristic_group.concrete_consumption %}
+                            <div class="feature-item">
+                                <div class="feature-icon">🧪</div>
+                                <div class="feature-text">
+                                    Расход бетона: {{ block.characteristic_group.concrete_consumption }} м³/м²
+                                </div>
                             </div>
+                            {% endif %}
                             
-                            <!-- Кнопки для медиа -->
-                            <div class="block-media-buttons">
-                                {% for media in block.linked_media.all %}
-                                    {% if media.media_type == 'document' %}
-                                    <button class="media-btn cert" onclick="window.open('{{ media.file_url }}')">
-                                        📄 {{ media.title|truncatechars:20 }}
-                                    </button>
-                                    {% elif media.media_type == 'drawing' %}
-                                    <button class="media-btn drawing" onclick="window.open('{{ media.file_url }}')">
-                                        📐 {{ media.title|truncatechars:20 }}
-                                    </button>
-                                    {% elif media.media_type == 'video_file' or media.media_type == 'video_link' %}
-                                    <button class="media-btn video" onclick="openMedia('{{ media.file_url }}', '{{ media.media_type }}')">
-                                        🎥 {{ media.title|truncatechars:20 }}
-                                    </button>
-                                    {% endif %}
-                                {% endfor %}
-                                
-                                {% if not block.linked_media.all %}
-                                    <button class="media-btn" disabled>Нет дополнительных материалов</button>
-                                {% endif %}
+                            <div class="feature-item">
+                                <div class="feature-icon">⚖️</div>
+                                <div class="feature-text">
+                                    Вес стены: {{ block.characteristic_group.weight_per_sqm }} кг/м²
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     </div>
-                    {% endfor %}
+                    
+                    <!-- Кнопки для медиа -->
+                    <div class="block-media-buttons">
+                        {% for media in block.linked_media.all %}
+                            {% if media.media_type == 'document' %}
+                            <button class="media-btn cert" onclick="window.open('{{ media.file_url }}')">
+                                📄 {{ media.title|truncatechars:20 }}
+                            </button>
+                            {% elif media.media_type == 'drawing' %}
+                            <button class="media-btn drawing" onclick="window.open('{{ media.file_url }}')">
+                                📐 {{ media.title|truncatechars:20 }}
+                            </button>
+                            {% elif media.media_type == 'video_file' or media.media_type == 'video_link' %}
+                            <button class="media-btn video" onclick="openMedia('{{ media.file_url }}', '{{ media.media_type }}')">
+                                🎥 {{ media.title|truncatechars:20 }}
+                            </button>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if not block.linked_media.all %}
+                            <button class="media-btn" disabled>Нет дополнительных материалов</button>
+                        {% endif %}
+                    </div>
                 </div>
-            {% else %}
-                <div class="empty-state">
-                    <p>В этой серии пока нет блоков</p>
-                </div>
-            {% endif %}
+            </div>
+            {% endfor %}
         </div>
+        {% else %}
+        <div class="empty-state">
+            <p>В этой серии пока нет блоков</p>
+        </div>
+        {% endif %}
+    </div>
     
 </div>
 
 <!-- Модальное окно для медиа -->
-<div class="modal" id="mediaModal">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
+<div class="modal" id="mediaModal" onclick="if(event.target===this) closeModal()">
+    <button class="modal-close" onclick="closeModal()" aria-label="Закрыть">×</button>
     <div class="modal-content" id="modalContent"></div>
 </div>
 
 <script>
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM загружен, инициализация галереи');
+    
+    // Проверяем наличие blocksMedia
+    console.log('blocksMedia:', blocksMedia);
+    
+    // Для каждого блока устанавливаем начальное состояние
+    Object.keys(blocksMedia).forEach(blockId => {
+        const blockMedia = blocksMedia[blockId];
+        if (blockMedia && blockMedia.items && blockMedia.items.length > 0) {
+            console.log(`Инициализация блока ${blockId} с ${blockMedia.items.length} медиа`);
+            // Показываем первое медиа
+            setTimeout(() => {
+                showMedia(parseInt(blockId), 0);
+            }, 100);
+        }
+    });
+    
+    // Добавляем поддержку клавиатуры
+    document.addEventListener('keydown', function(e) {
+        const modal = document.getElementById('mediaModal');
+        if (modal && modal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevMediaInModal();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextMediaInModal();
+            }
+        }
+    });
+    
+    // Добавляем поддержку свайпов для мобильных
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    document.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    document.addEventListener('touchend', function(e) {
+        const modal = document.getElementById('mediaModal');
+        if (!modal || !modal.classList.contains('active')) return;
+        
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchEndX - touchStartX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Свайп вправо - предыдущее
+                prevMediaInModal();
+            } else {
+                // Свайп влево - следующее
+                nextMediaInModal();
+            }
+        }
+    }
+});
+    // Отладка - проверим, что данные загружаются
+    console.log('Инициализация медиа галереи');
     // Хранилище для медиа данных блоков
     const blocksMedia = {};
-    
+
     {% for block in blocks %}
         {% with media_items=block.linked_media.all %}
             blocksMedia[{{ block.id }}] = {
@@ -952,7 +1298,8 @@
                     {
                         type: 'image',
                         url: '{{ block.main_image.image.url }}',
-                        title: '{{ block.main_image.title }}'
+                        title: '{{ block.main_image.title }}',
+                        thumbnail: '{{ block.main_image.image.url }}'
                     },
                     {% endif %}
                     {% for media in media_items %}
@@ -960,156 +1307,390 @@
                         type: '{{ media.media_type }}',
                         url: '{{ media.file_url }}',
                         title: '{{ media.title }}',
-                        {% if media.media_type == 'video_file' %}
-                        isVideo: true
-                        {% endif %}
+                        thumbnail: {% if media.media_type == 'image' %}'{{ media.image.url }}'{% else %}null{% endif %},
+                        {% comment %}
+                        isVideo: {{ media.media_type == 'video_file'|yesno:'true,false' }},
+                        isVideoLink: {{ media.media_type == 'video_link'|yesno:'true,false' }}
+                        {% endcomment %}
                     },
                     {% endfor %}
                 ]
             };
+        console.log('Блок {{ block.id }} загружен, элементов:', blocksMedia[{{ block.id }}].items.length);
         {% endwith %}
     {% endfor %}
-    
-    // Функция для переключения медиа в блоке
+    console.log('Всего блоков в blocksMedia:', Object.keys(blocksMedia).length);
+    // Функция для показа медиа
     function showMedia(blockId, index) {
         const blockMedia = blocksMedia[blockId];
-        if (!blockMedia || !blockMedia.items.length) return;
+        if (!blockMedia || !blockMedia.items.length) {
+            console.warn('Нет медиа для блока', blockId);
+            return;
+        }
+        
+        // Нормализуем индекс
+        if (index < 0) index = blockMedia.items.length - 1;
+        if (index >= blockMedia.items.length) index = 0;
         
         blockMedia.currentIndex = index;
         const media = blockMedia.items[index];
-        const mainMedia = document.getElementById(`main-media-${blockId}`);
         
-        if (!mainMedia) return;
+        // Получаем элементы
+        const mainContainer = document.getElementById(`media-main-${blockId}`);
+        const currentMedia = document.getElementById(`current-media-${blockId}`);
+        const counter = document.getElementById(`current-index-${blockId}`);
         
-        // Обновляем главное медиа
+        if (!mainContainer) return;
+        
+        // Показываем индикатор загрузки
+        showLoading(blockId);
+        
+        // Создаем новый элемент медиа
+        let newElement;
+        
         if (media.type === 'image') {
-            if (mainMedia.tagName === 'IMG') {
-                mainMedia.src = media.url;
-            } else {
-                const newImg = document.createElement('img');
-                newImg.src = media.url;
-                newImg.className = 'block-media__image';
-                newImg.id = `main-media-${blockId}`;
-                mainMedia.parentNode.replaceChild(newImg, mainMedia);
-            }
+            newElement = document.createElement('img');
+            newElement.src = media.url;
+            newElement.alt = media.title || 'Изображение блока';
+            newElement.className = 'block-media__image';
+            newElement.id = 'current-media-' + blockId;
+            newElement.onload = () => hideLoading(blockId);
+            newElement.onerror = () => {
+                hideLoading(blockId);
+                showError(blockId);
+            };
         } else if (media.type === 'video_file') {
-            const videoHtml = `<video class="block-media__video" id="main-media-${blockId}" controls><source src="${media.url}" type="video/mp4"></video>`;
-            const newVideo = document.createElement('div');
-            newVideo.innerHTML = videoHtml;
-            mainMedia.parentNode.replaceChild(newVideo.firstChild, mainMedia);
+            newElement = document.createElement('video');
+            newElement.className = 'block-media__video';
+            newElement.id = 'current-media-' + blockId;
+            newElement.controls = true;
+            newElement.autoplay = false;
+            
+            const source = document.createElement('source');
+            source.src = media.url;
+            source.type = 'video/mp4';
+            newElement.appendChild(source);
+            
+            newElement.onloadeddata = () => hideLoading(blockId);
+            newElement.onerror = () => {
+                hideLoading(blockId);
+                showError(blockId);
+            };
         } else if (media.type === 'video_link') {
-            const iframeHtml = `<iframe class="block-media__video" id="main-media-${blockId}" src="${media.url}" frameborder="0" allowfullscreen></iframe>`;
-            const newIframe = document.createElement('div');
-            newIframe.innerHTML = iframeHtml;
-            mainMedia.parentNode.replaceChild(newIframe.firstChild, mainMedia);
+            newElement = document.createElement('iframe');
+            newElement.className = 'block-media__video';
+            newElement.id = 'current-media-' + blockId;
+            newElement.src = media.url;
+            newElement.frameborder = '0';
+            newElement.allowfullscreen = true;
+            newElement.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            newElement.onload = () => hideLoading(blockId);
+        }
+        
+        // Заменяем текущее медиа
+        if (newElement) {
+            if (currentMedia) {
+                currentMedia.replaceWith(newElement);
+            } else {
+                mainContainer.appendChild(newElement);
+            }
+        }
+        
+        // Обновляем счетчик
+        if (counter) {
+            counter.textContent = index + 1;
         }
         
         // Обновляем активный thumb
         const thumbs = document.querySelectorAll(`#thumbs-${blockId} .block-media__thumb`);
         thumbs.forEach((thumb, i) => {
-            if (i === index) {
+            const thumbIndex = parseInt(thumb.dataset.index || 0);
+            if (thumbIndex === index) {
                 thumb.classList.add('active');
+                // Прокручиваем к активному thumb
+                thumb.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
             } else {
                 thumb.classList.remove('active');
             }
         });
     }
-    
+
+    // Предыдущее медиа
     function prevMedia(blockId) {
         const blockMedia = blocksMedia[blockId];
         if (!blockMedia) return;
         
-        let newIndex = blockMedia.currentIndex - 1;
-        if (newIndex < 0) newIndex = blockMedia.items.length - 1;
-        
+        const newIndex = blockMedia.currentIndex - 1;
         showMedia(blockId, newIndex);
     }
-    
+
+    // Следующее медиа
     function nextMedia(blockId) {
         const blockMedia = blocksMedia[blockId];
         if (!blockMedia) return;
         
-        let newIndex = blockMedia.currentIndex + 1;
-        if (newIndex >= blockMedia.items.length) newIndex = 0;
-        
+        const newIndex = blockMedia.currentIndex + 1;
         showMedia(blockId, newIndex);
     }
-    
-    // Функции для модального окна
-    function openMedia(url, type) {
-        const modal = document.getElementById('mediaModal');
-        const content = document.getElementById('modalContent');
+
+    // Показать индикатор загрузки
+    function showLoading(blockId) {
+        const container = document.getElementById(`media-main-${blockId}`);
+        if (!container) return;
         
-        if (type === 'image') {
-            content.innerHTML = `<img src="${url}" style="max-width: 100%; max-height: 90vh;">`;
-        } else if (type === 'video_file') {
-            content.innerHTML = `<video controls style="max-width: 100%; max-height: 90vh;"><source src="${url}" type="video/mp4"></video>`;
-        } else if (type === 'video_link') {
-            content.innerHTML = `<iframe src="${url}" style="width: 90vw; height: 90vh;" frameborder="0" allowfullscreen></iframe>`;
+        const loading = document.createElement('div');
+        loading.className = 'block-media__loading';
+        loading.id = `loading-${blockId}`;
+        container.appendChild(loading);
+    }
+
+    // Скрыть индикатор загрузки
+    function hideLoading(blockId) {
+        const loading = document.getElementById(`loading-${blockId}`);
+        if (loading) {
+            loading.remove();
         }
+    }
+
+    // Показать ошибку
+    function showError(blockId) {
+        const container = document.getElementById(`media-main-${blockId}`);
+        if (!container) return;
         
-        modal.classList.add('active');
+        const error = document.createElement('div');
+        error.className = 'block-media__error';
+        error.textContent = '❌ Ошибка загрузки';
+        container.appendChild(error);
+        
+        setTimeout(() => {
+            error.remove();
+        }, 3000);
+    }
+
+    // Автоматическая инициализация галерей
+    document.addEventListener('DOMContentLoaded', function() {
+        // Для каждого блока устанавливаем начальное состояние
+        Object.keys(blocksMedia).forEach(blockId => {
+            const blockMedia = blocksMedia[blockId];
+            if (blockMedia && blockMedia.items.length > 0) {
+                // Показываем первое медиа
+                showMedia(parseInt(blockId), 0);
+            }
+        });
+        
+        // Добавляем поддержку клавиатуры
+        document.addEventListener('keydown', function(e) {
+            // Проверяем, открыт ли модал
+            const modal = document.getElementById('mediaModal');
+            if (modal && modal.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') {
+                    // TODO: навигация в модале
+                } else if (e.key === 'ArrowRight') {
+                    // TODO: навигация в модале
+                }
+            }
+        });
+    });
+
+    // Функция для открытия медиа в модальном окне
+function openMediaInModal(blockId, index) {
+    console.log('openMediaInModal вызван:', blockId, index);
+    
+    // Проверяем наличие блока
+    if (!blocksMedia.hasOwnProperty(blockId)) {
+        console.error('Блок не найден в blocksMedia:', blockId);
+        alert('Ошибка: данные блока не найдены');
+        return;
     }
     
-    function closeModal() {
-        document.getElementById('mediaModal').classList.remove('active');
-        document.getElementById('modalContent').innerHTML = '';
+    const blockMedia = blocksMedia[blockId];
+    console.log('blockMedia:', blockMedia);
+    
+    if (!blockMedia || !blockMedia.items || !blockMedia.items.length) {
+        console.error('Нет медиа для блока', blockId);
+        alert('У этого блока нет медиафайлов');
+        return;
     }
     
+    // Нормализуем индекс
+    if (index === undefined || index < 0) index = blockMedia.currentIndex || 0;
+    if (index >= blockMedia.items.length) index = 0;
+    
+    modalCurrentBlock = blockId;
+    modalCurrentIndex = index;
+    
+    const media = blockMedia.items[index];
+    console.log('Открываем медиа:', media);
+    
+    const modal = document.getElementById('mediaModal');
+    const content = document.getElementById('modalContent');
+    
+    if (!modal || !content) {
+        console.error('Модальное окно не найдено в DOM');
+        return;
+    }
+    
+    // Очищаем контент
+    content.innerHTML = '';
+    
+    // Создаем контейнер для медиа
+    const mediaContainer = document.createElement('div');
+    mediaContainer.className = 'modal-media-container';
+    
+    // Создаем элемент в зависимости от типа
+    let mediaElement;
+    
+    if (media.type === 'image') {
+        mediaElement = document.createElement('img');
+        mediaElement.src = media.url;
+        mediaElement.alt = media.title || 'Изображение';
+        mediaElement.className = 'modal-image';
+    } 
+    else if (media.type === 'video_file') {
+        mediaElement = document.createElement('video');
+        mediaElement.controls = true;
+        mediaElement.autoplay = true;
+        mediaElement.className = 'modal-video';
+        
+        const source = document.createElement('source');
+        source.src = media.url;
+        source.type = 'video/mp4';
+        mediaElement.appendChild(source);
+    } 
+    else if (media.type === 'video_link') {
+        mediaElement = document.createElement('iframe');
+        mediaElement.src = media.url;
+        mediaElement.className = 'modal-iframe';
+        mediaElement.frameborder = '0';
+        mediaElement.allowfullscreen = true;
+        mediaElement.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    }
+    else {
+        // Для документов и чертежей
+        mediaElement = document.createElement('div');
+        mediaElement.className = 'modal-document';
+        mediaElement.innerHTML = `
+            <div class="modal-document-icon">📄</div>
+            <div class="modal-document-title">${media.title || 'Документ'}</div>
+            <a href="${media.url}" target="_blank" class="modal-document-link">Открыть</a>
+        `;
+    }
+    
+    mediaContainer.appendChild(mediaElement);
+    content.appendChild(mediaContainer);
+    
+    // Добавляем счетчик
+    const counter = document.createElement('div');
+    counter.className = 'modal-counter';
+    counter.id = 'modal-counter';
+    counter.innerHTML = `${index + 1} / ${blockMedia.items.length}`;
+    content.appendChild(counter);
+    
+    // Добавляем навигацию если больше одного медиа
+    if (blockMedia.items.length > 1) {
+        const nav = document.createElement('div');
+        nav.className = 'modal-nav';
+        nav.innerHTML = `
+            <button class="modal-nav-btn prev" onclick="prevMediaInModal()" aria-label="Предыдущее">←</button>
+            <button class="modal-nav-btn next" onclick="nextMediaInModal()" aria-label="Следующее">→</button>
+        `;
+        content.appendChild(nav);
+    }
+    
+    // Показываем модальное окно
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
+    
+    console.log('Модальное окно открыто');
+}
+
+// Предыдущее медиа в модальном окне
+function prevMediaInModal() {
+    console.log('prevMediaInModal вызван');
+    
+    if (modalCurrentBlock === null) {
+        console.error('modalCurrentBlock is null');
+        return;
+    }
+    
+    const blockMedia = blocksMedia[modalCurrentBlock];
+    if (!blockMedia || !blockMedia.items) {
+        console.error('blockMedia not found');
+        return;
+    }
+    
+    let newIndex = modalCurrentIndex - 1;
+    if (newIndex < 0) {
+        newIndex = blockMedia.items.length - 1;
+    }
+    
+    console.log('Переход к индексу:', newIndex);
+    openMediaInModal(modalCurrentBlock, newIndex);
+}
+
+// Следующее медиа в модальном окне
+function nextMediaInModal() {
+    console.log('nextMediaInModal вызван');
+    
+    if (modalCurrentBlock === null) {
+        console.error('modalCurrentBlock is null');
+        return;
+    }
+    
+    const blockMedia = blocksMedia[modalCurrentBlock];
+    if (!blockMedia || !blockMedia.items) {
+        console.error('blockMedia not found');
+        return;
+    }
+    
+    let newIndex = modalCurrentIndex + 1;
+    if (newIndex >= blockMedia.items.length) {
+        newIndex = 0;
+    }
+    
+    console.log('Переход к индексу:', newIndex);
+    openMediaInModal(modalCurrentBlock, newIndex);
+}
+
+// Закрыть модальное окно
+function closeModal() {
+    console.log('closeModal вызван');
+    
+    const modal = document.getElementById('mediaModal');
+    const content = document.getElementById('modalContent');
+    
+    if (modal) {
+        modal.classList.remove('active');
+    }
+    
+    if (content) {
+        content.innerHTML = '';
+    }
+    
+    document.body.style.overflow = ''; // Возвращаем прокрутку
+    
+    modalCurrentBlock = null;
+    modalCurrentIndex = 0;
+}
+
+// Добавляем обработчик клика вне модального окна
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('mediaModal');
+    if (modal && modal.classList.contains('active')) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    }
+});
     // Закрытие по ESC
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeModal();
         }
-    });
-    
-    // Функции для калькулятора
-    function calculate() {
-        const wallLength = document.getElementById('wall_length').value;
-        const wallHeight = document.getElementById('wall_height').value;
-        const seriesId = {{ selected_series.id|default:'null' }};
-        const blockType = document.getElementById('block_type').value;
-        
-        if (!seriesId) {
-            alert('Выберите серию блоков');
-            return;
-        }
-        
-        fetch('/catalog/api/calculate/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: JSON.stringify({
-                wall_length: wallLength,
-                wall_height: wallHeight,
-                series_id: seriesId,
-                block_type: blockType
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById('result_area').textContent = data.wall_area + ' м²';
-                document.getElementById('result_blocks').textContent = data.blocks_count + ' шт';
-                document.getElementById('result_pallets').textContent = data.pallets_needed + ' шт';
-                document.getElementById('result_weight').textContent = data.wall_weight + ' кг';
-                document.getElementById('result_concrete').textContent = data.concrete_needed.toFixed(2) + ' м³';
-                document.getElementById('result_heatloss').textContent = data.heat_loss + ' Вт';
-            } else {
-                alert('Ошибка расчета: ' + data.error);
-            }
-        });
-    }
-    
-    function scrollToCalculator() {
-        document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
-    }
-    
-    // Автоматический расчет при загрузке
-    document.addEventListener('DOMContentLoaded', function() {
-        calculate();
     });
 </script>
 {% endblock %}

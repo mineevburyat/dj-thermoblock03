@@ -1,0 +1,1151 @@
+{% extends "old/base.html" %}
+{% load static thumbnail %}
+
+{% block title %}{{ series.name }} - серия термоблоков{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Переменные и общие стили */
+    :root {
+        --primary: #2c3e50;
+        --secondary: #34495e;
+        --accent: #3498db;
+        --light: #ecf0f1;
+        --dark: #2c3e50;
+        --success: #27ae60;
+        --warning: #f39c12;
+        --danger: #e74c3c;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8f9fa;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 30px 20px;
+    }
+
+    /* Хлебные крошки */
+    .breadcrumbs {
+        margin-bottom: 30px;
+        padding: 15px 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .breadcrumbs a {
+        color: var(--accent);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .breadcrumbs a:hover {
+        color: #2980b9;
+        text-decoration: underline;
+    }
+
+    .breadcrumbs span {
+        color: #999;
+    }
+
+    /* Горизонтальная карточка серии */
+    .series-card {
+        display: grid;
+        grid-template-columns: 500px 1fr;
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        margin-bottom: 50px;
+        transition: transform 0.3s;
+    }
+
+    .series-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    }
+
+    /* Медиа секция */
+    .series-media {
+        position: relative;
+        background: #1a1a1a;
+        height: 100%;
+        min-height: 500px;
+        overflow: hidden;
+    }
+
+    .series-media__main {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #1a1a1a;
+        cursor: pointer;
+    }
+
+    .series-media__image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: opacity 0.3s ease;
+    }
+
+    .series-media__video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+    }
+
+    .series-media__placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-size: 4rem;
+        font-weight: bold;
+    }
+
+    /* Навигация по медиа */
+    .series-media__counter {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        z-index: 15;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .series-media__nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        z-index: 20;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .series-card:hover .series-media__nav {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .series-media__nav:hover {
+        background: white;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .series-media__nav--prev {
+        left: 20px;
+    }
+
+    .series-media__nav--next {
+        right: 20px;
+    }
+
+    /* Миниатюры */
+    .series-media__thumbs {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 10px 0;
+        z-index: 15;
+        scrollbar-width: thin;
+    }
+
+    .series-media__thumbs::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .series-media__thumbs::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.3);
+        border-radius: 4px;
+    }
+
+    .series-media__thumbs::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.5);
+        border-radius: 4px;
+    }
+
+    .series-media__thumb {
+        flex: 0 0 80px;
+        height: 80px;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.2s;
+        position: relative;
+        background: #333;
+    }
+
+    .series-media__thumb:hover {
+        transform: translateY(-2px);
+    }
+
+    .series-media__thumb.active {
+        border-color: var(--accent);
+        transform: scale(1.05);
+        box-shadow: 0 0 0 3px rgba(52,152,219,0.3);
+    }
+
+    .series-media__thumb img,
+    .series-media__thumb video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .series-media__thumb-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 1.5rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .series-media__thumb-icon {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--accent);
+        color: white;
+        font-size: 1.8rem;
+    }
+
+    /* Контент серии */
+    .series-content {
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .series-header {
+        margin-bottom: 30px;
+    }
+
+    .series-type {
+        display: inline-block;
+        padding: 6px 16px;
+        background: var(--light);
+        border-radius: 30px;
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 15px;
+    }
+
+    .series-title {
+        font-size: 2.5rem;
+        color: var(--dark);
+        margin-bottom: 15px;
+        line-height: 1.2;
+    }
+
+    .series-description {
+        color: #666;
+        line-height: 1.6;
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+    }
+
+    /* Характеристики */
+    .series-specs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+        padding: 25px;
+        background: var(--light);
+        border-radius: 16px;
+    }
+
+    .spec-group {
+        text-align: center;
+    }
+
+    .spec-group-title {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 10px;
+        font-weight: normal;
+    }
+
+    .spec-group-value {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--dark);
+    }
+
+    .spec-group-unit {
+        font-size: 0.9rem;
+        color: #999;
+        margin-left: 5px;
+    }
+
+    /* Дополнительные характеристики */
+    .series-features {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 35px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--light);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .feature-text {
+        font-size: 1rem;
+    }
+
+    .feature-text strong {
+        display: block;
+        font-size: 1.1rem;
+        color: var(--dark);
+        margin-bottom: 3px;
+    }
+
+    .feature-text span {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    /* Кнопки действий */
+    .series-actions {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: auto;
+    }
+
+    .btn {
+        padding: 14px 28px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        color: var(--dark);
+    }
+
+    .btn-primary {
+        background: var(--accent);
+        color: white;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(52,152,219,0.3);
+    }
+
+    .btn-outline {
+        background: white;
+        border: 2px solid var(--accent);
+        color: var(--accent);
+    }
+
+    .btn-outline:hover {
+        background: var(--accent);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Документы и чертежи */
+    .series-docs {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .doc-badge {
+        padding: 8px 16px;
+        background: var(--light);
+        border-radius: 30px;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .doc-badge:hover {
+        background: #e0e0e0;
+        transform: translateY(-2px);
+    }
+
+    /* Блоки серии */
+    .blocks-section {
+        margin-top: 60px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        color: var(--dark);
+        margin-bottom: 30px;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 2px;
+    }
+
+    .blocks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+    }
+
+    /* Карточка блока в сетке */
+    .block-card-grid {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: all 0.3s;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .block-card-grid:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .block-card-grid__image {
+        height: 220px;
+        background: #1a1a1a;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .block-card-grid__image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+
+    .block-card-grid:hover .block-card-grid__image img {
+        transform: scale(1.05);
+    }
+
+    .block-card-grid__type {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        backdrop-filter: blur(5px);
+    }
+
+    .block-card-grid__content {
+        padding: 20px;
+    }
+
+    .block-card-grid__title {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+        color: var(--dark);
+    }
+
+    .block-card-grid__article {
+        color: #999;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .block-card-grid__specs {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .block-card-grid__spec {
+        font-size: 0.9rem;
+    }
+
+    .block-card-grid__spec-label {
+        display: block;
+        color: #999;
+        font-size: 0.75rem;
+    }
+
+    .block-card-grid__spec-value {
+        font-weight: 600;
+        color: var(--dark);
+    }
+
+    .block-card-grid__thickness {
+        display: inline-block;
+        padding: 4px 12px;
+        background: var(--light);
+        border-radius: 15px;
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    /* Пустое состояние */
+    .empty-state {
+        text-align: center;
+        padding: 60px;
+        background: white;
+        border-radius: 20px;
+        color: #999;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 1200px) {
+        .series-card {
+            grid-template-columns: 400px 1fr;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .series-card {
+            grid-template-columns: 1fr;
+        }
+        
+        .series-media {
+            min-height: 400px;
+        }
+        
+        .series-features {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px 15px;
+        }
+        
+        .series-title {
+            font-size: 2rem;
+        }
+        
+        .series-specs {
+            grid-template-columns: 1fr;
+        }
+        
+        .blocks-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .series-actions {
+            flex-direction: column;
+        }
+        
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Хлебные крошки -->
+    <div class="breadcrumbs">
+        <a href="/">Главная</a> /
+        <a href="{% url 'products:catalog' %}">Каталог ThermoBlock</a> /
+        <span>{{ series.name }}</span>
+    </div>
+
+    <!-- Горизонтальная карточка серии -->
+    <div class="series-card">
+        <!-- Медиа галерея -->
+        <div class="series-media" id="series-media">
+            <div class="series-media__main" id="series-media-main"
+                 onclick="openSeriesMediaInModal({{ series.id }}, seriesMediaCurrentIndex)">
+                
+                {% if media_items %}
+                    {% with first_item=media_items.0 %}
+                        {% if first_item.media_type == 'image' and first_item.image %}
+                            <img src="{{ first_item.image.url }}" 
+                                 alt="{{ first_item.title }}"
+                                 class="series-media__image"
+                                 id="series-current-media">
+                        {% elif first_item.media_type == 'video_file' and first_item.video_file %}
+                            <video class="series-media__video" 
+                                   id="series-current-media"
+                                   muted
+                                   loop
+                                   onmouseover="this.play()"
+                                   onmouseout="this.pause(); this.currentTime=0;">
+                                <source src="{{ first_item.video_file.url }}" type="video/mp4">
+                            </video>
+                            <div class="series-media__play-icon">▶</div>
+                        {% elif first_item.media_type == 'video_link' and first_item.video_link %}
+                            <img src="https://img.youtube.com/vi/{{ first_item.video_link|cut:'https://www.youtube.com/watch?v='|cut:'https://youtu.be/' }}/0.jpg" 
+                                 alt="{{ first_item.title }}"
+                                 class="series-media__image">
+                            <div class="series-media__play-icon">▶</div>
+                        {% endif %}
+                    {% endwith %}
+                {% else %}
+                    <div class="series-media__placeholder">
+                        <span>{{ series.name|first }}</span>
+                    </div>
+                {% endif %}
+                
+                <!-- Подсказка для клика -->
+                <div class="series-media__click-hint">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                    <span>Нажмите для просмотра</span>
+                </div>
+            </div>
+
+            <!-- Счетчик медиа -->
+            <div class="series-media__counter" id="series-media-counter">
+                <span id="series-current-index">1</span> / {{ media_count }}
+            </div>
+
+            <!-- Кнопки навигации -->
+            {% if media_count > 1 %}
+            <button class="series-media__nav series-media__nav--prev" 
+                    onclick="event.stopPropagation(); prevSeriesMedia()"
+                    aria-label="Предыдущее медиа">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            
+            <button class="series-media__nav series-media__nav--next" 
+                    onclick="event.stopPropagation(); nextSeriesMedia()"
+                    aria-label="Следующее медиа">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+
+            <!-- Миниатюры -->
+            <div class="series-media__thumbs" id="series-media-thumbs">
+                {% for item in media_items %}
+                <div class="series-media__thumb {% if forloop.first %}active{% endif %}" 
+                     onclick="event.stopPropagation(); showSeriesMedia({{ forloop.counter0 }})"
+                     data-index="{{ forloop.counter0 }}">
+                    {% if item.media_type == 'image' and item.image %}
+                        <img src="{{ item.image.url }}" alt="">
+                    {% elif item.media_type == 'video_file' and item.video_file %}
+                        <video src="{{ item.video_file.url }}"></video>
+                        <div class="series-media__thumb-play">▶</div>
+                    {% elif item.media_type == 'video_link' %}
+                        <div class="series-media__thumb-icon">🎥</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Контент серии -->
+        <div class="series-content">
+            <div class="series-header">
+                <span class="series-type">{{ series.get_series_type_display }}</span>
+                <h1 class="series-title">Стена {{ series.name | lower}}</h1>
+                {% if series.description %}
+                    <div class="series-description">{{ series.description }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Характеристики по группам -->
+            {% for group in characteristic_groups %}
+            <div class="series-specs">
+                <div class="spec-group">
+                    <div class="spec-group-title">Толщина стены</div>
+                    <div class="spec-group-value">{{ group.wall_thickness }} <span class="spec-group-unit">мм</span></div>
+                </div>
+                {% if group.thermal_conductivity %}
+                <div class="spec-group">
+                    <div class="spec-group-title">Теплопроводность</div>
+                    <div class="spec-group-value">{{ group.thermal_conductivity }} <span class="spec-group-unit">Вт/(м·К)</span></div>
+                </div>
+                {% endif %}
+                {% if group.sound_insulation %}
+                <div class="spec-group">
+                    <div class="spec-group-title">Звукоизоляция</div>
+                    <div class="spec-group-value">{{ group.sound_insulation }} <span class="spec-group-unit">дБ</span></div>
+                </div>
+                {% endif %}
+                <div class="spec-group">
+                    <div class="spec-group-title">Вес 1 м² стены</div>
+                    <div class="spec-group-value">{{ group.weight_per_sqm }} <span class="spec-group-unit">кг</span></div>
+                </div>
+                {% if group.concrete_consumption %}
+                <div class="spec-group">
+                    <div class="spec-group-title">Расход бетона</div>
+                    <div class="spec-group-value">{{ group.concrete_consumption }} <span class="spec-group-unit">м³/м²</span></div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <!-- Дополнительные особенности -->
+            <div class="series-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🧱</div>
+                    <div class="feature-text">
+                        <strong>{{ blocks.count }}</strong>
+                        <span>блоков в серии</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📏</div>
+                    <div class="feature-text">
+                        <strong>
+                        {% with groups=characteristic_groups %}
+                            {% if groups.count == 1 %}
+                                {{ groups.first.wall_thickness }} мм
+                            {% else %}
+                                {{ groups.first.wall_thickness }}-{{ groups.last.wall_thickness }} мм
+                            {% endif %}
+                        {% endwith %}
+                        </strong>
+                        <span>толщина стены</span>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-text">
+                        <strong>до {{ characteristic_groups.first.thermal_conductivity|default:'0.3' }}</strong>
+                        <span>теплопроводность</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Документы и чертежи -->
+            <div class="series-docs">
+                {% if documents %}
+                    {% for doc in documents %}
+                    <div class="doc-badge" onclick="window.open('{{ doc.file_url }}')">
+                        📄 {{ doc.title|truncatechars:20 }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                
+                {% if drawings %}
+                    {% for drawing in drawings %}
+                    <div class="doc-badge" onclick="window.open('{{ drawing.file_url }}')">
+                        📐 {{ drawing.title|truncatechars:20 }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                
+                {% if videos %}
+                    {% for video in videos %}
+                    <div class="doc-badge" onclick="openSeriesMediaInModal({{ series.id }}, 0)">
+                        🎥 {{ video.title|truncatechars:20 }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Кнопки действий -->
+            <div class="series-actions">
+                <button class="btn btn-primary" onclick="scrollToBlocks()">
+                    🧱 Выбрать блоки
+                </button>
+                <a href="{% url 'products:catalog' %}?series={{ series.id }}" class="btn btn-outline">
+                    📋 В каталог
+                </a>
+                <a href="{% url 'products:catalog' %}?series={{ series.id }}" class="btn btn-outline">
+                    📋 Инструкция
+                </a>
+                <button class="btn" onclick="window.print()">
+                    🖨️ Распечатать
+                </button>
+                <button class="btn" onclick="window.print()">
+                    Калькулятор
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блоки серии -->
+    <div class="blocks-section" id="blocks-section">
+        <h2 class="section-title">ThermoBlock {{ series.name | lower}}</h2>
+        
+        {% if blocks %}
+            <div class="blocks-grid">
+                {% for block in blocks %}
+                <a href="#" class="block-card-grid" onclick="openBlockModal({{ block.id }}); return false;">
+                    <div class="block-card-grid__image">
+                        {% if block.main_image %}
+                            <img src="{{ block.main_image.image.url }}" alt="{{ block.name }}">
+                        {% elif block.linked_media.first %}
+                            {% with media=block.linked_media.first %}
+                                {% if media.media_type == 'image' %}
+                                    <img src="{{ media.image.url }}" alt="">
+                                {% else %}
+                                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 100%; height: 100%;"></div>
+                                {% endif %}
+                            {% endwith %}
+                        {% else %}
+                            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                                {{ block.name|first }}
+                            </div>
+                        {% endif %}
+                        <span class="block-card-grid__type">{{ block.get_block_type_display }}</span>
+                    </div>
+                    
+                    <div class="block-card-grid__content">
+                        <h3 class="block-card-grid__title">{{ block.name }}</h3>
+                        <div class="block-card-grid__article">Арт: {{ block.article }}</div>
+                        
+                        <div class="block-card-grid__specs">
+                            <div class="block-card-grid__spec">
+                                <span class="block-card-grid__spec-label">Д×Ш×В</span>
+                                <span class="block-card-grid__spec-value">{{ block.length }}×{{ block.width }}×{{ block.height }}</span>
+                            </div>
+                            <div class="block-card-grid__spec">
+                                <span class="block-card-grid__spec-label">Вес</span>
+                                <span class="block-card-grid__spec-value">{{ block.weight }} кг</span>
+                            </div>
+                            <div class="block-card-grid__spec">
+                                <span class="block-card-grid__spec-label">На поддоне</span>
+                                <span class="block-card-grid__spec-value">{{ block.pallet_quantity }} шт</span>
+                            </div>
+                            <div class="block-card-grid__spec">
+                                <span class="block-card-grid__spec-label">Вес поддона</span>
+                                <span class="block-card-grid__spec-value">{{ block.pallet_weight }} кг</span>
+                            </div>
+                        </div>
+                        
+                        {% if block.characteristic_group %}
+                            <span class="block-card-grid__thickness">
+                                Для стен {{ block.characteristic_group.wall_thickness }} мм
+                            </span>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>В этой серии пока нет блоков</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Модальное окно для медиа -->
+<div class="modal" id="mediaModal" onclick="if(event.target===this) closeModal()">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-content" id="modalContent"></div>
+</div>
+
+<script>
+    // Данные для медиа серии
+    const seriesMedia = {
+        items: [
+            {% for item in media_items %}
+            {
+                type: '{{ item.media_type }}',
+                url: '{{ item.file_url }}',
+                title: '{{ item.title|escapejs }}',
+                {% if item.media_type == 'image' %}
+                thumbnail: '{{ item.image.url }}'
+                {% endif %}
+            },
+            {% endfor %}
+        ],
+        currentIndex: 0
+    };
+    
+    // Данные для блоков
+    const blocksData = {
+        {% for block in blocks %}
+        {{ block.id }}: {
+            name: '{{ block.name|escapejs }}',
+            article: '{{ block.article|escapejs }}',
+            type: '{{ block.get_block_type_display|escapejs }}',
+            length: {{ block.length }},
+            width: {{ block.width }},
+            height: {{ block.height }},
+            weight: {{ block.weight }},
+            palletQuantity: {{ block.pallet_quantity }},
+            palletWeight: {{ block.pallet_weight }},
+            blocksPerSqm: {{ block.blocks_per_sqm }},
+            thickness: {% if block.characteristic_group %}{{ block.characteristic_group.wall_thickness }}{% else %}null{% endif %},
+            description: '{{ block.description|escapejs }}',
+            media: [
+                {% if block.main_image %}
+                {
+                    type: 'image',
+                    url: '{{ block.main_image.image.url }}',
+                    title: '{{ block.main_image.title|escapejs }}'
+                },
+                {% endif %}
+                {% for media in block.linked_media.all %}
+                {
+                    type: '{{ media.media_type }}',
+                    url: '{{ media.file_url }}',
+                    title: '{{ media.title|escapejs }}'
+                },
+                {% endfor %}
+            ]
+        },
+        {% endfor %}
+    };
+    
+    // Функции для медиа серии
+    function showSeriesMedia(index) {
+        if (!seriesMedia.items || !seriesMedia.items.length) return;
+        
+        if (index < 0) index = seriesMedia.items.length - 1;
+        if (index >= seriesMedia.items.length) index = 0;
+        
+        seriesMedia.currentIndex = index;
+        const media = seriesMedia.items[index];
+        const mainMedia = document.getElementById('series-current-media');
+        const mainContainer = document.getElementById('series-media-main');
+        const counter = document.getElementById('series-current-index');
+        
+        if (!mainContainer) return;
+        
+        // Обновляем счетчик
+        if (counter) counter.textContent = index + 1;
+        
+        // Создаем новый элемент
+        let newElement;
+        
+        if (media.type === 'image') {
+            newElement = document.createElement('img');
+            newElement.src = media.url;
+            newElement.alt = media.title;
+            newElement.className = 'series-media__image';
+            newElement.id = 'series-current-media';
+        } else if (media.type === 'video_file') {
+            newElement = document.createElement('video');
+            newElement.className = 'series-media__video';
+            newElement.id = 'series-current-media';
+            newElement.controls = false;
+            newElement.muted = true;
+            newElement.loop = true;
+            
+            const source = document.createElement('source');
+            source.src = media.url;
+            source.type = 'video/mp4';
+            newElement.appendChild(source);
+        } else if (media.type === 'video_link') {
+            newElement = document.createElement('img');
+            newElement.src = `https://img.youtube.com/vi/${media.url.split('=').pop()}/0.jpg`;
+            newElement.alt = media.title;
+            newElement.className = 'series-media__image';
+            newElement.id = 'series-current-media';
+        }
+        
+        // Заменяем элемент
+        if (newElement && mainMedia) {
+            mainMedia.replaceWith(newElement);
+        } else if (newElement) {
+            mainContainer.appendChild(newElement);
+        }
+        
+        // Обновляем активный thumb
+        const thumbs = document.querySelectorAll('#series-media-thumbs .series-media__thumb');
+        thumbs.forEach((thumb, i) => {
+            if (i === index) {
+                thumb.classList.add('active');
+                thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else {
+                thumb.classList.remove('active');
+            }
+        });
+    }
+    
+    function prevSeriesMedia() {
+        showSeriesMedia(seriesMedia.currentIndex - 1);
+    }
+    
+    function nextSeriesMedia() {
+        showSeriesMedia(seriesMedia.currentIndex + 1);
+    }
+    
+    function openSeriesMediaInModal(seriesId, index) {
+        if (!seriesMedia.items || !seriesMedia.items.length) {
+            alert('Нет медиафайлов');
+            return;
+        }
+        
+        const media = seriesMedia.items[index];
+        const modal = document.getElementById('mediaModal');
+        const content = document.getElementById('modalContent');
+        
+        let html = '';
+        
+        if (media.type === 'image') {
+            html = `<img src="${media.url}" alt="${media.title}" class="modal-image">`;
+        } else if (media.type === 'video_file') {
+            html = `<video controls autoplay class="modal-video"><source src="${media.url}" type="video/mp4"></video>`;
+        } else if (media.type === 'video_link') {
+            html = `<iframe src="${media.url}" class="modal-iframe" frameborder="0" allowfullscreen></iframe>`;
+        }
+        
+        content.innerHTML = html;
+        
+        // Добавляем навигацию если нужно
+        if (seriesMedia.items.length > 1) {
+            const nav = document.createElement('div');
+            nav.className = 'modal-nav';
+            nav.innerHTML = `
+                <button class="modal-nav-btn prev" onclick="prevSeriesMediaInModal()">←</button>
+                <button class="modal-nav-btn next" onclick="nextSeriesMediaInModal()">→</button>
+            `;
+            content.appendChild(nav);
+            
+            const counter = document.createElement('div');
+            counter.className = 'modal-counter';
+            counter.innerHTML = `${index + 1} / ${seriesMedia.items.length}`;
+            content.appendChild(counter);
+        }
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function prevSeriesMediaInModal() {
+        const newIndex = seriesMedia.currentIndex - 1;
+        if (newIndex >= 0) {
+            seriesMedia.currentIndex = newIndex;
+            openSeriesMediaInModal(null, newIndex);
+        }
+    }
+    
+    function nextSeriesMediaInModal() {
+        const newIndex = seriesMedia.currentIndex + 1;
+        if (newIndex < seriesMedia.items.length) {
+            seriesMedia.currentIndex = newIndex;
+            openSeriesMediaInModal(null, newIndex);
+        }
+    }
+    
+    function openBlockModal(blockId) {
+        const block = blocksData[blockId];
+        if (!block) return;
+        
+        // Здесь можно открыть модальное окно с деталями блока
+        // Или перейти на страницу блока
+        console.log('Открыть блок:', block);
+    }
+    
+    function scrollToBlocks() {
+        document.getElementById('blocks-section').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function closeModal() {
+        const modal = document.getElementById('mediaModal');
+        const content = document.getElementById('modalContent');
+        
+        modal.classList.remove('active');
+        content.innerHTML = '';
+        document.body.style.overflow = '';
+    }
+    
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Series page loaded');
+        console.log('Series media items:', seriesMedia.items.length);
+        
+        // Добавляем обработчик клавиш для модального окна
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('mediaModal');
+            if (modal && modal.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevSeriesMediaInModal();
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    nextSeriesMediaInModal();
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
