@@ -1,0 +1,881 @@
+{% extends 'home/base.html' %}
+
+{% block title %}ThermoBlock - наш кейс и отзвывы клиентов {% endblock %}
+
+{% block extra_css %}
+    <!-- Leaflet CSS для карты -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+        /* Стили для карты */
+        #map {
+            height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            z-index: 1;
+        }
+        
+        /* Кастомные метки на карте */
+        .custom-marker {
+            background: var(--primary);
+            border: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-marker:hover {
+            transform: scale(1.2);
+            background: var(--secondary);
+        }
+        
+        /* Карточки отзывов */
+        .review-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            padding: 20px 20px 10px;
+        }
+        
+        .review-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .review-rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+        
+        .review-location {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .review-location i {
+            color: var(--primary);
+        }
+        
+        /* Бейджи для фильтров */
+        .filter-badge {
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #dee2e6;
+        }
+        
+        .filter-badge.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Дом на карте */
+        .house-marker {
+            position: relative;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .house-marker i {
+            font-size: 2rem;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        /* Анимация появления */
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Статистика */
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        /* Модальное окно с деталями объекта */
+        .object-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .object-image {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 150px;
+            background: #f8f9fa;
+        }
+        
+        .object-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .object-image:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            #map {
+                height: 350px;
+            }
+            
+            .review-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .review-avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .filter-badges {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 10px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- Hero секция -->
+    <section class="py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-3">
+                        Реальные дома, реальные отзывы
+                        <span class="text-primary">по всей России</span>
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        Более 500 домов построено с ThermoBlock. На карте — реальные объекты наших клиентов.
+                        Кликните на метку, чтобы увидеть фотографии и отзыв.
+                    </p>
+                    
+                    <!-- Статистика -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="stat-card">
+                                <div class="stat-number">500+</div>
+                                <div class="text-muted">построенных домов</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-card">
+                                <div class="stat-number">98%</div>
+                                <div class="text-muted">положительных отзывов</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-card">
+                                <div class="stat-number">43</div>
+                                <div class="text-muted">региона России</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <!-- Фильтры отзывов -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Фильтровать отзывы:</h5>
+                            <div class="d-flex flex-wrap filter-badges" id="filterBadges">
+                                <span class="filter-badge active" data-filter="all">Все отзывы</span>
+                                <span class="filter-badge" data-filter="region-moscow">Москва и МО</span>
+                                <span class="filter-badge" data-filter="region-south">Юг России</span>
+                                <span class="filter-badge" data-filter="region-ural">Урал</span>
+                                <span class="filter-badge" data-filter="region-siberia">Сибирь</span>
+                                <span class="filter-badge" data-filter="type-cottage">Коттеджи</span>
+                                <span class="filter-badge" data-filter="type-dacha">Дачи</span>
+                                <span class="filter-badge" data-filter="type-commercial">Коммерческие</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Поиск по региону -->
+                    <div class="card border-0 shadow-sm mt-3">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Найти дом в вашем регионе:</h5>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="regionSearch" placeholder="Введите город или регион...">
+                                <button class="btn btn-primary" id="searchButton">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Карта России с метками -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="text-center mb-3">Карта построенных объектов</h2>
+                    <p class="text-center text-muted mb-4">
+                        Каждая метка — реальный дом, построенный по технологии ThermoBlock
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <!-- Контейнер для карты -->
+                    <div id="map"></div>
+                    
+                    <!-- Легенда карты -->
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-auto">
+                            <div class="d-flex align-items-center">
+                                <div class="house-marker me-2">
+                                    <i class="bi bi-house-fill"></i>
+                                </div>
+                                <span class="text-muted">— построенный дом</span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex align-items-center">
+                                <div class="house-marker me-2">
+                                    <i class="bi bi-house-check-fill text-success"></i>
+                                </div>
+                                <span class="text-muted">— с видеоотзывом</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзывы клиентов -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Отзывы наших клиентов</h2>
+            
+            <div class="row g-4" id="reviewsContainer">
+                <!-- Отзывы будут загружены через JavaScript -->
+            </div>
+            
+            <!-- Пагинация -->
+            <nav aria-label="Навигация по отзывам" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Назад</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Вперед</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Форма добавления отзыва -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body p-5">
+                            <h3 class="text-center mb-4">Построили дом с ThermoBlock? Оставьте отзыв!</h3>
+                            <p class="text-center text-muted mb-4">
+                                Ваш отзыв появится на карте и поможет другим сделать правильный выбор
+                            </p>
+                            
+                            <form id="addReviewForm">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Ваше имя</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Город/населенный пункт</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Ваш отзыв</label>
+                                        <textarea class="form-control" rows="4" placeholder="Расскажите о своем опыте строительства..." required></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Оценка</label>
+                                        <div class="rating-stars">
+                                            <div class="d-flex gap-1">
+                                                <i class="bi bi-star fs-3 text-muted" data-rating="1"></i>
+                                                <i class="bi bi-star fs-3 text-muted" data-rating="2"></i>
+                                                <i class="bi bi-star fs-3 text-muted" data-rating="3"></i>
+                                                <i class="bi bi-star fs-3 text-muted" data-rating="4"></i>
+                                                <i class="bi bi-star fs-3 text-muted" data-rating="5"></i>
+                                            </div>
+                                            <input type="hidden" name="rating" value="5">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Фотографии дома (необязательно)</label>
+                                        <input type="file" class="form-control" multiple accept="image/*">
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                                            <i class="bi bi-send me-2"></i>Отправить отзыв
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно с деталями объекта -->
+    <div class="modal fade" id="objectModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="objectModalTitle">Детали объекта</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Информация о доме:</h6>
+                            <p id="objectDescription">Загрузка...</p>
+                            <div class="mb-3">
+                                <strong>Площадь:</strong> <span id="objectArea">120 м²</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Год постройки:</strong> <span id="objectYear">2023</span>
+                            </div>
+                            <div class="mb-3">
+                                <strong>Модель ThermoBlock:</strong> <span id="objectModel">Плюс</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Фотографии:</h6>
+                            <div class="object-images" id="objectImages">
+                                <!-- Фотографии будут загружены через JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h6>Отзыв владельца:</h6>
+                        <div class="card border-0 bg-light">
+                            <div class="card-body">
+                                <p id="objectReview">Загрузка отзыва...</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div>
+                                        <strong id="objectOwner">Иван Иванов</strong>
+                                        <div class="text-muted small" id="objectLocation">Москва</div>
+                                    </div>
+                                    <div class="text-warning" id="objectRating">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Leaflet JS для карты -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация карты России
+            const map = L.map('map').setView([53.7558, 107.6173], 6); // Центр России
+            
+            // Добавление слоя OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Данные объектов (в реальном проекте будут из API)
+            const objects = [
+                {
+                    id: 1,
+                    lat: 53.7558,
+                    lng: 107.6173,
+                    title: "Коттедж в Московской области",
+                    description: "Двухэтажный коттедж 180 м², построен за 3 месяца",
+                    type: "cottage",
+                    region: "region-moscow",
+                    area: "180 м²",
+                    year: "2023",
+                    model: "ThermoBlock Премиум",
+                    owner: "Иван Иванов",
+                    location: "Московская область",
+                    rating: 5,
+                    review: "Строили дом для постоянного проживания. ThermoBlock выбрали после долгих сравнений. Результат превзошел ожидания: зимой тепло, летом прохладно. Строительство шло очень быстро — коробку поставили за месяц.",
+                    images: [
+                        "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                        "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    ]
+                },
+                {
+                    id: 2,
+                    lat: 59.9343,
+                    lng: 30.3351,
+                    title: "Загородный дом в Ленинградской области",
+                    type: "cottage",
+                    region: "region-siberia",
+                    hasVideo: true
+                },
+                {
+                    id: 3,
+                    lat: 56.8389,
+                    lng: 60.6057,
+                    title: "Дача на Урале",
+                    type: "dacha",
+                    region: "region-ural"
+                },
+                {
+                    id: 4,
+                    lat: 45.0355,
+                    lng: 38.9753,
+                    title: "Дом в Краснодарском крае",
+                    type: "cottage",
+                    region: "region-south",
+                    hasVideo: true
+                },
+                {
+                    id: 5,
+                    lat: 56.4977,
+                    lng: 84.9744,
+                    title: "Коттедж в Томске",
+                    type: "cottage",
+                    region: "region-siberia"
+                },
+                {
+                    id: 6,
+                    lat: 53.1959,
+                    lng: 50.1002,
+                    title: "Дом в Самаре",
+                    type: "cottage",
+                    region: "region-ural"
+                },
+                {
+                    id: 7,
+                    lat: 43.5855,
+                    lng: 39.7231,
+                    title: "Дом в Сочи",
+                    type: "cottage",
+                    region: "region-south"
+                },
+                {
+                    id: 8,
+                    lat: 54.9893,
+                    lng: 73.3682,
+                    title: "Дом в Омске",
+                    type: "dacha",
+                    region: "region-siberia"
+                },
+                {
+                    id: 9,
+                    lat: 55.0415,
+                    lng: 82.9346,
+                    title: "Дом в Новосибирске",
+                    type: "cottage",
+                    region: "region-siberia",
+                    hasVideo: true
+                },
+                {
+                    id: 10,
+                    lat: 51.7682,
+                    lng: 55.0974,
+                    title: "Дом в Оренбурге",
+                    type: "cottage",
+                    region: "region-ural"
+                }
+            ];
+            
+            // Добавление меток на карту
+            const markers = [];
+            const markersLayer = L.layerGroup().addTo(map);
+            
+            objects.forEach(obj => {
+                const iconHtml = `
+                    <div class="custom-marker ${obj.hasVideo ? 'has-video' : ''}">
+                        ${obj.hasVideo ? 
+                            '<i class="bi bi-camera-video"></i>' : 
+                            '<i class="bi bi-house-fill"></i>'
+                        }
+                    </div>
+                `;
+                
+                const customIcon = L.divIcon({
+                    html: iconHtml,
+                    className: 'custom-div-icon',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 40],
+                    popupAnchor: [0, -40]
+                });
+                
+                const marker = L.marker([obj.lat, obj.lng], { 
+                    icon: customIcon,
+                    objectId: obj.id
+                }).addTo(markersLayer);
+                
+                marker.on('click', function() {
+                    const objectData = objects.find(o => o.id === this.options.objectId);
+                    if (objectData) {
+                        showObjectDetails(objectData);
+                    }
+                });
+                
+                markers.push(marker);
+            });
+            
+            // Показ деталей объекта в модальном окне
+            function showObjectDetails(object) {
+                document.getElementById('objectModalTitle').textContent = object.title || 'Детали объекта';
+                document.getElementById('objectDescription').textContent = object.description || 'Информация о доме';
+                document.getElementById('objectArea').textContent = object.area || 'не указана';
+                document.getElementById('objectYear').textContent = object.year || 'не указан';
+                document.getElementById('objectModel').textContent = object.model || 'не указана';
+                document.getElementById('objectReview').textContent = object.review || 'Отзыв не предоставлен';
+                document.getElementById('objectOwner').textContent = object.owner || 'Аноним';
+                document.getElementById('objectLocation').textContent = object.location || 'не указано';
+                
+                // Рейтинг
+                const ratingElement = document.getElementById('objectRating');
+                if (object.rating) {
+                    ratingElement.innerHTML = '';
+                    for (let i = 0; i < 5; i++) {
+                        const star = document.createElement('i');
+                        star.className = i < object.rating ? 'bi bi-star-fill' : 'bi bi-star';
+                        ratingElement.appendChild(star);
+                    }
+                }
+                
+                // Фотографии
+                const imagesContainer = document.getElementById('objectImages');
+                imagesContainer.innerHTML = '';
+                
+                if (object.images && object.images.length > 0) {
+                    object.images.forEach(imgUrl => {
+                        const imgDiv = document.createElement('div');
+                        imgDiv.className = 'object-image';
+                        imgDiv.innerHTML = `<img src="${imgUrl}" alt="Дом">`;
+                        imagesContainer.appendChild(imgDiv);
+                    });
+                } else {
+                    imagesContainer.innerHTML = '<p class="text-muted">Фотографии не загружены</p>';
+                }
+                
+                // Показываем модальное окно
+                const modal = new bootstrap.Modal(document.getElementById('objectModal'));
+                modal.show();
+            }
+            
+            // Фильтрация отзывов
+            const filterBadges = document.querySelectorAll('.filter-badge');
+            const reviewsContainer = document.getElementById('reviewsContainer');
+            
+            // Загрузка отзывов
+            loadReviews('all');
+            
+            filterBadges.forEach(badge => {
+                badge.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    
+                    // Обновляем активный бейдж
+                    filterBadges.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Загружаем отзывы
+                    loadReviews(filter);
+                    
+                    // Фильтрация меток на карте
+                    filterMarkers(filter);
+                });
+            });
+            
+            function loadReviews(filter) {
+                // Симуляция загрузки отзывов
+                const reviews = [
+                    {
+                        id: 1,
+                        name: "Иван Иванов",
+                        location: "Московская область",
+                        date: "15.12.2023",
+                        rating: 5,
+                        text: "Строили дом для постоянного проживания. ThermoBlock выбрали после долгих сравнений. Результат превзошел ожидания: зимой тепло, летом прохладно. Строительство шло очень быстро — коробку поставили за месяц.",
+                        type: "cottage",
+                        region: "region-moscow"
+                    },
+                    {
+                        id: 2,
+                        name: "Анна Смирнова",
+                        location: "Краснодарский край",
+                        date: "10.11.2023",
+                        rating: 5,
+                        text: "Построили дачу. Главное преимущество — не нужно постоянно контролировать строителей. Технология сама не позволяет сделать ошибки. Летом в доме идеальная прохлада без кондиционера.",
+                        type: "dacha",
+                        region: "region-south"
+                    },
+                    {
+                        id: 3,
+                        name: "Сергей Петров",
+                        location: "Екатеринбург",
+                        date: "05.10.2023",
+                        rating: 4,
+                        text: "Строил гараж и мастерскую. Быстро, качественно, зимой тепло. Единственный минус — нужно было ждать доставку 2 недели. Но результат того стоит.",
+                        type: "commercial",
+                        region: "region-ural"
+                    },
+                    {
+                        id: 4,
+                        name: "Мария Козлова",
+                        location: "Новосибирск",
+                        date: "20.09.2023",
+                        rating: 5,
+                        text: "В Сибири зимы суровые, поэтому к выбору технологии подошли серьезно. ThermoBlock не подвел: дом теплый, счета за отопление в 2 раза меньше, чем у соседей.",
+                        type: "cottage",
+                        region: "region-siberia"
+                    }
+                ];
+                
+                // Фильтрация
+                let filteredReviews = reviews;
+                if (filter !== 'all') {
+                    filteredReviews = reviews.filter(review => 
+                        review.type === filter || review.region === filter
+                    );
+                }
+                
+                // Отрисовка отзывов
+                reviewsContainer.innerHTML = '';
+                
+                filteredReviews.forEach(review => {
+                    const reviewCol = document.createElement('div');
+                    reviewCol.className = 'col-lg-6 col-xl-4 fade-in';
+                    reviewCol.dataset.type = review.type;
+                    reviewCol.dataset.region = review.region;
+                    
+                    // Первая буква имени для аватара
+                    const firstLetter = review.name.charAt(0);
+                    
+                    // Звезды рейтинга
+                    let starsHtml = '';
+                    for (let i = 1; i <= 5; i++) {
+                        starsHtml += i <= review.rating ? 
+                            '<i class="bi bi-star-fill"></i>' : 
+                            '<i class="bi bi-star"></i>';
+                    }
+                    
+                    reviewCol.innerHTML = `
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-avatar">${firstLetter}</div>
+                                <div>
+                                    <h5 class="mb-1">${review.name}</h5>
+                                    <div class="review-location">
+                                        <i class="bi bi-geo-alt me-1"></i>${review.location}
+                                    </div>
+                                    <div class="review-rating">${starsHtml}</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">${review.text}</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <small class="text-muted">${review.date}</small>
+                                    <span class="badge bg-primary">${getTypeLabel(review.type)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    reviewsContainer.appendChild(reviewCol);
+                });
+                
+                // Анимация появления
+                setTimeout(() => {
+                    document.querySelectorAll('.fade-in').forEach((el, index) => {
+                        el.style.animationDelay = `${index * 0.1}s`;
+                    });
+                }, 100);
+            }
+            
+            function getTypeLabel(type) {
+                const labels = {
+                    'cottage': 'Коттедж',
+                    'dacha': 'Дача',
+                    'commercial': 'Коммерческий'
+                };
+                return labels[type] || type;
+            }
+            
+            function filterMarkers(filter) {
+                if (filter === 'all') {
+                    markersLayer.addTo(map);
+                    return;
+                }
+                
+                // В реальном проекте здесь будет фильтрация по данным объектов
+                markersLayer.clearLayers();
+                
+                objects.forEach((obj, index) => {
+                    if (filter === 'all' || obj.region === filter || obj.type === filter) {
+                        markers[index].addTo(markersLayer);
+                    }
+                });
+            }
+            
+            // Поиск по региону
+            document.getElementById('searchButton').addEventListener('click', function() {
+                const searchTerm = document.getElementById('regionSearch').value.toLowerCase();
+                
+                if (searchTerm) {
+                    // Ищем объект по региону
+                    const foundObject = objects.find(obj => 
+                        obj.title.toLowerCase().includes(searchTerm) ||
+                        (obj.location && obj.location.toLowerCase().includes(searchTerm))
+                    );
+                    
+                    if (foundObject) {
+                        // Центрируем карту на найденном объекте
+                        map.setView([foundObject.lat, foundObject.lng], 8);
+                        
+                        // Показываем детали
+                        showObjectDetails(foundObject);
+                    } else {
+                        alert('Объекты в этом регионе не найдены');
+                    }
+                }
+            });
+            
+            // Рейтинг звездами в форме
+            const stars = document.querySelectorAll('.rating-stars i');
+            const ratingInput = document.querySelector('input[name="rating"]');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    ratingInput.value = rating;
+                    
+                    // Обновляем отображение звезд
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.className = 'bi bi-star-fill fs-3 text-warning';
+                        } else {
+                            s.className = 'bi bi-star fs-3 text-muted';
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseover', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.className = 'bi bi-star-fill fs-3 text-warning';
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    const currentRating = parseInt(ratingInput.value);
+                    
+                    stars.forEach((s, index) => {
+                        if (index < currentRating) {
+                            s.className = 'bi bi-star-fill fs-3 text-warning';
+                        } else {
+                            s.className = 'bi bi-star fs-3 text-muted';
+                        }
+                    });
+                });
+            });
+            
+            // Отправка формы отзыва
+            document.getElementById('addReviewForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Здесь будет отправка на сервер
+                alert('Спасибо за отзыв! После проверки модератором он появится на сайте.');
+                this.reset();
+                
+                // Сброс звезд
+                stars.forEach(s => {
+                    s.className = 'bi bi-star fs-3 text-muted';
+                });
+                ratingInput.value = '5';
+            });
+            
+            // Автоматический фокус на поиске
+            document.getElementById('regionSearch').focus();
+        });
+    </script>
+{% endblock %}

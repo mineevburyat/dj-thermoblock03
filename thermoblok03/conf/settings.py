@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'apps.constructs',
     'apps.products',
     'apps.faq',
-    'apps.review',
+    'apps.portfolio',
 ]
 
 MIDDLEWARE = [

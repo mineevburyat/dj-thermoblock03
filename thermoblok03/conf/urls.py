@@ -26,7 +26,7 @@ urlpatterns = [
     path('products/', include('apps.products.urls', namespace='products')),
     # path('captcha/', include('captcha.urls')),
     # path('faq/', include('apps.faq.urls', namespace='faq')),
-    # path('review/', include('apps.review.urls', namespace='review')),
+    path('portfolio/', include('apps.portfolio.urls', namespace='portfolio')),
 ]
 
 

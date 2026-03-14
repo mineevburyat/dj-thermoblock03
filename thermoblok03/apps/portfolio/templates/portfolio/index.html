@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная · Отзывы и портфолио</title>
+    <!-- Font Awesome 6 (бесплатный) для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fb;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* основной контейнер — имитация экрана приложения */
+        .app-wrapper {
+            max-width: 1400px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -10px rgba(0,20,30,0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* шапка простая */
+        .app-header {
+            padding: 20px 28px;
+            border-bottom: 1px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .app-header h1 {
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: #122c44;
+            letter-spacing: -0.3px;
+        }
+        .app-header i {
+            color: #2a7faa;
+            font-size: 28px;
+        }
+
+        /* основная сетка: карта + sidebar */
+        .map-section {
+            display: flex;
+            flex-wrap: wrap; /* на узких экранах сайдбар уедет вниз */
+            gap: 20px;
+            padding: 24px 28px;
+        }
+
+        /* левая часть — карта */
+        .map-container {
+            flex: 2.5; 
+            min-width: 300px;
+            background-color: #e9edf4;
+            border-radius: 28px;
+            padding: 20px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.02), 0 8px 18px -6px rgba(33,45,60,0.12);
+        }
+
+        .map-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            color: #1e3b5c;
+        }
+        .map-title h3 {
+            font-weight: 500;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .map-title span {
+            background-color: #d9e2ef;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* имитация карты — сетка районов */
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            aspect-ratio: 16 / 9;
+        }
+        .district-card {
+            background: linear-gradient(145deg, #cbd5e1, #b8c5d6);
+            border-radius: 20px;
+            padding: 16px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #1e2f40;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(2px);
+        }
+        .district-card:hover {
+            transform: scale(1.02);
+            background: #b9cbdf;
+            border-color: #9bb0c9;
+        }
+        .district-name {
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .house-count {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #0f2a41;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .house-count small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        /* правая часть — сайдбар с последними отзывами */
+        .reviews-sidebar {
+            flex: 1.2;
+            min-width: 260px;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 20px 18px;
+            box-shadow: 0 10px 24px -12px rgba(32, 45, 64, 0.18);
+            border: 1px solid #eef2f8;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reviews-sidebar h3 {
+            font-size: 1.2rem;
+            color: #1a3b55;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px dashed #cbdae9;
+            padding-bottom: 12px;
+        }
+
+        .review-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            flex: 1;
+        }
+
+        /* карточка отзыва (заглушка) */
+        .review-item {
+            background-color: #f9fcff;
+            border-radius: 22px;
+            padding: 18px 16px;
+            border: 1px solid #e0eaf4;
+            transition: 0.15s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+        }
+        .review-item:hover {
+            background-color: #f1f7fd;
+            border-color: #b9d1e9;
+        }
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .review-author i {
+            font-size: 2rem;
+            color: #407b9e;
+            background: #e0edf9;
+            padding: 8px;
+            border-radius: 50%;
+        }
+        .author-name {
+            font-weight: 600;
+            color: #1e3d5e;
+        }
+        .review-text {
+            color: #2b4a6a;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            padding-left: 6px;
+            border-left: 3px solid #a6c4e2;
+            padding-left: 12px;
+        }
+        .review-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+        /* заглушка-ссылка */
+        .stub-link {
+            background: transparent;
+            border: 1px solid #a8c2dc;
+            color: #1f5a88;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .stub-link i {
+            font-size: 0.7rem;
+        }
+        .stub-link:hover {
+            background: #1f5a88;
+            color: white;
+            border-color: #1f5a88;
+        }
+
+        /* лента портфолио под картой */
+        .portfolio-section {
+            padding: 8px 28px 32px 28px;
+        }
+        .portfolio-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .portfolio-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #153e5a;
+        }
+        .portfolio-header i {
+            color: #356f97;
+            font-size: 26px;
+        }
+
+        .portfolio-scroll {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 6px 4px 16px 4px;
+            scrollbar-width: thin;
+            scrollbar-color: #98b9d6 #eaf1f9;
+        }
+        .portfolio-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .portfolio-scroll::-webkit-scrollbar-track {
+            background: #eaf1f9;
+            border-radius: 12px;
+        }
+        .portfolio-scroll::-webkit-scrollbar-thumb {
+            background-color: #98b9d6;
+            border-radius: 12px;
+        }
+
+        /* карточка портфолио (построенный дом) */
+        .portfolio-card {
+            min-width: 240px;
+            width: 260px;
+            background: white;
+            border-radius: 26px;
+            box-shadow: 0 12px 28px -12px rgba(0, 55, 80, 0.2);
+            border: 1px solid #deeaf5;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-5px);
+        }
+        .portfolio-image {
+            height: 150px;
+            background-color: #b7cfdf;
+            background-image: linear-gradient(135deg, #9bb7d4, #b5cfec);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1d4a72;
+            font-size: 2.5rem;
+            position: relative;
+        }
+        .portfolio-image i {
+            background: rgba(255,255,255,0.3);
+            padding: 14px;
+            border-radius: 50%;
+            backdrop-filter: blur(3px);
+        }
+        /* имитация разных цветов для карточек */
+        .portfolio-card:nth-child(2) .portfolio-image {
+            background: #b0c9b6;
+            background-image: linear-gradient(145deg, #9bbda8, #c0ddcf);
+        }
+        .portfolio-card:nth-child(3) .portfolio-image {
+            background: #cfc2a6;
+            background-image: linear-gradient(145deg, #c4b197, #e0d3bb);
+        }
+        .portfolio-card:nth-child(4) .portfolio-image {
+            background: #b6b9d4;
+            background-image: linear-gradient(145deg, #9fa7cf, #c5cef0);
+        }
+        .portfolio-card:nth-child(5) .portfolio-image {
+            background: #d4b9b9;
+            background-image: linear-gradient(145deg, #ceacac, #eed7d7);
+        }
+
+        .portfolio-info {
+            padding: 18px 16px;
+        }
+        .portfolio-info h4 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #113753;
+        }
+        .portfolio-info p {
+            color: #3b5f7a;
+            font-size: 0.9rem;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .portfolio-info p i {
+            color: #3f789b;
+            font-size: 0.8rem;
+        }
+
+        /* маленький футер для красоты */
+        .app-footer {
+            border-top: 1px solid #dde6f0;
+            padding: 16px 28px;
+            color: #5f7d9c;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            background: #fafdff;
+        }
+
+        /* адаптивность */
+        @media (max-width: 850px) {
+            .map-section {
+                flex-direction: column;
+            }
+            .map-grid {
+                aspect-ratio: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <!-- шапка приложения -->
+    <div class="app-header">
+        <i class="fas fa-home"></i>
+        <h1>Районы·портфолио</h1>
+    </div>
+
+    <!-- БЛОК 1: карта + сайдбар с отзывами -->
+    <div class="map-section">
+        <!-- карта с районами и количеством домов -->
+        <div class="map-container">
+            <div class="map-title">
+                <h3><i class="fas fa-map" style="color:#326f94;"></i> Карта районов</h3>
+                <span><i class="far fa-building"></i> всего 128 домов</span>
+            </div>
+            <!-- сетка с районами (карта-схема) -->
+            <div class="map-grid">
+                <div class="district-card">
+                    <span class="district-name">Центральный</span>
+                    <div class="house-count">42 <small>дома</small></div>
+                </div>
+                <div class="district-card">
+                    <span class="district-name">Прибрежный</span>
+                    <div class="house-count">27 <small>домов</small></div>
+                </div>
+                <div class="district-card">
+                    <span class="district-name">Солнечный</span>
+                    <div class="house-count">19 <small>домов</small></div>
+                </div>
+                <div class="district-card">
+                    <span class="district-name">Парковый</span>
+                    <div class="house-count">15 <small>домов</small></div>
+                </div>
+                <div class="district-card">
+                    <span class="district-name">Заозёрный</span>
+                    <div class="house-count">13 <small>домов</small></div>
+                </div>
+                <div class="district-card">
+                    <span class="district-name">Лесной</span>
+                    <div class="house-count">12 <small>домов</small></div>
+                </div>
+            </div>
+            <!-- дополнительная подпись карты -->
+            <div style="margin-top: 16px; color:#3f6688; font-size:0.9rem; display: flex; gap:12px; flex-wrap: wrap;">
+                <span><i class="fas fa-circle" style="color:#326f94; font-size: 0.5rem;"></i> Жилые комплексы</span>
+                <span><i class="fas fa-square" style="color:#326f94;"></i> Коттеджные посёлки</span>
+            </div>
+        </div>
+
+        <!-- САЙДБАР: последние отзывы (карточки ведут на заглушку) -->
+        <div class="reviews-sidebar">
+            <h3><i class="far fa-comment-dots"></i> Свежие отзывы</h3>
+            <div class="review-cards">
+                <!-- карточка 1 -->
+                <div class="review-item">
+                    <div class="review-author">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="author-name">Елена П.</span>
+                    </div>
+                    <div class="review-text">
+                        «Отличная планировка, тёплые стены. Район тихий, всё рядом.»
+                    </div>
+                    <div class="review-footer">
+                        <a href="#" class="stub-link" onclick="return false;">подробнее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- карточка 2 -->
+                <div class="review-item">
+                    <div class="review-author">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="author-name">Михаил К.</span>
+                    </div>
+                    <div class="review-text">
+                        «Сдали дом на месяц раньше. Качество отделки порадовало.»
+                    </div>
+                    <div class="review-footer">
+                        <a href="#" class="stub-link" onclick="return false;">подробнее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- карточка 3 -->
+                <div class="review-item">
+                    <div class="review-author">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="author-name">Анастасия В.</span>
+                    </div>
+                    <div class="review-text">
+                        «Очень нравится двор, много зелени. Дом построили качественно.»
+                    </div>
+                    <div class="review-footer">
+                        <a href="#" class="stub-link" onclick="return false;">подробнее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- можно добавить четвёртую, но оставим три, чтобы не перегружать -->
+            </div>
+            <!-- ссылка "все отзывы" тоже заглушка -->
+            <div style="margin-top: 16px; text-align: right;">
+                <a href="#" class="stub-link" style="background:#e6f0fa;" onclick="return false;">все отзывы <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 2: лента портфолио (построенные дома) ПОД КАРТОЙ -->
+    <div class="portfolio-section">
+        <div class="portfolio-header">
+            <i class="fas fa-briefcase"></i>
+            <h2>Портфолио построенных домов</h2>
+        </div>
+
+        <!-- горизонтальная лента карточек портфолио -->
+        <div class="portfolio-scroll">
+            <!-- карточка 1 -->
+            <div class="portfolio-card">
+                <div class="portfolio-image">
+                    <i class="fas fa-house-chimney"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Дом «Скандинавия»</h4>
+                    <p><i class="fas fa-map-pin"></i> Центральный р-н, 178 м²</p>
+                </div>
+            </div>
+            <!-- карточка 2 -->
+            <div class="portfolio-card">
+                <div class="portfolio-image">
+                    <i class="fas fa-tree"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Коттедж «Берёзка»</h4>
+                    <p><i class="fas fa-map-pin"></i> Лесной р-н, 210 м²</p>
+                </div>
+            </div>
+            <!-- карточка 3 -->
+            <div class="portfolio-card">
+                <div class="portfolio-image">
+                    <i class="fas fa-water"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Резиденция «Волна»</h4>
+                    <p><i class="fas fa-map-pin"></i> Прибрежный, 320 м²</p>
+                </div>
+            </div>
+            <!-- карточка 4 -->
+            <div class="portfolio-card">
+                <div class="portfolio-image">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Таунхаус «Солнечный»</h4>
+                    <p><i class="fas fa-map-pin"></i> Солнечный, 150 м²</p>
+                </div>
+            </div>
+            <!-- карточка 5 -->
+            <div class="portfolio-card">
+                <div class="portfolio-image">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Усадьба «Парковая»</h4>
+                    <p><i class="fas fa-map-pin"></i> Парковый, 280 м²</p>
+                </div>
+            </div>
+            <!-- карточка 6 (дополнительно, для красоты ленты) -->
+            <div class="portfolio-card">
+                <div class="portfolio-image">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Шале «Заозёрное»</h4>
+                    <p><i class="fas fa-map-pin"></i> Заозёрный, 195 м²</p>
+                </div>
+            </div>
+        </div>
+        <!-- индикатор, что можно листать -->
+        <div style="margin-top: 8px; color:#7b98b4; font-size:0.85rem; text-align: center;">
+            <i class="fas fa-arrow-left"></i> листайте вправо  <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+
+    <!-- небольшая подпись (заглушка) -->
+    <div class="app-footer">
+        <span><i class="far fa-copyright"></i> отзывы и портфолио — демо</span>
+        <span><i class="fas fa-external-link-alt"></i> все ссылки ведут на #</span>
+    </div>
+</div>
+
+<!-- дополнительная магия: чтобы клик по заглушке не перезагружал и не поднимал наверх -->
+<script>
+    (function() {
+        const stubLinks = document.querySelectorAll('.stub-link');
+        stubLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                // просто имитация — можно вывести в консоль
+                console.log('Заглушка: переход на детальную страницу');
+            });
+        });
+    })();
+</script>
+</body>
+</html>

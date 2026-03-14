@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная · Карта районов (Яндекс)</title>
+    <!-- Yandex Maps API (версия 2.1) -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=5932660d-1538-4f9f-9ff0-479507bf6643&lang=ru_RU" type="text/javascript"></script>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f0f4fa;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-wrapper {
+            max-width: 1400px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -10px rgba(0,20,30,0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-header {
+            padding: 20px 28px;
+            border-bottom: 1px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+        }
+        .app-header h1 {
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: #122c44;
+        }
+        .app-header i {
+            color: #2a7faa;
+            font-size: 28px;
+        }
+
+        .map-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 24px 28px;
+            /* Добавляем выравнивание по высоте для flex-детей */
+            align-items: stretch;
+        }
+
+        .map-container {
+            flex: 2.5;
+            min-width: 500px;
+            /* Убираем фиксированную высоту, теперь она будет определяться родителем */
+            background: #e9edf4;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 8px 18px -6px rgba(33,45,60,0.12);
+            position: relative;
+        }
+        
+        #district-map {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+
+        /* Стили для кастомных маркеров */
+        .custom-marker {
+            background-color: #2a7faa;
+            border: 3px solid white;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .custom-marker:hover {
+            transform: scale(1.1);
+            background-color: #1e5f84;
+        }
+
+        /* Сайдбар с отзывами */
+        .reviews-sidebar {
+            flex: 1.2;
+            min-width: 260px;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 20px 18px;
+            box-shadow: 0 10px 24px -12px rgba(32, 45, 64, 0.18);
+            border: 1px solid #eef2f8;
+            /* Добавляем, чтобы сайдбар сам определял свою высоту по содержимому */
+            height: fit-content;
+            /* Но для align-items: stretch нужно явно указать auto */
+            align-self: flex-start;
+        }
+
+        .reviews-sidebar h3 {
+            font-size: 1.2rem;
+            color: #1a3b55;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px dashed #cbdae9;
+            padding-bottom: 12px;
+        }
+
+        .review-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .review-item {
+            background-color: #f9fcff;
+            border-radius: 22px;
+            padding: 18px 16px;
+            border: 1px solid #e0eaf4;
+            transition: 0.15s;
+        }
+        .review-item:hover {
+            background-color: #f1f7fd;
+            border-color: #b9d1e9;
+        }
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .review-author i {
+            font-size: 2rem;
+            color: #407b9e;
+            background: #e0edf9;
+            padding: 8px;
+            border-radius: 50%;
+        }
+        .author-name {
+            font-weight: 600;
+            color: #1e3d5e;
+        }
+        .review-text {
+            color: #2b4a6a;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            border-left: 3px solid #a6c4e2;
+            padding-left: 12px;
+        }
+        .review-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .stub-link {
+            background: transparent;
+            border: 1px solid #a8c2dc;
+            color: #1f5a88;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+        .stub-link:hover {
+            background: #1f5a88;
+            color: white;
+            border-color: #1f5a88;
+        }
+
+        /* Лента портфолио */
+        .portfolio-section {
+            padding: 8px 28px 32px 28px;
+        }
+        .portfolio-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .portfolio-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #153e5a;
+        }
+        .portfolio-header i {
+            color: #356f97;
+            font-size: 26px;
+        }
+
+        .portfolio-scroll {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 6px 4px 16px 4px;
+            scrollbar-width: thin;
+            scrollbar-color: #98b9d6 #eaf1f9;
+        }
+        .portfolio-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .portfolio-scroll::-webkit-scrollbar-track {
+            background: #eaf1f9;
+            border-radius: 12px;
+        }
+        .portfolio-scroll::-webkit-scrollbar-thumb {
+            background-color: #98b9d6;
+            border-radius: 12px;
+        }
+
+        .portfolio-card {
+            min-width: 240px;
+            width: 260px;
+            background: white;
+            border-radius: 26px;
+            box-shadow: 0 12px 28px -12px rgba(0, 55, 80, 0.2);
+            border: 1px solid #deeaf5;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-5px);
+        }
+        .portfolio-image {
+            height: 150px;
+            background: linear-gradient(135deg, #9bb7d4, #b5cfec);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1d4a72;
+            font-size: 2.5rem;
+        }
+        .portfolio-image i {
+            background: rgba(255,255,255,0.3);
+            padding: 14px;
+            border-radius: 50%;
+        }
+        .portfolio-card:nth-child(2) .portfolio-image {
+            background: linear-gradient(145deg, #9bbda8, #c0ddcf);
+        }
+        .portfolio-card:nth-child(3) .portfolio-image {
+            background: linear-gradient(145deg, #c4b197, #e0d3bb);
+        }
+        .portfolio-card:nth-child(4) .portfolio-image {
+            background: linear-gradient(145deg, #9fa7cf, #c5cef0);
+        }
+        .portfolio-card:nth-child(5) .portfolio-image {
+            background: linear-gradient(145deg, #ceacac, #eed7d7);
+        }
+
+        .portfolio-info {
+            padding: 18px 16px;
+        }
+        .portfolio-info h4 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #113753;
+        }
+        .portfolio-info p {
+            color: #3b5f7a;
+            font-size: 0.9rem;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .app-footer {
+            border-top: 1px solid #dde6f0;
+            padding: 16px 28px;
+            color: #5f7d9c;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            background: #fafdff;
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <div class="app-header">
+        <i class="fas fa-map"></i>
+        <h1>Яндекс Карта · Районы и портфолио</h1>
+    </div>
+
+    <div class="map-section">
+        <!-- Контейнер для карты Яндекса -->
+        <div class="map-container">
+            <div id="district-map"></div>
+        </div>
+
+        <!-- Сайдбар с отзывами -->
+        <div class="reviews-sidebar">
+            <h3><i class="far fa-comment-dots"></i> Последние отзывы</h3>
+            <div class="review-cards">
+                <div class="review-item">
+                    <div class="review-author">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="author-name">Елена П.</span>
+                    </div>
+                    <div class="review-text">
+                        «Отличная планировка, тёплые стены. Район тихий, всё рядом.»
+                    </div>
+                    <div class="review-footer">
+                        <a class="stub-link" onclick="return false;">подробнее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="review-item">
+                    <div class="review-author">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="author-name">Михаил К.</span>
+                    </div>
+                    <div class="review-text">
+                        «Сдали дом на месяц раньше. Качество отделки порадовало.»
+                    </div>
+                    <div class="review-footer">
+                        <a class="stub-link" onclick="return false;">подробнее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="review-item">
+                    <div class="review-author">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="author-name">Анастасия В.</span>
+                    </div>
+                    <div class="review-text">
+                        «Очень нравится двор, много зелени. Дом построили качественно.»
+                    </div>
+                    <div class="review-footer">
+                        <a class="stub-link" onclick="return false;">подробнее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 16px; text-align: right;">
+                <a class="stub-link" style="background:#e6f0fa;" onclick="return false;">все отзывы <i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Лента портфолио -->
+    <div class="portfolio-section">
+        <div class="portfolio-header">
+            <i class="fas fa-briefcase"></i>
+            <h2>Портфолио построенных домов</h2>
+        </div>
+        <div class="portfolio-scroll">
+            <div class="portfolio-card">
+                <div class="portfolio-image"><i class="fas fa-house-chimney"></i></div>
+                <div class="portfolio-info">
+                    <h4>Дом «Скандинавия»</h4>
+                    <p><i class="fas fa-map-pin"></i> Центральный р-н, 178 м²</p>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div class="portfolio-image"><i class="fas fa-tree"></i></div>
+                <div class="portfolio-info">
+                    <h4>Коттедж «Берёзка»</h4>
+                    <p><i class="fas fa-map-pin"></i> Лесной р-н, 210 м²</p>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div class="portfolio-image"><i class="fas fa-water"></i></div>
+                <div class="portfolio-info">
+                    <h4>Резиденция «Волна»</h4>
+                    <p><i class="fas fa-map-pin"></i> Прибрежный, 320 м²</p>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div class="portfolio-image"><i class="fas fa-sun"></i></div>
+                <div class="portfolio-info">
+                    <h4>Таунхаус «Солнечный»</h4>
+                    <p><i class="fas fa-map-pin"></i> Солнечный, 150 м²</p>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div class="portfolio-image"><i class="fas fa-leaf"></i></div>
+                <div class="portfolio-info">
+                    <h4>Усадьба «Парковая»</h4>
+                    <p><i class="fas fa-map-pin"></i> Парковый, 280 м²</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-footer">
+        <span><i class="far fa-copyright"></i> данные демонстрационные</span>
+        <span><i class="fas fa-map-marker-alt"></i> кружки = количество домов</span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Заглушки для ссылок
+        document.querySelectorAll('.stub-link').forEach(link => {
+            link.addEventListener('click', (e) => e.preventDefault());
+        });
+
+        // Данные по районам: название, координаты, количество домов
+        const districts = [
+            { name: 'Улан-Удэ', coords: [51.834809, 107.584547], houses: 42 },
+            { name: 'Нижний Саянтуй', coords: [51.737094, 107.517623], houses: 27 },
+            { name: 'Гусиноозерск', coords: [51.285453, 106.529530], houses: 19 },
+            { name: 'Усть-Баргузин', coords: [53.414736, 109.028993], houses: 15 },
+            { name: 'Гусиноозерск', coords: [51.495, 106.31], houses: 13 },
+            { name: 'Турка', coords: [52.949042, 108.218659], houses: 12 }
+        ];
+
+        // Инициализация Яндекс.Карты
+        ymaps.ready(function() {
+            // Создаем карту
+            const map = new ymaps.Map('district-map', {
+                center: [52.949042, 108.218659], // Центр Турки
+                zoom: 7,
+                controls: ['zoomControl', 'fullscreenControl']
+            });
+
+                        // Для каждого района создаем маркер с кастомным содержимым
+            districts.forEach(district => {
+                // Создаем HTML-элемент для маркера
+                const markerElement = document.createElement('div');
+                markerElement.className = 'custom-marker';
+                markerElement.textContent = district.houses;
+                markerElement.style.backgroundColor = '#2a7faa';
+                
+                // Создаем макет на основе HTML-элемента
+                const customLayout = ymaps.templateLayoutFactory.createClass(
+                    '<div class="custom-marker" style="background-color: #2a7faa;">' + 
+                    district.houses + 
+                    '</div>',
+                    {
+                        build: function() {
+                            customLayout.superclass.build.call(this);
+                            // Добавляем обработчик события клика на маркер
+                            const markerDiv = this.getParentElement().querySelector('.custom-marker');
+                            if (markerDiv) {
+                                markerDiv.addEventListener('click', () => {
+                                    // Здесь можно добавить обработку клика
+                                    console.log('Клик по району:', district.name);
+                                });
+                            }
+                        }
+                    }
+                );
+
+                // Создаем метку с кастомным макетом
+                const placemark = new ymaps.Placemark(
+                    district.coords,
+                    {
+                        hintContent: `${district.name} район: ${district.houses} домов`,
+                        balloonContent: `
+                            <b>${district.name} район</b><br>
+                            Построено домов: ${district.houses}<br>
+                            <i>Нажмите для деталей</i>
+                        `
+                    },
+                    {
+                        iconLayout: customLayout,
+                        iconShape: {
+                            type: 'Circle',
+                            coordinates: [0, 0],
+                            radius: 23
+                        },
+                        hideIconOnBalloonOpen: false,
+                        balloonOffset: [0, -40]
+                    }
+                );
+
+                map.geoObjects.add(placemark);
+            });
+
+            // Добавляем пунктирные круги для визуализации районов
+            districts.forEach(district => {
+                const circle = new ymaps.Circle(
+                    [district.coords, 13000],
+                    {},
+                    {
+                        fillColor: '#2a7faa20',
+                        strokeColor: '#2a7faa',
+                        strokeWidth: 2,
+                        strokeOpacity: 0.5,
+                        strokeStyle: 'dash'
+                    }
+                );
+                map.geoObjects.add(circle);
+            });
+        });
+    })();
+</script>
+
+<!-- Дополнительный стиль для маркеров -->
+<style>
+    .ymaps-2-1-79-image-with-content-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        font-size: 16px;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+        pointer-events: none;
+    }
+    [class*="image-with-content-content"] {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        font-size: 16px;
+    }
+</style>
+</body>
+</html>

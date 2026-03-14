@@ -11,6 +11,5 @@ urlpatterns = [
     path('catalog/', CatalogView.as_view(), name='catalog'),
     path('tb300/', Tb300.as_view(), name='tb300'),
     path('tb400/', Tb400.as_view(), name='tb400'),
-    path('portfolio/', Portfolio.as_view(), name='portfolio'),
 ]
 
