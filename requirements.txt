@@ -17,3 +17,6 @@ typing_extensions==4.13.2
 urllib3==2.4.0
 django-cors-headers==4.9.0
 sorl-thumbnail==13.0.0
+djangorestframework==3.16.1
+django-filter==23.2
+Markdown==3.10.2

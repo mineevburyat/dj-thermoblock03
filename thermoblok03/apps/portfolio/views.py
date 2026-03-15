@@ -1,5 +1,17 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from rest_framework import viewsets, filters, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.db.models import Count, Avg, Q
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import District, House, Review
+from .serializers import (
+    DistrictSerializer, DistrictDetailSerializer,
+    HouseListSerializer, HouseDetailSerializer,
+    ReviewSerializer
+)
+
 
 class IndexView(TemplateView):
     template_name = 'portfolio/index_geo.html'
@@ -46,21 +58,6 @@ class Portfolio(TemplateView):
             }
         return context
     
-
-# views.py
-
-from rest_framework import viewsets, filters, status
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from django.db.models import Count, Avg, Q
-from django_filters.rest_framework import DjangoFilterBackend
-from .models import District, House, Review
-from .serializers import (
-    DistrictSerializer, DistrictDetailSerializer,
-    HouseListSerializer, HouseDetailSerializer,
-    ReviewSerializer
-)
-
 class DistrictViewSet(viewsets.ModelViewSet):
     """
     ViewSet для работы с районами

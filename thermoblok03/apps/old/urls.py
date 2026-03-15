@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import HomeView, HomeNewView, CatalogView, Tb300, Tb400, Portfolio
+from .views import HomeView, HomeNewView, CatalogView, Tb300, Tb400
 
 
 app_name = 'old'
