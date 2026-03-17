@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 from rest_framework import viewsets, filters, status
 from rest_framework.decorators import action
@@ -11,7 +11,11 @@ from .serializers import (
     HouseListSerializer, HouseDetailSerializer,
     ReviewSerializer
 )
-
+from django.shortcuts import render
+from django.core.paginator import Paginator
+from django.db.models import Count, Avg, Q
+from .models import District, House, Review
+from django.http import JsonResponse
 
 class IndexView(TemplateView):
     template_name = 'portfolio/index_geo.html'
@@ -177,3 +181,223 @@ class ReviewViewSet(viewsets.ModelViewSet):
         
         serializer = self.get_serializer(review)
         return Response(serializer.data)
+
+
+
+def index(request):
+    """
+    Главная страница с картой, отзывами и портфолио
+    """
+    # Получаем последние отзывы с пагинацией
+    reviews_list = Review.objects.filter(
+        is_published=True
+    ).select_related('house').order_by('-created_at')
+    
+    reviews_paginator = Paginator(reviews_list, 3)  # 3 отзыва на странице
+    reviews_page = request.GET.get('reviews_page', 1)
+    reviews = reviews_paginator.get_page(reviews_page)
+    
+    # Получаем дома с аннотациями
+    houses_list = House.objects.filter(
+        status='built'
+    ).select_related('district').annotate(
+        reviews_count=Count('reviews', filter=Q(reviews__is_published=True)),
+        average_rating=Avg('reviews__rating', filter=Q(reviews__is_published=True))
+    ).order_by('-created_at')
+    
+    houses_paginator = Paginator(houses_list, 5)  # 5 домов на странице
+    houses_page = request.GET.get('houses_page', 1)
+    houses = houses_paginator.get_page(houses_page)
+    
+    context = {
+        'reviews': reviews,
+        'houses': houses,
+    }
+    return render(request, 'portfolio/index_geo1.html', context)
+
+
+def reviews_list(request):
+    """AJAX view для пагинации отзывов"""
+    reviews_list = Review.objects.filter(
+        is_published=True
+    ).select_related('house').order_by('-created_at')
+    
+    paginator = Paginator(reviews_list, 3)
+    page = request.GET.get('page', 1)
+    reviews = paginator.get_page(page)
+    
+    return render(request, 'includes/reviews_list.html', {'reviews': reviews})
+
+
+def houses_list(request):
+    """AJAX view для пагинации домов"""
+    houses_list = House.objects.filter(
+        status='built'
+    ).select_related('district').annotate(
+        reviews_count=Count('reviews', filter=Q(reviews__is_published=True)),
+        average_rating=Avg('reviews__rating', filter=Q(reviews__is_published=True))
+    ).order_by('-created_at')
+    
+    paginator = Paginator(houses_list, 5)
+    page = request.GET.get('page', 1)
+    houses = paginator.get_page(page)
+    
+    return render(request, 'includes/houses_list.html', {'houses': houses})
+
+def house_detail(request, pk):
+    """Детальная страница дома"""
+    house = get_object_or_404(
+        House.objects.select_related('district').prefetch_related(
+            'media',
+            'reviews'
+        ),
+        pk=pk
+    )
+    
+    reviews = house.reviews.filter(is_published=True).order_by('-created_at')
+    
+    # Средний рейтинг
+    average_rating = reviews.aggregate(avg=Avg('rating'))['avg']
+    
+    context = {
+        'house': house,
+        'reviews': reviews,
+        'average_rating': average_rating,
+        'yandex_api_key': 'ваш_API_ключ',  # из настроек
+    }
+    return render(request, 'portfolio/house_detail.html', context)
+
+
+def review_detail(request, pk):
+    """Детальная страница отзыва"""
+    review = get_object_or_404(
+        Review.objects.select_related('house__district').prefetch_related('photos'),
+        pk=pk,
+        is_published=True
+    )
+    
+    context = {
+        'review': review,
+    }
+    return render(request, 'portfolio/review_detail.html', context)
+
+
+def house_list(request):
+    """Список всех домов с фильтрацией"""
+    houses = House.objects.select_related('district').prefetch_related(
+        'media'
+    ).annotate(
+        reviews_count=Count('reviews', filter=Q(reviews__is_published=True)),
+        average_rating=Avg('reviews__rating', filter=Q(reviews__is_published=True))
+    )
+    
+    # Фильтрация
+    district_id = request.GET.get('district')
+    if district_id:
+        houses = houses.filter(district_id=district_id)
+    
+    status = request.GET.get('status')
+    if status:
+        houses = houses.filter(status=status)
+    
+    search = request.GET.get('search')
+    if search:
+        houses = houses.filter(
+            Q(name__icontains=search) | Q(address__icontains=search)
+        )
+    
+    # Сортировка
+    sort = request.GET.get('sort', '-created_at')
+    houses = houses.order_by(sort)
+    
+    # Пагинация
+    paginator = Paginator(houses, 12)  # 12 домов на страницу
+    page = request.GET.get('page', 1)
+    houses_page = paginator.get_page(page)
+    
+    # Для фильтров
+    districts = District.objects.all()
+    
+    context = {
+        'houses': houses_page,
+        'paginator': paginator,
+        'districts': districts,
+    }
+    return render(request, 'portfolio/house_list.html', context)
+
+
+def review_list(request):
+    """Список всех отзывов с фильтрацией"""
+    reviews = Review.objects.filter(
+        is_published=True
+    ).select_related(
+        'house__district'
+    ).prefetch_related(
+        'photos'
+    )
+    
+    # Фильтрация по рейтингу
+    rating = request.GET.get('rating')
+    if rating and rating != 'all':
+        reviews = reviews.filter(rating=rating)
+    
+    # Сортировка
+    sort = request.GET.get('sort', 'newest')
+    if sort == 'newest':
+        reviews = reviews.order_by('-created_at')
+    elif sort == 'oldest':
+        reviews = reviews.order_by('created_at')
+    elif sort == 'highest':
+        reviews = reviews.order_by('-rating', '-created_at')
+    elif sort == 'lowest':
+        reviews = reviews.order_by('rating', '-created_at')
+    
+    # Пагинация
+    paginator = Paginator(reviews, 10)  # 10 отзывов на страницу
+    page = request.GET.get('page', 1)
+    reviews_page = paginator.get_page(page)
+    
+    # Статистика
+    total_reviews = Review.objects.filter(is_published=True).count()
+    average_rating = Review.objects.filter(
+        is_published=True
+    ).aggregate(avg=Avg('rating'))['avg']
+    total_houses_with_reviews = Review.objects.filter(
+        is_published=True
+    ).values('house').distinct().count()
+    
+    context = {
+        'reviews': reviews_page,
+        'paginator': paginator,
+        'total_reviews': total_reviews,
+        'average_rating': average_rating,
+        'total_houses_with_reviews': total_houses_with_reviews,
+    }
+    return render(request, 'portfolio/review_list.html', context)
+
+
+def district_detail(request, pk):
+    """Детальная страница района"""
+    district = get_object_or_404(District, pk=pk)
+    
+    houses = district.houses.filter(
+        status='built'
+    ).annotate(
+        reviews_count=Count('reviews', filter=Q(reviews__is_published=True)),
+        average_rating=Avg('reviews__rating', filter=Q(reviews__is_published=True))
+    )[:6]
+    
+    context = {
+        'district': district,
+        'houses': houses,
+        'yandex_api_key': 'ваш_API_ключ',
+    }
+    return render(request, 'portfolio/district_detail.html', context)
+
+def districts_api(request):
+    """API для получения данных районов для карты"""
+    districts = District.objects.annotate(
+        houses_count=Count('houses', filter=Q(houses__status='built'))
+    ).values('id', 'name', 'center_latitude', 'center_longitude', 'houses_count')
+    
+    return JsonResponse(list(districts), safe=False)

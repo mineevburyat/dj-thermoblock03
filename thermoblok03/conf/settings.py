@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'corsheaders',
     'captcha',
+    'django_extensions',
     'apps.utils',
     'apps.old',
     'apps.home',

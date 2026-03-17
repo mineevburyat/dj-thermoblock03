@@ -1,0 +1,36 @@
+{% for house in houses %}
+<div class="portfolio-card">
+{{house}}
+    <div class="portfolio-image" 
+         {% if house.media.exists %}
+         style="background-image: url('{{ house.media.first.file.url }}');"
+         {% endif %}>
+        {% if not house.media.exists %}
+        <i class="fas fa-house-chimney"></i>
+        {% endif %}
+    </div>
+    <div class="portfolio-info">
+        <h4>{{ house.name }}</h4>
+        <p><i class="fas fa-map-pin"></i> {{ house.district.name }}, {{ house.area_sqm }} м²</p>
+        {% if house.average_rating %}
+        <div class="portfolio-rating">
+            {% for i in "12345"|make_list %}
+                {% if forloop.counter <= house.average_rating %}
+                    <i class="fas fa-star"></i>
+                {% else %}
+                    <i class="far fa-star"></i>
+                {% endif %}
+            {% endfor %}
+            <span style="margin-left: 5px; color: #2a5f7a;">({{ house.reviews_count }})</span>
+        </div>
+        {% endif %}
+        {% comment%}
+        <a href="{% url 'house_detail' house.id %}" class="stub-link" style="margin-top: 10px;">
+            Подробнее
+        </a>
+        {% endcomment %}
+    </div>
+</div>
+{% empty %}
+<p>Пока нет построенных домов</p>
+{% endfor %}

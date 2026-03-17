@@ -1,0 +1,173 @@
+<!-- templates/sections/latest_reviews.html -->
+<section class="container">
+<div class="section-latest-reviews">
+    <div class="section-header">
+        <h2><i class="far fa-comment-dots"></i> Последние отзывы</h2>
+        <a href="{% url 'portfolio:reviews_list' %}" class="section-link">Все отзывы <i class="fas fa-arrow-right"></i></a>
+    </div>
+    
+    <div class="reviews-grid">
+        {% for review in reviews %}
+        <div class="review-card">
+            <div class="review-header">
+                <div class="review-author-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="review-author-info">
+                    <span class="review-author-name">{{ review.author_name }}</span>
+                    <span class="review-date">{{ review.created_at|date:"d.m.Y" }}</span>
+                </div>
+                <div class="review-rating">
+                    {% for i in "12345"|make_list %}
+                        {% if forloop.counter <= review.rating %}
+                            <i class="fas fa-star"></i>
+                        {% else %}
+                            <i class="far fa-star"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            
+            {% if show_house %}
+            <div class="review-house">
+                <a href="{% url 'portfolio:house_detail' review.house.id %}">
+                    <i class="fas fa-home"></i> {{ review.house.name }}
+                </a>
+            </div>
+            {% endif %}
+            
+            <div class="review-content">
+                <p>{{ review.text|truncatechars:150 }}</p>
+            </div>
+            
+            {% if review.photos.exists %}
+            <div class="review-photos">
+                {% for photo in review.photos.all|slice:":3" %}
+                <img src="{{ photo.file.url }}" alt="Фото к отзыву">
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="review-footer">
+                <a href="{% url 'portfolio:review_detail' review.id %}" class="review-link">
+                    Читать полностью <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="empty-message">Пока нет отзывов</p>
+        {% endfor %}
+    </div>
+</div>
+</section>
+<style>
+.section-latest-reviews {
+    margin-bottom: 40px;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.review-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #eef2f8;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.review-author-avatar i {
+    font-size: 2.5rem;
+    color: #2a7faa;
+}
+
+.review-author-info {
+    flex: 1;
+}
+
+.review-author-name {
+    font-weight: 600;
+    color: #1e3d5e;
+    display: block;
+}
+
+.review-date {
+    font-size: 0.8rem;
+    color: #5f7d9c;
+}
+
+.review-rating {
+    color: #f5b342;
+    font-size: 0.9rem;
+}
+
+.review-house {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.review-house a {
+    color: #2a7faa;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.review-house a:hover {
+    text-decoration: underline;
+}
+
+.review-content {
+    color: #2b4a6a;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.review-photos {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.review-photos img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #deeaf5;
+}
+
+.review-footer {
+    text-align: right;
+}
+
+.review-link {
+    color: #2a7faa;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.review-link:hover {
+    color: #1e5f84;
+}
+</style>

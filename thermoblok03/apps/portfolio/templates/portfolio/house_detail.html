@@ -1,0 +1,495 @@
+<!-- templates/house_detail.html -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ house.name }} · Дом</title>
+    <!-- Yandex Maps API для отображения местоположения -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey={{ yandex_api_key }}&lang=ru_RU" type="text/javascript"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4fa;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -10px rgba(0,20,30,0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 20px 28px;
+            border-bottom: 1px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+        }
+
+        .back-link {
+            color: #2a7faa;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            color: #1e5f84;
+        }
+
+        .header h1 {
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: #122c44;
+            flex: 1;
+        }
+
+        .content {
+            padding: 28px;
+        }
+
+        /* Галерея */
+        .gallery {
+            margin-bottom: 30px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            background-color: #e9edf4;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnails {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            cursor: pointer;
+            object-fit: cover;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            border-color: #2a7faa;
+        }
+
+        /* Информация о доме */
+        .house-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .info-section {
+            background: #f9fcff;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid #eef2f8;
+        }
+
+        .info-section h2 {
+            color: #153e5a;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #5f7d9c;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #122c44;
+        }
+
+        .description {
+            line-height: 1.6;
+            color: #2b4a6a;
+            margin-top: 20px;
+        }
+
+        /* Карта местоположения */
+        .location-map {
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        /* Характеристики */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .feature-tag {
+            background: #e0edf9;
+            color: #1e5f84;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+
+        /* Отзывы */
+        .reviews-section {
+            margin-top: 40px;
+        }
+
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .reviews-header h2 {
+            color: #153e5a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .average-rating {
+            background: #2a7faa;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .review-card {
+            background: #f9fcff;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #eef2f8;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: #1e3d5e;
+        }
+
+        .review-date {
+            color: #5f7d9c;
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: #f5b342;
+            margin-left: auto;
+        }
+
+        .review-text {
+            color: #2b4a6a;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .review-response {
+            background: #eef6ff;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+            border-left: 3px solid #2a7faa;
+        }
+
+        .response-header {
+            font-weight: 600;
+            color: #1e5f84;
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            background: #2a7faa;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #1e5f84;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #2a7faa;
+            color: #2a7faa;
+        }
+
+        .btn-outline:hover {
+            background: #2a7faa;
+            color: white;
+        }
+
+        .footer {
+            border-top: 1px solid #dde6f0;
+            padding: 16px 28px;
+            color: #5f7d9c;
+            background: #fafdff;
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <div class="header">
+        <a href="javascript:history.back()" class="back-link">
+            <i class="fas fa-arrow-left"></i> Назад
+        </a>
+        <h1>{{ house.name }}</h1>
+    </div>
+
+    <div class="content">
+        <!-- Галерея изображений -->
+        {% with images=house.media.all %}
+        {% if images %}
+        <div class="gallery">
+            <div class="main-image">
+                <img src="{{ images.0.file.url }}" alt="{{ house.name }}" id="main-image">
+            </div>
+            {% if images|length > 1 %}
+            <div class="thumbnails">
+                {% for image in images %}
+                <img src="{{ image.file.url }}" 
+                     class="thumbnail {% if forloop.first %}active{% endif %}" 
+                     onclick="document.getElementById('main-image').src = this.src; document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active')); this.classList.add('active');">
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Основная информация -->
+        <div class="house-info">
+            <div class="info-section">
+                <h2><i class="fas fa-info-circle"></i> О доме</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Район</span>
+                        <span class="info-value">
+                            <a href="{% url 'portfolio:district_detail' house.district.id %}" style="color: #2a7faa;">
+                                {{ house.district.name }}
+                            </a>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Год постройки</span>
+                        <span class="info-value">{{ house.built_year|default:"-" }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Площадь</span>
+                        <span class="info-value">{{ house.area_sqm|default:"-" }} м²</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Этажей</span>
+                        <span class="info-value">{{ house.floors|default:"-" }}</span>
+                    </div>
+                    {% if house.price %}
+                    <div class="info-item">
+                        <span class="info-label">Цена</span>
+                        <span class="info-value">{{ house.price|floatformat:0 }} ₽</span>
+                    </div>
+                    {% endif %}
+                    <div class="info-item">
+                        <span class="info-label">Статус</span>
+                        <span class="info-value">
+                            {% if house.status == 'built' %}Построен
+                            {% elif house.status == 'in_progress' %}Строится
+                            {% else %}В планах{% endif %}
+                        </span>
+                    </div>
+                </div>
+
+                {% if house.address %}
+                <div style="margin-top: 20px;">
+                    <span class="info-label">Адрес</span>
+                    <div class="info-value">{{ house.address }}</div>
+                </div>
+                {% endif %}
+
+                {% if house.features %}
+                <div class="features">
+                    {% for key, value in house.features.items %}
+                    <span class="feature-tag">{{ key }}: {{ value }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if house.description %}
+                <div class="description">
+                    {{ house.description|linebreaks }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="info-section">
+                <h2><i class="fas fa-map-marker-alt"></i> Расположение</h2>
+                {% if house.latitude and house.longitude %}
+                <div id="house-map" class="location-map"></div>
+                <p style="margin-top: 10px; color: #5f7d9c;">
+                    <i class="fas fa-crosshairs"></i> 
+                    Координаты: {{ house.latitude|floatformat:5 }}, {{ house.longitude|floatformat:5 }}
+                </p>
+                {% else %}
+                <p style="color: #5f7d9c;">Координаты не указаны</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Отзывы -->
+        <div class="reviews-section">
+            <div class="reviews-header">
+                <h2><i class="far fa-comment-dots"></i> Отзывы ({{ reviews|length }})</h2>
+                {% if average_rating %}
+                <span class="average-rating">
+                    {{ average_rating|floatformat:1 }} <i class="fas fa-star"></i>
+                </span>
+                {% endif %}
+            </div>
+
+            {% for review in reviews %}
+            <div class="review-card">
+                <div class="review-header">
+                    <span class="review-author">{{ review.author_name }}</span>
+                    <span class="review-date">{{ review.created_at|date:"d.m.Y" }}</span>
+                    <span class="review-rating">
+                        {% for i in "12345"|make_list %}
+                            {% if forloop.counter <= review.rating %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <div class="review-text">
+                    {{ review.text|linebreaks }}
+                </div>
+                {% if review.response_text %}
+                <div class="review-response">
+                    <div class="response-header">
+                        <i class="fas fa-building"></i> Ответ компании
+                    </div>
+                    {{ review.response_text|linebreaks }}
+                </div>
+                {% endif %}
+                <div style="margin-top: 15px;">
+                    <a href="{% url 'portfolio:review_detail' review.id %}" class="btn btn-outline" style="padding: 8px 15px;">
+                        Подробнее
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <p style="color: #5f7d9c; text-align: center; padding: 40px;">
+                Пока нет отзывов. Будьте первым!
+            </p>
+            {% endfor %}
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn" onclick="alert('Форма добавления отзыва будет здесь'); return false;">
+                    <i class="fas fa-pen"></i> Написать отзыв
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span><i class="far fa-copyright"></i> данные из Django модели</span>
+    </div>
+</div>
+
+{% if house.latitude and house.longitude %}
+<script>
+ymaps.ready(function() {
+    const map = new ymaps.Map('house-map', {
+        center: [{{ house.latitude }}, {{ house.longitude }}],
+        zoom: 16,
+        controls: ['zoomControl']
+    });
+    
+    const placemark = new ymaps.Placemark(
+        [{{ house.latitude }}, {{ house.longitude }}],
+        {
+            hintContent: '{{ house.name }}',
+            balloonContent: '{{ house.name }}'
+        }
+    );
+    
+    map.geoObjects.add(placemark);
+});
+</script>
+{% endif %}
+</body>
+</html>

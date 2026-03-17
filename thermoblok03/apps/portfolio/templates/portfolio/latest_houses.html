@@ -1,0 +1,174 @@
+<!-- templates/sections/latest_houses.html -->
+<section class="container">
+<div class="section-latest-houses">
+    <div class="section-header">
+        <h2><i class="fas fa-home"></i> Последние построенные дома</h2>
+        {% comment%}
+        <a href="{% url 'houses_list' %}" class="section-link">Все дома <i class="fas fa-arrow-right"></i></a>
+        {% endcomment %}
+    </div>
+    
+    <div class="houses-grid" style="display: grid; grid-template-columns: repeat({{ columns }}, 1fr); gap: 20px;">
+        {% for house in houses %}
+        <div class="house-card">
+            <a href="{% url 'portfolio:house_detail' house.id %}" class="house-link">
+                <div class="house-image" 
+                     {% if house.primary_image %}
+                     style="background-image: url('{{ house.primary_image.file.url }}');"
+                     {% endif %}>
+                    {% if not house.primary_image %}
+                    <i class="fas fa-house-chimney"></i>
+                    {% endif %}
+                    
+                    {% if house.average_rating %}
+                    <div class="house-rating-badge">
+                        {{ house.average_rating|floatformat:1 }} <i class="fas fa-star"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="house-info">
+                    <h3>{{ house.name }}</h3>
+                    <p class="house-location">
+                        <i class="fas fa-map-marker-alt"></i> {{ house.district.name }}
+                    </p>
+                    <p class="house-details">
+                        {{ house.area_sqm }} м² · {{ house.built_year|default:'скоро' }}
+                    </p>
+                    {% if house.price %}
+                    <p class="house-price">{{ house.price|floatformat:0 }} ₽</p>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <p class="empty-message">Пока нет построенных домов</p>
+        {% endfor %}
+    </div>
+</div>
+</section>
+
+<style>
+.section-latest-houses {
+    margin-bottom: 40px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eef2f6;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    color: #153e5a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-link {
+    color: #2a7faa;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.section-link:hover {
+    color: #1e5f84;
+}
+
+.house-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.house-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.house-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.house-image {
+    height: 160px;
+    background: linear-gradient(135deg, #9bb7d4, #b5cfec);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1d4a72;
+    font-size: 2rem;
+    position: relative;
+}
+
+.house-image i {
+    background: rgba(255,255,255,0.3);
+    padding: 15px;
+    border-radius: 50%;
+}
+
+.house-rating-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.7);
+    color: #f5b342;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.house-info {
+    padding: 15px;
+}
+
+.house-info h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: #113753;
+}
+
+.house-location {
+    color: #2a5f7a;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.house-location i {
+    color: #2a7faa;
+    font-size: 0.8rem;
+}
+
+.house-details {
+    color: #5f7d9c;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.house-price {
+    font-weight: bold;
+    color: #1e5f84;
+    font-size: 1.1rem;
+    margin-top: 8px;
+}
+
+.empty-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #5f7d9c;
+    padding: 40px;
+}
+</style>

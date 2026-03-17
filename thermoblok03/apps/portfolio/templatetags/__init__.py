@@ -1,0 +1,144 @@
+from django import template
+from django.db.models import Count, Avg, Q, Prefetch
+from django.core.paginator import Paginator
+from ..models import District, House, Review, HouseMedia
+
+register = template.Library()
+
+@register.inclusion_tag('sections/latest_houses.html', takes_context=True)
+def latest_houses_section(context, count=6, columns=3):
+    """
+    Шаблонный тег для секции с последними домами
+    Использование: {% latest_houses_section count=6 columns=3 %}
+    """
+    houses = House.objects.filter(
+        status='built'
+    ).select_related('district').prefetch_related(
+        Prefetch(
+            'media',
+            queryset=HouseMedia.objects.filter(is_primary=True),
+            to_attr='primary_media'
+        )
+    ).annotate(
+        reviews_count=Count('reviews', filter=Q(reviews__is_published=True)),
+        average_rating=Avg('reviews__rating', filter=Q(reviews__is_published=True))
+    ).order_by('-created_at')[:count]
+    
+    # Добавляем primary_image для каждого дома
+    for house in houses:
+        house.primary_image = house.primary_media[0] if house.primary_media else None
+    
+    return {
+        'houses': houses,
+        'columns': columns,
+        'request': context.get('request'),
+    }
+
+
+@register.inclusion_tag('sections/latest_reviews.html', takes_context=True)
+def latest_reviews_section(context, count=3, show_house=True):
+    """
+    Шаблонный тег для секции с последними отзывами
+    Использование: {% latest_reviews_section count=3 show_house=True %}
+    """
+    reviews = Review.objects.filter(
+        is_published=True
+    ).select_related(
+        'house',
+        'house__district'
+    ).prefetch_related(
+        'photos'
+    ).order_by('-created_at')[:count]
+    
+    return {
+        'reviews': reviews,
+        'show_house': show_house,
+        'request': context.get('request'),
+    }
+
+
+@register.inclusion_tag('sections/districts_map.html', takes_context=True)
+def districts_map_section(context, height='500px', show_houses=True):
+    """
+    Шаблонный тег для секции с картой районов
+    Использование: {% districts_map_section height='400px' show_houses=True %}
+    """
+    districts = District.objects.annotate(
+        houses_count=Count('houses', filter=Q(houses__status='built'))
+    ).order_by('name')
+    
+    # Получаем последние дома для отображения в балунах
+    latest_houses = {}
+    if show_houses:
+        for district in districts:
+            latest_houses[district.id] = district.houses.filter(
+                status='built'
+            ).select_related('district')[:3]
+    
+    return {
+        'districts': districts,
+        'latest_houses': latest_houses,
+        'map_height': height,
+        'show_houses': show_houses,
+        'yandex_api_key': context.get('yandex_api_key', ''),
+        'request': context.get('request'),
+    }
+
+
+@register.inclusion_tag('sections/paginated_houses.html', takes_context=True)
+def paginated_houses_section(context, per_page=9, template='grid'):
+    """
+    Шаблонный тег для секции с пагинацией домов
+    Использование: {% paginated_houses_section per_page=9 template='grid' %}
+    """
+    page = context.get('request').GET.get('houses_page', 1)
+    
+    houses_list = House.objects.filter(
+        status='built'
+    ).select_related('district').prefetch_related(
+        Prefetch(
+            'media',
+            queryset=HouseMedia.objects.filter(is_primary=True),
+            to_attr='primary_media'
+        )
+    ).annotate(
+        reviews_count=Count('reviews', filter=Q(reviews__is_published=True)),
+        average_rating=Avg('reviews__rating', filter=Q(reviews__is_published=True))
+    ).order_by('-created_at')
+    
+    paginator = Paginator(houses_list, per_page)
+    houses = paginator.get_page(page)
+    
+    # Добавляем primary_image для каждого дома
+    for house in houses:
+        house.primary_image = house.primary_media[0] if house.primary_media else None
+    
+    return {
+        'houses': houses,
+        'template_type': template,
+        'request': context.get('request'),
+    }
+
+
+@register.inclusion_tag('sections/paginated_reviews.html', takes_context=True)
+def paginated_reviews_section(context, per_page=5):
+    """
+    Шаблонный тег для секции с пагинацией отзывов
+    Использование: {% paginated_reviews_section per_page=5 %}
+    """
+    page = context.get('request').GET.get('reviews_page', 1)
+    
+    reviews_list = Review.objects.filter(
+        is_published=True
+    ).select_related(
+        'house',
+        'house__district'
+    ).order_by('-created_at')
+    
+    paginator = Paginator(reviews_list, per_page)
+    reviews = paginator.get_page(page)
+    
+    return {
+        'reviews': reviews,
+        'request': context.get('request'),
+    }

@@ -1,6 +1,6 @@
 {% extends "old/base.html" %}
 {% load static %}
-{% load construct_tags products_tags %}
+{% load construct_tags products_tags portfolio_tags%}
 {% block title %}Главная страница | ThermoBlock{% endblock %}
 {% block meta_description %}Строительные блоки ThermoBlock в Улан-Удэ. Проектирование и строительство теплых и надежных домов, коттеджей и производственные строений из термоблока.{% endblock %}
 {% block meta_keywords %}строительство домов, построить дом, коттедж, dom, проекты домов, построить дом, строение, какой дом построить{% endblock %}
@@ -47,48 +47,17 @@
 
     {% block  content %}
         
-    <section class="main_slider">
-        <div class="item">
-            <div class="image"
-                style="background-image: url({% static 'old/assets/manager/main_slider/gal2.jpg' %});"></div>
-            <div class="text_wrapper">
-                <div class="text1 animated d-none d-sm-block" data-animation="fadeInTop" data-delay="0.9s">ДОМ ВАШЕЙ
-                    МЕЧТЫ!</div>
-                <div class="text2 animated" data-animation="fadeInTop" data-delay="0.6s">Дом из THERMOBLOCK за 2 месяца!
-                </div>
-                <!-- <a href="katalog.html" class="btn animated" data-animation="fadeInTop" data-delay="0.3s">Выбрать дом</a> -->
-                <a href="{% url 'feedback:question'%}" class="btn animated btn-diagonal-stripe" data-animation="fadeInTop" data-delay="0.3s"
-                    >Расчитать стоимость</a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="image"
-                style="background-image: url({% static 'old/assets/manager/main_slider/3.png' %});"></div>
-            <div class="text_wrapper">
-                <div class="text1 animated d-none d-sm-block" data-animation="fadeInTop" data-delay="0.9s">ДОМ ВАШЕЙ
-                    МЕЧТЫ!</div>
-                <div class="text2 animated" data-animation="fadeInTop" data-delay="0.6s">Дом из THERMOBLOCK это
-                    экономично!</div>
-                <a href="{% url 'feedback:question'%}" class="btn animated btn-diagonal-stripe" data-animation="fadeInTop" data-delay="0.3s"
-                    >Расчитать стоимость</a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="image"
-                style="background-image: url({% static 'old/assets/manager/main_slider/2.png' %});"></div>
-            <div class="text_wrapper">
-                <div class="text1 animated d-none d-sm-block" data-animation="fadeInTop" data-delay="0.9s">НИЗКАЯ
-                    СЕБЕСТОИМОСТЬ СТРОИТЕЛЬСТВА!</div>
-                <div class="text2 animated" data-animation="fadeInTop" data-delay="0.6s">Строительство для бизнеса!
-                </div>
-                <a href="{% url 'feedback:question'%}" class="btn animated btn-diagonal-stripe" data-animation="fadeInTop" data-delay="0.3s"
-                    >Расчитать стоимость</a>
-            </div>
-        </div>
-    </section>
-
     <!-- Блок проектов из каталога (переиспользуемый) -->
     {% show_projects_preview limit=3 show_categories=True %}
+
+    <!-- Секция 1: Карта с районами -->
+    {% districts_map_section height='450px' show_houses=True %}
+    
+    <!-- Секция 2: Последние дома -->
+    {% latest_houses_section count=6 columns=3 %}
+    
+    <!-- Секция 3: Последние отзывы -->
+    {% latest_reviews_section count=3 show_house=True %}
 
     {% show_section_products limit=6 %}
 

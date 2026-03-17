@@ -1,0 +1,32 @@
+{% for review in reviews %}
+<div class="review-item">
+
+    <div class="review-author">
+        <i class="fas fa-user-circle"></i>
+        <span class="author-name">{{ review.author_name }}</span>
+    </div>
+    <div class="review-text">
+        «{{ review.text|truncatechars:100 }}»
+    </div>
+    <div class="review-footer">
+        <span class="review-rating">
+            {% for i in "12345"|make_list %}
+                {% if forloop.counter <= review.rating %}
+                    <i class="fas fa-star"></i>
+                {% else %}
+                    <i class="far fa-star"></i>
+                {% endif %}
+            {% endfor %}
+        </span>
+        {% comment %}
+        <a href="{% url 'portfolio:review_detail' review.id %}" class="stub-link">
+            подробнее <i class="fas fa-arrow-right"></i>
+        </a>
+        {% endcomment %}
+    </div>
+</div>
+{% empty %}
+<div class="review-item">
+    <p>Пока нет отзывов</p>
+</div>
+{% endfor %}

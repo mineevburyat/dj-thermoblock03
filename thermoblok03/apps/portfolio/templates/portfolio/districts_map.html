@@ -1,0 +1,120 @@
+<!-- templates/sections/districts_map.html -->
+
+<div class="section-districts-map">
+    <div class="section-header">
+        <h2><i class="fas fa-map"></i> Карта районов</h2>
+        <span class="houses-total">Всего домов: {{ districts|sum_houses }}</span>
+    </div>
+    
+    <div id="districts-map" style="height: {{ map_height }}; width: 100%; border-radius: 20px; overflow: hidden;"></div>
+</div>
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey={{ yandex_api_key }}&lang=ru_RU" type="text/javascript"></script>
+<script>
+ymaps.ready(function() {
+    // Собираем данные районов из Django шаблона
+    const districts = [
+        {% for district in districts %}
+        {
+            id: {{ district.id }},
+            name: "{{ district.name|escapejs }}",
+            coords: [{{ district.center_latitude }}, {{ district.center_longitude }}],
+            houses_count: {{ district.houses_count }},
+            houses: [
+                {% if show_houses and latest_houses|get_item:district.id %}
+                    {% for house in latest_houses|get_item:district.id %}
+                    {
+                        name: "{{ house.name|escapejs }}",
+                        url: "{% url 'house_detail' house.id %}"
+                    }{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                {% endif %}
+            ]
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+    
+    const map = new ymaps.Map('districts-map', {
+        center: [55.76, 37.64],
+        zoom: 10,
+        controls: ['zoomControl', 'fullscreenControl', 'geolocationControl']
+    });
+    
+    // Добавляем маркеры для каждого района
+    districts.forEach(district => {
+        // Формируем содержимое балуна
+        let balloonContent = `
+            <div style="padding: 10px;">
+                <b style="font-size: 16px;">${district.name} район</b><br>
+                <span style="color: #2a7faa; font-size: 20px; font-weight: bold;">${district.houses_count}</span> домов<br>
+        `;
+        
+        if (district.houses.length > 0) {
+            balloonContent += '<hr style="margin: 10px 0;">';
+            balloonContent += '<b>Последние дома:</b><br>';
+            district.houses.forEach(house => {
+                balloonContent += `<a href="${house.url}" style="color: #2a7faa; text-decoration: none; display: block; margin: 5px 0;">• ${house.name}</a>`;
+            });
+        }
+        
+        balloonContent += '</div>';
+        
+        // Создаем маркер
+        const placemark = new ymaps.Placemark(
+            district.coords,
+            {
+                hintContent: `${district.name} район`,
+                balloonContent: balloonContent
+            },
+            {
+                iconLayout: 'default#imageWithContent',
+                iconImageHref: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'44\' height=\'44\'%3E%3Ccircle cx=\'22\' cy=\'22\' r=\'22\' fill=\'%232a7faa\' stroke=\'white\' stroke-width=\'3\'/%3E%3C/svg%3E',
+                iconImageSize: [44, 44],
+                iconImageOffset: [-22, -44],
+                iconContentLayout: ymaps.templateLayoutFactory.createClass(
+                    '<div style="color: white; font-weight: bold; font-size: 16px; line-height: 44px; text-align: center;">$[properties.iconContent]</div>'
+                ),
+                iconContent: district.houses_count.toString()
+            }
+        );
+        
+        map.geoObjects.add(placemark);
+        
+        // Добавляем круг для визуализации района
+        const circle = new ymaps.Circle(
+            [district.coords, 3000],
+            {},
+            {
+                fillColor: '#2a7faa20',
+                strokeColor: '#2a7faa',
+                strokeWidth: 2,
+                strokeOpacity: 0.5,
+                strokeStyle: 'dash'
+            }
+        );
+        
+        map.geoObjects.add(circle);
+    });
+});
+</script>
+
+<style>
+.section-districts-map {
+    margin-bottom: 40px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.houses-total {
+    background: #e0edf9;
+    padding: 5px 15px;
+    border-radius: 30px;
+    color: #1e5f84;
+    font-weight: 500;
+}
+</style>

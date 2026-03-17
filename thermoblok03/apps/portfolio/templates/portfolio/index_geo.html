@@ -421,16 +421,47 @@
             link.addEventListener('click', (e) => e.preventDefault());
         });
 
+        
         // Данные по районам: название, координаты, количество домов
         const districts = [
-            { name: 'Улан-Удэ', coords: [51.834809, 107.584547], houses: 42 },
-            { name: 'Нижний Саянтуй', coords: [51.737094, 107.517623], houses: 27 },
-            { name: 'Гусиноозерск', coords: [51.285453, 106.529530], houses: 19 },
-            { name: 'Усть-Баргузин', coords: [53.414736, 109.028993], houses: 15 },
-            { name: 'Гусиноозерск', coords: [51.495, 106.31], houses: 13 },
-            { name: 'Турка', coords: [52.949042, 108.218659], houses: 12 }
+            { name: 'Улан-Удэ', coords: [51.834809, 107.584547], houses: 1 },
+            { name: 'Нижний Саянтуй', coords: [51.737094, 107.517623], houses: 1 },
+            { name: 'Гусиноозерск', coords: [51.285453, 106.529530], houses: 1 },
+            { name: 'Усть-Баргузин', coords: [53.414736, 109.028993], houses: 1 },
+            { name: 'Гусиноозерск', coords: [51.495, 106.31], houses: 1 },
+            { name: 'Турка', coords: [52.949042, 108.218659], houses: 1 }
         ];
-
+        // Загрузка данных для карты
+        fetch('/portfolio/map/districts/')
+            .then(response => response.json())
+            .then(districts => {
+                ymaps.ready(() => {
+                    const map = new ymaps.Map('map', {
+                        center: [55.76, 37.64],
+                        zoom: 10
+                    });
+                    
+                    districts.forEach(district => {
+                        // Маркер с количеством домов
+                        const placemark = new ymaps.Placemark(
+                            [district.center_latitude, district.center_longitude],
+                            {
+                                hintContent: district.name,
+                                balloonContent: `
+                                    <b>${district.name}</b><br>
+                                    Домов: ${district.houses_count}
+                                `
+                            },
+                            {
+                                preset: 'islands#circleIcon',
+                                iconColor: '#2a7faa'
+                            }
+                        );
+                        
+                        map.geoObjects.add(placemark);
+                    });
+                });
+            });
         // Инициализация Яндекс.Карты
         ymaps.ready(function() {
             // Создаем карту
@@ -440,7 +471,7 @@
                 controls: ['zoomControl', 'fullscreenControl']
             });
 
-                        // Для каждого района создаем маркер с кастомным содержимым
+            // Для каждого района создаем маркер с кастомным содержимым
             districts.forEach(district => {
                 // Создаем HTML-элемент для маркера
                 const markerElement = document.createElement('div');
@@ -537,5 +568,8 @@
         font-size: 16px;
     }
 </style>
+   <script>
+
+    </script>
 </body>
 </html>

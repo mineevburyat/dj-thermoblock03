@@ -1,0 +1,384 @@
+<!-- templates/house_list.html -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все дома · Портфолио</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4fa;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -10px rgba(0,20,30,0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 20px 28px;
+            border-bottom: 1px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+        }
+
+        .back-link {
+            color: #2a7faa;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            color: #1e5f84;
+        }
+
+        .header h1 {
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: #122c44;
+            flex: 1;
+        }
+
+        .filters {
+            padding: 20px 28px;
+            background: #f9fcff;
+            border-bottom: 1px solid #eef2f8;
+        }
+
+        .filter-form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-size: 0.85rem;
+            color: #5f7d9c;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 15px;
+            border: 1px solid #dde6f0;
+            border-radius: 30px;
+            background: white;
+            min-width: 150px;
+        }
+
+        .filter-btn {
+            background: #2a7faa;
+            color: white;
+            border: none;
+            padding: 8px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #1e5f84;
+        }
+
+        .reset-btn {
+            background: transparent;
+            color: #2a7faa;
+            border: 1px solid #2a7faa;
+            padding: 8px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .content {
+            padding: 28px;
+        }
+
+        .houses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .house-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #eef2f8;
+        }
+
+        .house-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .house-image {
+            height: 200px;
+            background: linear-gradient(135deg, #9bb7d4, #b5cfec);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .house-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .house-rating {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.9);
+            color: #f5b342;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .house-info {
+            padding: 18px;
+        }
+
+        .house-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #113753;
+            margin-bottom: 8px;
+        }
+
+        .house-location {
+            color: #2a5f7a;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .house-location i {
+            color: #2a7faa;
+            margin-right: 5px;
+        }
+
+        .house-details {
+            display: flex;
+            justify-content: space-between;
+            color: #5f7d9c;
+            font-size: 0.9rem;
+            padding-top: 12px;
+            border-top: 1px solid #eef2f8;
+        }
+
+        /* Пагинация */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #dde6f0;
+            background: white;
+            color: #2a5f7a;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .page-btn:hover:not(.disabled) {
+            background: #2a7faa;
+            color: white;
+            border-color: #2a7faa;
+        }
+
+        .page-btn.active {
+            background: #2a7faa;
+            color: white;
+            border-color: #2a7faa;
+        }
+
+        .page-btn.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .footer {
+            border-top: 1px solid #dde6f0;
+            padding: 16px 28px;
+            color: #5f7d9c;
+            background: #fafdff;
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <div class="header">
+        <a href="{% url 'index' %}" class="back-link">
+            <i class="fas fa-arrow-left"></i> На главную
+        </a>
+        <h1>Все дома</h1>
+    </div>
+
+    <!-- Фильтры -->
+    <div class="filters">
+        <form method="get" class="filter-form">
+            <div class="filter-group">
+                <label>Район</label>
+                <select name="district">
+                    <option value="">Все районы</option>
+                    {% for district in districts %}
+                    <option value="{{ district.id }}" {% if request.GET.district == district.id|stringformat:"s" %}selected{% endif %}>
+                        {{ district.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Статус</label>
+                <select name="status">
+                    <option value="">Все статусы</option>
+                    <option value="built" {% if request.GET.status == 'built' %}selected{% endif %}>Построен</option>
+                    <option value="in_progress" {% if request.GET.status == 'in_progress' %}selected{% endif %}>Строится</option>
+                    <option value="planning" {% if request.GET.status == 'planning' %}selected{% endif %}>В планах</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Поиск</label>
+                <input type="text" name="search" placeholder="Название или адрес" value="{{ request.GET.search }}">
+            </div>
+            <button type="submit" class="filter-btn">
+                <i class="fas fa-search"></i> Применить
+            </button>
+            <a href="{% url 'houses_list' %}" class="reset-btn">
+                <i class="fas fa-times"></i> Сбросить
+            </a>
+        </form>
+    </div>
+
+    <div class="content">
+        <p style="margin-bottom: 20px; color: #5f7d9c;">
+            Найдено домов: {{ paginator.count }}
+        </p>
+
+        <div class="houses-grid">
+            {% for house in houses %}
+            <a href="{% url 'house_detail' house.id %}" style="text-decoration: none;">
+                <div class="house-card">
+                    <div class="house-image" 
+                         {% if house.primary_image %}
+                         style="background-image: url('{{ house.primary_image.file.url }}');"
+                         {% endif %}>
+                        <span class="house-status">
+                            {% if house.status == 'built' %}Построен
+                            {% elif house.status == 'in_progress' %}Строится
+                            {% else %}В планах{% endif %}
+                        </span>
+                        {% if house.average_rating %}
+                        <span class="house-rating">
+                            <i class="fas fa-star"></i> {{ house.average_rating|floatformat:1 }}
+                        </span>
+                        {% endif %}
+                    </div>
+                    <div class="house-info">
+                        <div class="house-name">{{ house.name }}</div>
+                        <div class="house-location">
+                            <i class="fas fa-map-marker-alt"></i> {{ house.district.name }}
+                        </div>
+                        <div class="house-details">
+                            <span><i class="fas fa-ruler-combined"></i> {{ house.area_sqm }} м²</span>
+                            <span><i class="far fa-comment"></i> {{ house.reviews_count }}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <p style="grid-column: 1/-1; text-align: center; padding: 60px; color: #5f7d9c;">
+                Дома не найдены
+            </p>
+            {% endfor %}
+        </div>
+
+        <!-- Пагинация -->
+        {% if paginator.num_pages > 1 %}
+        <div class="pagination">
+            {% if houses.has_previous %}
+            <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page=1" class="page-btn">
+                <i class="fas fa-angle-double-left"></i>
+            </a>
+            <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ houses.previous_page_number }}" class="page-btn">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            {% endif %}
+
+            {% for num in paginator.page_range %}
+                {% if num >= houses.number|add:-2 and num <= houses.number|add:2 %}
+                <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ num }}" 
+                   class="page-btn {% if num == houses.number %}active{% endif %}">
+                    {{ num }}
+                </a>
+                {% endif %}
+            {% endfor %}
+
+            {% if houses.has_next %}
+            <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ houses.next_page_number }}" class="page-btn">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ paginator.num_pages }}" class="page-btn">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <span><i class="far fa-copyright"></i> портфолио домов</span>
+    </div>
+</div>
+</body>
+</html>
