@@ -501,9 +501,9 @@ nav .icon:hover i {
 }
 .main_slider .text_wrapper .text2 {
     margin: 0 0 40px;
-    font-family: Oswald, sans-serif;
+    font-family: 'Roboto',Arial,sans-serif;
     font-size: 60px;
-    font-weight: 300;
+    font-weight: 600;
     text-shadow: 2px 1px 1px rgba(12,12,12,0.8);
     color: #fff;
     opacity: 0;
@@ -1600,6 +1600,45 @@ footer a:hover {
     color: #6c757d;
 }
 
+.stronglogo {
+  display: inline-flex;
+  align-items: baseline;
+  padding: 5px 15px;
+  background-color: #333333; /* Общий темный фон для всего логотипа */
+  border-radius: 4px;
+  font-style: normal;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  font-weight: 800;
+  line-height: 1;
+}
+
 .hotlogo {
-    color: #991d27;
+  color: #991d27; /* Буквы Thermo теперь красные */
+}
+
+.collogo {
+  color: #a9a9a9; /* Буквы Block бетонно-серые */
+}
+
+.tm-sign {
+  color: #ffffff;
+  font-size: 0.4em;
+  align-self: flex-start; /* Поднимает ® наверх */
+  font-weight: normal;
+  vertical-align: super;   /* Поднимает над строкой */
+  margin-left: -2px;       /* Пододвигает вплотную к буквам */
+  line-height: 0;          /* Чтобы знак не распирал блок по высоте */
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }
