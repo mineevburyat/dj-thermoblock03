@@ -19,7 +19,8 @@ env = environ.Env(
     EMAIL_USE_TLS=(bool, True),
     EMAIL_USE_SSL=(bool,False),
     CSRF_TRUSTED_ORIGINS=(list,[]),
-    ADMINS_EMAILS = (list, ["mineevburyat@yandex.ru"])
+    ADMINS_EMAILS = (list, ["mineevburyat@yandex.ru"]),
+    BASE_URL=(str,'http://localhost:8000')
 )
 env.read_env(BASE_DIR / '.env')
 
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'apps.products',
     'apps.faq',
     'apps.portfolio',
+    'apps.qr_tracker',
 ]
 
 MIDDLEWARE = [
@@ -135,6 +137,9 @@ USE_I18N = True
 USE_TZ = True
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# Базовый URL вашего приложения
+BASE_URL = env('BASE_URL')
 
 # STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = 'static/'

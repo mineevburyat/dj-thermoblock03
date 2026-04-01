@@ -27,6 +27,7 @@ urlpatterns = [
     # path('captcha/', include('captcha.urls')),
     # path('faq/', include('apps.faq.urls', namespace='faq')),
     path('portfolio/', include('apps.portfolio.urls', namespace='portfolio')),
+    path('qr/', include('apps.qr_tracker.urls', namespace='qr_tracker')),
 ]
 
 
