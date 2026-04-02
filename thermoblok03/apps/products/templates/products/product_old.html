@@ -16,6 +16,21 @@
     width: 100%;
     height: 100%;
 }
+.btn-play-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-play-overlay:hover {
+    background: rgba(220, 53, 69, 0.9);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.btn-play-overlay i {
+    font-size: 2rem;
+    margin-left: 5px;
+}
 </style>
 <section class="product" id="productions">
     <div class="container">
@@ -23,12 +38,46 @@
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <img src="{% static 'blocks_img/tb400.png'%}" alt="ThermoBlock рядовый ТБ400 эпюр" class="img-fluid">
-                <div class="video-container">
-                    <div class="ratio ratio-16x9">
-                        <iframe src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239065&hash=02b40dc12c375ead&autoplay=1&loop=1" width="426" height="240" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                <!-- Кнопка с иконкой поверх изображения -->
+                <button type="button" class="btn btn-danger position-absolute" 
+                        style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; border-radius: 50%; opacity: 0.9;"
+                        data-toggle="modal" data-target="#videoModal-tb400">
+                    <i class="fa fa-play" style="font-size: 2rem; margin-left: 5px;"></i>
+                </button>
+                <a href="#" class="btn btn-primary mt-3">чертеж</a>
+            </div>
+            <!-- Модальное окно Bootstrap 4 -->
+            <div class="modal fade" id="videoModal-tb400" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="videoModalLabel">Видео ThermoBlock ТБ400</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe id="videoIframe-tb400" src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239065&hash=02b40dc12c375ead&hd=1&loop=1" width="640" height="360" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <script>
+                $('#videoModal-tb400').on('hidden.bs.modal', function () {
+                    // Получаем iframe
+                    var iframe = $('#videoIframe-tb400');
+                    // Сохраняем src
+                    var src = iframe.attr('src');
+                    // Очищаем src (останавливает видео)
+                    iframe.attr('src', '');
+                    // Восстанавливаем src через таймаут
+                    setTimeout(function() {
+                        iframe.attr('src', src);
+                    }, 100);
+                });
+            </script>
             <div class="col-lg-8 col-md-6 col-sm-12">
                 <h3>ThermoBlock рядовый ТБ400</h3>
                 <p class="name">Блок представляет собой «сэндвич» из двух бетонных оболочек, соединенных через слой эффективного утеплителя в единую конструкцию. Внутри блока предусмотрены сквозные полости для создания несущего железобетонного ядра.</p>
