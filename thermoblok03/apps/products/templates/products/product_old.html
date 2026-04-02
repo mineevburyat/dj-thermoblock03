@@ -1,57 +1,65 @@
 {% load static %}
 <style>
-/* Адаптивное видео */
-.ratio-16x9 {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; /* 16:9 = 9/16 = 0.5625 */
-    height: 0;
-    overflow: hidden;
-}
+    /* Адаптивное видео */
+    .ratio-16x9 {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 = 9/16 = 0.5625 */
+        height: 0;
+        overflow: hidden;
+    }
 
-.ratio-16x9 iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-.btn-play-overlay {
-    background: rgba(0, 0, 0, 0.7);
-    border: none;
-    transition: all 0.3s ease;
-}
+    .ratio-16x9 iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .play-button {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
 
-.btn-play-overlay:hover {
-    background: rgba(220, 53, 69, 0.9);
-    transform: translate(-50%, -50%) scale(1.1);
-}
+    .play-button i {
+        font-size: 30px;
+        color: #dc3545;
+        margin-left: 5px;
+    }
 
-.btn-play-overlay i {
-    font-size: 2rem;
-    margin-left: 5px;
-}
+    .position-relative:hover .play-button {
+        transform: scale(1.1);
+        background: white;
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+
+    .position-relative:hover .overlay {
+        background: rgba(0,0,0,0.5);
+    }
 </style>
 <section class="product" id="productions">
     <div class="container">
-        <h2 class="text-center display-4">Основные виды продукции <strong class="stronglogo"><strong class="logotext"><span class="hotlogo">Thermo</span><span class="collogo">Block</span></strong></strong></h2>
+        <h2 class="text-center display-4">Основная продукция <strong class="stronglogo"><strong class="logotext"><span class="hotlogo">Thermo</span><span class="collogo">Block</span></strong></strong></h2>
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                 <img src="{% static 'blocks_img/tb400.png'%}" alt="ThermoBlock рядовый ТБ400 эпюр" class="img-fluid">
-                <!-- Кнопка с иконкой поверх изображения -->
-                <button type="button" class="btn btn-danger position-absolute" 
-                        style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; border-radius: 50%; opacity: 0.9;"
-                        data-toggle="modal" data-target="#videoModal-tb400">
-                    <i class="fa fa-play" style="font-size: 2rem; margin-left: 5px;"></i>
+                <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#videoModal-tb400">
+                    <i class="fa fa-play-circle"></i> Смотреть видео
                 </button>
-                <a href="#" class="btn btn-primary mt-3">чертеж</a>
             </div>
             <!-- Модальное окно Bootstrap 4 -->
-            <div class="modal fade" id="videoModal-tb400" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+            <div class="modal fade" id="videoModal-tb400" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel-tb400" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="videoModalLabel">Видео ThermoBlock ТБ400</h5>
+                            <h5 class="modal-title" id="videoModalLabel-tb400">Видео ThermoBlock ТБ400</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -178,14 +186,43 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                 <img src="{% static 'blocks_img/tbu400_epur.png'%}" alt="ThermoBlock угловой ТБУ400 эпюр" class="img-fluid">
-                <div class="video-container">
-                    <div class="ratio ratio-16x9">
-                        <iframe src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239066&hash=8a7484d5456e564e&autoplay=1&loop=1" width="426" height="240" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#videoModal-tbu400">
+                    <i class="fa fa-play-circle"></i> Смотреть видео
+                </button>
+            </div>
+            <div class="modal fade" id="videoModal-tbu400" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel-tbг400" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="videoModalLabel-tbu400">Видео ThermoBlock ТБУ400</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe id="videoIframe-tbu400" src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239066&hash=8a7484d5456e564e&autoplay=1&loop=1" width="640" height="360" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <script>
+                $('#videoModal-tbu400').on('hidden.bs.modal', function () {
+                    // Получаем iframe
+                    var iframe = $('#videoIframe-tbu400');
+                    // Сохраняем src
+                    var src = iframe.attr('src');
+                    // Очищаем src (останавливает видео)
+                    iframe.attr('src', '');
+                    // Восстанавливаем src через таймаут
+                    setTimeout(function() {
+                        iframe.attr('src', src);
+                    }, 100);
+                });
+            </script>
             <div class="col-lg-8 col-md-6 col-sm-12">
                 <h3>ThermoBlock угловой ТБУ400</h3>
                 <p class="name">Угловой блок ТБУ400 это Г-образный элемент несъемной опалубки, специально разработанный для устранения «мостиков холода» в самых критических точках здания.</p>
@@ -286,15 +323,43 @@
                 </div>
 
             </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                 <img src="{% static 'blocks_img/tb300.png'%}" alt="ThermoBlock рядовый ТБ300 эпюр" class="img-fluid">
-                <div class="video-container">
-                    <div class="ratio ratio-16x9">
-                        <iframe src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239067&hash=6c2bd7ba70749374&autoplay=1&loop=1" width="426" height="240" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#videoModal-tb300">
+                    <i class="fa fa-play-circle"></i> Смотреть видео
+                </button>
+            </div>
+            <div class="modal fade" id="videoModal-tb300" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel-tb300" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="videoModalLabel-tbu400">Видео ThermoBlock ТБ300</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe id="videoIframe-tb300" src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239067&hash=6c2bd7ba70749374&autoplay=1&loop=1" width="640" height="360" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <script>
+                $('#videoModal-tb300').on('hidden.bs.modal', function () {
+                    // Получаем iframe
+                    var iframe = $('#videoIframe-tb300');
+                    // Сохраняем src
+                    var src = iframe.attr('src');
+                    // Очищаем src (останавливает видео)
+                    iframe.attr('src', '');
+                    // Восстанавливаем src через таймаут
+                    setTimeout(function() {
+                        iframe.attr('src', src);
+                    }, 100);
+                });
+            </script>
             <div class="col-lg-8 col-md-6 col-sm-12">
                 <h3>ThermoBlock рядовый ТБ300.</h3>
                 <p class="name">Это рядовый блок серии 300, предназначен для строительства монолитно-плиточной трехслойной стены толщиной 300 мм. Облегченная система несъемной опалубки, ориентированной на максимальную экономичность при сохранении монолитной прочности.</p>
@@ -394,14 +459,43 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                 <img src="{% static 'blocks_img/tbu300_epur.png'%}" alt="ThermoBlock угловой ТБУ300 эпюр" class="img-fluid">
-                <div class="video-container">
-                    <div class="ratio ratio-16x9">
-                        <iframe src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239068&hash=c6db65c4d6c4b96b&autoplay=1&loop=1" width="426" height="240" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#videoModal-tbu300">
+                    <i class="fa fa-play-circle"></i> Смотреть видео
+                </button>
+            </div>
+            <div class="modal fade" id="videoModal-tbu300" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel-tbu300" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="videoModalLabel-tbu400">Видео ThermoBlock ТБУ300</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe id="videoIframe-tbu300" src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239068&hash=c6db65c4d6c4b96b&autoplay=1&loop=1" width="640" height="360" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <script>
+                $('#videoModal-tbu300').on('hidden.bs.modal', function () {
+                    // Получаем iframe
+                    var iframe = $('#videoIframe-tbu300');
+                    // Сохраняем src
+                    var src = iframe.attr('src');
+                    // Очищаем src (останавливает видео)
+                    iframe.attr('src', '');
+                    // Восстанавливаем src через таймаут
+                    setTimeout(function() {
+                        iframe.attr('src', src);
+                    }, 100);
+                });
+            </script>
             <div class="col-lg-8 col-md-6 col-sm-12">
                 <h3>ThermoBlock угловой ТБУ300</h3>
                 <p class="name">Угловой элемент серии 300 это специализированный доборный блок несъемной опалубки, созданный для формирования энергоэффективных углов в стенах общей толщиной 300 мм.</p>
@@ -501,14 +595,43 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                 <img src="{% static 'blocks_img/pb200.png'%}" alt="ThermoBlock ПБ200 эпюр" class="img-fluid">
-                <div class="video-container">
-                    <div class="ratio ratio-16x9">
-                        <iframe src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239070&hash=da201f64778c317c&autoplay=1&loop=1" width="426" height="240" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#videoModal-pb200">
+                    <i class="fa fa-play-circle"></i> Смотреть видео
+                </button>
+            </div>
+            <div class="modal fade" id="videoModal-pb200" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel-pb200" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="videoModalLabel-pb200">Видео ThermoBlock ПБ200</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe id="videoIframe-pb200" src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239070&hash=da201f64778c317c&autoplay=1&loop=1" width="640" height="360" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <script>
+                $('#videoModal-pb200').on('hidden.bs.modal', function () {
+                    // Получаем iframe
+                    var iframe = $('#videoIframe-pb200');
+                    // Сохраняем src
+                    var src = iframe.attr('src');
+                    // Очищаем src (останавливает видео)
+                    iframe.attr('src', '');
+                    // Восстанавливаем src через таймаут
+                    setTimeout(function() {
+                        iframe.attr('src', src);
+                    }, 100);
+                });
+            </script>
             <div class="col-lg-8 col-md-6 col-sm-12">
                 <h3>ThermoBlock ПБ200</h3>
                 <p class="name">Несущий перегородочный бетонный блок несъемной опалубки толщиной 200 мм — это универсальный конструкционный элемент для создания прочных монолитных перегородок, возведения подпорных стен, подвалов и смотровых ям в гараже. Особенность технологии позволяет предусмотреть прокладку инженерных сетей непосредственно в полости стены перед заливкой бетона.</p>
@@ -604,14 +727,43 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                 <img src="{% static 'blocks_img/pb100.png'%}" alt="ThermoBlock ПБ100 эпюр" class="img-fluid">
-                <div class="video-container">
-                    <div class="ratio ratio-16x9">
-                        <iframe src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239069&hash=c322584b6bbb65d0&autoplay=1&loop=1" width="426" height="240" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#videoModal-pb100">
+                    <i class="fa fa-play-circle"></i> Смотреть видео
+                </button>
+            </div>
+            <div class="modal fade" id="videoModal-pb100" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel-pb100" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="videoModalLabel-pb100">Видео ThermoBlock ПБ100</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe id="videoIframe-pb100" src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239069&hash=c322584b6bbb65d0&autoplay=1&loop=1" width="640" height="360" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <script>
+                $('#videoModal-pb100').on('hidden.bs.modal', function () {
+                    // Получаем iframe
+                    var iframe = $('#videoIframe-pb100');
+                    // Сохраняем src
+                    var src = iframe.attr('src');
+                    // Очищаем src (останавливает видео)
+                    iframe.attr('src', '');
+                    // Восстанавливаем src через таймаут
+                    setTimeout(function() {
+                        iframe.attr('src', src);
+                    }, 100);
+                });
+            </script>
             <div class="col-lg-8 col-md-6 col-sm-12">
                 <h3>ThermoBlock ПБ100</h3>
                 <p class="name">Узкий бетонный блок несъемной опалубки толщиной 100 мм предназначен для возведения тонких монолитных перегородок. Технология позволяет заложить инженерные сети перед армированием и заливкой бетона.</p>
