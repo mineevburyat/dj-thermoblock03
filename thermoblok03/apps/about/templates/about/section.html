@@ -1,0 +1,67 @@
+{% load static%}
+
+<style>
+.history_item {
+    text-align: center;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.history_item .year {
+    font-size: 28px;
+    font-weight: bold;
+    color: #e31e24; /* или ваш фирменный цвет */
+    margin-bottom: 10px;
+}
+</style>
+
+<section class="intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="global_title">ThermoBlock — экономичное и быстрое строительство</div>
+                <div class="global_subtitle">Блоки для энергоэффективных зданий</div>
+                <div class="global_line"></div>
+                
+                <img src="{% static 'img_about/sclad.jpg' %}" alt="Склад готовой продукции ThermoBlock">
+                
+                <div class="about_text">
+                    <p><strong>ThermoBlock</strong> — российский производитель энергоэффективных строительных материалов и подрядчик полного цикла. Собственное производство — г. Улан-Удэ.</p>
+                </div>
+                
+                <div class="row history_cards">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="history_item">
+                            <div class="year">2006</div>
+                            <p>Начало производства шлакоблока на оборудовании собственной разработки</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="history_item">
+                            <div class="year">2015</div>
+                            <p>Освоен выпуск «ThermoBlock» — аналога скандинавских блоков с утеплителем</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="history_item">
+                            <div class="year">2016</div>
+                            <p>Открыто направление проектирования и строительства зданий из ThermoBlock</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="history_item">
+                            <div class="year">2018</div>
+                            <p>Представлен в торговых строительных сетях г. Улан-Удэ</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about_footer">
+                    <p><strong>Доставка</strong> — собственным транспортом компании. <strong>В разработке</strong> — новые блоки для системы каменного малоэтажного домостроения.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
