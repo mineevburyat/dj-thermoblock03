@@ -1,0 +1,135 @@
+{% load static %}
+<section class="clients py-5 bg-light">
+    <div class="container">
+        <!-- Заголовок секции -->
+        <div class="text-center mb-5">
+            <h2 class="display-4 fw-bold text-dark">Строительство из <strong class="stronglogo"><strong class="logotext"><span class="hotlogo">Thermo</span><span class="collogo">Block</span></strong></strong></h2>
+            <div class="divider mx-auto my-3" style="width: 80px; height: 4px; background: #007bff; border-radius: 2px;"></div>
+            <p class="lead text-muted">Современные технологии для вашего бизнеса и дома</p>
+        </div>
+
+        <div class="row">
+            <!-- Карточка: Индивидуальное строительство -->
+            <div class="col-md-6 col-sm-12 mb-4">
+                <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <h3 class="card-title h4 mb-0 fw-bold">Индивидуальное строительство</h3>
+                        </div>
+                        <div class="position-relative overflow-hidden rounded mb-4">
+                            <img src="{% static 'img/building1.jpg' %}" alt="Индивидуальное строительство" class="img-fluid w-100 transition-img" style="object-fit: cover; height: 220px;">
+                        </div>
+                        <p>Из <strong class="text-danger">Thermoblock</strong> можно реализовать любой проект, даже если проект готовился под другие строительные материалы.</p>
+                        
+                        <h5 class="fw-bold text-uppercase small text-secondary border-start border-primary border-3 ps-3 mb-3">Преимущества строительства:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 me-2"></i>
+                                <span>Более быстрое строительство, чем из других материалов</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 me-2"></i>
+                                <span>Дом из Thermoblock сможет построить даже человек без специальной подготовки</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 me-2"></i>
+                                <span>Минимум рабочих на стройке, 3-4 человека</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 me-2"></i>
+                                <span>Легко проводить финишную отделку</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 me-2"></i>
+                                <span>Минимум затрат на отопление</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка: Коммерческое строительство -->
+            <div class="col-md-6 col-sm-12 mb-4">
+                <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <h3 class="card-title h4 mb-0 fw-bold">Коммерческое строительство</h3>
+                        </div>
+                        <div class="position-relative overflow-hidden rounded mb-4">
+                            <img src="{% static 'img/building2.jpg' %}" alt="Коммерческое строительство" class="img-fluid w-100 transition-img" style="object-fit: cover; height: 220px;">
+                        </div>
+                        <p><strong class="text-primary">ThermoBlock</strong> подходит для строительства торговых центров, магазинов, ресторанов, многоквартирных жилых домов, гостиниц, СТО, общежитий, складов, производственных помещений.</p>
+                        <h5 class="fw-bold text-uppercase small text-secondary border-start border-success border-3 ps-3 mb-3">Преимущества строительства:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-danger mt-1 me-2"></i>
+                                <span>Короткие сроки строительства</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-danger mt-1 me-2"></i>
+                                <span>Бесперебойная поставка блоков в любых объемах</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-danger mt-1 me-2"></i>
+                                <span>Не нужна тяжелая спецтехника</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-danger mt-1 me-2"></i>
+                                <span>Стены не нужно утеплять и штукатурить</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-danger mt-1 me-2"></i>
+                                <span>Легко проводить финишную отделку</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-danger mt-1 me-2"></i>
+                                <span>Минимум затрат на отопление</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Дополнительные стили для красоты */
+    .transition-all {
+        transition: all 0.3s ease;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    }
+    .transition-img {
+        transition: transform 0.5s ease;
+    }
+    .overflow-hidden:hover .transition-img {
+        transform: scale(1.05);
+    }
+    .icon-circle {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+    }
+    .divider {
+        width: 60px;
+        height: 3px;
+        background: #007bff;
+        margin: 16px auto;
+    }
+    /* Адаптивность для мобильных */
+    @media (max-width: 767.98px) {
+        .card-body {
+            padding: 1.5rem;
+        }
+        .display-4 {
+            font-size: 2rem;
+        }
+    }
+</style>

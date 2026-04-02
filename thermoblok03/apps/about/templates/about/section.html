@@ -1,6 +1,7 @@
 {% load static%}
 
 <style>
+
 .history_item {
     text-align: center;
     padding: 20px;
@@ -15,52 +16,220 @@
     color: #e31e24; /* или ваш фирменный цвет */
     margin-bottom: 10px;
 }
+/* Горизонтальный скролл */
+.advantages_scroll_wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    cursor: grab;
+    scroll-behavior: smooth;
+}
+
+.advantages_scroll_wrapper:active {
+    cursor: grabbing;
+}
+
+.advantages_scroll_container {
+    display: flex;
+    gap: 24px;
+    padding-bottom: 15px; /* Для видимости тени скролла */
+    min-width: min-content;
+}
+
+/* Карточка преимущества */
+.advantage_card {
+    flex: 0 0 280px; /* Фиксированная ширина карточки */
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #eee;
+}
+
+.advantage_card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.advantage_icon {
+    font-size: 42px;
+    margin-bottom: 16px;
+}
+
+.advantage_name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #222;
+}
+
+.advantage_text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Стилизация скроллбара (опционально, для Chrome/Safari) */
+.advantages_scroll_wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.advantages_scroll_wrapper::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 10px;
+}
+
+.advantages_scroll_wrapper::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.advantages_scroll_wrapper::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Заголовок преимуществ */
+.advantages_title {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin: 50px 0 20px 0;
+    color: #1a1a1a;
+}
+
+/* Стиль для текста о компании */
+.about_text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.about_text p {
+    margin-bottom: 20px;
+}
+
+/* Ваши существующие стили для global_title и др. сохраняются */
+.global_title {
+    font-size: 42px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.global_subtitle {
+    font-size: 20px;
+    text-align: center;
+    color: #666;
+    margin-top: 10px;
+}
+
+.global_line {
+    width: 80px;
+    height: 3px;
+    background: #e31e24; /* или ваш фирменный цвет */
+    margin: 20px auto 30px auto;
+}
 </style>
 
-<section class="intro">
+<section class="about">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="global_title">ThermoBlock — экономичное и быстрое строительство</div>
-                <div class="global_subtitle">Блоки для энергоэффективных зданий</div>
+                <h2 class="global_title">О компании</h2>
+                <h3 class="global_subtitle">ThermoBlock — экономичное и быстрое строительство</h3>
                 <div class="global_line"></div>
-                
-                <img src="{% static 'img_about/sclad.jpg' %}" alt="Склад готовой продукции ThermoBlock">
-                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
                 <div class="about_text">
-                    <p><strong>ThermoBlock</strong> — российский производитель энергоэффективных строительных материалов и подрядчик полного цикла. Собственное производство — г. Улан-Удэ.</p>
+                    <p><strong>ThermoBlock</strong> — российский производитель энергоэффективных строительных материалов и подрядчик полного цикла. Собственное производство находится в г. Улан-Удэ.</p>
                 </div>
+            </div>
+        </div>
+        <div class="row history_cards">
+            <div class="col-md-6 col-lg-3">
+                <div class="history_item">
+                    <div class="year">2006</div>
+                    <p>Начало производства шлакоблока на оборудовании собственной разработки</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="history_item">
+                    <div class="year">2015</div>
+                    <p>Освоен выпуск «ThermoBlock» — аналога скандинавских блоков с утеплителем</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="history_item">
+                    <div class="year">2016</div>
+                    <p>Открыто направление проектирования и строительства зданий из ThermoBlock</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="history_item">
+                    <div class="year">2018</div>
+                    <p>Представлен в торговых строительных сетях г. Улан-Удэ. Доставка материалов осуществляется собственным транспортом компании.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="history_item">
+                    <div class="year">2022</div>
+                    <p>Построено более четырехсот домов и зданий в Республике Бурятия и соседних регионах.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="history_item">
+                    <div class="year">2026</div>
+                    <p>В настоящее время ведётся разработка и внедрение в производство новых блоков — элементов системы каменного малоэтажного домостроения.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Блок с преимуществами (горизонтальный скролл) -->
+        <div class="row">
+            <div class="col-12">
+                <h3 class="advantages_title">Почему выбирают ThermoBlock</h3>
+            </div>
+        </div>
+
+        <div class="advantages_scroll_wrapper">
+            <div class="advantages_scroll_container">
                 
-                <div class="row history_cards">
-                    <div class="col-md-6 col-lg-3">
-                        <div class="history_item">
-                            <div class="year">2006</div>
-                            <p>Начало производства шлакоблока на оборудовании собственной разработки</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="history_item">
-                            <div class="year">2015</div>
-                            <p>Освоен выпуск «ThermoBlock» — аналога скандинавских блоков с утеплителем</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="history_item">
-                            <div class="year">2016</div>
-                            <p>Открыто направление проектирования и строительства зданий из ThermoBlock</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="history_item">
-                            <div class="year">2018</div>
-                            <p>Представлен в торговых строительных сетях г. Улан-Удэ</p>
-                        </div>
-                    </div>
+                <div class="advantage_card">
+                    <div class="advantage_name">Быстрое возведение</div>
+                    <div class="advantage_text">Скорость строительства выше кирпичной кладки. Отсутствие усадки позволяет начинать отделку сразу после возведения стен.</div>
                 </div>
-                
-                <div class="about_footer">
-                    <p><strong>Доставка</strong> — собственным транспортом компании. <strong>В разработке</strong> — новые блоки для системы каменного малоэтажного домостроения.</p>
+
+                <div class="advantage_card">
+                    <div class="advantage_name">Теплоэффективность</div>
+                    <div class="advantage_text">Монолитная конструкция без швов и мостиков холода. Стабильное теплосбережение при низких температурах.</div>
                 </div>
+
+                <div class="advantage_card">
+                    <div class="advantage_name">Сейсмостойкость</div>
+                    <div class="advantage_text">Технология подтверждена применением в сейсмоактивных зонах.</div>
+                </div>
+
+                <div class="advantage_card">
+                    <div class="advantage_name">Долговечность и безопасность</div>
+                    <div class="advantage_text">Материал не гниёт, не горит, устойчив к биологическим воздействиям. Срок службы — десятилетия.</div>
+                </div>
+
+                <div class="advantage_card">
+                    <div class="advantage_name">Собственное производство</div>
+                    <div class="advantage_text">Изготовление блоков в Улан-Удэ. Полный контроль качества, стабильные сроки поставки.</div>
+                </div>
+
+                <div class="advantage_card">
+                    <div class="advantage_name">Проектирование и строительство</div>
+                    <div class="advantage_text">Готовые типовые проекты и индивидуальное проектирование. Возведение зданий любой площади и планировки.</div>
+                </div>
+
             </div>
         </div>
     </div>
