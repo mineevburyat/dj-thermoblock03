@@ -1,0 +1,505 @@
+{% load static %}
+<style>
+/* Адаптивное видео */
+.ratio-16x9 {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 = 9/16 = 0.5625 */
+    height: 0;
+    overflow: hidden;
+}
+
+.ratio-16x9 iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+<section class="product" id="productions">
+    <div class="container">
+        <h2 class="text-center display-4">Основные виды продукции <span class="hotlogo">Thermo</span><span class="collogo">Block</span></h2>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <img src="{% static 'blocks_img/tb400.png'%}" alt="ThermoBlock рядовый ТБ400 эпюр" class="img-fluid">
+                <div class="video-container">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://vkvideo.ru/video_ext.php?oid=-116450358&id=456239065&hash=02b40dc12c375ead&autoplay=1&loop=1" width="426" height="240" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-12">
+                <h3>ThermoBlock рядовый ТБ400</h3>
+                <p class="name">Блок представляет собой «сэндвич» из двух бетонных оболочек, соединенных через слой эффективного утеплителя в единую конструкцию. Внутри блока предусмотрены сквозные полости для создания несущего железобетонного ядра.</p>
+                <p class="name">В отличие от кладочных материалов, здесь блок не является самостоятельной несущей единицей. Он служит высокоточной формой, которая после заливки бетона становится частью монолитной трехслойной конструкции, объединяющей в одном цикле возведение каркаса, утепление и финишную отделку здания.</p>
+                <p>Размеры и вес:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Длина:</td>
+                                <td class="info-b">600мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Ширина:</td>
+                                <td class="info-b">400мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Высота:</td>
+                                <td class="info-b">200мм</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Вес блока:</td>
+                                <td class="info-b">30кг</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Блоков в поддоне:</td>
+                                <td class="info-b">20шт</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес поддона:</td>
+                                <td class="info-b">600кг</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <p>Основные характеристики:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Артикул:</td>
+                                <td class="info-b">ТБ400</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Термическое сопротивление R, м2*°C/Вт:</td>
+                                <td class="info-b">5,45</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Звукоизоляция дБА (Rw):</td>
+                                <td class="info-b">51Дб</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Расход бетона:</td>
+                                <td class="info-b">0,125м3/м2 стены</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Расход блоков:</td>
+                                <td class="info-b">8,33/1/м2</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес бетонированной стены:</td>
+                                <td class="info-b">550кг/м2</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <img src="{% static 'blocks_img/tbu400_epur.png'%}" alt="ThermoBlock угловой ТБУ400 эпюр" class="img-fluid">
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-12">
+                <h3>ThermoBlock угловой ТБУ400</h3>
+                <p class="name">Угловой блок ТБУ400 — это Г-образный элемент несъемной опалубки, специально разработанный для устранения «мостиков холода» в самых критических точках здания.
+                </p>
+                <p class="name">Слой утеплителя внутри блока ТБУ400 имеет изогнутую конфигурацию, что позволяет создать герметичный тепловой щит по всему периметру монолитного ядра.</p>
+                <p>Размеры и вес:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Длина:</td>
+                                <td class="info-b">600мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Ширина:</td>
+                                <td class="info-b">400мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Высота:</td>
+                                <td class="info-b">200мм</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Вес блока:</td>
+                                <td class="info-b">30кг</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Блоков в поддоне:</td>
+                                <td class="info-b">20шт</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес поддона:</td>
+                                <td class="info-b">600кг</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <p>Основные характеристики:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Артикул:</td>
+                                <td class="info-b">ТБУ400</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Термическое сопротивление R, м2*°C/Вт:</td>
+                                <td class="info-b">5,45</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Звукоизоляция дБА (Rw):</td>
+                                <td class="info-b">51Дб</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Расход бетона:</td>
+                                <td class="info-b">0,125м3/м2 стены</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Расход блоков:</td>
+                                <td class="info-b">8,33/1/м2</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес бетонированной стены:</td>
+                                <td class="info-b">550кг/м2</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 portfolio">
+                <div class="btn_wrapper">
+                    <a href="{% url 'old:tb400' %}" class="btn"></a>
+                    <p>Инструкция по производству работ из блоков несъемной опалубки ThermoBlock 400</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <img src="{% static 'blocks_img/tb300.png'%}" alt="ThermoBlock рядовый ТБ300 эпюр" class="img-fluid">
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-12">
+                <h3>ThermoBlock Рядовый ТБ300.</h3>
+                <p class="name">Это рядный блок серии 300, предназначен для возведения монолитно-плиточной трехслойной стены толщиной 300 мм. — облегченной системы несъемной опалубки, ориентированной на максимальную экономичность при сохранении монолитной прочности.</p>
+                <p class="name">Оптимальная соотношение цена качество. Внутренняя полость блока позволяет беспрепятственно установить угловое армирование и залить бетон. Внешний слой представляет собой прочную бетонную плитку (панель), которая жестко интегрирована с утеплителем.</p>
+                <p>Размеры и вес:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Длина:</td>
+                                <td class="info-b">400мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Ширина:</td>
+                                <td class="info-b">300мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Высота:</td>
+                                <td class="info-b">200мм</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Вес блока:</td>
+                                <td class="info-b">21кг</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Блоков в поддоне:</td>
+                                <td class="info-b">40шт</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес поддона:</td>
+                                <td class="info-b">840кг</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <p>Основные характеристики:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Артикул:</td>
+                                <td class="info-b">ТБ300</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Термическое сопротивление R, м2*°C/Вт:</td>
+                                <td class="info-b">3,945</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Звукоизоляция дБА (Rw):</td>
+                                <td class="info-b">51Дб</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Расход бетона:</td>
+                                <td class="info-b">0,08м3/м2 стены</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Расход блоков:</td>
+                                <td class="info-b">12,5шт/м2</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес бетонированной стены:</td>
+                                <td class="info-b">412,5кг/м2</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <img src="{% static 'blocks_img/tbu300_epur.png'%}" alt="ThermoBlock угловой ТБУ300 эпюр" class="img-fluid">
+
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-12">
+                <h3>ThermoBlock угловой ТБУ300</h3>
+                <p class="name">Угловой элемент серии 300 — это специализированный доборный блок несъемной опалубки, созданный для формирования энергоэффективных углов в стенах общей толщиной 300 мм.</p>
+                <p class="name">Как и в старшей серии, блок имеет изогнутую геометрию, что исключает наличие сквозных вертикальных швов в углах здания.</p>
+                <p>Размеры и вес:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Длина:</td>
+                                <td class="info-b">500мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Ширина:</td>
+                                <td class="info-b">300мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Высота:</td>
+                                <td class="info-b">200мм</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Вес блока:</td>
+                                <td class="info-b">21кг</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Блоков в поддоне:</td>
+                                <td class="info-b">40шт</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес поддона:</td>
+                                <td class="info-b">840кг</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <p>Основные характеристики:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Артикул:</td>
+                                <td class="info-b">ТБУ300</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Термическое сопротивление R, м2*°C/Вт:</td>
+                                <td class="info-b">3,945</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Звукоизоляция дБА (Rw):</td>
+                                <td class="info-b">51Дб</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Расход бетона:</td>
+                                <td class="info-b">0,08м3/м2 стены</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Расход блоков:</td>
+                                <td class="info-b">12,5шт/м2</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес бетонированной стены:</td>
+                                <td class="info-b">412,5кг/м2</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 portfolio">
+                <div class="btn_wrapper">
+                    <a href="{% url 'old:tb300' %}" class="btn"></a>
+                    <p>Инструкция по производству работ из теплоизоляционных блоков ThermoBlock 300</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <img src="{% static 'blocks_img/pb200.png'%}" alt="ThermoBlock ПБ200 эпюр" class="img-fluid">
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-12">
+                <h3>ThermoBlock ПБ200</h3>
+                <p class="name">Несущий перегородочный бетонный блок несъемной опалубки толщиной 200 мм — это универсальный конструкционный элемент для создания прочных монолитных перегородок, возведения подпорных стен, подвалов и смотровых ям в гараже. Особенность технологии позволяет предусмотреть прокладку инженерных сетей непосредственно в полости стены перед заливкой бетона.</p>
+                <p>Размеры и вес:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Длина:</td>
+                                <td class="info-b">600мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Ширина:</td>
+                                <td class="info-b">200мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Высота:</td>
+                                <td class="info-b">200мм</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Вес блока:</td>
+                                <td class="info-b">24кг</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Блоков в поддоне:</td>
+                                <td class="info-b">40шт</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес поддона:</td>
+                                <td class="info-b">960кг</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <p>Основные характеристики:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Артикул:</td>
+                                <td class="info-b">ПБ200</td>
+                            </tr>
+
+                            <tr>
+                                <td class="info-a">Звукоизоляция дБА (Rw):</td>
+                                <td class="info-b">62 дБ</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Расход бетона:</td>
+                                <td class="info-b">0,11 л/м²</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Расход блоков:</td>
+                                <td class="info-b">8,33 шт./м²</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес бетонированной стены:</td>
+                                <td class="info-b">450 кг/м²</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <img src="{% static 'blocks_img/pb100.png'%}" alt="ThermoBlock ПБ100 эпюр" class="img-fluid">
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-12">
+                <h3>ThermoBlock ПБ100</h3>
+                <p class="name">Узкий бетонный блок несъемной опалубки толщиной 100 мм предназначен для возведения тонких монолитных перегородок. Технология позволяет заложить инженерные сети перед армированием и заливкой бетона.</p>
+                <p>Размеры и вес:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Длина:</td>
+                                <td class="info-b">600мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Ширина:</td>
+                                <td class="info-b">100мм</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Высота:</td>
+                                <td class="info-b">200мм</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="padding-control table table-bordered">
+                            <tr>
+                                <td class="info-a">Вес блока:</td>
+                                <td class="info-b">14,5кг</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Блоков в поддоне:</td>
+                                <td class="info-b"></td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес поддона:</td>
+                                <td class="info-b"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <p>Основные характеристики:</p>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Артикул:</td>
+                                <td class="info-b">ПБ100</td>
+                            </tr>
+
+                            <tr>
+                                <td class="info-a">Звукоизоляция дБА (Rw):</td>
+                                <td class="info-b">38 дБ</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="info-a">Расход бетона:</td>
+                                <td class="info-b">0.045 л/м2</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Расход блоков:</td>
+                                <td class="info-b">8.33 шт./м2</td>
+                            </tr>
+                            <tr>
+                                <td class="info-a">Вес бетонированной стены:</td>
+                                <td class="info-b">234 кг/м2</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
