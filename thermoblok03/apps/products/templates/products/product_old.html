@@ -47,7 +47,14 @@
 <section class="product" id="productions">
     <div class="container">
         <h2 class="text-center display-4">Основная продукция <strong class="stronglogo"><span class="logotext" aria-label="ТермоБлок"><span class="hotlogo">Thermo</span><span class="collogo">Block</span></span></strong></h2>
-        <div class="row">
+        <div class="row" itemscope itemtype="https://schema.org/Product">
+            <!-- СКРЫТЫЕ МЕТА-ДАННЫЕ ДЛЯ ПОИСКОВЫХ СИСТЕМ (обязательно для снипета) -->
+            <meta itemprop="name" content="ThermoBlock рядовый ТБ400" />
+            <meta itemprop="description" content="Трехслойный блок-форма ТБ400 для монолитного строительства. Утепление + бетонное ядро + отделка за один цикл. Размер 600х400х200 мм, вес 30 кг." />
+            <meta itemprop="sku" content="ТБ400" />
+            <meta itemprop="mpn" content="ТБ400-R" />
+            <!-- ИЗОБРАЖЕНИЕ (обязательно для товарного снипета) - добавьте реальную ссылку на фото -->
+            <meta itemprop="image" content="{% static 'blocks_img/tb400_epur.png'%}" />
             <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                 <img src="{% static 'blocks_img/tb400_epur.png'%}" alt="ThermoBlock рядовый ТБ400 эпюр" class="img-fluid">
                 <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#videoModal-tb400">
@@ -87,9 +94,9 @@
                 });
             </script>
             <div class="col-lg-8 col-md-6 col-sm-12">
-                <h3>ThermoBlock рядовый ТБ400</h3>
-                <p class="name">Блок представляет собой «сэндвич» из двух бетонных оболочек, соединенных через слой эффективного утеплителя в единую конструкцию. Внутри блока предусмотрены сквозные полости для создания несущего железобетонного ядра.</p>
-                <p class="name">В отличие от кладочных материалов, здесь блок не является самостоятельной несущей единицей. Он служит высокоточной формой, которая после заливки бетона становится частью монолитной трехслойной конструкции, объединяющей в одном цикле возведение каркаса, утепление и финишную отделку здания.</p>
+                <h3 itemprop="name">ThermoBlock рядовый ТБ400</h3>
+                <p class="name" itemprop="description">Блок представляет собой «сэндвич» из двух бетонных оболочек, соединенных через слой эффективного утеплителя в единую конструкцию. Внутри блока предусмотрены сквозные полости для создания несущего железобетонного ядра.
+                <br>В отличие от кладочных материалов, здесь блок не является самостоятельной несущей единицей. Он служит высокоточной формой, которая после заливки бетона становится частью монолитной трехслойной конструкции, объединяющей в одном цикле возведение каркаса, утепление и финишную отделку здания.</p>
                 <!-- Блок с табами - каждый такой блок имеет уникальный ID -->
                 <div class="product-tabs-wrapper" id="product-tb400">
                     <!-- Навигация по табам -->
@@ -112,49 +119,51 @@
                         <div class="tab-pane fade show active" id="product-tb400-size-weight" role="tabpanel">
                             <div class="row mt-3">
                                 <div class="col-lg-6 col-md-12">
-                                    <table class="padding-control table table-bordered" itemscope itemtype="https://schema.org">
-                                        <meta itemprop="name" content="ThermoBlock рядовый ТБ400 габариты">
+                                    <table class="padding-control table table-bordered">
+                                        <caption class="sr-only">Габаритные размеры блока ТБ400</caption>
                                         <tr>
                                             <td class="info-a">Длина:</td>
                                             <td class="info-b">
-                                                <span itemprop="value">600</span>&nbsp;<abbr title="миллиметров" itemprop="unitText">мм.</abbr>
-                                                <meta itemprop="unitCode" content="MMT">
+                                                <span itemprop="width" content="600">600</span>&nbsp;<abbr title="миллиметров">мм.</abbr>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="info-a">Ширина:</td>
                                             <td class="info-b">
-                                                <span itemprop="value">400</span>&nbsp;<abbr title="миллиметров">мм.</abbr>
-                                                <meta itemprop="unitCode" content="MMT">
+                                                <span itemprop="depth" content="400">400</span>&nbsp;<abbr title="миллиметров">мм.</abbr>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="info-a">Высота:</td>
                                             <td class="info-b">
-                                                <span itemprop="value">200</span>&nbsp;<abbr title="миллиметров">мм.</abbr></td>
-                                                <meta itemprop="unitCode" content="MMT">
+                                                <span itemprop="height" content="200">200</span>&nbsp;<abbr title="миллиметров">мм.</abbr>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <table class="padding-control table table-bordered">
-                                        <meta itemprop="name" content="ThermoBlock рядовый ТБ400 общие характеристики">
+                                        <caption class="sr-only">Масса и упаковка блока ТБ400</caption>
                                         <tr>
                                             <td class="info-a">Вес блока:</td>
                                             <td class="info-b">
-                                                <span itemprop="value">30</span>&nbsp;<abbr title="килограммов" itemprop="unitText">кг.</abbr>
+                                                <span>30</span>&nbsp;<abbr title="килограммов">кг.</abbr>
+                                                <meta itemprop="weight" content="30" />
                                                 <meta itemprop="unitCode" content="KGM">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="info-a">Блоков в поддоне:</td>
-                                            <td class="info-b">20&nbsp;<abbr title="штук">шт.</abbr></td>
+                                            <td class="info-b">
+                                                <span>20</span>&nbsp;<abbr title="штук">шт.</abbr>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="info-a">Вес поддона:</td>
                                             <td class="info-b">
-                                                <span itemprop="value">600</span>&nbsp;<abbr title="килограммов" itemprop="unitText">кг.</abbr></td>
-                                                <meta itemprop="unitCode" content="KGM">
+                                                <span>600</span>&nbsp;<abbr title="килограммов">кг.</abbr>
+                                            </td>
+                                                
                                         </tr>
                                     </table>
                                 </div>
@@ -166,6 +175,7 @@
                             <div class="row mt-3">
                                 <div class="col-lg-6 col-md-12">
                                     <table class="table table-bordered">
+                                        <caption class="sr-only">Технические характеристики ТБ400</caption>
                                         <tr>
                                             <td class="info-a">Артикул:</td>
                                             <td class="info-b" itemprop="sku">ТБ400</td>
@@ -173,39 +183,42 @@
                                         <tr>
                                             <td class="info-a">Термическое сопротивление, R:</td>
                                             <td class="info-b">
-                                                <span aria-hidden="true">5,45 м<sup>2</sup>*°C/Вт</span>
-                                                <span class="sr-only">5,45 квадратных метра на градус Цельсия на Ватт</span>
+                                                <span style="white-space: nowrap;" aria-hidden="true">5,45&nbsp;<abbr title="квадратный метр-кельвин на ватт">м<sup>2</sup>*°C/Вт</abbr></span>
+                                                <span class="sr-only">5,45 квадратных метра-кельвин на Ватт</span>
+                                                <meta itemprop="thermalResistance" content="5.45" />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="info-a">Звукоизоляция (Rw):</td>
                                             <td class="info-b">
-                                                <span aria-hidden="true">51 дБ</span>
+                                                <span style="white-space: nowrap;" aria-hidden="true">51&nbsp;<abbr title="децибелл">дБ</abbr></span>
                                                 <span class="sr-only">51 децибел</span>
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
+                                
                                 <div class="col-lg-6 col-md-12">
                                     <table class="table table-bordered">
+                                        <caption class="sr-only">Расходные характеристики</caption>
                                         <tr>
                                             <td class="info-a">Расход бетона:</td>
                                             <td class="info-b">
-                                                <span aria-hidden="true">125 л./м<sup>2</sup></span>
+                                                <span style="white-space: nowrap;" aria-hidden="true">125&nbsp;<abbr title="литров на квадратный метр стены">л./м<sup>2</sup></abbr></span>
                                                 <span class="sr-only">125 литра на квадратный метр стены</span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="info-a">Расход блоков:</td>
                                             <td class="info-b">
-                                                <span aria-hidden="true">8,33 шт./м<sup>2</sup></span>
+                                                <span style="white-space: nowrap;" aria-hidden="true">8,33&nbsp;<abbr title="штуки на квадратный метр стены">шт./м<sup>2</sup></abbr></span>
                                                 <span class="sr-only">8,33 блока на квадратный метр</span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="info-a">Вес бетонированной стены:</td>
                                             <td class="info-b">
-                                                <span aria-hidden="true">550 кг/м<sup>2</sup></span>
+                                                <span style="white-space: nowrap;" aria-hidden="true">550&nbsp;<abbr title="килограмм на квадратный метр стены">кг/м<sup>2</sup></abbr></span>
                                                 <span class="sr-only">550 килограмм на квадратный метр стены</span>
                                             </td>
                                         </tr>
@@ -216,6 +229,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                 <img src="{% static 'blocks_img/tbu400_epur.png'%}" alt="ThermoBlock угловой ТБУ400 эпюр" class="img-fluid">
                 <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#videoModal-tbu400">
@@ -353,6 +368,8 @@
                 </div>
 
             </div>
+        </div>
+        <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-12 text-center">
                 <img src="{% static 'blocks_img/tb301.png'%}" alt="ThermoBlock рядовый ТБ300 эпюр" class="img-fluid">
                 <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#videoModal-tb300">
