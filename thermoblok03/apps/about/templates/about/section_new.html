@@ -1,159 +1,159 @@
 <style>
-/* Горизонтальный скролл без выхода за пределы контейнера */
-.scroll-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    cursor: grab;
-    position: relative;
-}
-
-.scroll-wrapper:active {
-    cursor: grabbing;
-}
-
-.scroll-track {
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-    width: max-content;
-    min-width: 100%;
-    padding-bottom: 10px;
-}
-
-/* Карточка истории */
-.history_card {
-    width: 280px;
-    flex-shrink: 0;
-    background: #f8f9fa;
-    border-radius: 16px;
-    padding: 24px 20px;
-    text-align: center;
-    border-left: 4px solid #e31e24;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.history_card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.history_card .year {
-    font-size: 32px;
-    font-weight: 800;
-    color: #e31e24;
-    margin-bottom: 15px;
-}
-
-.history_card p {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #444;
-    margin: 0;
-}
-
-/* Карточка преимущества */
-.advantage_card {
-    width: 280px;
-    flex-shrink: 0;
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 24px 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid #eee;
-}
-
-.advantage_card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-}
-
-.advantage_name {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: #222;
-}
-
-.advantage_text {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #555;
-}
-
-/* Стилизация скроллбара */
-.scroll-wrapper::-webkit-scrollbar {
-    height: 6px;
-}
-
-.scroll-wrapper::-webkit-scrollbar-track {
-    background: #e0e0e0;
-    border-radius: 10px;
-}
-
-.scroll-wrapper::-webkit-scrollbar-thumb {
-    background: #e31e24;
-    border-radius: 10px;
-}
-
-.scroll-wrapper::-webkit-scrollbar-thumb:hover {
-    background: #b0171c;
-}
-
-/* Общие стили */
-.global_title {
-    font-size: 42px;
-    font-weight: 700;
-    text-align: center;
-    margin-top: 40px;
-}
-
-.global_subtitle {
-    font-size: 20px;
-    text-align: center;
-    color: #666;
-    margin-top: 10px;
-}
-
-.global_line {
-    width: 80px;
-    height: 3px;
-    background: #e31e24;
-    margin: 20px auto 40px auto;
-}
-
-.about_text {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* Кнопки скролла */
-.scroll-btn {
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.scroll-btn:active {
-    transform: scale(0.95);
-}
-
-/* Адаптив для мобилок */
-@media (max-width: 768px) {
-    .history_card, .advantage_card {
-        width: 260px;
+    /* Горизонтальный скролл без выхода за пределы контейнера */
+    .scroll-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        cursor: grab;
+        position: relative;
     }
-    
-    .global_title {
+
+    .scroll-wrapper:active {
+        cursor: grabbing;
+    }
+
+    .scroll-track {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        width: max-content;
+        min-width: 100%;
+        padding-bottom: 10px;
+    }
+
+    /* Карточка истории */
+    .history_card {
+        width: 280px;
+        flex-shrink: 0;
+        background: #f8f9fa;
+        border-radius: 16px;
+        padding: 24px 20px;
+        text-align: center;
+        border-left: 4px solid #e31e24;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .history_card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .history_card .year {
         font-size: 32px;
+        font-weight: 800;
+        color: #e31e24;
+        margin-bottom: 15px;
     }
-    
+
+    .history_card p {
+        font-size: 14px;
+        line-height: 1.5;
+        color: #444;
+        margin: 0;
+    }
+
+    /* Карточка преимущества */
+    .advantage_card {
+        width: 280px;
+        flex-shrink: 0;
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 24px 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid #eee;
+    }
+
+    .advantage_card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .advantage_name {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #222;
+    }
+
+    .advantage_text {
+        font-size: 14px;
+        line-height: 1.5;
+        color: #555;
+    }
+
+    /* Стилизация скроллбара */
+    .scroll-wrapper::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .scroll-wrapper::-webkit-scrollbar-track {
+        background: #e0e0e0;
+        border-radius: 10px;
+    }
+
+    .scroll-wrapper::-webkit-scrollbar-thumb {
+        background: #e31e24;
+        border-radius: 10px;
+    }
+
+    .scroll-wrapper::-webkit-scrollbar-thumb:hover {
+        background: #b0171c;
+    }
+
+    /* Общие стили */
+    .global_title {
+        font-size: 42px;
+        font-weight: 700;
+        text-align: center;
+        margin-top: 40px;
+    }
+
     .global_subtitle {
-        font-size: 18px;
+        font-size: 20px;
+        text-align: center;
+        color: #666;
+        margin-top: 10px;
     }
-}
+
+    .global_line {
+        width: 80px;
+        height: 3px;
+        background: #e31e24;
+        margin: 20px auto 40px auto;
+    }
+
+    .about_text {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Кнопки скролла */
+    .scroll-btn {
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .scroll-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Адаптив для мобилок */
+    @media (max-width: 768px) {
+        .history_card, .advantage_card {
+            width: 260px;
+        }
+        
+        .global_title {
+            font-size: 32px;
+        }
+        
+        .global_subtitle {
+            font-size: 18px;
+        }
+    }
 </style>
 
 <section class="about">
@@ -168,7 +168,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="about_text">
-                    <p><strong>ThermoBlock</strong> — российский производитель энергоэффективных строительных материалов и подрядчик полного цикла. Собственное производство находится в г. Улан-Удэ.</p>
+                    <p><strong aria-label="термоБлок">ThermoBlock</strong> — российский производитель энергоэффективных строительных материалов и подрядчик полного цикла. Собственное производство находится в г. Улан-Удэ. <strong aria-label="термоБлок">ThermoBlock</strong> - зарегистрированная торговая марка.</p>
                 </div>
             </div>
         </div>
@@ -216,7 +216,7 @@
         <!-- Блок: Почему выбирают ThermoBlock -->
         <div class="scroll_block mt-5">
             <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                <h3 class="h2 mb-2 mb-sm-0">Почему выбирают ThermoBlock</h3>
+                <h3 class="h2 mb-2 mb-sm-0">Приемущества <strong class="stronglogo"><strong class="logotext" area-label="ТермоБлок"><span class="hotlogo">Thermo</span><span class="collogo">Block</span></strong><span class="tm-sign" aria-hidden="true">&trade;</span></strong></h3>
                 <div class="btn-group">
                     <button class="btn btn-outline-danger scroll-btn" data-target="advantages_scroll" data-dir="left">←</button>
                     <button class="btn btn-outline-danger scroll-btn" data-target="advantages_scroll" data-dir="right">→</button>
@@ -226,28 +226,32 @@
             <div class="scroll-wrapper" id="advantages_scroll">
                 <div class="scroll-track">
                     <div class="advantage_card">
-                        <div class="advantage_name">Быстрое возведение</div>
-                        <div class="advantage_text">Скорость строительства выше кирпичной кладки. Отсутствие усадки позволяет начинать отделку сразу после возведения стен.</div>
+                        <h4 class="advantage_name">Теплоэффективность</h4>
+                        <div class="advantage_text">Монолитная конструкция стен без швов и мостиков холода. Стены из <strong label-area="термоблока">ThermoBlock</strong> имеют эффект термоса. Прекрасно работают в диапазоне температур от -50 до +50 градусов Цельсия. Коэффициент теплопередачи соответсвует рекомендованному нормируемому сопротивлению теплопередаче для Бурятии и Якутии (<a href="#">СП 50.13330.2012 «Тепловая защита зданий»</a>). Затраты на отопление дома из <strong label-area="термоблока">ThermoBlock</strong> в 3 раза меньше, чем тратят владельцы домов из кирпича, газоблока и пенополистиролбетона.</div>
                     </div>
                     <div class="advantage_card">
-                        <div class="advantage_name">Теплоэффективность</div>
-                        <div class="advantage_text">Монолитная конструкция без швов и мостиков холода. Стабильное теплосбережение при низких температурах.</div>
+                        <h4 class="advantage_name">Сейсмостойкость</h4>
+                        <p class="advantage_text">Технология <strong>ThermoBlock</strong> подтверждена для примененения в сейсмоактивных зонах. Результаты вибродинамических испытаний здания из <strong label-area="термоблока">ThermoBlock</strong> показали, что такие дома выдержат землетрясение в 9-10 баллов. Смотреть видео сейсмоиспытания.</p>
                     </div>
                     <div class="advantage_card">
-                        <div class="advantage_name">Сейсмостойкость</div>
-                        <div class="advantage_text">Технология подтверждена применением в сейсмоактивных зонах.</div>
+                        <h5 class="advantage_name">Технологичность</h5>
+                        <p class="advantage_text"><strong>ThermoBlock</strong> очень прост и удобен в использовании. Практически, как конструктор. Прямые и угловые блоки позволяют построить одноэтажную коробку за 5 дней. Конструкция несъемной опалубки <strong>ThermoBlock</strong> позволяет на этапе строительства заложит инженерные сети. Продуманная форма блоков учитывает пазы для армирования и направляющие для швеллеров перемычек и проемов. Готовая стена имеет надежный терморазрыв, без мостиков холода.</p>
                     </div>
                     <div class="advantage_card">
-                        <div class="advantage_name">Долговечность и безопасность</div>
-                        <div class="advantage_text">Материал не гниёт, не горит, устойчив к биологическим воздействиям. Срок службы — десятилетия.</div>
+                        <h4 class="advantage_name">Безопасность</h4>
+                        <p class="advantage_text">Готовая стена из <strong>ThermoBlock</strong> не гниёт, не горит, устойчив к биологическим воздействиям. Безопасность материала подтверждена испытаниями на пожаробезопасность соглалсно  <a href="https://docs.cntd.ru/document/9055248">ГОСТ 30247.0-94</a>. Заключение: конструкция железобетонной трехслойной монолитной стены построенной по технологии <strong label-area="термоблок">ThermoBlock</strong>  относится к группе негорючих строительных материалов, скорость распространения огня по конструкции равен нулю.</p>
                     </div>
                     <div class="advantage_card">
-                        <div class="advantage_name">Собственное производство</div>
-                        <div class="advantage_text">Изготовление блоков в Улан-Удэ. Полный контроль качества, стабильные сроки поставки.</div>
+                        <h4 class="advantage_name">Собственное производство</h4>
+                        <p class="advantage_text">Изготовление блоков в Улан-Удэ. Полный контроль качества, стабильные сроки поставки.</p>
                     </div>
                     <div class="advantage_card">
-                        <div class="advantage_name">Проектирование и строительство</div>
-                        <div class="advantage_text">Готовые типовые проекты и индивидуальное проектирование. Возведение зданий любой площади и планировки.</div>
+                        <h4 class="advantage_name">Проектирование и строительство</h4>
+                        <p class="advantage_text">Готовые типовые проекты и индивидуальное проектирование. Возведение зданий любой площади и планировки. Собственная школа проектировщиков.</p>
+                    </div>
+                    <div class="advantage_card">
+                        <h4 class="advantage_name">Оптимальное соотношение цена - качество</h4>
+                        <p class="advantage_text"><strong>ThermoBlock</strong> это <strong>ТРИ В ОДНОМ</strong>.  <strong>Надежный конструктив стены</strong> из железобетонного монолита, с <strong>эффективным утеплением</strong> стены и элементами <strong>инженерных сетей</strong> встроенных в стену. Кроме того стены из <strong>ThermoBlock</strong> готовы к чистовой отделке. Дома и здания, строящиеся по технологии <strong>ThermoBlock</strong> готовы к эксплуатации через 2 месяца и стоимость строительства <span aria-label="одного квадратного метра">1&nbsp;м<sup>2</sup></span> сравнима с рыночной ценой других строительных материалов.</p>
                     </div>
                 </div>
             </div>
