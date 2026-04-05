@@ -535,9 +535,9 @@
 
                     <!-- Кнопки действий -->
                     <div class="detail-actions">
-                        <button class="btn btn-primary" onclick="alert('Заказ проекта: {{ product.title }}')">
-                            Заказать проект
-                        </button>
+                        <a class="btn btn-primary" href="{% url 'feedback:question'%}">
+                            Рассчитать проект
+                        </a>
                         {% if request.user.is_staff %}
                             <a class="btn btn-secondary" href="{% url 'constructs:product-edit' product.id%}">
                             Редактировать
