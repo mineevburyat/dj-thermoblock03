@@ -10,6 +10,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="{% static 'old/js/jquery.maskedinput.js' %}"></script>
     <script src="{% static 'old/js/jquery.maskedinput.min.js' %}"></script>
+    <script src="//code.jivo.ru/widget/SU21jljTUP" async></script>
     <script>
         $("#menu").on("click", ".ex", function (event) {
             event.preventDefault();
@@ -185,3 +186,29 @@
 
     </script>
     <script type="text/javascript" src="https://cloudpbx.beeline.ru/app/cabinet/app/pub/callmenow/mpbx-cmn-frame.js?externalId=54d40a58-7efc-4d78-91cc-53815501a819-405019378&theme=2&color=2"></script>
+    <style>
+        /* Общие стили для контейнеров виджета */
+        .cmn-frame {
+            /* Изменить положение (по умолчанию, скорее всего, fixed в правом нижнем углу) */
+            bottom: 90px !important;
+            right: 30px !important;
+             
+            /* Добавить тень или рамку */
+            box-shadow: 0 0 15px rgba(0,0,0,0.3) !important;
+            border-radius: 16px !important;
+        }
+
+        /* Стили для свернутого состояния */
+        .cmn-frame-closed {
+            /* Например, сделать его круглым */
+            width: 100px !important;
+            height: 60px !important;
+            border-radius: 50% !important;
+        }
+
+        /* Стили для развернутого состояния */
+        .cmn-frame-opened {
+            /* Например, увеличить высоту */
+            height: 600px !important;
+        }
+</style>
