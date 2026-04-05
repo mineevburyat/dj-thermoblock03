@@ -213,11 +213,28 @@ ThermoBlock - расчет стоимости дома из монолитных
                         </select>
                         <div class="error-message" id="error-payment_method"></div>
                     </div>
-                    
-                    <!-- Шаг 6: Контакты -->
+
+                     <!-- Шаг 6: Площадь дома -->
                     <div class="form-step" id="step6">
                         <div class="mb-4">
                             <span class="step-number">6</span>
+                            <h4 class="d-inline h5">Примерная площадь будущего дома?</h4>
+                        </div>
+                        
+                        <select class="form-select mb-4" id="square" name="square" required>
+                            <option value="" selected disabled>Площадь будущего дома...</option>
+                            <option value="less50">до 50 кв. м.</option>
+                            <option value="from50to100">от 50 кв. м. до 100 кв. м.</option>
+                            <option value="from100to150">от 100 кв. м. до 150 кв. м.</option>
+                            <option value="more150">более 150 кв. м.</option>
+                        </select>
+                        <div class="error-message" id="error-square"></div>
+                    </div>
+                    
+                    <!-- Шаг 7: Контакты -->
+                    <div class="form-step" id="step7">
+                        <div class="mb-4">
+                            <span class="step-number">7</span>
                             <h4 class="d-inline h5">Как с вами связаться?</h4>
                         </div>
                         
@@ -226,16 +243,7 @@ ThermoBlock - расчет стоимости дома из монолитных
                             <option value="whatsapp">WhatsApp</option>
                             <option value="max">MAX</option>
                         </select>
-                        <select class="form-select mb-4" id="square" name="square" required>
-                            <option value="" selected disabled>Площадь будущего дома...</option>
-                            <option value="less50">до 50 кв. м.</option>
-                            <option value="from50to100">от 50 кв. м. до 100 кв. м.</option>
-                            <option value="from100to150">от 100 кв. м. до 150 кв. м.</option>
-                            <option value="more150">более 150 кв. м.</option>
-                        </select>
                         <div class="error-message" id="error-contact_method"></div>
-                        <div class="error-message" id="error-square"></div>
-                        
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Имя *" required>
@@ -302,7 +310,7 @@ ThermoBlock - расчет стоимости дома из монолитных
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let currentStep = 1;
-            const totalSteps = 6;
+            const totalSteps = 7;
             
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
@@ -344,10 +352,9 @@ ThermoBlock - расчет стоимости дома из монолитных
                     const name = document.getElementById('name').value;
                     const phone = document.getElementById('phone').value;
                     const contactMethod = document.getElementById('contact_method').value;
-                    const square = document.getElementById('square').value;
                     const dataAgreement = document.getElementById('data_agreement').checked;
                     
-                    submitBtn.disabled = !(name && phone && contactMethod && square && dataAgreement);
+                    submitBtn.disabled = !(name && phone && contactMethod && dataAgreement);
                 }
             }
             
