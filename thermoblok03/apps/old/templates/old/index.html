@@ -5,45 +5,8 @@
 {% block meta_description %}Строительные блоки ThermoBlock в Улан-Удэ. Проектирование и строительство теплых и надежных домов, коттеджей и производственные строений из термоблока.{% endblock %}
 {% block meta_keywords %}строительство домов, построить дом, коттедж, dom, проекты домов, построить дом, строение, какой дом построить{% endblock %}
 {% block extra_css %}
-    <style>
-        /* Наклонная движущаяся полоска */
-        .btn-diagonal-stripe {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-diagonal-stripe::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 40%;
-            height: 200%;
-            background: linear-gradient(
-                to right,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                rgba(255, 255, 255, 0.5),
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
-            transform: rotate(30deg);
-            animation: diagonal-shine 3s infinite linear;
-        }
-        
-        @keyframes diagonal-shine {
-            0% {
-                left: -60%;
-            }
-            100% {
-                left: 120%;
-            }
-        }
-    </style>
+
 {% endblock %}
-
-
-
 
     {% block  content %}
     <h1 class="visually-hidden">Производство и строительство домов и зданий из ThermoBlock</h1> 

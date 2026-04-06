@@ -108,12 +108,7 @@ def product_detail(request, slug):
         })
     
     if product.floors_count:
-        floors_text = {
-            1: 'Одноэтажный',
-            1.5: 'Полутораэтажный',
-            2: 'Двухэтажный'
-        }
-        value = floors_text.get(float(product.floors_count), f'{product.floors_count} этажа')
+        value = f'{product.floors_count()} этажа'
         characteristics.append({
             'icon': '🏗️',
             'label': 'Этажность',
@@ -149,14 +144,16 @@ def product_detail(request, slug):
         })
     
     context = {
-        'product': product,
-        'images': product.images.all().order_by('order'),
+        # 'product': product,
+        'project': product,
+        # 'images': product.images.all().order_by('order'),
+        'project_images': product.images.all().order_by('order'),
         'characteristics': characteristics,
         'similar_products': similar_products,
         'prev_product': prev_product,
         'next_product': next_product,
     }
-    return render(request, 'constructs/detail.html', context)
+    return render(request, 'constructs/detail_new.html', context)
 
 def product_edit(request, product_id):
     """Страница редактирования проекта"""

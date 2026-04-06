@@ -42,7 +42,7 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
     max_num = 20
-    fields = ['image_preview', 'image', 'alt', 'order', 'is_main']
+    fields = ['image_preview', 'image', 'image_type','alt', 'order', 'is_main']
     readonly_fields = ['image_preview']
     
     def image_preview(self, obj):
@@ -56,14 +56,14 @@ class ProductImageInline(admin.TabularInline):
 
 @admin.register(ProductType)
 class ProductTypeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'order', 'products_count']
+    list_display = ['name', 'slug', 'floor', 'order', 'products_count']
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name']
     list_editable = ['order']
     
     def products_count(self, obj):
         return obj.products.count()
-    products_count.short_description = 'Товаров'
+    products_count.short_description = 'Проектов'
     products_count.admin_order_field = 'products__count'
 
 @admin.register(RoofType)
@@ -130,7 +130,7 @@ class ProductAdmin(admin.ModelAdmin):
         }),
         ('Характеристики', {
             'fields': (
-                ('area', 'floors_count'),
+                ('area', ),
                 ('rooms_count', 'bedrooms_count'),
                 ('bathrooms_count',),
                 ('garage', 'terrace'),

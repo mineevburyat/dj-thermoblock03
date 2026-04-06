@@ -1634,3 +1634,37 @@ footer a:hover {
   font-weight: 300;
   top: 0;
 }
+
+/* Наклонная движущаяся полоска */
+        .btn-diagonal-stripe {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-diagonal-stripe::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                rgba(255, 255, 255, 0.5),
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transform: rotate(30deg);
+            animation: diagonal-shine 3s infinite linear;
+        }
+        
+        @keyframes diagonal-shine {
+            0% {
+                left: -60%;
+            }
+            100% {
+                left: 120%;
+            }
+        }

@@ -1,0 +1,898 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>{{ project.name|default:"Проект дома" }}</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Font Awesome 5 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .project-card {
+            max-width: 960px;
+            width: 100%;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .gallery-wrapper {
+            position: relative;
+            background: #0a0c15;
+        }
+
+        .carousel {
+            background: #0f111a;
+        }
+        .carousel-inner, .carousel-item {
+            background: #0f111a;
+        }
+        .carousel-item img {
+            object-fit: cover;
+            width: 100%;
+            height: 460px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        @media (max-width: 768px) {
+            .carousel-item img {
+                height: 320px;
+            }
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            padding: 20px;
+            background-size: 50%;
+        }
+
+        .gallery-overlay-bar {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            right: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 15;
+            pointer-events: none;
+        }
+        .btn-overlay {
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: white;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .btn-overlay i {
+            margin-right: 6px;
+        }
+        .btn-overlay:hover {
+            background: #000000cc;
+            transform: scale(1.02);
+        }
+
+        .action-buttons-panel {
+            position: absolute;
+            bottom: 18px;
+            right: 18px;
+            z-index: 15;
+            display: flex;
+            gap: 12px;
+            pointer-events: none;
+        }
+        .action-btn {
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .action-btn i {
+            font-size: 1rem;
+        }
+        .action-btn:hover {
+            background: #000000dd;
+            transform: translateY(-2px);
+        }
+        .like-active {
+            background: #e63946cc !important;
+        }
+
+        .project-info {
+            padding: 1.5rem 1.8rem 2rem;
+        }
+        .project-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #0b2b3b;
+            margin-bottom: 0.5rem;
+        }
+        .project-chars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+        .char-badge {
+            background: #eef2f8;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e4663;
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .btn-custom {
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-calc {
+            background: #1e6f3f;
+            border: none;
+            color: white;
+        }
+        .btn-calc:hover {
+            background: #0f5a34;
+            transform: translateY(-2px);
+        }
+        .btn-mortgage {
+            background: #e67e22;
+            border: none;
+            color: white;
+        }
+        .btn-mortgage:hover {
+            background: #cf711f;
+            transform: translateY(-2px);
+        }
+
+        
+        @media (max-width: 576px) {
+            .project-title { font-size: 1.4rem; }
+            .project-info { padding: 1.2rem; }
+            .action-btn { padding: 0.4rem 1rem; font-size: 0.75rem; }
+        }
+        /* Дополнительные стили */
+        .modal-full-gallery .modal-body {
+            height: 85vh;
+            overflow: hidden;
+        }
+        
+        /* Контейнер для зума */
+        .zoom-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            cursor: zoom-in;
+        }
+        
+        .zoom-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transform-origin: center center;
+        }
+        
+        .zoom-wrapper.zoomed {
+            cursor: zoom-out;
+        }
+        
+        #zoomImage {
+            display: block;
+            max-width: 100%;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        /* Увеличенное состояние */
+        .zoom-wrapper.zoomed #zoomImage {
+            max-width: none;
+            max-height: none;
+            width: auto;
+            height: auto;
+            pointer-events: auto;
+        }
+        
+        /* Кнопки навигации */
+        .modal-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 15;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-nav-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .modal-nav-prev {
+            left: 20px;
+        }
+        
+        .modal-nav-next {
+            right: 20px;
+        }
+        
+        /* Подсказка */
+        .swipe-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 6px 15px;
+            border-radius: 20px;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            font-family: monospace;
+        }
+        
+        .swipe-hint i {
+            margin: 0 5px;
+        }
+        
+        /* Скрываем стрелки навигации при зуме для удобства */
+        .zoom-wrapper.zoomed ~ .modal-nav-btn {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        @media (max-width: 768px) {
+            .modal-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            .swipe-hint {
+                font-size: 10px;
+                padding: 4px 10px;
+                white-space: nowrap;
+            }
+        }
+        
+        /* Анимация */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .swipe-hint {
+            animation: fadeInUp 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+<section class="container">
+    <div class="row">
+        <!-- Левая колонка - галерея -->
+        <div class="col-12 col-lg-8">
+            <div class="project-card">
+                <div class="gallery-wrapper">
+                    <!-- ОДНА карусель со ВСЕМИ изображениями -->
+                    <div id="mainCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                        <div class="carousel-inner">
+                            {% for image in project_images %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}" data-type="{{ image.image_type }}">
+                                    <img src="{{ image.image.url }}" alt="{{ image.get_alt }}" data-index="{{ forloop.counter0 }}">
+                                </div>
+                            {% empty %}
+                                <div class="carousel-item active">
+                                    <div style="height:460px;background:#1a1e2b;display:flex;align-items:center;justify-content:center;color:white;">Нет изображений</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                            <span class="sr-only">Предыдущее изображение</span>
+                        </a>
+                        <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                            <span class="sr-only">Следующее изображение</span>
+                        </a>
+                    </div>
+
+                    <!-- Оверлей: счетчик + кнопки переключения типов -->
+                    <div class="gallery-overlay-bar">
+                        <button class="btn btn-overlay" id="counterBtn" type="button">
+                            <i class="fas fa-images"></i> <span id="slideCounter">1 / {{ project_images|length }}</span>
+                        </button>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-overlay" id="facadeTypeBtn" type="button">
+                                <i class="fas fa-home"></i> <span>Фасад</span>
+                            </button>
+                            <button class="btn btn-overlay" id="planTypeBtn" type="button">
+                                <i class="fas fa-draw-polygon"></i> <span>Планировка</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Панель действий: лайк и поделиться -->
+                    <div class="action-buttons-panel">
+                        <button class="action-btn" id="likeActionBtn">
+                            <i class="far fa-heart"></i> <span>Нравится</span>
+                        </button>
+                        <button class="action-btn" id="shareActionBtn">
+                            <i class="fas fa-share-alt"></i> <span>Поделиться</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Характеристики проекта (под галереей) -->
+                <div class="project-info">
+                    <div class="project-chars">
+                        <span class="char-badge"><i class="fas fa-ruler-combined"></i> {{ project.area|default:"-" }} м²</span>
+                        <span class="char-badge"><i class="fas fa-pallet"></i> {{ project.material|default:"ThermoBlock" }}</span>
+                        <span class="char-badge"><i class="fas fa-square"></i> {{ project.rooms_count|default:"-" }} комнат</span>
+                        <span class="char-badge"><i class="fas fa-bed"></i> {{ project.bedrooms_count|default:"-" }} спален</span>
+                        <span class="char-badge"><i class="fas fa-building"></i> {{ project.floors_count|default:"-" }} этажа</span>
+                        <span class="char-badge"><i class="fas fa-toilet"></i> {{ project.bathrooms_count|default:"-" }} санузла</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая колонка - описание проекта -->
+        <div class="col-12 col-lg-4">
+            <div class="project-description">
+                <h2 class="project-title-main">{{ project.title|default:"Название проекта" }}</h2>
+                
+                {% if project.short_description %}
+                    <div class="project-short-desc">
+                        <i class="fas fa-tag"></i> {{ project.short_description }}
+                    </div>
+                {% endif %}
+                
+                <div class="project-description-text">
+                    <h4><i class="fas fa-info-circle"></i> Описание</h4>
+                    <p>{{ project.description|default:"Нет описания"|linebreaks }}</p>
+                </div>
+                
+                {% if project.features %}
+                    <div class="project-features">
+                        <h4><i class="fas fa-star"></i> Особенности</h4>
+                        <ul>
+                            {% for feature in project.features %}
+                                <li><i class="fas fa-check-circle"></i> {{ feature }}</li>
+                            {% empty %}
+                                <li>Современные материалы</li>
+                                <li>Энергоэффективность</li>
+                                <li>Быстрый монтаж</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                <div class="button-group">
+                    <button class="btn btn-calc btn-custom" id="calcProjectBtn">
+                        <i class="fas fa-calculator"></i> Рассчитать стоимость
+                    </button>
+                    <button class="btn btn-mortgage btn-custom" id="mortgageProjectBtn">
+                        <i class="fas fa-home"></i> Ипотека
+                    </button>
+                </div>
+                
+                <div class="project-contacts">
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <small>Звоните</small>
+                            <span>+7 (XXX) XXX-XX-XX</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <small>Пишите</small>
+                            <span>info@example.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для полноэкранного просмотра с лупой по клику -->
+    <div class="modal fade modal-full-gallery" id="fullGalleryModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header border-0">
+                    <div class="custom-modal-counter text-white">
+                        <i class="fas fa-expand-alt"></i> <span id="modalCounter">1 / 6</span>
+                    </div>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="padding: 0; position: relative; overflow: hidden;">
+                    <!-- Контейнер для картинки с зумом -->
+                    <div class="zoom-container" id="zoomContainer">
+                        <div class="zoom-wrapper" id="zoomWrapper">
+                            <img id="zoomImage" src="" alt="Увеличенное изображение">
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопки навигации -->
+                    <button class="modal-nav-btn modal-nav-prev" id="modalPrevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="modal-nav-btn modal-nav-next" id="modalNextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    
+                    <!-- Подсказка -->
+                    <div class="swipe-hint">
+                        <i class="fas fa-chevron-left"></i> Листайте <i class="fas fa-chevron-right"></i> | <i class="fas fa-search-plus"></i> Кликните для увеличения
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Данные об индексах начала каждой категории
+    const imageTypes = [];
+    {% for image in project_images %}
+        imageTypes.push('{{ image.image_type }}');
+    {% endfor %}
+    
+    // Массив с URL изображений в высоком разрешении
+    const highResImages = [];
+    {% for image in project_images %}
+        highResImages.push('{{ image.image.url }}');
+    {% endfor %}
+    
+    // Находим индекс первого фасада и первой планировки
+    let firstFacadeIndex = -1;
+    let firstPlanIndex = -1;
+    
+    for (let i = 0; i < imageTypes.length; i++) {
+        if (firstFacadeIndex === -1 && imageTypes[i] === 'facade') {
+            firstFacadeIndex = i;
+        }
+        if (firstPlanIndex === -1 && imageTypes[i] === 'plan') {
+            firstPlanIndex = i;
+        }
+    }
+    
+    // Кнопки переключения типов
+    const facadeBtn = document.getElementById('facadeTypeBtn');
+    const planBtn = document.getElementById('planTypeBtn');
+    
+    // Функция для принудительного обновления карусели
+    function refreshCarousel(index) {
+        const carousel = $('#mainCarousel');
+        carousel.carousel('dispose');
+        carousel.carousel({
+            interval: false,
+            ride: false
+        });
+        carousel.carousel(parseInt(index));
+        setTimeout(updateCounter, 100);
+    }
+    
+    if (facadeBtn) {
+        facadeBtn.addEventListener('click', () => {
+            if (firstFacadeIndex !== -1) {
+                refreshCarousel(firstFacadeIndex);
+                facadeBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => { facadeBtn.style.transform = ''; }, 200);
+            }
+        });
+    }
+    
+    if (planBtn) {
+        planBtn.addEventListener('click', () => {
+            if (firstPlanIndex !== -1) {
+                refreshCarousel(firstPlanIndex);
+                planBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => { planBtn.style.transform = ''; }, 200);
+            }
+        });
+    }
+    
+    // Счетчик текущего слайда
+    const counterSpan = document.getElementById('slideCounter');
+    const totalSlides = {{ project_images|length }};
+    
+    function updateCounter() {
+        const activeIndex = $('#mainCarousel .carousel-item.active').index();
+        if (activeIndex !== -1) {
+            counterSpan.innerText = `${activeIndex + 1} / ${totalSlides}`;
+        }
+    }
+    
+    $('#mainCarousel').on('slid.bs.carousel', function() {
+        updateCounter();
+    });
+    
+    setInterval(() => {
+        const activeIndex = $('#mainCarousel .carousel-item.active').index();
+        const currentCounter = parseInt(counterSpan.innerText.split('/')[0]);
+        if (activeIndex !== -1 && activeIndex + 1 !== currentCounter) {
+            counterSpan.innerText = `${activeIndex + 1} / ${totalSlides}`;
+        }
+    }, 500);
+    
+    updateCounter();
+    
+    // Модальное окно с зумом по клику
+    let currentModalIndex = 0;
+    let isZoomed = false;
+    let zoomScale = 2.5;
+    let panX = 0, panY = 0;
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    
+    const modalImage = document.getElementById('zoomImage');
+    const zoomWrapper = document.getElementById('zoomWrapper');
+    const modalPrevBtn = document.getElementById('modalPrevBtn');
+    const modalNextBtn = document.getElementById('modalNextBtn');
+    const modalCounterSpan = document.getElementById('modalCounter');
+    const fullModal = $('#fullGalleryModal');
+    const zoomContainer = document.getElementById('zoomContainer');
+    
+    function openFullGallery(startIdx) {
+        if (!highResImages.length) return;
+        currentModalIndex = startIdx;
+        resetZoom();
+        updateModalImage();
+        fullModal.modal('show');
+    }
+    
+    function resetZoom() {
+        isZoomed = false;
+        zoomWrapper.classList.remove('zoomed');
+        zoomWrapper.style.transform = 'scale(1)';
+        if (zoomContainer) zoomContainer.style.cursor = 'zoom-in';
+        panX = 0;
+        panY = 0;
+    }
+    
+    function updateModalImage() {
+        modalImage.src = highResImages[currentModalIndex];
+        modalCounterSpan.innerText = `${currentModalIndex + 1} / ${highResImages.length}`;
+        resetZoom();
+    }
+    
+    function toggleZoom(e) {
+        if (!isZoomed) {
+            isZoomed = true;
+            zoomWrapper.classList.add('zoomed');
+            zoomContainer.style.cursor = 'zoom-out';
+            
+            const rect = zoomWrapper.getBoundingClientRect();
+            
+            let clickX, clickY;
+            if (e) {
+                clickX = e.clientX - rect.left;
+                clickY = e.clientY - rect.top;
+            } else {
+                clickX = rect.width / 2;
+                clickY = rect.height / 2;
+            }
+            
+            zoomWrapper.style.transform = `scale(${zoomScale})`;
+            
+            const wrapperWidth = rect.width;
+            const wrapperHeight = rect.height;
+            const scaledWidth = wrapperWidth * zoomScale;
+            const scaledHeight = wrapperHeight * zoomScale;
+            
+            let moveX = (clickX - wrapperWidth / 2) * (zoomScale - 1);
+            let moveY = (clickY - wrapperHeight / 2) * (zoomScale - 1);
+            
+            const maxX = (scaledWidth - wrapperWidth) / 2;
+            const maxY = (scaledHeight - wrapperHeight) / 2;
+            moveX = Math.min(Math.max(moveX, -maxX), maxX);
+            moveY = Math.min(Math.max(moveY, -maxY), maxY);
+            
+            panX = moveX;
+            panY = moveY;
+            zoomWrapper.style.transform = `scale(${zoomScale}) translate(${-panX}px, ${-panY}px)`;
+        } else {
+            resetZoom();
+        }
+    }
+    
+    function startDrag(e) {
+        if (!isZoomed) return;
+        isDragging = true;
+        startX = e.clientX - panX;
+        startY = e.clientY - panY;
+        zoomWrapper.style.transition = 'none';
+        e.preventDefault();
+    }
+    
+    function onDrag(e) {
+        if (!isDragging || !isZoomed) return;
+        panX = startX - e.clientX;
+        panY = startY - e.clientY;
+        
+        const wrapper = zoomWrapper.getBoundingClientRect();
+        const scaledWidth = wrapper.width * zoomScale;
+        const scaledHeight = wrapper.height * zoomScale;
+        const maxX = (scaledWidth - wrapper.width) / 2;
+        const maxY = (scaledHeight - wrapper.height) / 2;
+        
+        panX = Math.min(Math.max(panX, -maxX), maxX);
+        panY = Math.min(Math.max(panY, -maxY), maxY);
+        
+        zoomWrapper.style.transform = `scale(${zoomScale}) translate(${-panX}px, ${-panY}px)`;
+    }
+    
+    function stopDrag() {
+        isDragging = false;
+        zoomWrapper.style.transition = '';
+    }
+    
+    if (zoomContainer) {
+        zoomContainer.addEventListener('click', (e) => {
+            if (e.target.closest('.modal-nav-btn')) return;
+            toggleZoom(e);
+        });
+        
+        zoomWrapper.addEventListener('mousedown', startDrag);
+        window.addEventListener('mousemove', onDrag);
+        window.addEventListener('mouseup', stopDrag);
+        
+        zoomContainer.addEventListener('wheel', (e) => {
+            if (isZoomed) {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -0.2 : 0.2;
+                zoomScale = Math.min(Math.max(zoomScale + delta, 1.5), 4);
+                if (zoomScale <= 1.5) {
+                    resetZoom();
+                } else {
+                    zoomWrapper.style.transform = `scale(${zoomScale}) translate(${-panX}px, ${-panY}px)`;
+                }
+            }
+        });
+    }
+    
+    function nextImage() {
+        if (currentModalIndex < highResImages.length - 1) {
+            currentModalIndex++;
+        } else {
+            currentModalIndex = 0;
+        }
+        updateModalImage();
+    }
+    
+    function prevImage() {
+        if (currentModalIndex > 0) {
+            currentModalIndex--;
+        } else {
+            currentModalIndex = highResImages.length - 1;
+        }
+        updateModalImage();
+    }
+    
+    if (modalPrevBtn) {
+        modalPrevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            prevImage();
+        });
+    }
+    
+    if (modalNextBtn) {
+        modalNextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            nextImage();
+        });
+    }
+    
+    // Свайп для мобильных
+    let touchStartX = 0;
+    
+    if (zoomContainer) {
+        zoomContainer.addEventListener('touchstart', (e) => {
+            if (isZoomed) {
+                if (e.touches.length === 1) {
+                    startDrag(e.touches[0]);
+                }
+            } else {
+                touchStartX = e.changedTouches[0].screenX;
+            }
+        });
+        
+        zoomContainer.addEventListener('touchmove', (e) => {
+            if (isZoomed) {
+                onDrag(e.touches[0]);
+                e.preventDefault();
+            }
+        });
+        
+        zoomContainer.addEventListener('touchend', (e) => {
+            if (isZoomed) {
+                stopDrag();
+            } else {
+                const touchEndX = e.changedTouches[0].screenX;
+                const diffX = touchEndX - touchStartX;
+                
+                if (Math.abs(diffX) > 50) {
+                    if (diffX > 0) {
+                        prevImage();
+                    } else {
+                        nextImage();
+                    }
+                }
+            }
+        });
+    }
+    
+    // Клавиатура
+    document.addEventListener('keydown', (e) => {
+        if (fullModal.hasClass('show')) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevImage();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextImage();
+            } else if (e.key === 'Escape') {
+                if (isZoomed) {
+                    resetZoom();
+                } else {
+                    fullModal.modal('hide');
+                }
+            }
+        }
+    });
+    
+    // Клик по картинке в главной карусели
+    $(document).on('click', '#mainCarousel .carousel-item img', function() {
+        const idx = $(this).closest('.carousel-item').index();
+        openFullGallery(idx);
+    });
+    
+    // Лайк
+    let liked = false;
+    const likeBtn = document.getElementById('likeActionBtn');
+    if (likeBtn) {
+        likeBtn.addEventListener('click', () => {
+            liked = !liked;
+            if (liked) {
+                likeBtn.classList.add('like-active');
+                likeBtn.innerHTML = '<i class="fas fa-heart"></i> <span>Нравится</span>';
+                likeBtn.style.transform = 'scale(1.1)';
+                setTimeout(() => { likeBtn.style.transform = ''; }, 200);
+            } else {
+                likeBtn.classList.remove('like-active');
+                likeBtn.innerHTML = '<i class="far fa-heart"></i> <span>Нравится</span>';
+            }
+        });
+    }
+    
+    // Поделиться
+    const shareBtn = document.getElementById('shareActionBtn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+            const shareData = {
+                title: '{{ project.title|default:"Проект дома"|escapejs }}',
+                text: '{{ project.area|default:"" }} м², {{ project.material|default:"" }}',
+                url: window.location.href,
+            };
+            
+            if (navigator.share && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        fallbackShare();
+                    }
+                }
+            } else {
+                fallbackShare();
+            }
+            
+            function fallbackShare() {
+                const input = document.createElement('textarea');
+                input.value = window.location.href;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                alert('Ссылка скопирована в буфер обмена!');
+            }
+        });
+    }
+    
+    // Рассчитать и Ипотека
+    const calcBtn = document.getElementById('calcProjectBtn');
+    if (calcBtn) {
+        calcBtn.addEventListener('click', () => {
+            alert('🧮 Расчёт стоимости проекта\nПлощадь: {{ project.area|default:"125" }} м²\nМатериал: {{ project.material|default:"ThermoBlock" }}\nОриентировочная цена: от 7 510 000 ₽');
+        });
+    }
+    
+    const mortgageBtn = document.getElementById('mortgageProjectBtn');
+    if (mortgageBtn) {
+        mortgageBtn.addEventListener('click', () => {
+            alert('🏦 Ипотечный калькулятор\nПредварительная ставка от 6%\nЕжемесячный платёж ~ от 45 000 ₽');
+        });
+    }
+    
+    // Скрываем подсказку через 5 секунд
+    setTimeout(() => {
+        const hint = document.querySelector('.swipe-hint');
+        if (hint) {
+            hint.style.transition = 'opacity 0.5s';
+            hint.style.opacity = '0';
+            setTimeout(() => {
+                if (hint) hint.style.display = 'none';
+            }, 500);
+        }
+    }, 5000);
+    
+    // Пересоздаем карусель при загрузке
+    $(document).ready(function() {
+        $('#mainCarousel').carousel({
+            interval: false
+        });
+        updateCounter();
+    });
+</script>
+</body>
+</html>

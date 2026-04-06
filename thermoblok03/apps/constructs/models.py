@@ -7,9 +7,21 @@ class ProductType(models.Model):
     """Тип строения (категория)"""
     name = models.CharField('Название', max_length=100)
     slug = models.SlugField('URL', max_length=120, unique=True)
-    description = models.TextField('Описание', blank=True)
     order = models.PositiveIntegerField('Порядок', default=0)
-    
+    FLOOR_CHOICES = [
+        (1.0, '1'),
+        (1.5, '1.5'),
+        (2.0, '2'),
+        (3.0, '3'),
+        (0.0, '0'),
+    ]
+    floor = models.DecimalField(
+        max_digits=2, 
+        decimal_places=1, 
+        choices=FLOOR_CHOICES,
+        default=0.0,
+        verbose_name="Этажность"
+    )
     class Meta:
         verbose_name = 'Тип строения'
         verbose_name_plural = 'Типы строений'
@@ -47,6 +59,9 @@ class ProductType(models.Model):
         if first_image and first_image.image:
             return first_image.image.url
         return None
+    
+    def get_floor_count(self):
+        return self.get_floor_display()
 
 class RoofType(models.Model):
     """Тип крыши"""
@@ -64,7 +79,6 @@ class RoofType(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-
 
 class Product(models.Model):
     """Модель проекта дома"""
@@ -94,7 +108,7 @@ class Product(models.Model):
     # Характеристики
     area = models.DecimalField(
         'Площадь, м²', 
-        max_digits=8, 
+        max_digits=6, 
         decimal_places=2, 
         null=True, 
         blank=True,
@@ -111,15 +125,7 @@ class Product(models.Model):
         null=True, 
         blank=True
     )
-    floors_count = models.DecimalField(
-        'Количество этажей', 
-        max_digits=3, 
-        decimal_places=1, 
-        null=True, 
-        blank=True,
-        help_text='1 - одноэтажный, 1.5 - полутораэтажный, 2 - двухэтажный и т.д.'
-    )
-    
+        
     # Дополнительные характеристики (опционально)
     bedrooms_count = models.PositiveSmallIntegerField(
         'Количество спален', 
@@ -157,6 +163,13 @@ class Product(models.Model):
             models.Index(fields=['is_active']),
         ]
     
+    def floors_count(self):
+        'Количество этажей'
+        if self.product_type:
+            return self.product_type.get_floor_count()
+        else:
+            return '-'
+
     def __str__(self):
         return self.title
     
@@ -167,14 +180,22 @@ class Product(models.Model):
     
     def get_first_image(self):
         """Возвращает первое изображение для использования в шаблонах"""
-        first = self.images.filter(is_main=True).first()
+        first = self.images.filter(is_main=True).order_by('order').first()
         if not first:
             first = self.images.first()
         return first
+    
+
 
 
 class ProductImage(models.Model):
     """Модель для хранения изображений проектов"""
+    class ImageType(models.TextChoices):
+        FACADE = ('facade', 'Фасад')
+        PLAN = ('plan', 'Планировка')
+        INTERIOR = ('interior', 'Интерьер')
+        EXTERIOR = ('exterior', 'Екстерьер')
+    
     product = models.ForeignKey(
         Product, 
         on_delete=models.CASCADE,
@@ -185,7 +206,17 @@ class ProductImage(models.Model):
         'Изображение', 
         upload_to='constructs/'
     )
-    alt = models.CharField('Alt текст', max_length=200, blank=True)
+    image_type = models.CharField(
+        max_length=20, 
+        choices=ImageType.choices, 
+        default=ImageType.EXTERIOR, 
+        verbose_name='Тип изображения'
+    )
+    alt = models.CharField(
+        'Alt текст', 
+        max_length=120, 
+        blank=True,
+        help_text='только вид, перед этим будет добавдено название проекта и вид фотографии')
     order = models.PositiveIntegerField('Порядок', default=0)
     is_main = models.BooleanField('Главное', default=False)
     
@@ -194,8 +225,8 @@ class ProductImage(models.Model):
         verbose_name_plural = 'Изображения проектов'
         ordering = ['order']
     
-    def __str__(self):
-        return f"{self.product.title} - изображение {self.order}"
+    def get_alt(self):
+        return f"{self.order}. {self.product.title} {self.get_image_type_display()} {self.alt}"
     
     def save(self, *args, **kwargs):
         # Если это главное изображение, сбрасываем флаг у других
@@ -207,3 +238,6 @@ class ProductImage(models.Model):
             self.alt = f"{self.product.title} - фото {self.order}"
         
         super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"{self.get_alt()}"

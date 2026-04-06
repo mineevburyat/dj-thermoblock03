@@ -1,0 +1,584 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>{{ project.name|default:"Проект дома" }}</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Font Awesome 5 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-card {
+            max-width: 960px;
+            width: 100%;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .gallery-wrapper {
+            position: relative;
+            background: #0a0c15;
+        }
+
+        .carousel {
+            background: #0f111a;
+        }
+        .carousel-inner, .carousel-item {
+            background: #0f111a;
+        }
+        .carousel-item img {
+            object-fit: cover;
+            width: 100%;
+            height: 460px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        @media (max-width: 768px) {
+            .carousel-item img {
+                height: 320px;
+            }
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            padding: 20px;
+            background-size: 50%;
+        }
+
+        .gallery-overlay-bar {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            right: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 15;
+            pointer-events: none;
+        }
+        .btn-overlay {
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: white;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .btn-overlay i {
+            margin-right: 6px;
+        }
+        .btn-overlay:hover {
+            background: #000000cc;
+            transform: scale(1.02);
+        }
+
+        .action-buttons-panel {
+            position: absolute;
+            bottom: 18px;
+            right: 18px;
+            z-index: 15;
+            display: flex;
+            gap: 12px;
+            pointer-events: none;
+        }
+        .action-btn {
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .action-btn i {
+            font-size: 1rem;
+        }
+        .action-btn:hover {
+            background: #000000dd;
+            transform: translateY(-2px);
+        }
+        .like-active {
+            background: #e63946cc !important;
+        }
+
+        .project-info {
+            padding: 1.5rem 1.8rem 2rem;
+        }
+        .project-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #0b2b3b;
+            margin-bottom: 0.5rem;
+        }
+        .project-chars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+        .char-badge {
+            background: #eef2f8;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1e4663;
+        }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .btn-custom {
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-calc {
+            background: #1e6f3f;
+            border: none;
+            color: white;
+        }
+        .btn-calc:hover {
+            background: #0f5a34;
+            transform: translateY(-2px);
+        }
+        .btn-mortgage {
+            background: #e67e22;
+            border: none;
+            color: white;
+        }
+        .btn-mortgage:hover {
+            background: #cf711f;
+            transform: translateY(-2px);
+        }
+
+        .modal-full-gallery .modal-dialog {
+            max-width: 98vw;
+            margin: 0.5rem auto;
+        }
+        .modal-full-gallery .modal-content {
+            background: #000000dd;
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 1.2rem;
+        }
+        .modal-full-gallery .modal-body {
+            padding: 0 1rem 1rem;
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-carousel-item img {
+            max-height: 80vh;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            margin: 0 auto;
+            display: block;
+        }
+                /* Дополнительные стили для модального окна */
+        .modal-full-gallery .modal-body {
+            padding: 0;
+            height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #modalCarousel {
+            width: 100%;
+            height: 100%;
+        }
+        
+        #modalCarousel .carousel-inner {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        
+        #modalCarousel .carousel-item {
+            text-align: center;
+            height: 100%;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #modalCarousel .carousel-item img {
+            max-height: 95vh;
+            max-width: 95vw;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        /* Подсказка для свайпа */
+        .swipe-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 20px;
+            width: fit-content;
+            margin: 0 auto 20px auto;
+            pointer-events: none;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+        
+        .swipe-hint i {
+            margin: 0 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .swipe-hint {
+                font-size: 12px;
+                bottom: 10px;
+                padding: 5px 12px;
+            }
+        }
+        
+        /* Улучшенные стрелки для модального окна */
+        .modal-full-gallery .carousel-control-prev,
+        .modal-full-gallery .carousel-control-next {
+            width: 10%;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .modal-full-gallery .carousel-control-prev:hover,
+        .modal-full-gallery .carousel-control-next:hover {
+            opacity: 1;
+        }
+        
+        /* Анимация для подсказки */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .swipe-hint {
+            animation: fadeInUp 0.5s ease-out;
+        }
+        .custom-modal-counter {
+            background: rgba(0,0,0,0.6);
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .type-indicator {
+            background: #ffc10720;
+            border-radius: 20px;
+            padding: 2px 8px;
+            margin-left: 6px;
+            font-size: 0.7rem;
+        }
+        @media (max-width: 576px) {
+            .project-title { font-size: 1.4rem; }
+            .project-info { padding: 1.2rem; }
+            .action-btn { padding: 0.4rem 1rem; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="project-card">
+        <div class="gallery-wrapper">
+            <!-- ОДНА карусель со ВСЕМИ изображениями -->
+            <div id="mainCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                <div class="carousel-inner">
+                    {% for image in project_images %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}" data-type="{{ image.type }}">
+                            <img src="{{ image.image.url }}" alt="{{ image.get_alt }}" data-index="{{ forloop.counter0 }}">
+                        </div>
+                    {% empty %}
+                        <div class="carousel-item active">
+                            <div style="height:460px;background:#1a1e2b;display:flex;align-items:center;justify-content:center;color:white;">Нет изображений</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    <span class="sr-only">Предыдущее изображение</span>
+                </a>
+                <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    <span class="sr-only">Следующее изображение</span>
+                </a>
+            </div>
+
+            <!-- Оверлей: счетчик + кнопки переключения типов -->
+            <div class="gallery-overlay-bar">
+                <button class="btn btn-overlay" id="counterBtn" type="button">
+                    <i class="fas fa-images"></i> <span id="slideCounter">1 / {{ project_images|length }}</span>
+                </button>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-overlay" id="facadeTypeBtn" type="button">
+                        <i class="fas fa-home"></i> <span>Фасад</span>
+                    </button>
+                    <button class="btn btn-overlay" id="planTypeBtn" type="button">
+                        <i class="fas fa-draw-polygon"></i> <span>Планировка</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Панель действий: лайк и поделиться -->
+            <div class="action-buttons-panel">
+                <button class="action-btn" id="likeActionBtn">
+                    <i class="far fa-heart"></i> <span>Нравится</span>
+                </button>
+                <button class="action-btn" id="shareActionBtn">
+                    <i class="fas fa-share-alt"></i> <span>Поделиться</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Информация о проекте -->
+        <div class="project-info">
+            <h3 class="project-title">{{ project.title|default:"Дом ThermoBlock" }}</h3>
+            <div class="project-chars">
+                <span class="char-badge"><i class="fas fa-ruler-combined"></i> {{ project.area|default:"-" }} м²</span>
+                <span class="char-badge"><i class="fas fa-tree"></i> {{ project.material|default:"-" }}</span>
+                <span class="char-badge"><i class="fas fa-bed"></i> {{ project.bedrooms_count|default:"-" }} спален</span>
+                <span class="char-badge"><i class="fas fa-building"></i> {{ project.floors_count|default:"-" }} этажа</span>
+                <span class="char-badge"><i class="fas fa-toilet"></i> {{ project.bathrooms_count|default:"-" }} санузла</span>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-calc btn-custom" id="calcProjectBtn"><i class="fas fa-calculator"></i> Рассчитать</button>
+                <button class="btn btn-mortgage btn-custom" id="mortgageProjectBtn"><i class="fas fa-home"></i> Ипотека</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для полноэкранного просмотра -->
+    <div class="modal fade modal-full-gallery" id="fullGalleryModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header border-0">
+                    <div class="custom-modal-counter text-white">
+                        <i class="fas fa-expand-alt"></i> <span id="modalCounter">1 / 6</span>
+                    </div>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalCarousel" class="carousel slide w-100" data-ride="carousel" data-interval="false">
+                        <div class="carousel-inner" id="modalCarouselInner"></div>
+                        <a class="carousel-control-prev" href="#modalCarousel" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#modalCarousel" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Минимум JS — только для переключения к первому слайду категории
+        // и для модального окна
+        
+        // Данные об индексах начала каждой категории
+        const imageTypes = [];
+        {% for image in project_images %}
+            imageTypes.push('{{ image.image_type }}');
+        {% endfor %}
+        console.log(imageTypes)
+        // Находим индекс первого фасада и первой планировки
+        let firstFacadeIndex = -1;
+        let firstPlanIndex = -1;
+        
+        for (let i = 0; i < imageTypes.length; i++) {
+            if (firstFacadeIndex === -1 && imageTypes[i] === 'facade') {
+                firstFacadeIndex = i;
+            }
+            if (firstPlanIndex === -1 && imageTypes[i] === 'plan') {
+                firstPlanIndex = i;
+            }
+        }
+        console.log(firstFacadeIndex, firstPlanIndex)
+        // Кнопки переключения типов
+        const facadeBtn = document.getElementById('facadeTypeBtn');
+        const planBtn = document.getElementById('planTypeBtn');
+        
+        if (facadeBtn) {
+            facadeBtn.addEventListener('click', () => {
+                if (firstFacadeIndex !== -1) {
+                    $('#mainCarousel').carousel(firstFacadeIndex);
+                }
+            });
+        }
+        
+        if (planBtn) {
+            planBtn.addEventListener('click', () => {
+                if (firstPlanIndex !== -1) {
+                    $('#mainCarousel').carousel(firstPlanIndex);
+                }
+            });
+        }
+        
+        // Счетчик текущего слайда
+        const counterSpan = document.getElementById('slideCounter');
+        const totalSlides = {{ project_images|length }};
+        
+        function updateCounter() {
+            const activeIndex = $('#mainCarousel .carousel-item.active').index();
+            counterSpan.innerText = `${activeIndex + 1} / ${totalSlides}`;
+        }
+        
+        $('#mainCarousel').on('slid.bs.carousel', updateCounter);
+        updateCounter();
+        
+        // Модальное окно — собираем все изображения из главной карусели
+        const modalCarouselInner = document.getElementById('modalCarouselInner');
+        const modalCounterSpan = document.getElementById('modalCounter');
+        const fullModal = $('#fullGalleryModal');
+        
+        function openFullGallery(startIdx) {
+            // Берем все изображения из главной карусели
+            const images = document.querySelectorAll('#mainCarousel .carousel-item img');
+            
+            if (!images.length) return;
+            
+            modalCarouselInner.innerHTML = '';
+            images.forEach((img, i) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = `carousel-item ${i === startIdx ? 'active' : ''}`;
+                const newImg = document.createElement('img');
+                newImg.src = img.src;
+                newImg.alt = img.alt;
+                newImg.style.maxHeight = '95vh';
+                newImg.style.width = 'auto';
+                newImg.style.margin = '0 auto';
+                slideDiv.appendChild(newImg);
+                modalCarouselInner.appendChild(slideDiv);
+            });
+            
+            modalCounterSpan.innerText = `${startIdx + 1} / ${images.length}`;
+            $('#modalCarousel').carousel(parseInt(startIdx));
+            $('#modalCarousel').off('slid.bs.carousel');
+            $('#modalCarousel').on('slid.bs.carousel', () => {
+                const activeIdx = $('#modalCarousel .carousel-item.active').index();
+                modalCounterSpan.innerText = `${activeIdx + 1} / ${images.length}`;
+            });
+            fullModal.modal('show');
+        }
+        
+        // Клик по картинке в главной карусели
+        $(document).on('click', '#mainCarousel .carousel-item img', function() {
+            const idx = $(this).closest('.carousel-item').index();
+            openFullGallery(idx);
+        });
+        
+        // Лайк
+        let liked = false;
+        const likeBtn = document.getElementById('likeActionBtn');
+        if (likeBtn) {
+            likeBtn.addEventListener('click', () => {
+                liked = !liked;
+                if (liked) {
+                    likeBtn.classList.add('like-active');
+                    likeBtn.innerHTML = '<i class="fas fa-heart"></i> <span>Нравится</span>';
+                } else {
+                    likeBtn.classList.remove('like-active');
+                    likeBtn.innerHTML = '<i class="far fa-heart"></i> <span>Нравится</span>';
+                }
+            });
+        }
+        
+        // Поделиться
+        const shareBtn = document.getElementById('shareActionBtn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: '{{ project.name|default:"Проект дома"|escapejs }}',
+                        text: '{{ project.area|default:"125" }} м², из {{ project.material|default:"дерева"|escapejs }}',
+                        url: window.location.href
+                    }).catch(() => {});
+                } else {
+                    const input = document.createElement('textarea');
+                    input.value = window.location.href;
+                    document.body.appendChild(input);
+                    input.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(input);
+                    alert('Ссылка скопирована!');
+                }
+            });
+        }
+        
+        // Рассчитать и Ипотека
+        const calcBtn = document.getElementById('calcProjectBtn');
+        if (calcBtn) {
+            calcBtn.addEventListener('click', () => {
+                alert('🧮 Расчёт стоимости проекта\nПлощадь: {{ project.area|default:"125" }} м²\nМатериал: {{ project.material|default:"Двойной брус" }}\nОриентировочная цена: от 7 510 000 ₽');
+            });
+        }
+        
+        const mortgageBtn = document.getElementById('mortgageProjectBtn');
+        if (mortgageBtn) {
+            mortgageBtn.addEventListener('click', () => {
+                alert('🏦 Ипотечный калькулятор\nПредварительная ставка от 6%\nЕжемесячный платёж ~ от 45 000 ₽');
+            });
+        }
+    </script>
+</body>
+</html>
