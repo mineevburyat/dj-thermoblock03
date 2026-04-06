@@ -79,14 +79,13 @@ class House(models.Model):
     # Основная информация
     name = models.CharField('Название дома', max_length=200)
     description = models.TextField('Описание', blank=True)
-    address = models.CharField('Адрес', max_length=300, blank=True)
-    
+        
     # Характеристики дома
     built_year = models.PositiveIntegerField(
         'Год постройки',
         null=True,
         blank=True,
-        validators=[MinValueValidator(1900), MaxValueValidator(2100)]
+        validators=[MinValueValidator(2016), MaxValueValidator(2050)]
     )
     area_sqm = models.DecimalField(
         'Площадь (м²)',
@@ -100,14 +99,7 @@ class House(models.Model):
         null=True,
         blank=True
     )
-    price = models.DecimalField(
-        'Цена',
-        max_digits=12,
-        decimal_places=2,
-        null=True,
-        blank=True,
-        help_text='Цена в рублях'
-    )
+    
     status = models.CharField(
         'Статус',
         max_length=20,

@@ -1,12 +1,8 @@
 {% load static %}
 <section class="projects-preview">
-    <div class="container">
-        <!-- Заголовок секции -->
-        <div class="section-header">
-            <h2 class="section-title">Популярные проекты домов из ThermoBlock</h2>
-            <p class="section-subtitle">Стройте с умом - живите с комфортом!</p>
-        </div>
-
+    <div class="container pt-2">
+        <h2 class="h2 text-center">Популярные проекты домов из <strong class="stronglogo"><span class="logotext" aria-label="ТермоБлок"><span class="hotlogo">Thermo</span><span class="collogo">Block</span></span></strong></h2>
+        <p class="display-5 text-center">Стройте с умом - живите с комфортом!</p>
         <!-- Сетка с тремя проектами -->
         <div class="projects-grid">
             {% for project in projects|slice:":3" %}
@@ -90,7 +86,6 @@
         <!-- Секция категорий домов -->
         <div class="categories-section">
             <h3 class="categories-title">Категории зданий</h3>
-            
             <div class="categories-grid">
                 {% for category in categories %}
                 <a href="{% url 'constructs:index' %}?product_type={{ category.id }}" class="category-card">
@@ -117,19 +112,12 @@
 </section>
 
 <style>
-    .projects-preview {
-        padding: 60px 0;
-        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    }
-
-
-
     /* Сетка проектов (3 колонки) */
     .projects-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 25px;
-        margin-bottom: 60px;
+        margin-bottom: 30px;
     }
 
     /* Карточка проекта */
@@ -342,14 +330,14 @@
 
     /* Секция категорий */
     .categories-section {
-        margin: 60px 0;
+        margin: 30px 0;
     }
 
     .categories-title {
         font-size: 2rem;
         font-weight: 600;
         color: #1e293b;
-        margin-bottom: 30px;
+        margin-bottom: 8px;
         text-align: center;
     }
 

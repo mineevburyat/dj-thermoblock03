@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Портфолио построенных домов от ThermoBlock. Современные энергоэффективные дома из термоблока под ключ. Реальные проекты с фото, характеристиками и описанием каждого дома. Горизонтальная лента проектов.">
+    <meta name="keywords" content="построенные дома, портфолио домов, ThermoBlock, современные дома, дома под ключ, проекты домов, термоблок, Улан-Удэ, энергоэффективные дома">
+    <meta name="author" content="ThermoBlock">
+    <meta name="robots" content="index, follow">
+    <title>Портфолио домов | ThermoBlock — построенные дома из термоблока</title>
+    
+    <!-- Bootstrap 4 CSS + Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fb;
+            color: #1a2a3a;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .portfolio-header {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .global_title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stronglogo {
+            display: inline-flex;
+            align-items: baseline;
+        }
+        
+        .hotlogo {
+            color: #e65c1e;
+            font-weight: 800;
+        }
+        
+        .collogo {
+            color: #1e4a6b;
+            font-weight: 800;
+        }
+        
+        .tm-sign {
+            font-size: 0.8rem;
+            vertical-align: super;
+            font-weight: 500;
+            color: #5b6e8c;
+        }
+        
+        .global_subtitle {
+            font-size: 1.2rem;
+            color: #2c5a6e;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+        
+        .global_line {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #e65c1e, #f4a261);
+            margin: 1rem auto 0;
+            border-radius: 4px;
+        }
+        
+        /* Горизонтальная лента (скролл) */
+        .horizontal-scroll-section {
+            padding: 3rem 0 4rem;
+            position: relative;
+        }
+        
+        .scroll-container {
+            overflow-x: auto;
+            overflow-y: visible;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            padding: 0.5rem 0 1rem;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #e65c1e;
+            border-radius: 10px;
+        }
+        
+        .houses-track {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            padding: 0.5rem 2rem;
+        }
+        
+        /* Карточка дома в горизонтальной ленте */
+        .house-card-horizontal {
+            flex-shrink: 0;
+            width: 320px;
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+        }
+        
+        .house-card-horizontal:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .house-thumb-horizontal {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+            background: #e2e8f0;
+        }
+        
+        .house-thumb-horizontal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .house-card-horizontal:hover .house-thumb-horizontal img {
+            transform: scale(1.05);
+        }
+        
+        .house-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(230, 92, 30, 0.95);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+        
+        .house-info-horizontal {
+            padding: 1.2rem 1.2rem 1rem;
+            flex: 1;
+        }
+        
+        .house-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f3b4c;
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
+        }
+        
+        .house-location {
+            font-size: 0.75rem;
+            color: #e65c1e;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .specs-grid-horizontal {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin: 0.75rem 0;
+            padding: 0.6rem 0;
+            border-top: 1px solid #eef2f6;
+            border-bottom: 1px solid #eef2f6;
+        }
+        
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: #334155;
+        }
+        
+        .spec-item i {
+            width: 18px;
+            color: #e65c1e;
+            font-size: 0.75rem;
+        }
+        
+        .house-desc-short {
+            font-size: 0.8rem;
+            color: #475569;
+            line-height: 1.4;
+            margin-top: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .view-btn {
+            margin: 0 1rem 1.2rem 1rem;
+            background: transparent;
+            border: 1.5px solid #e65c1e;
+            color: #e65c1e;
+            font-weight: 600;
+            padding: 0.5rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .view-btn:hover {
+            background: #e65c1e;
+            color: white;
+        }
+        
+        /* Контроллеры скролла */
+        .scroll-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-right: 2rem;
+        }
+        
+        .scroll-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #e65c1e;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .scroll-btn:hover {
+            background: #e65c1e;
+            color: white;
+            border-color: #e65c1e;
+        }
+        
+        /* Модальное окно */
+        .modal-gallery .modal-dialog {
+            max-width: 95%;
+            width: 1300px;
+            margin: 1.75rem auto;
+        }
+        
+        .modal-gallery .modal-content {
+            background: #1a1a2e;
+            border-radius: 28px;
+            overflow: hidden;
+        }
+        
+        .modal-gallery .modal-header {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: #1a1a2e;
+            padding: 1rem 1.5rem;
+        }
+        
+        .modal-gallery .modal-header .close {
+            color: white;
+            opacity: 0.8;
+            text-shadow: none;
+            font-size: 1.8rem;
+        }
+        
+        .gallery-container {
+            background: #0f0f1a;
+            padding: 1.5rem;
+        }
+        
+        .main-image-container {
+            background: #0a0a12;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+            max-height: 65vh;
+            position: relative;
+        }
+        
+        .main-image-container img {
+            max-width: 100%;
+            max-height: 65vh;
+            object-fit: contain;
+            width: auto;
+        }
+        
+        .nav-arrows {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+            font-size: 1.3rem;
+        }
+        
+        .nav-arrows:hover {
+            background: #e65c1e;
+        }
+        
+        .nav-prev {
+            left: 20px;
+        }
+        
+        .nav-next {
+            right: 20px;
+        }
+        
+        .houses-thumbnail-strip {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scrollbar-width: thin;
+            margin-top: 1rem;
+        }
+        
+        .house-nav-item {
+            flex-shrink: 0;
+            width: 100px;
+            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s;
+            opacity: 0.6;
+            border: 2px solid transparent;
+            background: #1e1e2e;
+        }
+        
+        .house-nav-item:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        .house-nav-item.active-house {
+            opacity: 1;
+            border-color: #e65c1e;
+        }
+        
+        .house-nav-item img {
+            width: 100%;
+            height: 65px;
+            object-fit: cover;
+        }
+        
+        .house-nav-item .house-nav-title {
+            font-size: 0.6rem;
+            padding: 4px;
+            text-align: center;
+            color: #cbd5e1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .gallery-description {
+            background: #1e1e2e;
+            padding: 1.2rem 1.5rem;
+            border-radius: 16px;
+            margin-top: 1rem;
+            color: #e2e8f0;
+        }
+        
+        .gallery-description h3 {
+            color: #f4a261;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gallery-description .house-location-modal {
+            color: #e65c1e;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .gallery-description p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        .gallery-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #334155;
+        }
+        
+        .gallery-specs span {
+            font-size: 0.8rem;
+            background: #2d2d44;
+            padding: 5px 14px;
+            border-radius: 30px;
+            color: #cbd5e1;
+        }
+        
+        .gallery-counter {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            color: white;
+        }
+        
+        footer {
+            background: #0f2c38;
+            color: #cbd5e1;
+            padding: 1.8rem;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .global_title { font-size: 2rem; }
+            .house-card-horizontal { width: 280px; }
+            .house-thumb-horizontal { height: 180px; }
+            .nav-arrows { width: 36px; height: 36px; font-size: 1rem; }
+            .modal-gallery .modal-dialog { margin: 0.5rem; }
+            .main-image-container { min-height: 300px; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #0f3b4c;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #e65c1e;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="portfolio-header">
+    <div class="container">
+        <div class="global_title">
+            Портфолио 
+            <strong class="stronglogo">
+                <span class="logotext">
+                    <span class="hotlogo">Thermo</span><span class="collogo">Block</span>
+                </span>
+                <span class="tm-sign">™</span>
+            </strong>
+        </div>
+        <div class="global_subtitle">Время строить из ThermoBlock!</div>
+        <div class="global_line"></div>
+        <p class="mt-3 text-muted" style="max-width: 700px; margin: 1rem auto 0;">Реализованные проекты домов из термоблока — листайте карточки по горизонтали, смотрите детали и вдохновляйтесь</p>
+    </div>
+</div>
+
+<!-- Горизонтальная лента портфолио -->
+<div class="horizontal-scroll-section">
+    <div class="container-fluid px-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+            <div class="section-title">
+                <i class="fas fa-home"></i> Наши проекты
+                <span class="badge badge-light ml-2" style="background:#eef2ff; color:#e65c1e;">10 домов</span>
+            </div>
+            <div class="scroll-controls">
+                <button class="btn scroll-btn" id="scrollLeftBtn"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn scroll-btn" id="scrollRightBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        
+        <div class="scroll-container" id="scrollContainer">
+            <div class="houses-track" id="housesTrack"></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 <strong>ThermoBlock</strong> — Строительство домов из термоблока. Все фотографии реальны, каждый проект построен под ключ.<br>
+    Энергоэффективные дома с гарантией качества.</p>
+</footer>
+
+<!-- Bootstrap Modal (галерея всех домов) -->
+<div class="modal fade modal-gallery" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="galleryModalLabel" style="color: white;"><i class="fas fa-home"></i> Проект ThermoBlock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="gallery-container">
+                    <div class="position-relative">
+                        <div class="main-image-container d-flex justify-content-center align-items-center">
+                            <img id="modalMainImage" src="" alt="Фото дома">
+                            <div class="gallery-counter" id="galleryCounter">1 / 10</div>
+                        </div>
+                        <button class="nav-arrows nav-prev" id="galleryPrev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="nav-arrows nav-next" id="galleryNext"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    
+                    <div class="houses-thumbnail-strip" id="housesThumbStrip"></div>
+                    
+                    <div class="gallery-description" id="galleryDescription">
+                        <!-- динамическое описание -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Данные по домам: один дом = одна фотография в карточке, в модалке показываем все дома
+    const housesData = [
+        { id: 1, title: "Усадьба с гаражом и котельней", location: "Пригород Улан-Удэ", image: "https://picsum.photos/id/104/1200/800", thumb: "https://picsum.photos/id/104/600/450", specs: { area: "90 м²", rooms: "4 комнаты", bedrooms: "3 спальни", bathroom: "Раздельный санузел", heating: "Электрическое", walls: "ТБ400" }, fullDesc: "Одноэтажный дом с гаражом и котельней в пригороде Улан-Удэ. Жилая площадь 90 кв.м. Стены из термоблока серии ТБ400. 4 комнаты, 3 спальни, раздельный санузел. Гараж на 2 машины, мастерская, котельня, тамбур. Отопление электрическое, теплые полы." },
+        { id: 2, title: "Загородный эко-дом", location: "Загородный район", image: "https://picsum.photos/id/106/1200/800", thumb: "https://picsum.photos/id/106/600/450", specs: { area: "85 м²", rooms: "3 комнаты", bedrooms: "3 спальни", bathroom: "Совмещенный", heating: "Электрическое", walls: "ТБ400" }, fullDesc: "Одноэтажный загородный дом. 3 спальни, гостиная совмещенная с кухней, совмещенный санузел, тамбур и бойлерная. Отопление полностью электрическое. Современная планировка и высокие потолки." },
+        { id: 3, title: "Двухэтажный особняк", location: "Элитный район, Улан-Удэ", image: "https://picsum.photos/id/15/1200/800", thumb: "https://picsum.photos/id/15/600/450", specs: { area: "160 м²", rooms: "5 комнат", bedrooms: "3 спальни", bathroom: "2 санузла", heating: "Электрическое", walls: "ТБ500" }, fullDesc: "Двухэтажный дом в элитном районе города Улан-Удэ. 3 спальни, 2 санузла совмещенных. Кухня и гостиная раздельно. Кабинет. Отопление электрическое. Жилая площадь 160 кв. м. Панорамное остекление." },
+        { id: 4, title: "Уютный дачный домик", location: "Пригородная зона", image: "https://picsum.photos/id/169/1200/800", thumb: "https://picsum.photos/id/169/600/450", specs: { area: "55 м²", rooms: "3 комнаты", bedrooms: "2 спальни", bathroom: "Совмещенный", heating: "Электрическое", walls: "ТБ300" }, fullDesc: "Одноэтажный дачный домик в пригороде. Гостиная и кухня совмещены. Две спальни, тамбур и совмещенный санузел. Отопление электрическое. Отличный вариант для загородного отдыха." },
+        { id: 5, title: "Семейный дом 100 м²", location: "Улан-Удэ, жилой массив", image: "https://picsum.photos/id/22/1200/800", thumb: "https://picsum.photos/id/22/600/450", specs: { area: "100 м²", rooms: "4 комнаты", bedrooms: "2 спальни", bathroom: "Совмещенный", heating: "Комбинированное", walls: "ТБ400" }, fullDesc: "Одноэтажный дом. Жилая площадь 100 кв. м. 2 спальни, совмещенный санузел, кухня с гостиной. Отопление комбинированное. Высокая энергоэффективность благодаря термоблоку." },
+        { id: 6, title: "Резиденция 110 м²", location: "Загородный коттеджный поселок", image: "https://picsum.photos/id/20/1200/800", thumb: "https://picsum.photos/id/20/600/450", specs: { area: "110 м²", rooms: "4 комнаты", bedrooms: "2 спальни", bathroom: "Совмещенный", heating: "Комбинированное", walls: "ТБ400" }, fullDesc: "Одноэтажный загородный дом. Жилая площадь 110 кв. м. Гостиная, кухня, 2 спальни, совмещенный санузел. Тамбур и бойлерная (котельня). Отопление комбинированное. Продуманная планировка." },
+        { id: 7, title: "Дом с гаражом и мастерской", location: "Северный жилой район", image: "https://picsum.photos/id/59/1200/800", thumb: "https://picsum.photos/id/59/600/450", specs: { area: "120 м²", rooms: "5 комнат", bedrooms: "3 спальни", bathroom: "2 санузла", heating: "Электрическое", walls: "ТБ400" }, fullDesc: "Одноэтажный дом с гаражом и мастерской. Три спальни, кухня-гостиная, 2 санузла, гардеробная. Отопление электрическое. Отличное решение для семьи с детьми." },
+        { id: 8, title: "Функциональный дом с техпомещением", location: "Южный микрорайон", image: "https://picsum.photos/id/153/1200/800", thumb: "https://picsum.photos/id/153/600/450", specs: { area: "95 м²", rooms: "3 комнаты", bedrooms: "2 спальни", bathroom: "Раздельный", heating: "Комбинированное", walls: "ТБ400" }, fullDesc: "Одноэтажный дом с гаражом и техпомещением. Гостиная, кухня, две спальни. Санузел раздельный — туалет и ванная. Отопление комбинированное. Отличная планировка." },
+        { id: 9, title: "Инженерный Smart-дом", location: "Улан-Удэ, центр", image: "https://picsum.photos/id/1/1200/800", thumb: "https://picsum.photos/id/1/600/450", specs: { area: "145 м²", rooms: "5 комнат", bedrooms: "3 спальни", bathroom: "2 санузла", heating: "Электрическое + рекуперация", walls: "ТБ400 + ТБ300" }, fullDesc: "Дом в городе Улан-Удэ. Проектировала семья инженеров. Стены из ThermoBlock ТБ400. Гараж на 2 машины ТБ300. Мастер-спальня с кабинетом. Отопление электрическое. Вентиляция с рекуператором. Тепловизионная съёмка показала тёплые стены, мостики холода только у окон. Котёл всего на 8 кВт!" },
+        { id: 10, title: "Дом с камином и теплым полом", location: "Эко-поселок", image: "https://picsum.photos/id/28/1200/800", thumb: "https://picsum.photos/id/28/600/450", specs: { area: "105 м²", rooms: "4 комнаты", bedrooms: "3 спальни", bathroom: "Раздельный", heating: "Электрическое + камин", walls: "ТБ400" }, fullDesc: "Уютный дом с гаражом. Три спальни, гостиная совмещена с кухней. Санузел раздельный. Отопление электрическое, теплый пол и имеется камин. Идеальное место для уютных семейных вечеров." }
+    ];
+
+    let currentModalIndex = 0;
+
+    // Отрисовка горизонтальной ленты
+    function renderHorizontalTrack() {
+        const track = document.getElementById('housesTrack');
+        track.innerHTML = '';
+        
+        housesData.forEach((house, idx) => {
+            const card = document.createElement('div');
+            card.className = 'house-card-horizontal fade-in';
+            card.style.animationDelay = `${idx * 0.03}s`;
+            card.setAttribute('data-house-id', house.id);
+            
+            card.innerHTML = `
+                <div class="house-thumb-horizontal">
+                    <img src="${house.thumb}" alt="${house.title}" loading="lazy">
+                    <div class="house-badge"><i class="fas fa-ruler-combined"></i> ${house.specs.area}</div>
+                </div>
+                <div class="house-info-horizontal">
+                    
+                    <div class="house-location"><i class="fas fa-map-marker-alt"></i> ${house.location}</div>
+                    <div class="specs-grid-horizontal">
+                        <div class="spec-item"><i class="fas fa-bed"></i> ${house.specs.bedrooms}</div>
+                        <div class="spec-item"><i class="fas fa-toilet"></i> ${house.specs.bathroom}</div>
+                        <div class="spec-item"><i class="fas fa-thermometer-half"></i> ${house.specs.heating}</div>
+                        <div class="spec-item"><i class="fas fa-cube"></i> ${house.specs.walls}</div>
+                    </div>
+                    <div class="house-desc-short">${house.fullDesc.substring(0, 85)}...</div>
+                </div>
+                <div class="view-btn" data-id="${house.id}">
+                    <i class="fas fa-expand-alt"></i> Подробнее
+                </div>
+            `;
+            track.appendChild(card);
+        });
+        
+        // Обработчики клика
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const houseId = parseInt(btn.getAttribute('data-id'));
+                const index = housesData.findIndex(h => h.id === houseId);
+                if (index !== -1) openGalleryModal(index);
+            });
+        });
+        
+        document.querySelectorAll('.house-card-horizontal').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.classList && (e.target.classList.contains('view-btn') || e.target.closest('.view-btn'))) return;
+                const houseId = parseInt(card.getAttribute('data-house-id'));
+                const index = housesData.findIndex(h => h.id === houseId);
+                if (index !== -1) openGalleryModal(index);
+            });
+        });
+    }
+    
+    // Горизонтальный скролл
+    const scrollContainer = document.getElementById('scrollContainer');
+    document.getElementById('scrollLeftBtn').addEventListener('click', () => {
+        scrollContainer.scrollBy({ left: -350, behavior: 'smooth' });
+    });
+    document.getElementById('scrollRightBtn').addEventListener('click', () => {
+        scrollContainer.scrollBy({ left: 350, behavior: 'smooth' });
+    });
+    
+    // Модальное окно
+    function openGalleryModal(startIndex) {
+        currentModalIndex = startIndex;
+        updateModalContent();
+        renderModalThumbStrip();
+        $('#galleryModal').modal('show');
+    }
+    
+    function updateModalContent() {
+        const house = housesData[currentModalIndex];
+        if (!house) return;
+        
+        document.getElementById('modalMainImage').src = house.image;
+        document.getElementById('modalMainImage').alt = house.title;
+        document.getElementById('galleryCounter').innerHTML = `${currentModalIndex + 1} / ${housesData.length}`;
+        document.getElementById('galleryModalLabel').innerHTML = `<i class="fas fa-home"></i> ${house.title} | ThermoBlock`;
+        
+        const descContainer = document.getElementById('galleryDescription');
+        descContainer.innerHTML = `
+            <h3>${house.title}</h3>
+            <div class="house-location-modal"><i class="fas fa-map-marker-alt"></i> ${house.location}</div>
+            <p>${house.fullDesc}</p>
+            <div class="gallery-specs">
+                <span><i class="fas fa-arrows-alt"></i> ${house.specs.area}</span>
+                <span><i class="fas fa-door-open"></i> ${house.specs.rooms}</span>
+                <span><i class="fas fa-bed"></i> ${house.specs.bedrooms}</span>
+                <span><i class="fas fa-tint"></i> ${house.specs.bathroom}</span>
+                <span><i class="fas fa-fire"></i> ${house.specs.heating}</span>
+                <span><i class="fas fa-th-large"></i> ${house.specs.walls}</span>
+            </div>
+            <div class="mt-2 small text-muted"><i class="fas fa-check-circle"></i> Построено ThermoBlock — тепло, надежно, современно</div>
+        `;
+        
+        document.querySelectorAll('.house-nav-item').forEach((item, idx) => {
+            if (idx === currentModalIndex) item.classList.add('active-house');
+            else item.classList.remove('active-house');
+        });
+    }
+    
+    function renderModalThumbStrip() {
+        const strip = document.getElementById('housesThumbStrip');
+        strip.innerHTML = '';
+        
+        housesData.forEach((house, idx) => {
+            const navItem = document.createElement('div');
+            navItem.className = 'house-nav-item';
+            if (idx === currentModalIndex) navItem.classList.add('active-house');
+            navItem.innerHTML = `
+                <img src="${house.thumb}" alt="${house.title}">
+                <div class="house-nav-title">${house.title.substring(0, 18)}</div>
+            `;
+            navItem.addEventListener('click', () => {
+                currentModalIndex = idx;
+                updateModalContent();
+                renderModalThumbStrip();
+            });
+            strip.appendChild(navItem);
+        });
+    }
+    
+    function nextHouse() {
+        currentModalIndex = (currentModalIndex + 1) % housesData.length;
+        updateModalContent();
+        renderModalThumbStrip();
+    }
+    
+    function prevHouse() {
+        currentModalIndex = (currentModalIndex - 1 + housesData.length) % housesData.length;
+        updateModalContent();
+        renderModalThumbStrip();
+    }
+    
+    document.getElementById('galleryNext').addEventListener('click', nextHouse);
+    document.getElementById('galleryPrev').addEventListener('click', prevHouse);
+    
+    $(document).on('keydown', function(e) {
+        if ($('#galleryModal').hasClass('show')) {
+            if (e.key === 'ArrowRight') { nextHouse(); e.preventDefault(); }
+            else if (e.key === 'ArrowLeft') { prevHouse(); e.preventDefault(); }
+        }
+    });
+    
+    renderHorizontalTrack();
+    
+    // JSON-LD
+    (function addStructuredData() {
+        var script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Портфолио построенных домов ThermoBlock",
+            "numberOfItems": housesData.length,
+            "itemListElement": housesData.map((h, idx) => ({ "@type": "SingleFamilyResidence", "position": idx+1, "name": h.title, "floorSize": h.specs.area, "description": h.fullDesc }))
+        });
+        document.head.appendChild(script);
+    })();
+</script>
+</body>
+</html>
