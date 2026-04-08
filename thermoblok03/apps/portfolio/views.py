@@ -401,3 +401,11 @@ def districts_api(request):
     ).values('id', 'name', 'center_latitude', 'center_longitude', 'houses_count')
     
     return JsonResponse(list(districts), safe=False)
+
+def portfolio_view(request):
+    houses = House.objects.all()
+    context = {
+        'houses': houses,
+        'total_count': houses.count(),
+    }
+    return render(request, 'portfolio/section_portfolio.html', context)

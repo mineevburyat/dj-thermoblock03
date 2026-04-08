@@ -68,18 +68,17 @@ class House(models.Model):
         ('in_progress', 'Строится'),
         ('planning', 'В планах'),
     ]
-    
     district = models.ForeignKey(
         District,
         on_delete=models.CASCADE,
         related_name='houses',
         verbose_name='Район'
     )
-    
     # Основная информация
     name = models.CharField('Название дома', max_length=200)
     description = models.TextField('Описание', blank=True)
-        
+    slug = models.SlugField('URL', max_length=250, unique=False, default=2)
+    order = models.PositiveIntegerField('Порядок', default=1000)
     # Характеристики дома
     built_year = models.PositiveIntegerField(
         'Год постройки',
@@ -89,17 +88,11 @@ class House(models.Model):
     )
     area_sqm = models.DecimalField(
         'Площадь (м²)',
-        max_digits=8,
+        max_digits=6,
         decimal_places=2,
         null=True,
         blank=True
     )
-    floors = models.PositiveSmallIntegerField(
-        'Количество этажей',
-        null=True,
-        blank=True
-    )
-    
     status = models.CharField(
         'Статус',
         max_length=20,
@@ -112,16 +105,16 @@ class House(models.Model):
         'Дополнительные характеристики',
         blank=True,
         default=dict,
-        help_text='Например: {"material": "кирпич", "parking": true}'
+        help_text='Например: {"material": ["ThermoBlock 300", ], "garage": true, "teracce": True, "heating": "Гибридное"}'
     )
     
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
-    
+    photo = models.ImageField('Фото дома', upload_to='houses/', blank=True, null=True)
     class Meta:
         verbose_name = 'Дом'
         verbose_name_plural = 'Дома'
-        ordering = ['-created_at']
+        ordering = ['order']
         indexes = [
             models.Index(fields=['district', 'status']),
             

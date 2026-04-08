@@ -12,7 +12,8 @@ router.register(r'reviews', views.ReviewViewSet)
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.portfolio_view, name='section'),
+#     path('', views.index, name='index'),
     # path('', views.IndexView.as_view(), name='index'),
     path('map/districts/', views.DistrictViewSet.as_view({'get': 'list'}), 
          name='map-districts'),

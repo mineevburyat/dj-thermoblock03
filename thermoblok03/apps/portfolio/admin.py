@@ -41,11 +41,17 @@ class HouseAdmin(admin.ModelAdmin):
     list_display = ['name', 'district', 'status', 'display_primary_image']
     list_filter = ['district', 'status', 'built_year']
     search_fields = ['name', ]
-    inlines = [HouseMediaInline, ReviewInline]
+    # inlines = [HouseMediaInline, ReviewInline]
     readonly_fields = ['created_at', 'updated_at']
     
+    # def display_primary_image(self, obj):
+    #     primary = obj.media.filter(is_primary=True).first()
+    #     if primary and primary.file:
+    #         return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', 
+    #                          primary.file.url)
+    #     return 'Нет фото'
     def display_primary_image(self, obj):
-        primary = obj.media.filter(is_primary=True).first()
+        primary = obj.photo
         if primary and primary.file:
             return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', 
                              primary.file.url)
