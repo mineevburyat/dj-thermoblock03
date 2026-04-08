@@ -7,13 +7,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>{% block title %}Главная страница | ThermoBlock{% endblock%}</title>
+        <title>{% block title %}ThermoBlock{% endblock%}</title>
         <meta name="description" content="{% block meta_description %}Строительные блоки ThermoBlock в Улан-Удэ. Проектирование и строительство теплых и надежных домов, коттеджей и производственные строений из термоблока.{% endblock %}">
         <meta name="keywords" content="{% block meta_keywords %}строительство домов, построить дом, коттедж, dom, проекты домов, построить дом, строение, какой дом построить{% endblock %}">
         
         <link rel="shortcut icon" href="{% static '/favicon.ico' %}">
         <link rel="icon" href="{% static '/favicon.ico' %}" type="image/x-icon">
-        
+        <!-- Основная SVG-фавиконка для современных браузеров -->
+        <link rel="icon" type="image/svg+xml" href="{% static '/favicon.svg' %}">
+
         {% canonical_url as canonical %}
         <link rel="canonical" href="{{ canonical }}">
         

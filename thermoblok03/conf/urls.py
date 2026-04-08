@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import GenericSitemap
+from django.views.generic import RedirectView
 
 # from products.models import Products
 from .sitemaps import StaticViewSitemap
@@ -28,6 +29,14 @@ urlpatterns = [
     # path('faq/', include('apps.faq.urls', namespace='faq')),
     path('portfolio/', include('apps.portfolio.urls', namespace='portfolio')),
     path('qr/', include('apps.qr_tracker.urls', namespace='qr_tracker')),
+    
+    path('instructions/tb300/', RedirectView.as_view(url='/tb300/'), name='old-tb300'),
+    path('instructions/tb400/', RedirectView.as_view(url='/tb400/'), name='old-tb400'),
+    path('catalog/instrukcziya-po-proizvodstvu-rabot-iz-teploizolyaczionnyix-blokov.html', RedirectView.as_view(url='/tb400/'), name='old-incruct'),
+    path('instructions/', RedirectView.as_view(url='/tb400/'), name='old-all-incruct'),
+    path('instructions/tb400/index.html', RedirectView.as_view(url='/tb400/'), name='old-tb400-incruct'),
+    path('index.html', RedirectView.as_view(url='/'), name='old-index'),
+    path('catalog/', RedirectView.as_view(url='constructs/'), name='projects'),
 ]
 
 

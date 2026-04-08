@@ -1,7 +1,7 @@
 {% extends "old/base.html" %}
 {% load static %}
 {% load construct_tags breadcrumbs_tags %}
-{% block title %}Каталог проектов домов из ThermoBlock{% endblock  %}
+{% block title %}ThermoBlock каталог проектов домов{% endblock  %}
 {% block meta_description %}Популярные проекты домов и зданий из термоблоков различных серий. Проекты продуманы для Сибири и Крайнего Севера{% endblock  %}
 {% block meta_keywords %}{% endblock  %}
 {% block extra_css %}
@@ -642,6 +642,26 @@
             }
         }
     </style>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "ThermoBlock",
+                "item": "https://thermoblock.ru/"
+                },
+                {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Проекты домов",
+                "item": "https://thermoblock.ru/constructs/"
+                }
+            ]
+        }
+    </script>
 {% endblock  %}
 {% block content %}
     <div class="container">

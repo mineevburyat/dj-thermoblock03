@@ -12,7 +12,26 @@ ThermoBlock | о нас
 {% endblock %}
 
 {% block extra_css %}
-
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "ThermoBlock",
+                "item": "https://thermoblock.ru/"
+                },
+                {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "о нас",
+                "item": "https://thermoblock.ru/about/"
+                }
+            ]
+        }
+    </script>
 {% endblock %}
 
 {% block content %}

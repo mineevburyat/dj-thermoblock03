@@ -5,12 +5,18 @@ Allow: /about/contact/
 Allow: /about/privacy/
 Allow: /about/agreement/
 Allow: /constructs/
-Allow: /products/
-Allow: /faq/
-Allow: /review/
+Allow: /tb300/
+Allow: /tb400/
+
 Disallow: /admin/
 Disallow: /captcha/
 Disallow: /feedback/
 Disallow: /search/
+Disallow: /new/
+
+User-agent: Yandex
+Clean-param: etext
+Clean-param: page
+Clean-param: yprqee
 
 Sitemap: https://thermoblock.ru/sitemap.xml

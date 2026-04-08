@@ -1,0 +1,214 @@
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Brand",
+            "@id": "https://thermoblock.ru/",
+            "name": "ThermoBlock",
+            "alternateName": "Термоблок",
+            "slogan": "Максимально эффективное строительное решение!",
+            "logo": "https://thermoblock.ru/static/logo.svg",
+            "image": "https://thermoblock.ru/static/blocks_img/vid.png",
+            "url": "https://thermoblock.ru/",
+            "description": "Производство и продажа энергоэффективных блоков несъемной опалубки.",
+            "brand": { "@id": "https://thermoblock.ru/about/contact/#org" }
+        },
+        {
+            "@type": "Organization",
+            "@id": "https://thermoblock.ru/about/contact/#org",
+            "name": "ООО 'Строй Тех'",
+            "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "RU",
+                    "addressLocality": "Улан-Удэ, Россия",
+                    "postalCode": "670000",
+                    "streetAddress": "ул. Грачевская, 49, офис 1"
+                },
+            "telephone": "+7 (3012) 20-63-20",
+            "email": "info@thermoblock.ru",
+            "image": "https://thermoblock.ru/static/blocks_img/vid.png",
+            "taxID": "0326560590", 
+            "vatID": "032601001" ,
+            "founder": { "@id": "https://thermoblock.ru/about/#aldar" }
+        },
+        {
+            "@type": "Person",
+            "@id": "https://thermoblock.ru/about/#aldar",
+            "name": "Алдар Жаргалов",
+            "jobTitle": "Генеральный директор"
+        },
+        {
+            "@type": "Organization",
+            "@id": "https://thermoblock.ru/about/contact/#manufacturing",
+            "name": "Завод ThermoBlock",
+            "parentOrganization": { 
+                "@id": "https://thermoblock.ru/about/contact/#org" },
+            "location": {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "RU",
+                    "addressLocality": "Улан-Удэ, Россия",
+                    "streetAddress": "ул. Николая Нищенко, д.19а"
+                    },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "51.843401",
+                    "longitude": "107.647169"
+                }
+            },
+            "makesOffer": {
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "Service",
+                    "name": "Производство строительных материалов",
+                    "description": "Производство широкого ассортимента бетонной несъемной опалубки ThermoBlock"
+                    }
+            }
+        },
+        {
+            "@type": "Store",
+            "@id": "https://thermoblock.ru/about/contact/#office",
+            "name": "Офис продаж ThermoBlock",
+            "parentOrganization": { 
+                "@id": "https://thermoblock.ru/about/contact/#org" },
+            "branchOf": { "@id": "https://thermoblock.ru/" },
+            "priceRange": "₽₽",
+            "address": {
+                    "@type": "PostalAddress",
+                    "postalCode": "670000",
+                    "addressCountry": "RU",
+                    "addressLocality": "Улан-Удэ, Россия",
+                    "streetAddress": "ул. Николая Петрова, д. 70, офис 309, 'БизнесЛайф'"
+                    },
+            "openingHours": "Mo-Fr 09:00-18:00",
+            "telephone": "+7 (3012) 20-63-20",
+            "image": "https://thermoblock.ru/static/blocks_img/vid.png",
+            "description": "Продажа строительных термоблоков ThermoBlock - блоков несъемной терхслойной бетонной опалубки с эффективным утеплителем посередине.",
+            "location": {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "RU",
+                    "addressLocality": "Улан-Удэ, Россия",
+                    "streetAddress": "ул. Николая Петрова, д. 70, офис 309, 'БизнесЛайф'"
+                    },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "51.843441",
+                    "longitude": "107.647523"
+                }
+            },
+            "makesOffer": {
+                "@type": "Offer",
+                "itemOffered": [
+                    {
+                    "@type": "Service",
+                    "name": "Термоблок ThermoBlock серии 300",
+                    "description": "Рядовый и угловой трёхслойные блоки несъемной опалубки для армированной монолитной стены толщиной 300 мм. Слои: бетон — утеплитель — бетон."
+                    },
+                    {
+                    "@type": "Service",
+                    "name": "Термоблок ThermoBlock серии 400",
+                    "description": "Рядовый и угловой трёхслойные блоки несъемной опалубки для армированной монолитной стены толщиной 400 мм. Слои: бетон — утеплитель — бетон."
+                    },
+                    {
+                    "@type": "Service",
+                    "name": "ThermoBlock ПБ200",
+                    "description": "Рядовый бетонный блок несъемной опалубки для монолитной армированной бетонной стены толщиной 200 мм. Для перегородок и подпорных стен."
+                    },
+                    {
+                    "@type": "Service",
+                    "name": "ThermoBlock ПБ100",
+                    "description": "Рядовый бетонный блок несъемной опалубки для монолитной армированной бетонной стены толщиной 100 мм. Для перегородок."
+                    }
+                ]
+            }
+        },
+        {
+            "@type": "GeneralContractor",
+            "@id": "https://thermoblock.ru/about/contact/#contractor",
+            "name": "Генеральный застройщик ThermoBlock",
+            "parentOrganization": { 
+                "@id": "https://thermoblock.ru/about/contact/#org" },
+            "branchOf": { "@id": "https://thermoblock.ru/"},
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "ул. Николая Петрова, д. 70, офис 309, 'БизнесЛайф'",
+                "addressLocality": "Улан-Удэ",
+                "addressCountry": "RU",
+                "postalCode": "670000"
+            },
+            "priceRange": "₽₽",
+            "openingHours": "Mo-Fr 09:00-18:00",
+            "telephone": "+7 (3012) 20-63-20",
+            "image": "https://thermoblock.ru/media/constructs/constract3.jpg",
+            "description": "Профессиональное строительство домов и коттеджей под ключ по технологии ThermoBlock.",
+            "areaServed": [
+                "Улан-Удэ и Республика Бурятия",
+                "Иркутск и Иркутская область",
+                "Якутия и Республика Саха (Якутия)",
+                "Чита и Забайкальский край"
+                ],
+            "makesOffer": {
+                "@type": "Offer",
+                "itemOffered": [
+                    {
+                    "@type": "Service",
+                    "name": "Строительство коттеджей под ключ",
+                    "description": "Полный цикл строительства домов и зданий"
+                    },
+                    {
+                    "@type": "Service",
+                    "name": "Капитальный ремонт",
+                    "description": "Ремонт малоэтажных домов и зданий"
+                    },
+                    {
+                    "@type": "Service",
+                    "name": "Проектирование",
+                    "description": "Архитектурное проектирование и дизайн"
+                    }
+                ]
+            },
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Услуги строительной компании",
+                "itemListElement": [
+                    {
+                        "@type": "OfferCatalog",
+                        "name": "Строительство домов",
+                        "itemListElement": [
+                            {"@type": "Offer", "name": "дома"},
+                            {"@type": "Offer", "name": "коттеджи"},
+                            {"@type": "Offer", "name": "гаражи"},
+                            {"@type": "Offer", "name": "промышленные здания"},
+                            {"@type": "Offer", "name": "отдельные офисы"},
+                            {"@type": "Offer", "name": "элементы ландшафтного дизайна"}
+                        ]
+                    },
+                    {
+                        "@type": "OfferCatalog",
+                        "name": "Ремонтные работы",
+                        "itemListElement": [
+                        {"@type": "Offer", "name": "Капитальный ремонт"}
+                        ]
+                    }
+                ]
+            },
+            "keywords": "строительство, ремонт, отделка, дом под ключ, строительная компания, Улан-Удэ",
+            "knowsAbout": [
+                "Строительство",
+                "Архитектура",
+                "Дизайн интерьеров",
+                "Инженерные системы",
+                "Сметное дело",
+                "Проектирование"
+            ],
+            "award": [
+                "Золотая медаль выставки стройиндустрия 2018",
+                "Диплом за участие в выставке Стройка 2016",
+                "Награда за продвижение бетонных блоков Байкал Экспо 2017"
+            ]
+        }
+    ]
+}

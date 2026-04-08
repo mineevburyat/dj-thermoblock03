@@ -12,13 +12,13 @@ class StaticViewSitemap(sitemaps.Sitemap):
     
 
     def items(self):
-        return ["home:index", "about:contact", "about:privacy"]
+        return ["home:index", "about:contact", "about:privacy", "constructs:index"]
 
     def location(self, item):
         return reverse(item)
     
     def lastmod(self, item):
-        return date(2026,1, 14)
+        return date(2026,4,8)
         
     # def get_urls(self, **kwargs):
     #     # Формируем базовый URL
