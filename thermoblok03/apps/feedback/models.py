@@ -64,6 +64,7 @@ class CalculationRequest(models.Model):
     PAYMENT_METHODS = [
         ('собственные средства', 'Собственные средства'),
         ('ипотека', 'Ипотека'),
+        ('эскроу', 'Эскроу')
     ]
     
     CONTACT_METHODS = [

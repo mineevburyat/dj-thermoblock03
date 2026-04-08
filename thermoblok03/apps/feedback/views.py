@@ -246,6 +246,20 @@ class QuestionProjectViews(TemplateView):
         
         return context        
 
+class QuestionProjectEsqrouViews(TemplateView):
+    template_name = 'feedback/question-payment-project.html'
+
+    def get_project(self):
+        """Получает проект по ID из URL"""
+        project_id = self.kwargs.get('project_id')
+        return get_object_or_404(Project, id=project_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['payment_method'] = self.kwargs.get('payment')
+        context['project'] = self.get_project()
+        return context   
+
 
 def _send_to_crm(calculation_request):
     # Отправка email администратору

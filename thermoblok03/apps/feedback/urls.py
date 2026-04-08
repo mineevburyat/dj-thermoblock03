@@ -10,5 +10,6 @@ urlpatterns = [
     path('submit-request1/', views.submit_construction_request, name='submit_construction_request'),
     path('question/', views.QuestionViews.as_view(), name='question'),
     path('dquestion/<int:project_id>', views.QuestionProjectViews.as_view(), name='project_question'),
+    path('dquestion/<int:project_id>/<str:payment>', views.QuestionProjectEsqrouViews.as_view(), name='project_payment_question'),
     path('request/', views.submit_request, name='submit_request'),
 ]

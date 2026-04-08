@@ -664,6 +664,7 @@
     </script>
 {% endblock  %}
 {% block content %}
+    {% comment%}
     <div class="container">
         <nav aria-label="breadcrumb" class="breadcrumbs">
             <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
@@ -684,8 +685,10 @@
                     <meta itemprop="position" content="2" />
                 </li>
             </ol>
+        
         </nav>
     </div>
+    {% endcomment %}
     <section class="catalog">
         <!-- Кнопка показа фильтров на мобильных -->
         <button class="mobile-filter-toggle" onclick="toggleFilters()">
@@ -885,7 +888,15 @@
                         <!-- Нижняя часть: название, характеристики и бейджи -->
                         <div class="project-card__content">
                             <h3 class="project-title">{{ project.title }}</h3>
-                            
+                            {% if project.short_description %}
+                            <p class="project-short-description">
+                                {{ project.short_description|truncatechars:190 }}
+                            </p>
+                            {% elif project.description %}
+                            <p class="project-short-description">
+                                {{ project.description|truncatechars:190 }}
+                            </p>
+                            {% endif %}
                             <!-- Строка с характеристиками и бейджами -->
                             <div class="project-info-row">
                                 <!-- Характеристики слева -->

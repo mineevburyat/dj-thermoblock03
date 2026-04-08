@@ -54,8 +54,8 @@ def product_list(request):
         projects = projects.filter(terrace=True)
     
     # Сортировка
-    sort = request.GET.get('sort', '-created_at')
-    # projects = projects.order_by(sort)
+    sort = request.GET.get('sort', )
+    projects = projects.order_by('order')
     
     # Пагинация
     paginator = Paginator(projects, 6)
