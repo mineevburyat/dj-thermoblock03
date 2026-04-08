@@ -1,0 +1,586 @@
+{% extends 'old/base.html' %}
+
+{% block title %}
+ThermoBlock | Расчёт стоимости выбранного проекта
+{% endblock %}
+{% block meta_description %}
+ThermoBlock - расчет стоимости выбранного проекта ThermoBlock.
+{% endblock %}
+{% block extra_css %}
+    <style>
+        .calculation-section {
+            background-color: #f8f9fa;
+            padding: 4rem 0;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            padding: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background-color: #1e40af;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            margin-right: 10px;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #1e40af;
+            box-shadow: 0 0 0 0.2rem rgba(30, 64, 175, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: #1e40af;
+            border-color: #1e40af;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1e3a8a;
+            border-color: #1e3a8a;
+        }
+        
+        .btn-outline-primary {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .thank-you-message {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #0f766e;
+            margin-bottom: 1.5rem;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 1.5rem;
+            }
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: -1rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <section class="calculation-section" id="calculation-form">
+        <div class="container">
+            <div class="form-card">
+                <!-- Заголовок -->
+                <div class="text-center mb-4">
+                    <h1 class="h3 fw-bold mb-2">Вы выбрали проект {{project.title}}!</h1>
+                    <p class="text-muted">Площадь: {{project.area}} м<sup>2</sup>, Комнат всего: {{project.rooms_count}}, спален: {{project.bedrooms_count}}, этажей: {{project.floors_count}}</p>
+                    <p class="text-muted">Для расчет необходимо уточнить несколько моментов по выбранному проекту</p>
+                </div>
+                
+                <!-- Форма -->
+                <form id="calculationForm">
+                    <!-- Уже определенные параметры проекта-->
+                    <select id="project_status" name="project_status" required hidden>
+                        <option value="выбрал ваш проект"></option>
+                    </select>
+                    <div class="error-message" id="error-house_type"></div>
+                    <select id="square" name="square" required hidden>
+                        <option value="project"></option>
+                    </select>
+                    <div class="error-message" id="error-project_status"></div>
+                    <select id="house_type" name="house_type" required hidden>
+                        <option value="по проекту"></option>
+                    </select>
+                    <div class="error-message" id="error-square"></div>
+                    <!-- Шаг 1: Тип дома -->
+                    <div class="form-step active" id="step1">
+                        <div class="mb-4">
+                            <span class="step-number">1</span>
+                            <h4 class="d-inline h5">Есть ли у вас участок под строительство?</h4>
+                        </div>
+                        
+                        <select class="form-select" id="land_status" name="land_status" required>
+                            <option value="" selected disabled>Выберите вариант...</option>
+                            <option value="есть участок">Да, есть участок</option>
+                            <option value="в процессе покупки">Нахожусь в процессе покупки</option>
+                            <option value="планирую покупать">Планирую покупать</option>
+                            <option value="нужна помощь">Нужна помощь в подборе и оформлении</option>
+                        </select>
+                        <div class="error-message" id="error-land_status"></div>
+                    </div>
+                                        
+                    <!-- Шаг 2: Сроки -->
+                    <div class="form-step" id="step2">
+                        <div class="mb-4">
+                            <span class="step-number">2</span>
+                            <h4 class="d-inline h5">Когда планируете начать строительство?</h4>
+                        </div>
+                        
+                        <select class="form-select" id="timeline" name="timeline" required>
+                            <option value="" selected disabled>Выберите вариант...</option>
+                            <option value="как можно скорее">Как можно скорее</option>
+                            <option value="хочу консультацию">Хочу сначала проконсультироваться</option>
+                            <option value="в течении года">В течение года</option>
+                            <option value="3-6 месяцев">В течение 3-6 месяцев</option>
+                            <option value="в этом месяце">В течение этого месяца</option>
+                        </select>
+                        <div class="error-message" id="error-timeline"></div>
+                    </div>
+                    
+                    <!-- Шаг 3: Оплата -->
+                    <div class="form-step" id="step3">
+                        <div class="mb-4">
+                            <span class="step-number">3</span>
+                            <h4 class="d-inline h5">Какой способ оплаты планируете использовать?</h4>
+                        </div>
+                        
+                        <select class="form-select" id="payment_method" name="payment_method" required>
+                            <option value="" selected disabled>Выберите вариант...</option>
+                            <option value="собственные средства">Собственные средства</option>
+                            <option value="ипотека">Ипотека</option>
+                        </select>
+                        <div class="error-message" id="error-payment_method"></div>
+                    </div>
+                    
+                    <!-- Шаг 4: Контакты -->
+                    <div class="form-step" id="step4">
+                        <div class="mb-4">
+                            <span class="step-number">4</span>
+                            <h4 class="d-inline h5">Как с вами связаться?</h4>
+                        </div>
+                        
+                        <select class="form-select mb-4" id="contact_method" name="contact_method" required>
+                            <option value="telegram">Telegram</option>
+                            <option value="whatsapp">WhatsApp</option>
+                            <option value="max">MAX</option>
+                        </select>
+                        <div class="error-message" id="error-contact_method"></div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Имя *" required>
+                                <div class="error-message" id="error-name"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="surname" name="surname" placeholder="Фамилия (необязательно)">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="tel" class="form-control" id="phone" name="phone" ppattern="\+7\s?\(?\d{3}\)?\s?\d{3}[-\s]?\d{2}[-\s]?\d{2}" placeholder="Телефон *" required>
+                                <div class="error-message" id="error-phone"></div>
+                            </div>
+                            <div class="col-md-6 d-none">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email (необязательно)">
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control" id="comments" name="comments" rows="3" placeholder="Комментарии или пожелания (необязательно)"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Блок согласия -->
+                        <div class="mt-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="data_agreement" name="data_agreement" required>
+                                <label class="form-check-label small" for="data_agreement">
+                                    Я согласен на обработку моих персональных данных в соответствии с 
+                                    <a href="{% url 'about:privacy' %}" target="_blank" class="text-decoration-none">Политикой конфиденциальности</a>
+                                </label>
+                            </div>
+                            <div class="error-message" id="error-data_agreement"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопки навигации -->
+                    <div class="navigation-buttons">
+                        <button type="button" class="btn btn-outline-primary" id="prevBtn" disabled>
+                            ← Назад
+                        </button>
+                        <button type="button" class="btn btn-primary" id="nextBtn">
+                            Далее →
+                        </button>
+                        <button type="submit" class="btn btn-primary hidden" id="submitBtn">
+                            Отправить заявку
+                        </button>
+                    </div>
+                    
+                </form>
+
+                
+                <!-- Сообщение об успехе -->
+                <div class="thank-you-message hidden" id="thankYou">
+                    <div class="success-icon">✓</div>
+                    <h3 class="h4 fw-bold mb-3">Спасибо за заявку!</h3>
+                    <p class="mb-4">Мы получили ваши ответы и в течение 24 часов свяжемся с вами для подготовки коммерческого предложения.</p>
+                    <a href="/" class="btn btn-outline-primary">Вернуться на главную</a>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentStep = 1;
+            const totalSteps = 4;
+            
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Показать текущий шаг
+            function showStep(step) {
+                // Скрыть все шаги
+                document.querySelectorAll('.form-step').forEach(stepEl => {
+                    stepEl.classList.remove('active');
+                });
+                
+                // Показать текущий шаг
+                document.getElementById('step' + step).classList.add('active');
+                currentStep = step;
+                
+                // Обновить кнопки
+                updateButtons();
+            }
+            
+            // Обновить состояние кнопок
+            function updateButtons() {
+                // Кнопка "Назад"
+                prevBtn.disabled = currentStep === 1;
+                
+                // Кнопки "Далее"/"Отправить"
+                if (currentStep < totalSteps) {
+                    nextBtn.classList.remove('hidden');
+                    submitBtn.classList.add('hidden');
+                    
+                    // Проверить, заполнено ли текущее поле
+                    const currentSelect = document.querySelector(`#step${currentStep} select`);
+                    nextBtn.disabled = !currentSelect.value;
+                } else {
+                    nextBtn.classList.add('hidden');
+                    submitBtn.classList.remove('hidden');
+                    
+                    // Проверить обязательные поля на последнем шаге
+                    const name = document.getElementById('name').value;
+                    const phone = document.getElementById('phone').value;
+                    const contactMethod = document.getElementById('contact_method').value;
+                    const dataAgreement = document.getElementById('data_agreement').checked;
+                    
+                    submitBtn.disabled = !(name && phone && contactMethod && dataAgreement);
+                }
+            }
+            
+            // Проверка при изменении полей
+            document.querySelectorAll('select, input, textarea').forEach(element => {
+                element.addEventListener('change', updateButtons);
+                element.addEventListener('input', updateButtons);
+            });
+            
+            // Согласие на обработку данных
+            document.getElementById('data_agreement').addEventListener('change', updateButtons);
+            
+            // Кнопка "Назад"
+            prevBtn.addEventListener('click', function() {
+                if (currentStep > 1) {
+                    showStep(currentStep - 1);
+                }
+            });
+            
+            // Кнопка "Далее"
+            nextBtn.addEventListener('click', function() {
+                if (currentStep < totalSteps) {
+                    // Проверить текущее поле
+                    const currentSelect = document.querySelector(`#step${currentStep} select`);
+                    if (!currentSelect.value) {
+                        showError(currentSelect.id, 'Пожалуйста, выберите вариант');
+                        return;
+                    }
+                    
+                    showStep(currentStep + 1);
+                }
+            });
+            
+            // Показать ошибку
+            function showError(fieldId, message) {
+                const errorElement = document.getElementById(`error-${fieldId}`);
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+            
+            // Скрыть ошибку
+            function hideError(fieldId) {
+                const errorElement = document.getElementById(`error-${fieldId}`);
+                console.log(errorElement)
+                errorElement.style.display = 'none';
+            }
+            
+            // Отправка формы
+            document.getElementById('calculationForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Собрать данные формы
+                add_comment = 'Выбран проект на сайте {{project.title}}. Этажей: {{project.floors_count}}. Площадь {{project.area}} '
+                const formData = {
+                    house_type: document.getElementById('house_type').value,
+                    land_status: document.getElementById('land_status').value,
+                    project_status: document.getElementById('project_status').value,
+                    timeline: document.getElementById('timeline').value,
+                    payment_method: document.getElementById('payment_method').value,
+                    contact_method: document.getElementById('contact_method').value,
+                    name: document.getElementById('name').value,
+                    surname: document.getElementById('surname').value,
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    comments: document.getElementById('comments').value + add_comment,
+                    square: document.getElementById('square').value,
+                    data_agreement: document.getElementById('data_agreement').checked
+                };
+                
+                // Проверка всех обязательных полей
+                let hasErrors = false;
+                
+                const requiredFields = [
+                    'house_type', 'land_status', 'project_status', 'timeline', 
+                    'payment_method', 'contact_method', 'name', 'phone', 'square'
+                ];
+                
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (!field.value) {
+                        showError(fieldId, 'Это поле обязательно для заполнения');
+                        hasErrors = true;
+                    } else {
+                        hideError(fieldId);
+                    }
+                });
+                
+                // Проверка согласия
+                if (!formData.data_agreement) {
+                    showError('data_agreement', 'Необходимо согласие на обработку персональных данных');
+                    hasErrors = true;
+                } else {
+                    hideError('data_agreement');
+                }
+                
+                if (hasErrors) {
+                    return;
+                }
+                
+                // Показать загрузку
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Отправка...';
+                
+                try {
+                    // Отправить данные на сервер Django
+                    const response = await fetch('{% url "feedback:submit_request" %}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        // Показать сообщение об успехе
+                        document.querySelector('form').classList.add('hidden');
+                        document.getElementById('thankYou').classList.remove('hidden');
+                    } else {
+                        // Показать ошибки
+                        if (result.errors) {
+                            Object.keys(result.errors).forEach(field => {
+                                showError(field, result.errors[field]);
+                            });
+                        }
+                        alert(result.message || 'Ошибка при отправке формы');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Ошибка при отправке формы. Проверьте подключение к интернету.');
+                } finally {
+                    // Сбросить состояние кнопки
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Отправить заявку';
+                }
+            });
+            
+            // Функция для получения CSRF токена
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            
+            // Маска для телефона
+const phoneInput = document.getElementById('phone');
+if (phoneInput) {
+    phoneInput.addEventListener('input', function(e) {
+        // Сохраняем позицию курсора
+        const cursorPos = e.target.selectionStart;
+        const oldLength = e.target.value.length;
+        
+        let value = e.target.value.replace(/\D/g, '');
+        
+        // Обработка первой цифры
+        if (value.length > 0) {
+            // Если первая цифра 8 или 7, заменяем на 7 (код России)
+            if (value[0] === '8' || value[0] === '7') {
+                value = '7' + value.substring(1);
+            } else {
+                // Если первая цифра не 7 или 8, добавляем 7 в начало
+                value = '7' + value;
+            }
+        }
+        
+        // Ограничиваем до 11 цифр (7 + 10 цифр номера)
+        value = value.substring(0, 11);
+        
+        if (value.length > 0) {
+            let formatted = '+7 ';
+            
+            // Форматируем оставшиеся цифры (после первой семерки)
+            const numberPart = value.substring(1); // убираем первую семерку
+            
+            if (numberPart.length > 0) {
+                formatted += '(' + numberPart.substring(0, 3);
+            }
+            if (numberPart.length > 3) {
+                formatted += ') ' + numberPart.substring(3, 6);
+            }
+            if (numberPart.length > 6) {
+                formatted += '-' + numberPart.substring(6, 8);
+            }
+            if (numberPart.length > 8) {
+                formatted += '-' + numberPart.substring(8, 10);
+            }
+            
+            e.target.value = formatted;
+            
+            // Восстанавливаем позицию курсора с учетом изменений форматирования
+            const newLength = e.target.value.length;
+            const newCursorPos = cursorPos + (newLength - oldLength);
+            e.target.setSelectionRange(newCursorPos, newCursorPos);
+        } else {
+            e.target.value = '';
+        }
+    });
+    
+    // Добавляем обработку вставки
+    phoneInput.addEventListener('paste', function(e) {
+        e.preventDefault();
+        const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+        const cleanedText = pastedText.replace(/\D/g, '');
+        
+        let startPos = this.selectionStart;
+        let endPos = this.selectionEnd;
+        let currentValue = this.value.replace(/\D/g, '');
+        
+        // Вставляем текст в текущую позицию
+        let newValue = currentValue.substring(0, startPos) + 
+                      cleanedText + 
+                      currentValue.substring(endPos);
+        
+        // Обрабатываем первую цифру
+        if (newValue.length > 0) {
+            if (newValue[0] === '8' || newValue[0] === '7') {
+                newValue = '7' + newValue.substring(1);
+            } else {
+                newValue = '7' + newValue;
+            }
+        }
+        
+        newValue = newValue.substring(0, 11);
+        
+        // Обновляем поле
+        this.value = formatPhoneNumber(newValue);
+        
+        // Устанавливаем курсор в конец вставленного текста
+        const newCursorPos = startPos + cleanedText.length;
+        this.setSelectionRange(newCursorPos, newCursorPos);
+    });
+}
+
+// Функция для форматирования номера
+function formatPhoneNumber(value) {
+    if (!value || value.length === 0) return '';
+    
+    let formatted = '+7 ';
+    const numberPart = value.substring(1); // убираем первую семерку
+    
+    if (numberPart.length > 0) {
+        formatted += '(' + numberPart.substring(0, 3);
+    }
+    if (numberPart.length > 3) {
+        formatted += ') ' + numberPart.substring(3, 6);
+    }
+    if (numberPart.length > 6) {
+        formatted += '-' + numberPart.substring(6, 8);
+    }
+    if (numberPart.length > 8) {
+        formatted += '-' + numberPart.substring(8, 10);
+    }
+    
+    return formatted;
+}
+            
+            // Инициализация
+            updateButtons();
+        });
+    </script>
+ {% endblock %}

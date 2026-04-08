@@ -35,9 +35,11 @@
         {% endblock %}
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <script src="{% static 'old/feedback/form-processing.js' %}"></script>
-        {% include "old/_ya_metrika.html" %}
-        {% include "old/_graph.html" %}
-        {% include "old/_ld_json.html" %}
+        {% if not debug %}
+            {% include "old/_ya_metrika.html" %}
+            {% include "old/_graph.html" %}
+            {% include "old/_ld_json.html" %}
+        {% endif %}
     </head>
 
     <body>

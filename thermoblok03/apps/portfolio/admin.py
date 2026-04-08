@@ -38,9 +38,9 @@ class DistrictAdmin(admin.ModelAdmin):
 
 @admin.register(House)
 class HouseAdmin(admin.ModelAdmin):
-    list_display = ['name', 'district', 'address', 'status', 'display_primary_image']
+    list_display = ['name', 'district', 'status', 'display_primary_image']
     list_filter = ['district', 'status', 'built_year']
-    search_fields = ['name', 'address']
+    search_fields = ['name', ]
     inlines = [HouseMediaInline, ReviewInline]
     readonly_fields = ['created_at', 'updated_at']
     

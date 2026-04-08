@@ -1036,7 +1036,7 @@
                     </div>
                                         
                     <div class="button-group">
-                        <a class="btn btn-calc btn-custom btn-diagonal-stripe" href="{% url 'feedback:question'%}">
+                        <a class="btn btn-calc btn-custom btn-diagonal-stripe" href="{% url 'feedback:project_question' project_id=project.id %}">
                             <i class="fas fa-calculator"></i> Рассчитать стоимость
                         </a>
                         {% comment %}

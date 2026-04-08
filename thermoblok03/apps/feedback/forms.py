@@ -1,16 +1,27 @@
 from dataclasses import fields
-from django.forms import ModelForm
 from captcha.fields import CaptchaField
 from .models import Feedback
 from django import forms
 from .models import CalculationRequest
 
-class FeedbackForm(ModelForm):
+class FeedbackForm(forms.ModelForm):
     captcha = CaptchaField()
     class Meta:
         model = Feedback
         fields = ('name', 'phone')
 
+
+class ProjectForm(forms.ModelForm):
+    pass
+
+class ProductForm(forms.ModelForm):
+    pass
+
+class PortfolioForm(forms.ModelForm):
+    pass
+
+class PartnerForm(forms.ModelForm):
+    pass
 
 class CalculationRequestForm(forms.ModelForm):
     class Meta:
@@ -32,3 +43,4 @@ class CalculationRequestForm(forms.ModelForm):
         if not data_agreement:
             raise forms.ValidationError('Необходимо согласие на обработку персональных данных')
         return data_agreement
+   

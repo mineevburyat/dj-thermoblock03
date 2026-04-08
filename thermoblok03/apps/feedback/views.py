@@ -1,8 +1,9 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, HttpResponseRedirect
+
 from .forms import FeedbackForm
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
@@ -11,12 +12,12 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
-from .forms import CalculationRequestForm
+from .forms import CalculationRequestForm, PartnerForm, ProductForm, ProjectForm, PortfolioForm
 from django.core.mail import send_mail
 from django.conf import settings
-
-from django.views.generic import TemplateView
-
+from django.http import Http404
+from django.views.generic import TemplateView, FormView
+from apps.constructs.models import Product as Project
 import json
 from datetime import datetime
 
@@ -229,6 +230,23 @@ def send_notification_email(request_data):
 class QuestionViews(TemplateView):
     template_name = 'feedback/question.html'
 
+class QuestionProjectViews(TemplateView):
+    template_name = 'feedback/question-project.html'
+
+    def get_project(self):
+        """Получает проект по ID из URL"""
+        project_id = self.kwargs.get('project_id')
+        return get_object_or_404(Project, id=project_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Добавляем все данные в контекст
+        context['project'] = self.get_project()
+        
+        return context        
+
+
 def _send_to_crm(calculation_request):
     # Отправка email администратору
     admin_subject = f"Новая заявка на расчёт от {calculation_request.name}"
@@ -344,4 +362,21 @@ def submit_request(request):
             'errors': errors
         }, status=400)
             
+# class DinamicFormView(FormView):
+#     template_name = 'form.html'
     
+#     def get_form_class(self):
+#         form_type = self.kwargs.get('form_type')
+        
+#         # Явное соответствие тип → форма
+#         forms_mapping = {
+#             'project': ProjectForm,
+#             'product': ProductForm,
+#             'portfolio': PortfolioForm,
+#             'partner': PartnerForm,
+#         }
+        
+#         if form_type not in forms_mapping:
+#             raise Http404("Unknown form type")
+        
+#         return forms_mapping[form_type]
