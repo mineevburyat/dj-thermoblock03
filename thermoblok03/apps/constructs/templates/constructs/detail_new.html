@@ -1104,12 +1104,6 @@
                 <div class="project-description">
                     <h2 class="project-title-main">{{ project.title|default:"Проект дома из ThermoBlock" }}</h2>
                     
-                    {% if project.short_description %}
-                        <div class="project-short-desc">
-                            <i class="fas fa-tag"></i> {{ project.short_description }}
-                        </div>
-                    {% endif %}
-                    
                     <div class="project-description-text">
                         <h3><i class="fas fa-info-circle"></i> Описание</h3>
                         <p>{{ project.description|default:""|linebreaks }}</p>
