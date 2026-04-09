@@ -1,0 +1,248 @@
+{% load static %}
+<!-- Секция портфолио -->
+<div class="portfolio-section py-5">
+    <div class="container-fluid px-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+            <div class="section-title">
+                <i class="fas fa-home"></i> {{ section_title|default:"Наши проекты" }}
+                <span class="badge badge-light ml-2" style="background:#eef2ff; color:#e65c1e;">
+                    {{ total_count }} {% if total_count == 1 %}дом{% elif total_count < 5 %}дома{% else %}домов{% endif %}
+                </span>
+            </div>
+            {% if show_controls %}
+            <div class="scroll-controls">
+                <button class="btn scroll-btn scroll-prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn scroll-btn scroll-next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="scroll-container portfolio-scroll-container">
+            <div class="houses-track portfolio-houses-track">
+                {% for house in houses %}
+                <div class="house-card-horizontal" data-house-id="{{ house.id }}" data-house-index="{{ forloop.counter0 }}">
+                    <div class="house-thumb-horizontal">
+                        {% if house.photo %}
+                        <img src="{{ house.photo.url }}" alt="{{ house.name }}" loading="lazy">
+                        {% else %}
+                        <img src="https://picsum.photos/600/450" alt="Фото дома" loading="lazy">
+                        {% endif %}
+                        <div class="house-badge">
+                            {% if house.status == 'built' %}
+                            <i class="fas fa-check-circle"></i> Построен
+                            {% elif house.status == 'in_progress' %}
+                            <i class="fas fa-hard-hat"></i> Строится
+                            {% else %}
+                            <i class="fas fa-drafting-compass"></i> Проект
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="house-info-horizontal">
+                        <h3 class="house-title">{{ house.name }}</h3>
+                        <div class="house-location">
+                            <i class="fas fa-map-marker-alt"></i> {{ house.district }}
+                        </div>
+                        <div class="house-area">
+                            <i class="fas fa-ruler-combined"></i> {{ house.area }} м²
+                        </div>
+                        <div class="house-desc-short">{{ house.description|truncatechars:90 }}</div>
+                    </div>
+                    <div class="view-btn" data-id="{{ house.id }}">
+                        <i class="fas fa-expand-alt"></i> Подробнее
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center p-5" style="min-width: 300px;">
+                    <i class="fas fa-home fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">Пока нет добавленных домов</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Стили для секции (если не глобальные) -->
+<style>
+    .portfolio-section .scroll-container {
+        overflow-x: auto;
+        overflow-y: visible;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        padding: 0.5rem 0 1rem;
+    }
+    .portfolio-section .scroll-container::-webkit-scrollbar {
+        height: 6px;
+    }
+    .portfolio-section .scroll-container::-webkit-scrollbar-track {
+        background: #e2e8f0;
+        border-radius: 10px;
+    }
+    .portfolio-section .scroll-container::-webkit-scrollbar-thumb {
+        background: #e65c1e;
+        border-radius: 10px;
+    }
+    .portfolio-section .houses-track {
+        display: flex;
+        flex-direction: row;
+        gap: 1.5rem;
+        padding: 0.5rem 2rem;
+    }
+    .portfolio-section .house-card-horizontal {
+        flex-shrink: 0;
+        width: 320px;
+        background: #ffffff;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+    }
+    .portfolio-section .house-card-horizontal:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
+    }
+    .portfolio-section .house-thumb-horizontal {
+        position: relative;
+        overflow: hidden;
+        height: 220px;
+        background: #e2e8f0;
+    }
+    .portfolio-section .house-thumb-horizontal img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    .portfolio-section .house-card-horizontal:hover .house-thumb-horizontal img {
+        transform: scale(1.05);
+    }
+    .portfolio-section .house-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(230, 92, 30, 0.95);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        backdrop-filter: blur(4px);
+        z-index: 2;
+    }
+    .portfolio-section .house-info-horizontal {
+        padding: 1.2rem 1.2rem 1rem;
+        flex: 1;
+    }
+    .portfolio-section .house-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #0f3b4c;
+        margin-bottom: 0.25rem;
+        line-height: 1.3;
+    }
+    .portfolio-section .house-location {
+        font-size: 0.75rem;
+        color: #e65c1e;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .portfolio-section .house-area {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #eef2ff;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #1e4a6b;
+        margin: 0.5rem 0;
+    }
+    .portfolio-section .house-desc-short {
+        font-size: 0.8rem;
+        color: #475569;
+        line-height: 1.4;
+        margin-top: 0.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .portfolio-section .view-btn {
+        margin: 0 1rem 1.2rem 1rem;
+        background: transparent;
+        border: 1.5px solid #e65c1e;
+        color: #e65c1e;
+        font-weight: 600;
+        padding: 0.5rem;
+        border-radius: 40px;
+        font-size: 0.75rem;
+        transition: all 0.2s;
+        text-align: center;
+        cursor: pointer;
+    }
+    .portfolio-section .view-btn:hover {
+        background: #e65c1e;
+        color: white;
+    }
+    .portfolio-section .scroll-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: white;
+        border: 1px solid #e2e8f0;
+        color: #e65c1e;
+        transition: all 0.2s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .portfolio-section .scroll-btn:hover {
+        background: #e65c1e;
+        color: white;
+        border-color: #e65c1e;
+    }
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #0f3b4c;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .section-title i {
+        color: #e65c1e;
+    }
+    @media (max-width: 768px) {
+        .portfolio-section .house-card-horizontal { width: 280px; }
+        .portfolio-section .house-thumb-horizontal { height: 180px; }
+    }
+</style>
+
+<script>
+// JavaScript для работы скролла в секции
+(function() {
+    const section = document.querySelector('.portfolio-section');
+    if (!section) return;
+    
+    const scrollContainer = section.querySelector('.portfolio-scroll-container');
+    const prevBtn = section.querySelector('.scroll-prev-btn');
+    const nextBtn = section.querySelector('.scroll-next-btn');
+    
+    if (prevBtn && scrollContainer) {
+        prevBtn.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: -340, behavior: 'smooth' });
+        });
+    }
+    
+    if (nextBtn && scrollContainer) {
+        nextBtn.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: 340, behavior: 'smooth' });
+        });
+    }
+})();
+</script>

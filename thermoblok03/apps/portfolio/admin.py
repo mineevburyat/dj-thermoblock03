@@ -52,9 +52,10 @@ class HouseAdmin(admin.ModelAdmin):
     #     return 'Нет фото'
     def display_primary_image(self, obj):
         primary = obj.photo
+        print(primary, dir(primary))
         if primary and primary.file:
             return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', 
-                             primary.file.url)
+                             primary.url)
         return 'Нет фото'
     display_primary_image.short_description = 'Главное фото'
 
