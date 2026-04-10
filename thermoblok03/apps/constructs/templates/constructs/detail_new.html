@@ -1239,7 +1239,7 @@
         facadeBtn.addEventListener('click', () => {
             if (firstFacadeIndex !== -1) {
                 refreshCarousel(firstFacadeIndex);
-                facadeBtn.style.transform = 'scale(0.95)';
+                facadeBtn.style.transform = 'scale(0.5)';
                 setTimeout(() => { facadeBtn.style.transform = ''; }, 200);
             }
         });
@@ -1249,7 +1249,7 @@
         planBtn.addEventListener('click', () => {
             if (firstPlanIndex !== -1) {
                 refreshCarousel(firstPlanIndex);
-                planBtn.style.transform = 'scale(0.95)';
+                planBtn.style.transform = 'scale(0.5)';
                 setTimeout(() => { planBtn.style.transform = ''; }, 200);
             }
         });
@@ -1283,7 +1283,7 @@
     // Модальное окно с зумом по клику
     let currentModalIndex = 0;
     let isZoomed = false;
-    let zoomScale = 2.5;
+    let zoomScale = 1.25;
     let panX = 0, panY = 0;
     let isDragging = false;
     let startX = 0, startY = 0;
@@ -1320,6 +1320,10 @@
     }
     
     function toggleZoom(e) {
+        // Проверяем, что клик не по кнопкам навигации и не по кнопке закрытия
+        if (e.target.closest('.modal-nav-btn') || e.target.closest('.close')) {
+            return;
+        }
         if (!isZoomed) {
             isZoomed = true;
             zoomWrapper.classList.add('zoomed');
@@ -1484,7 +1488,35 @@
             }
         });
     }
-    
+    // Останавливаем всплытие событий для кнопки закрытия и навигации
+    const closeModalBtn = document.querySelector('#fullGalleryModal .close');
+    const modalNavBtns = document.querySelectorAll('#fullGalleryModal .modal-nav-btn');
+
+    // Для кнопки закрытия
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            fullModal.modal('hide');
+        });
+        
+        // Также на touchstart для мобильных
+        closeModalBtn.addEventListener('touchstart', (e) => {
+            e.stopPropagation();
+        });
+    }
+
+    // Для кнопок навигации
+    modalNavBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        btn.addEventListener('touchstart', (e) => {
+            e.stopPropagation();
+        });
+    });
+
     // Клавиатура
     document.addEventListener('keydown', (e) => {
         if (fullModal.hasClass('show')) {
