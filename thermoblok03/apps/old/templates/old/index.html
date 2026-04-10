@@ -24,11 +24,13 @@
     <!-- Лучшие проекты -->
     {% show_projects_preview  %}
 
-    {% include 'portfolio/old_section.html' %}
-    {% comment %}
+    
+    
     <section class="container">
             {% show_portfolio_section %}
-        </section>
+    </section>
+    {% comment %}
+    {% include 'portfolio/old_section.html' %}
     {% endcomment %}
         
     {% include 'about/achievements_old.html' %}

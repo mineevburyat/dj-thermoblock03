@@ -1,69 +1,104 @@
 {% load static %}
 <!-- Секция портфолио -->
-<div class="portfolio-section py-5">
-    <div class="container-fluid px-4">
-        <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
-            <div class="section-title">
-                <i class="fas fa-home"></i> {{ section_title|default:"Наши проекты" }}
-                <span class="badge badge-light ml-2" style="background:#eef2ff; color:#e65c1e;">
-                    {{ total_count }} {% if total_count == 1 %}дом{% elif total_count < 5 %}дома{% else %}домов{% endif %}
-                </span>
+    <div class="portfolio-section py-1">
+        <div class="container-fluid px-4">
+            <h2 class="global_title">
+                Портфолио 
+                <strong class="stronglogo">
+                    <span class="logotext">
+                        <span class="hotlogo">Thermo</span><span class="collogo">Block</span>
+                    </span>
+                    <span class="tm-sign">™</span>
+                </strong>
+            </h2>
+            <div class="global_subtitle"></div>
+            <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                <h3 class="section-title">
+                    Время строить из ThermoBlock!
+                </h3>
+                <div class="scroll-controls">
+                    <button id="scrollLeftBtn" class="btn scroll-btn scroll-prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button id="scrollRightBtn" class="btn scroll-btn scroll-next-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
             </div>
-            {% if show_controls %}
-            <div class="scroll-controls">
-                <button class="btn scroll-btn scroll-prev-btn"><i class="fas fa-chevron-left"></i></button>
-                <button class="btn scroll-btn scroll-next-btn"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            {% endif %}
-        </div>
-        
-        <div class="scroll-container portfolio-scroll-container">
-            <div class="houses-track portfolio-houses-track">
-                {% for house in houses %}
-                <div class="house-card-horizontal" data-house-id="{{ house.id }}" data-house-index="{{ forloop.counter0 }}">
-                    <div class="house-thumb-horizontal">
-                        {% if house.photo %}
-                        <img src="{{ house.photo.url }}" alt="{{ house.name }}" loading="lazy">
-                        {% else %}
-                        <img src="https://picsum.photos/600/450" alt="Фото дома" loading="lazy">
-                        {% endif %}
-                        <div class="house-badge">
-                            {% if house.status == 'built' %}
-                            <i class="fas fa-check-circle"></i> Построен
-                            {% elif house.status == 'in_progress' %}
-                            <i class="fas fa-hard-hat"></i> Строится
+            
+            <div class="scroll-container portfolio-scroll-container" id="scrollContainer">
+                <div class="houses-track portfolio-houses-track">
+                    {% for house in houses %}
+                    <div class="house-card-horizontal" data-house-id="{{ house.id }}" data-house-index="{{ forloop.counter0 }}">
+                        <div class="house-thumb-horizontal">
+                            {% if house.photo %}
+                            <img src="{{ house.photo.url }}" alt="{{ house.name }}" loading="lazy">
                             {% else %}
-                            <i class="fas fa-drafting-compass"></i> Проект
+                            <img src="https://picsum.photos/600/450" alt="Фото дома" loading="lazy">
                             {% endif %}
+                            <div class="house-badge">
+                                {% if house.status == 'built' %}
+                                <i class="fas fa-check-circle"></i> Построен
+                                {% elif house.status == 'in_progress' %}
+                                <i class="fas fa-hard-hat"></i> Строится
+                                {% else %}
+                                <i class="fas fa-drafting-compass"></i> Проект
+                                {% endif %}
+                            </div>
+                            <div class="house-area">
+                                <i class="fas fa-ruler-combined"></i> {{ house.area }} м²
+                            </div>
+                        </div>
+                        <div class="house-info-horizontal">
+                            <h4 class="house-title">{{ house.name }}</h4>
+                            <div class="house-location">
+                                <i class="fas fa-map-marker-alt"></i> {{ house.district }}
+                            </div>
+                            <div class="house-desc-short">{{ house.description|truncatechars:90 }}</div>
+                        </div>
+                        <div class="view-btn" data-id="{{ house.id }}">
+                            <i class="fas fa-expand-alt"></i> Подробнее
                         </div>
                     </div>
-                    <div class="house-info-horizontal">
-                        <h3 class="house-title">{{ house.name }}</h3>
-                        <div class="house-location">
-                            <i class="fas fa-map-marker-alt"></i> {{ house.district }}
-                        </div>
-                        <div class="house-area">
-                            <i class="fas fa-ruler-combined"></i> {{ house.area }} м²
-                        </div>
-                        <div class="house-desc-short">{{ house.description|truncatechars:90 }}</div>
+                    {% empty %}
+                    <div class="text-center p-5" style="min-width: 300px;">
+                        <i class="fas fa-home fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Пока нет добавленных домов</p>
                     </div>
-                    <div class="view-btn" data-id="{{ house.id }}">
-                        <i class="fas fa-expand-alt"></i> Подробнее
-                    </div>
+                    {% endfor %}
                 </div>
-                {% empty %}
-                <div class="text-center p-5" style="min-width: 300px;">
-                    <i class="fas fa-home fa-3x text-muted mb-3"></i>
-                    <p class="text-muted">Пока нет добавленных домов</p>
-                </div>
-                {% endfor %}
             </div>
         </div>
     </div>
-</div>
-
-<!-- Стили для секции (если не глобальные) -->
-<style>
+    <!-- Bootstrap Modal (галерея всех домов) -->
+    <div class="modal fade modal-gallery" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="galleryModalLabel" style="color: white;"><i class="fas fa-home"></i> Проект ThermoBlock</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="gallery-container">
+                        <div class="position-relative">
+                            <div class="main-image-container d-flex justify-content-center align-items-center">
+                                <img id="modalMainImage" src="" alt="Фото дома">
+                                <div class="gallery-counter" id="galleryCounter">1 / {{ total_count }}</div>
+                            </div>
+                            <button class="nav-arrows nav-prev" id="galleryPrev"><i class="fas fa-chevron-left"></i></button>
+                            <button class="nav-arrows nav-next" id="galleryNext"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        
+                        <div class="houses-thumbnail-strip" id="housesThumbStrip"></div>
+                        
+                        <div class="gallery-description" id="galleryDescription">
+                            <!-- динамическое описание заполняется через JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Стили для секции (если не глобальные) -->
+    <style>
     .portfolio-section .scroll-container {
         overflow-x: auto;
         overflow-y: visible;
@@ -217,32 +252,391 @@
     .section-title i {
         color: #e65c1e;
     }
+
+    /* Модальное окно */
+        .modal-gallery .modal-dialog {
+            max-width: 95%;
+            width: 1300px;
+            margin: 1.75rem auto;
+        }
+        
+        .modal-gallery .modal-content {
+            background: #1a1a2e;
+            border-radius: 28px;
+            overflow: hidden;
+        }
+        
+        .modal-gallery .modal-header {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: #1a1a2e;
+            padding: 1rem 1.5rem;
+        }
+        
+        .modal-gallery .modal-header .close {
+            color: white;
+            opacity: 0.8;
+            text-shadow: none;
+            font-size: 1.8rem;
+        }
+        
+        .gallery-container {
+            background: #0f0f1a;
+            padding: 1.5rem;
+        }
+        
+        .main-image-container {
+            background: #0a0a12;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+            max-height: 65vh;
+            position: relative;
+        }
+        
+        .main-image-container img {
+            max-width: 100%;
+            max-height: 65vh;
+            object-fit: contain;
+            width: auto;
+        }
+        
+        .nav-arrows {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+            font-size: 1.3rem;
+        }
+        
+        .nav-arrows:hover {
+            background: #e65c1e;
+        }
+        
+        .nav-prev {
+            left: 20px;
+        }
+        
+        .nav-next {
+            right: 20px;
+        }
+        
+        .houses-thumbnail-strip {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scrollbar-width: thin;
+            margin-top: 1rem;
+        }
+        
+        .house-nav-item {
+            flex-shrink: 0;
+            width: 100px;
+            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s;
+            opacity: 0.6;
+            border: 2px solid transparent;
+            background: #1e1e2e;
+        }
+        
+        .house-nav-item:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        .house-nav-item.active-house {
+            opacity: 1;
+            border-color: #e65c1e;
+        }
+        
+        .house-nav-item img {
+            width: 100%;
+            height: 65px;
+            object-fit: cover;
+        }
+        
+        .house-nav-item .house-nav-title {
+            font-size: 0.6rem;
+            padding: 4px;
+            text-align: center;
+            color: #cbd5e1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .gallery-description {
+            background: #1e1e2e;
+            padding: 1.2rem 1.5rem;
+            border-radius: 16px;
+            margin-top: 1rem;
+            color: #e2e8f0;
+        }
+        
+        .gallery-description h3 {
+            color: #f4a261;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gallery-description .house-location-modal {
+            color: #e65c1e;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .gallery-description p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        .gallery-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #334155;
+        }
+        
+        .gallery-specs span {
+            font-size: 0.8rem;
+            background: #2d2d44;
+            padding: 5px 14px;
+            border-radius: 30px;
+            color: #cbd5e1;
+        }
+        
+        .gallery-counter {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            color: white;
+        }
     @media (max-width: 768px) {
         .portfolio-section .house-card-horizontal { width: 280px; }
         .portfolio-section .house-thumb-horizontal { height: 180px; }
     }
-</style>
+    </style>
 
-<script>
-// JavaScript для работы скролла в секции
-(function() {
+    <script>
     const section = document.querySelector('.portfolio-section');
-    if (!section) return;
-    
-    const scrollContainer = section.querySelector('.portfolio-scroll-container');
-    const prevBtn = section.querySelector('.scroll-prev-btn');
-    const nextBtn = section.querySelector('.scroll-next-btn');
-    
-    if (prevBtn && scrollContainer) {
-        prevBtn.addEventListener('click', () => {
+    // ---------- 1. Горизонтальный скролл ----------
+    const scrollContainer = document.getElementById('scrollContainer');
+    const scrollLeftBtn = document.getElementById('scrollLeftBtn');
+    const scrollRightBtn = document.getElementById('scrollRightBtn');
+
+    if (scrollLeftBtn && scrollContainer) {
+        scrollLeftBtn.addEventListener('click', () => {
             scrollContainer.scrollBy({ left: -340, behavior: 'smooth' });
         });
     }
-    
-    if (nextBtn && scrollContainer) {
-        nextBtn.addEventListener('click', () => {
+
+    if (scrollRightBtn && scrollContainer) {
+        scrollRightBtn.addEventListener('click', () => {
             scrollContainer.scrollBy({ left: 340, behavior: 'smooth' });
         });
     }
-})();
-</script>
+
+    // ---------- 2. Сбор данных о домах из DOM ----------
+    function getHousesData() {
+        const cards = document.querySelectorAll('.house-card-horizontal');
+        const houses = [];
+        
+        cards.forEach((card, idx) => {
+            const id = card.getAttribute('data-house-id') || idx;
+            const titleEl = card.querySelector('.house-title');
+            const districtEl = card.querySelector('.house-location');
+            const areaEl = card.querySelector('.house-area');
+            const descShortEl = card.querySelector('.house-desc-short');
+            const imgEl = card.querySelector('.house-thumb-horizontal img');
+            const statusEl = card.querySelector('.house-badge');
+            
+            let fullDesc = descShortEl ? descShortEl.innerText : '';
+            const hiddenDesc = card.querySelector('.house-full-desc');
+            if (hiddenDesc) fullDesc = hiddenDesc.innerText;
+            
+            let area = '';
+            if (areaEl) {
+                const areaMatch = areaEl.innerText.match(/([\d\.]+)\s*м²/);
+                if (areaMatch) area = areaMatch[1];
+            }
+            
+            let district = '';
+            if (districtEl) {
+                district = districtEl.innerText.replace('📍', '').replace('🏠', '').trim();
+            }
+            
+            houses.push({
+                id: id,
+                name: titleEl ? titleEl.innerText : 'Дом',
+                district: district,
+                area: area,
+                description: fullDesc,
+                status: statusEl ? statusEl.innerText.trim() : 'Построен',
+                photo: imgEl ? imgEl.src : '',
+                thumb: imgEl ? imgEl.src : ''
+            });
+        });
+        console.log(houses)
+        return houses;
+    }
+        
+    // ---------- 3. Модальная галерея ----------
+    let housesData = [];
+    let currentIndex = 0;
+
+    function openGallery(index) {
+        if (!housesData.length) return;
+        currentIndex = index;
+        updateModalContent();
+        renderThumbStrip();
+        $('#galleryModal').modal('show');
+    }
+        
+    function updateModalContent() {
+        const house = housesData[currentIndex];
+        if (!house) return;
+        
+        const mainImg = document.getElementById('modalMainImage');
+        if (mainImg) {
+            mainImg.src = house.photo;
+            mainImg.alt = house.name;
+        }
+        
+        const counter = document.getElementById('galleryCounter');
+        if (counter) {
+            counter.innerText = `${currentIndex + 1} / ${housesData.length}`;
+        }
+        
+        const modalTitle = document.getElementById('galleryModalLabel');
+        if (modalTitle) {
+            modalTitle.innerHTML = `<i class="fas fa-home"></i> ${escapeHtml(house.name)} | ThermoBlock`;
+        }
+        
+        const descContainer = document.getElementById('galleryDescription');
+        if (descContainer) {
+            descContainer.innerHTML = `
+                <h3>${escapeHtml(house.name)}</h3>
+                <div class="house-location-modal"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(house.district)}</div>
+                <p>${escapeHtml(house.description)}</p>
+                <div class="gallery-specs">
+                    <span><i class="fas fa-ruler-combined"></i> ${house.area} м²</span>
+                    <span><i class="fas fa-chart-line"></i> ${escapeHtml(house.status)}</span>
+                </div>
+                <div class="mt-2 small text-muted"><i class="fas fa-check-circle"></i> Построено ThermoBlock</div>
+            `;
+        }
+        
+        document.querySelectorAll('.house-nav-item').forEach((item, idx) => {
+            if (idx == currentIndex) item.classList.add('active-house');
+            else item.classList.remove('active-house');
+        });
+    }
+        
+        function renderThumbStrip() {
+            const strip = document.getElementById('housesThumbStrip');
+            if (!strip) return;
+            strip.innerHTML = '';
+            
+            housesData.forEach((house, idx) => {
+                const navItem = document.createElement('div');
+                navItem.className = 'house-nav-item';
+                if (idx === currentIndex) navItem.classList.add('active-house');
+                navItem.innerHTML = `
+                    <img src="${house.thumb || house.photo}" alt="${escapeHtml(house.name)}">
+                    <div class="house-nav-title">${escapeHtml(house.name.substring(0, 18))}</div>
+                `;
+                navItem.addEventListener('click', () => {
+                    currentIndex = idx;
+                    updateModalContent();
+                    renderThumbStrip();
+                });
+                strip.appendChild(navItem);
+            });
+        }
+        
+        function nextHouse() {
+            if (housesData.length) {
+                currentIndex = (currentIndex + 1) % housesData.length;
+                updateModalContent();
+                renderThumbStrip();
+            }
+        }
+        
+        function prevHouse() {
+            if (housesData.length) {
+                currentIndex = (currentIndex - 1 + housesData.length) % housesData.length;
+                updateModalContent();
+                renderThumbStrip();
+            }
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        // ---------- 4. Инициализация ----------
+        document.addEventListener('DOMContentLoaded', function() {
+            housesData = getHousesData();
+            
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const card = btn.closest('.house-card-horizontal');
+                    if (card) {
+                        const idx = Array.from(document.querySelectorAll('.house-card-horizontal')).indexOf(card);
+                        if (idx !== -1) openGallery(idx);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.house-card-horizontal').forEach((card, idx) => {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.view-btn')) {
+                        openGallery(idx);
+                    }
+                });
+            });
+            
+            const prevBtn = document.getElementById('galleryPrev');
+            const nextBtn = document.getElementById('galleryNext');
+            if (prevBtn) prevBtn.addEventListener('click', prevHouse);
+            if (nextBtn) nextBtn.addEventListener('click', nextHouse);
+            
+            $(document).on('keydown', function(e) {
+                if ($('#galleryModal').hasClass('show')) {
+                    if (e.key === 'ArrowRight') { nextHouse(); e.preventDefault(); }
+                    else if (e.key === 'ArrowLeft') { prevHouse(); e.preventDefault(); }
+                }
+            });
+        });
+
+    </script>

@@ -211,3 +211,7 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
+# Настройки (опционально, но рекомендую)
+THUMBNAIL_QUALITY = 85  # Качество миниатюр
+THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]  # Для retina-экранов (по желанию)
