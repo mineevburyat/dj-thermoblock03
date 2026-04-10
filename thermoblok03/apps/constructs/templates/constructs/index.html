@@ -641,6 +641,19 @@
                 padding: 8px;
             }
         }
+        /* Скрываем краткое описание на мобильных */
+        @media (max-width: 768px) {
+            .project-short-description {
+                display: none !important;
+            }
+        }
+
+        /* Или если у вас класс project-short-desc (как в вашем коде) */
+        @media (max-width: 768px) {
+            .project-short-desc {
+                display: none !important;
+            }
+        }
     </style>
     <script type="application/ld+json">
         {
