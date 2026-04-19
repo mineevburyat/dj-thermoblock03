@@ -68,10 +68,11 @@ class CalculationRequest(models.Model):
     ]
     
     CONTACT_METHODS = [
-        ('whatsapp', 'WhatsApp'),
+        ('max', 'MAX'),
         ('telegram', 'Telegram'),
-        ('viber', 'Viber'),
         ('email', 'Email'),
+        ('viber', 'Viber'),
+        ('whatsapp', 'WhatsApp'),
     ]
 
     SQUARE = [
