@@ -93,7 +93,7 @@
                         <div class="category-card__overlay"></div>
                         <div class="category-card__content">
                             <h4 class="category-title">{{ category.name }}</h4>
-                            <span class="category-count">{{ category.products_count }} проекта</span>
+                            <span class="category-count">{{ category.products_count }} проект{{ category.products_count|pluralize:"а,ов" }}</span>
                         </div>
                     </div>
                 </a>

@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+from django.urls import reverse
 
 class ProductType(models.Model):
     """Тип строения (категория)"""
@@ -185,6 +185,9 @@ class Product(models.Model):
             first = self.images.first()
         return first
     
+    def get_absolute_url(self):
+        # 'post_detail' is the name of the URL pattern in urls.py
+        return reverse('constructs:project_detail', kwargs={'slug': self.slug})
 
 
 
