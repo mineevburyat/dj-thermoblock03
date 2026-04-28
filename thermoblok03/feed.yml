@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<yml_catalog date="2026-04-28 14:57">
+  <shop>
+    <name>ThermoBlock</name>
+    <companyООО 'Строй Тех'</company>
+    <url>https://thermoblock.ru/</url>
+    <platform>Django</platform>
+    <currencies>
+      <currency id="RUB" rate="1"/>
+    </currencies>
+    <sets>
+      <set id="s1">
+      <name>Домокомплекты ThermoBlock</name>
+      <url>https://thermoblock.ru/constructs/</url>
+      </set>
+    </sets>
+    <categories>
+      <category id="1">Одноэтажные дома из ThermoBlock</category>
+      <category id="3">Двухэтажные дома из ThermoBlock</category>
+      <category id="4">Усадебный комплекс из ThermoBlock</category>
+    </categories>
+    <offers>
+      <offer id="2208" available="true" type="vendor.model">
+        <url>https://thermoblock.ru/constructs/eravna-108/</url>
+        <price>0</price>
+        <currencyId>RUB</currencyId>
+        <categoryId>1</categoryId>
+        <picture>https://thermoblock.ru/media/constructs/eravna_vecher.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/eravna_utro.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/eravna_common.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/eravna_back.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/eravna_fasad.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/eravna_mebel.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/eravna_size.jpg</picture>
+        <name>Еравна 108</name>
+        <description>«Еравна-108»: дом из ThermoBlock — быстро, тепло, технологично. Спальня, большая детская, раздельные кухня и гостиная, санузел, котельная. Тёплые полы.</description>
+        <vendor>ThermoBlock</vendor>
+        <model>eravna-12-9-1</model>
+        <params>
+          <param name="Площадь">108.0 м²</param>
+          <param name="Количество комнат">3</param>
+          <param name="Количество спален">2</param>
+          <param name="Количество санузлов">1</param>
+          <param name="Тип строения">Одноэтажные дома</param>
+          <param name="Тип крыши">Двускатная</param>
+        </params>
+      </offer>
+      <offer id="2207" available="true" type="vendor.model">
+        <url>https://thermoblock.ru/constructs/hatag-100/</url>
+        <price>0</price>
+        <currencyId>RUB</currencyId>
+        <categoryId>1</categoryId>
+        <picture>https://thermoblock.ru/media/constructs/hatag_front.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/hatagright1.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/hatagzubkovback.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/hatagzubkovfront1.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/fasadzubkov1.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/mebelzubkov1.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/sizezubkov1.jpg</picture>
+        <name>Хатаг 100</name>
+        <description>«Хатаг-100»: уютный дом на основе ThermoBlock. Возводится быстро, тепло и технологично. 2 комнаты, кухня-гостиная, санузел, тёплый тамбур. Тёплые полы. Идеален для Сибири.</description>
+        <vendor>ThermoBlock</vendor>
+        <model>hatag-100-tb400</model>
+        <params>
+          <param name="Площадь">102.0 м²</param>
+          <param name="Количество комнат">3</param>
+          <param name="Количество спален">2</param>
+          <param name="Количество санузлов">1</param>
+          <param name="Тип строения">Одноэтажные дома</param>
+          <param name="Тип крыши">Вальмовая</param>
+        </params>
+      </offer>
+      <offer id="2206" available="true" type="vendor.model">
+        <url>https://thermoblock.ru/constructs/kurumkan-70/</url>
+        <price>0</price>
+        <currencyId>RUB</currencyId>
+        <categoryId>1</categoryId>
+        <picture>https://thermoblock.ru/media/constructs/vecher_geser.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/geserleft1.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/geser_den1.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/geser_back.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/fasadgeser1.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/mebelgeser1.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/sizegeser1.jpg</picture>
+        <name>Курумкан 70</name>
+        <description>«Курумкан 70» — тёплый тамбур, две комнаты, кухня-гостиная, совмещённый санузел. Отопление — электрические тёплые полы. Для Сибири, дачи или маленькой семьи.</description>
+        <vendor>ThermoBlock</vendor>
+        <model>70-ТБ300</model>
+        <params>
+          <param name="Площадь">70.0 м²</param>
+          <param name="Количество комнат">3</param>
+          <param name="Количество спален">2</param>
+          <param name="Количество санузлов">1</param>
+          <param name="Тип строения">Одноэтажные дома</param>
+          <param name="Тип крыши">Двускатная</param>
+        </params>
+      </offer>
+      <offer id="2205" available="true" type="vendor.model">
+        <url>https://thermoblock.ru/constructs/barguzin-120/</url>
+        <price>0</price>
+        <currencyId>RUB</currencyId>
+        <categoryId>1</categoryId>
+        <picture>https://thermoblock.ru/media/constructs/batirbek1.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/batirbek2.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/bstirbek3_1.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/batrbek4.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/fasadbatirbek2.webp</picture>
+        <picture>https://thermoblock.ru/media/constructs/sizebatirbek1.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/mebelbatirbek1.jpg</picture>
+        <name>Баргузин 120</name>
+        <description>Компактный дом 120 м². Тамбур, совмещённый санузел, помещение под бойлер/котел. Комбинированное отопление. Гостиная с кухней — единое пространство.</description>
+        <vendor>ThermoBlock</vendor>
+        <model>БР-120-ТБ300</model>
+        <params>
+          <param name="Площадь">120.0 м²</param>
+          <param name="Количество комнат">4</param>
+          <param name="Количество спален">3</param>
+          <param name="Количество санузлов">1</param>
+          <param name="Тип строения">Одноэтажные дома</param>
+          <param name="Тип крыши">Вальмовая</param>
+        </params>
+      </offer>
+      <offer id="2204" available="true" type="vendor.model">
+        <url>https://thermoblock.ru/constructs/bagulnik110/</url>
+        <price>0</price>
+        <currencyId>RUB</currencyId>
+        <categoryId>1</categoryId>
+        <picture>https://thermoblock.ru/media/constructs/constract3.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/constract2.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/construct1.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/fasad.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/mebdel1.png</picture>
+        <picture>https://thermoblock.ru/media/constructs/size1.png</picture>
+        <name>Багульник 110</name>
+        <description>«Багульник 110» из ThermoBlock. Гараж с проходом в дом, 2 санузла (один при спальне), камин, тамбур, тёплые полы. Семье из 4 человек — идеально.</description>
+        <vendor>ThermoBlock</vendor>
+        <model>bagul110</model>
+        <params>
+          <param name="Площадь">110.0 м²</param>
+          <param name="Количество комнат">4</param>
+          <param name="Количество спален">3</param>
+          <param name="Количество санузлов">2</param>
+          <param name="Гараж">есть</param>
+          <param name="Тип строения">Одноэтажные дома</param>
+          <param name="Тип крыши">Вальмовая</param>
+        </params>
+      </offer>
+      <offer id="2203" available="true" type="vendor.model">
+        <url>https://thermoblock.ru/constructs/baikal-160/</url>
+        <price>0</price>
+        <currencyId>RUB</currencyId>
+        <categoryId>3</categoryId>
+        <picture>https://thermoblock.ru/media/constructs/photo_2026-03-09_14-49-34.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/photo_2026-03-09_14-56-20.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/photo_2026-03-09_14-56-34.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/photo_2026-03-09_14-56-56.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/photo_2026-03-09_14-59-03.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/photo_2026-03-09_14-59-49.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/photo_2026-03-09_15-01-09.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/photo_2026-03-09_15-02-01.jpg</picture>
+        <name>Байкал 160</name>
+        <description>Дом “Байкал 160” 2 этажа — тепло и скорость строительства за счет технологии ThermoBlock</description>
+        <vendor>ThermoBlock</vendor>
+        <model>АП-26-24-ТБ400</model>
+        <params>
+          <param name="Площадь">165.0 м²</param>
+          <param name="Количество комнат">5</param>
+          <param name="Количество спален">3</param>
+          <param name="Количество санузлов">2</param>
+          <param name="Тип строения">Двухэтажные дома</param>
+          <param name="Тип крыши">Вальмовая</param>
+        </params>
+      </offer>
+      <offer id="2202" available="true" type="vendor.model">
+        <url>https://thermoblock.ru/constructs/g-089/</url>
+        <price>0</price>
+        <currencyId>RUB</currencyId>
+        <categoryId>4</categoryId>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_089_001.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_089_002.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_089_006.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_089_007.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_089_009.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_089_012.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_089_015.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_089_017.jpg</picture>
+        <name>Барн-хауз G-089</name>
+        <description>Современный барн-хаус из термоблоков: гараж, банный комплекс и гостевая комната под одной крышей.</description>
+        <vendor>ThermoBlock</vendor>
+        <model>G-089</model>
+        <params>
+          <param name="Площадь">171.0 м²</param>
+          <param name="Количество комнат">8</param>
+          <param name="Количество спален">1</param>
+          <param name="Количество санузлов">3</param>
+          <param name="Гараж">есть</param>
+          <param name="Терраса">есть</param>
+          <param name="Тип строения">Усадебный комплекс</param>
+          <param name="Тип крыши">Двускатная</param>
+        </params>
+      </offer>
+      <offer id="2201" available="true" type="vendor.model">
+        <url>https://thermoblock.ru/constructs/g-088/</url>
+        <price>0</price>
+        <currencyId>RUB</currencyId>
+        <categoryId>4</categoryId>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_088_001.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_088_005.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_088_013.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_088_014.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_088_006.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_088_012.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_088_019.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_088_021.jpg</picture>
+        <name>Барн-хауз G-088</name>
+        <description>Просторный барн-хаус из термоблоков: гараж на две машины, баня и комната отдыха.</description>
+        <vendor>ThermoBlock</vendor>
+        <model>G-088</model>
+        <params>
+          <param name="Площадь">137.4 м²</param>
+          <param name="Количество комнат">5</param>
+          <param name="Количество спален">1</param>
+          <param name="Количество санузлов">3</param>
+          <param name="Гараж">есть</param>
+          <param name="Терраса">есть</param>
+          <param name="Тип строения">Усадебный комплекс</param>
+          <param name="Тип крыши">Вальмовая</param>
+        </params>
+      </offer>
+      <offer id="2200" available="true" type="vendor.model">
+        <url>https://thermoblock.ru/constructs/g-087/</url>
+        <price>0</price>
+        <currencyId>RUB</currencyId>
+        <categoryId>4</categoryId>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_087_001.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_087_002.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_087_003.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_087_004.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_087_010.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_087_011.jpg</picture>
+        <picture>https://thermoblock.ru/media/constructs/%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D1%85%D0%BE%D0%B7_%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8_g_087_017.jpg</picture>
+        <name>Пиртти G-087</name>
+        <description>Финский гостевой павильон из термоблоков: кухня, душ, терраса для встреч с друзьями.</description>
+        <vendor>ThermoBlock</vendor>
+        <model>G-087</model>
+        <params>
+          <param name="Площадь">37.0 м²</param>
+          <param name="Количество комнат">5</param>
+          <param name="Количество санузлов">2</param>
+          <param name="Терраса">есть</param>
+          <param name="Тип строения">Усадебный комплекс</param>
+          <param name="Тип крыши">Вальмовая</param>
+        </params>
+      </offer>
+    </offers>
+  </shop>
+</yml_catalog>

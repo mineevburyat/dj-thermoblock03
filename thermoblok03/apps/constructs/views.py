@@ -1,10 +1,18 @@
 # views.py
+from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Product, ProductType, ProductImage, RoofType
 from django.db.models import Prefetch, Max
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views import View
+from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
+# from django.contrib.sites.models import Site
+from .utils import generate_yandex_yml_feed
 
 def product_list(request):
     projects = Product.objects.filter(is_active=True)
@@ -231,3 +239,25 @@ def product_edit(request, product_id):
         'roof_types': RoofType.objects.all(),
     }
     return render(request, 'constructs/edit_detail.html', context)
+
+# @method_decorator(cache_page(60 * 60 * 24), name='dispatch')  # Кешируем на 1 час
+class YandexFeedView(View):
+    
+    def get(self, request):
+        # Берём только активные проекты
+        products = Product.objects.filter(is_active=True).order_by('-id')[0:10].select_related(
+            'product_type', 
+            'roof_type'
+        ).prefetch_related('images')
+        
+        if not products.exists():
+            return HttpResponse('Нет активных проектов для выгрузки', status=404)
+        
+        # Определяем базовый URL
+        base_url = 'https://thermoblock'
+        
+        # Генерируем фид
+        feed_xml = generate_yandex_yml_feed(products, base_url)
+        
+        # Отдаём как XML файл
+        return HttpResponse(feed_xml, content_type='application/xml; charset=utf-8')

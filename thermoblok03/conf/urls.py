@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import GenericSitemap
 from django.views.generic import RedirectView
-
+from apps.constructs.views import YandexFeedView
 # from products.models import Products
 from .sitemaps import StaticViewSitemap
 
@@ -18,6 +18,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type="text/plain")),
     path('sitemap.xml', sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
+    path('yandex-feed.xml', YandexFeedView.as_view(), name='yandex_feed'),
     path('', include('apps.old.urls', namespace='home')),
     # path('catalog/', include('apps.old.urls', namespace='catalog')),
     path('about/', include('apps.about.urls', namespace='about')),

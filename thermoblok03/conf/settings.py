@@ -215,3 +215,14 @@ CORS_ALLOW_HEADERS = [
 # Настройки (опционально, но рекомендую)
 THUMBNAIL_QUALITY = 85  # Качество миниатюр
 THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]  # Для retina-экранов (по желанию)
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/django_cache',
+        'TIMEOUT': 86400,  # 24 час
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
+        }
+    }
+}
