@@ -24,7 +24,7 @@ def generate_yandex_yml_feed(products, base_url):
     company.text = 'ООО "Строй Тех"'
     
     url = SubElement(shop, 'url')
-    url.text = base_url + '/'
+    url.text = base_url
     
     platform = SubElement(shop, 'platform')
     platform.text = 'Django'
@@ -46,6 +46,7 @@ def generate_yandex_yml_feed(products, base_url):
             cat_elem.text = product.product_type.name + ' ThermoBlock'
             categories_dict[product.product_type.id] = True
     
+    
     # Основной блок с товарами
     offers = SubElement(shop, 'offers')
     
@@ -56,6 +57,9 @@ def generate_yandex_yml_feed(products, base_url):
         offer.set('available', 'true')
         # offer.set('type', 'vendor.model')
         
+        # Вендор и модель
+        vendor = SubElement(offer, 'vendor')
+        vendor.text = 'ThermoBlock'        
         # URL страницы товара
         product_url = SubElement(offer, 'url')
         product_url.text = f'{base_url}{product.get_absolute_url()}'
@@ -92,9 +96,7 @@ def generate_yandex_yml_feed(products, base_url):
         description = SubElement(offer, 'description')
         description.text = product.short_description or product.description or f'Проект {product.title} из термоблока'
         
-        # Вендор и модель
-        vendor = SubElement(offer, 'vendor')
-        vendor.text = 'ThermoBlock'
+
         
         model = SubElement(offer, 'model')
         model.text = product.article or product.slug.upper()
@@ -103,35 +105,47 @@ def generate_yandex_yml_feed(products, base_url):
         # Дополнительные параметры
         # params = SubElement(offer, 'params')
         
-        # if product.area:
-        #     param = SubElement(offer, 'param')
-        #     param.set('name', 'Площадь')
-        #     param.text = f'{float(product.area):.1f} м²'
+        # param = SubElement(offer, 'param')
+        # param.set('name', 'Конверсия')
+        # param.text = '100'
+
+        # param = SubElement(offer, 'param')
+        # param.set('name', 'Тип предложения')
+        # param.text = 'Продажа'
+
+        # param = SubElement(offer, 'param')
+        # param.set('name', 'Сайт застройщика')
+        # param.text = 'https://thermoblock.ru/'
+
+        if product.area:
+            param = SubElement(offer, 'param')
+            param.set('name', 'Площадь')
+            param.text = f'{float(product.area):.1f}'
         
-        # if product.rooms_count:
-        #     param = SubElement(params, 'param')
-        #     param.set('name', 'Количество комнат')
-        #     param.text = str(product.rooms_count)
+        if product.rooms_count:
+            param = SubElement(offer, 'param')
+            param.set('name', 'Количество комнат')
+            param.text = str(product.rooms_count)
         
-        # if product.bedrooms_count:
-        #     param = SubElement(params, 'param')
-        #     param.set('name', 'Количество спален')
-        #     param.text = str(product.bedrooms_count)
+        if product.bedrooms_count:
+            param = SubElement(offer, 'param')
+            param.set('name', 'Количество спален')
+            param.text = str(product.bedrooms_count)
         
-        # if product.bathrooms_count:
-        #     param = SubElement(params, 'param')
-        #     param.set('name', 'Количество санузлов')
-        #     param.text = str(product.bathrooms_count)
+        if product.bathrooms_count:
+            param = SubElement(offer, 'param')
+            param.set('name', 'Количество санузлов')
+            param.text = str(product.bathrooms_count)
         
-        # if product.garage:
-        #     param = SubElement(params, 'param')
-        #     param.set('name', 'Гараж')
-        #     param.text = 'есть'
+        if product.garage:
+            param = SubElement(offer, 'param')
+            param.set('name', 'Гараж')
+            param.text = 'есть'
         
-        # if product.terrace:
-        #     param = SubElement(params, 'param')
-        #     param.set('name', 'Терраса')
-        #     param.text = 'есть'
+        if product.terrace:
+            param = SubElement(offer, 'param')
+            param.set('name', 'Терраса')
+            param.text = 'есть'
         
         # if product.product_type:
         #     param = SubElement(params, 'param')

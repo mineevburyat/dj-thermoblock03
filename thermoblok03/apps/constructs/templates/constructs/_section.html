@@ -4,82 +4,93 @@
         <h2 class="h2 text-center">Популярные проекты домов из <strong class="stronglogo"><span class="logotext" aria-label="ТермоБлок"><span class="hotlogo">Thermo</span><span class="collogo">Block</span></span></strong></h2>
         <p class="display-5 text-center">Стройте с умом - живите с комфортом!</p>
         <!-- Сетка с тремя проектами -->
-        <div class="projects-grid">
+        <div class="projects-grid" itemscope itemtype="https://schema.org/ItemList">
+            <meta itemprop="name" content="Домокомплекты ThermoBlock" />
+            <meta itemprop="numberOfItems" content="3" />
             {% for project in projects|slice:":3" %}
-            <a href="{% url 'constructs:project_detail' project.slug%}" class="project-card">
-                <div class="project-card__inner" style="background-image: url('{% if project.get_first_image %}{{ project.get_first_image.image.url }}{% else %}/static/img/placeholder.jpg{% endif %}');">
-                    <div class="project-card__overlay"></div>
-                    
-                    <!-- Верхняя часть: бейджи слева, иконки и лайк справа -->
-                    <div class="project-card__top">
-                        <!-- Бейджи слева -->
-                        <div class="project-badges">
-                            {% if project.is_popular %}
-                            <span class="badge popular"><i class="fas fa-fire"></i> Популярное</span>
-                            {% endif %}
-                            {% if project.is_new %}
-                            <span class="badge new"><i class="fas fa-star"></i> Новинка</span>
-                            {% endif %}
+            <div itemprop="itemListElement" itemscope itemtype="https://schema.org/Product">
+                <meta itemprop="image" content="{{ request.scheme }}://{{ request.get_host}}{{project.get_first_image.image.url }}">
+                <meta itemprop="category" content="Домокомплекты ThermoBlock > {{project.product_type.name}}">
+                <a href="{% url 'constructs:project_detail' project.slug%}" class="project-card">
+                    <div class="project-card__inner" style="background-image: url('{% if project.get_first_image %}{{ project.get_first_image.image.url }}{% else %}/static/img/placeholder.jpg{% endif %}');">
+                        <div class="project-card__overlay"></div>
+                        <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <meta itemprop="price" content="0">
+                            <meta itemprop="priceCurrency" content="RUB">
+                            <link itemprop="availability" href="https://schema.org/InStock">
                         </div>
-                        
-                        <!-- Правый блок: иконки гаража/террасы + лайк -->
-                        <div class="project-actions">
-                            <!-- Иконки дополнительных опций -->
-                            <div class="project-features">
-                                {% if project.garage %}
-                                <span class="feature-icon" title="Гараж">
-                                    <i class="fas fa-warehouse"></i>
-                                </span>
+                        <meta itemprop="description" content="{{project.short_description}}">
+                        <!-- Верхняя часть: бейджи слева, иконки и лайк справа -->
+                        <div class="project-card__top">
+                            <!-- Бейджи слева -->
+                            <div class="project-badges">
+                                {% if project.is_popular %}
+                                <span class="badge popular"><i class="fas fa-fire"></i> Популярное</span>
                                 {% endif %}
-                                {% if project.terrace %}
-                                <span class="feature-icon" title="Терраса">
-                                    <i class="fas fa-umbrella-beach"></i>
-                                </span>
+                                {% if project.is_new %}
+                                <span class="badge new"><i class="fas fa-star"></i> Новинка</span>
                                 {% endif %}
                             </div>
                             
-                            <!-- Кнопка лайка (для главной можно убрать или оставить) -->
-                            <button class="like-btn" onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite(this, {{ project.id }})">
-                                <i class="{% if project.id in favorites %}fas{% else %}far{% endif %} fa-heart"></i>
-                            </button>
+                            <!-- Правый блок: иконки гаража/террасы + лайк -->
+                            <div class="project-actions">
+                                <!-- Иконки дополнительных опций -->
+                                <div class="project-features">
+                                    {% if project.garage %}
+                                    <span class="feature-icon" title="Гараж">
+                                        <i class="fas fa-warehouse"></i>
+                                    </span>
+                                    {% endif %}
+                                    {% if project.terrace %}
+                                    <span class="feature-icon" title="Терраса">
+                                        <i class="fas fa-umbrella-beach"></i>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Кнопка лайка (для главной можно убрать или оставить) -->
+                                <button class="like-btn" onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite(this, {{ project.id }})">
+                                    <i class="{% if project.id in favorites %}fas{% else %}far{% endif %} fa-heart"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Нижняя часть: название, характеристики и бейджи -->
-                    <div class="project-card__content">
-                        <h3 class="project-title">{{ project.title }}</h3>
                         
-                        <!-- Строка с характеристиками и бейджами -->
-                        <div class="project-info-row">
-                            <!-- Характеристики слева -->
-                            <div class="project-specs">
-                                {% if project.area %}
-                                <span class="spec-badge"><i class="fas fa-arrows-alt"></i> {{ project.area }} м²</span>
-                                {% endif %}
-                                {% if project.rooms_count %}
-                                <span class="spec-badge"><i class="fas fa-door-open"></i> {{ project.rooms_count }} комн.</span>
-                                {% endif %}
-                                {% if project.bedrooms_count %}
-                                <span class="spec-badge"><i class="fas fa-bed"></i> {{ project.bedrooms_count }} спал.</span>
-                                {% endif %}
-                                {% if project.bathrooms_count %}
-                                <span class="spec-badge"><i class="fas fa-toilet"></i> {{ project.bathrooms_count }} сан.</span>
-                                {% endif %}
-                            </div>
+                        <!-- Нижняя часть: название, характеристики и бейджи -->
+                        <div class="project-card__content">
+                            <h3 class="project-title" itemprop="name">{{ project.title }}</h3>
                             
-                            <!-- Бейджи справа -->
-                            <div class="info-badges">
-                                <span class="info-badge mortgage">
-                                    <i class="fas fa-credit-card"></i> Ипотека
-                                </span>
-                                <span class="info-badge escrow">
-                                    <i class="fas fa-shield-alt"></i> Эскроу
-                                </span>
+                            <!-- Строка с характеристиками и бейджами -->
+                            <div class="project-info-row">
+                                <!-- Характеристики слева -->
+                                <div class="project-specs">
+                                    {% if project.area %}
+                                    <span class="spec-badge"><i class="fas fa-arrows-alt"></i> {{ project.area }} м²</span>
+                                    {% endif %}
+                                    {% if project.rooms_count %}
+                                    <span class="spec-badge"><i class="fas fa-door-open"></i> {{ project.rooms_count }} комн.</span>
+                                    {% endif %}
+                                    {% if project.bedrooms_count %}
+                                    <span class="spec-badge"><i class="fas fa-bed"></i> {{ project.bedrooms_count }} спал.</span>
+                                    {% endif %}
+                                    {% if project.bathrooms_count %}
+                                    <span class="spec-badge"><i class="fas fa-toilet"></i> {{ project.bathrooms_count }} сан.</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Бейджи справа -->
+                                <div class="info-badges">
+                                    <span class="info-badge mortgage">
+                                        <i class="fas fa-credit-card"></i> Ипотека
+                                    </span>
+                                    <span class="info-badge escrow">
+                                        <i class="fas fa-shield-alt"></i> Эскроу
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
             {% endfor %}
         </div>
 
@@ -88,15 +99,15 @@
             <h3 class="categories-title">Категории зданий</h3>
             <div class="categories-grid">
                 {% for category in categories %}
-                <a href="{% url 'constructs:index' %}?product_type={{ category.id }}" class="category-card">
-                    <div class="category-card__inner" style="background-image: url('{{ category.get_image_url }}');">
-                        <div class="category-card__overlay"></div>
-                        <div class="category-card__content">
-                            <h4 class="category-title">{{ category.name }}</h4>
-                            <span class="category-count">{{ category.products_count }} проект{{ category.products_count|pluralize:"а,ов" }}</span>
+                    <a href="{% url 'constructs:index' %}?product_type={{ category.id }}" class="category-card">
+                        <div class="category-card__inner" style="background-image: url('{{ category.get_image_url }}');">
+                            <div class="category-card__overlay"></div>
+                            <div class="category-card__content">
+                                <h4 class="category-title">{{ category.name }}</h4>
+                                <span class="category-count">{{ category.products_count }} проект{{ category.products_count|pluralize:"а,ов" }}</span>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
                 {% endfor %}
             </div>
         </div>
