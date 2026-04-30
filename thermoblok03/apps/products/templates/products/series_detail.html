@@ -2,7 +2,8 @@
 {% load static thumbnail %}
 
 {% block title %}{{ series.name }} - серия термоблоков{% endblock %}
-
+{% block meta_description %}{{ series.name }} {{series.description}} {% endblock %}
+{% block description %}{{ series.name }} {{series.description}} {% endblock %}
 {% block extra_css %}
 <style>
     /* Переменные и общие стили */

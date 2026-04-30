@@ -18,7 +18,7 @@ User-agent: Yandex
 Clean-param: etext
 Clean-param: page
 Clean-param: yprqee
-
+Allow: /
 Disallow: /feedback/*
 Disallow: /admin/*
 Disallow: /new/*

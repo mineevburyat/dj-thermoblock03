@@ -1,10 +1,10 @@
 {% extends 'old/base.html' %}
 
 {% block title %}
-ThermoBlock - расчёт стоимости выбранного проекта
+ThermoBlock - расчёт стоимости выбранного проекта {{project.title}} и {{payment_method}}
 {% endblock %}
 {% block meta_description %}
-ThermoBlock - форма расчета стоимости выбранного проекта. Проект
+ThermoBlock - форма расчета стоимости выбранного проекта {{project.title}} и финансирования строительства {{payment_method}}
 {% endblock %}
 {% block extra_css %}
     <style>
