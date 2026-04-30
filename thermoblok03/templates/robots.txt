@@ -19,4 +19,8 @@ Clean-param: etext
 Clean-param: page
 Clean-param: yprqee
 
+Disallow: /feedback/*
+Disallow: /admin/*
+Disallow: /new/*
+
 Sitemap: https://thermoblock.ru/sitemap.xml
