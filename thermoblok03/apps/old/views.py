@@ -28,3 +28,10 @@ class Tb400(TemplateView):
     """Главная страница"""
     template_name = 'old/instruction400.html'
 
+def custom_400(request, exception):
+    # Передайте контекст, если нужно, но для 400-й это может быть опасно
+    return render(request, 'my_errors/400.html', status=400)
+
+def custom_500(request):
+    # Для 500 НЕ передавайте сложные данные в контекст
+    return render(request, 'my_errors/500.html', status=500)

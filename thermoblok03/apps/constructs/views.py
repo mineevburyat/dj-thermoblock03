@@ -240,7 +240,7 @@ def product_edit(request, product_id):
     }
     return render(request, 'constructs/edit_detail.html', context)
 
-# @method_decorator(cache_page(60 * 60 * 24), name='dispatch')  # Кешируем на 1 час
+@method_decorator(cache_page(60 * 60 * 24), name='dispatch')  # Кешируем на 1 час
 class YandexFeedView(View):
     
     def get(self, request):
