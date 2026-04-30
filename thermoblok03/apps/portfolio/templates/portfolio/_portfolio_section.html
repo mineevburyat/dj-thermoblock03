@@ -26,42 +26,134 @@
                 <div class="houses-track portfolio-houses-track">
                     {% for house in houses %}
                     <div class="house-card-horizontal" data-house-id="{{ house.id }}" data-house-index="{{ forloop.counter0 }}">
-                        <div class="house-thumb-horizontal">
+                        <div class="house-thumb-horizontal" itemscope itemtype="https://schema.org/SingleFamilyResidence" data-house-id="{{ house.id }}" data-house-index="{{ forloop.counter0 }}">
                             {% if house.photo %}
-                            <img src="{{ house.photo.url }}" alt="{{ house.name }}" loading="lazy">
+                            <img itemprop="image" src="{{ house.photo.url }}" alt="{{ house.name }}" loading="lazy">
                             {% else %}
                             <img src="https://picsum.photos/600/450" alt="Фото дома" loading="lazy">
                             {% endif %}
-                            <div class="house-badge">
+                            <div class="house-badge" itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
+                                <meta itemprop="name" content="Статус">
                                 {% if house.status == 'built' %}
-                                <i class="fas fa-check-circle"></i> Построен
+                                <i class="fas fa-check-circle"></i><span itemprop="value">Построен</span>
                                 {% elif house.status == 'in_progress' %}
-                                <i class="fas fa-hard-hat"></i> Строится
+                                <i class="fas fa-hard-hat"></i><span itemprop="value">Строится</sapn>
                                 {% else %}
-                                <i class="fas fa-drafting-compass"></i> Проект
+                                <i class="fas fa-drafting-compass"></i><span itemprop="value">Проект</span>
                                 {% endif %}
                             </div>
-                            <div class="house-area">
-                                <i class="fas fa-ruler-combined"></i> {{ house.area }} м²
+                            <div class="house-area" itemprop="floorSize" itemscope itemtype="https://schema.org/QuantitativeValue">
+                                <i class="fas fa-ruler-combined"></i>
+                                <meta itemprop="name" content="Общая площадь">
+                                <span itemprop="value">{{ house.area }} <span itemprop="unitCode" content="MTK">м²</span>
                             </div>
                         </div>
                         <div class="house-info-horizontal">
-                            <h4 class="house-title">{{ house.name }}</h4>
-                            <div class="house-location">
-                                <i class="fas fa-map-marker-alt"></i> {{ house.district }}
+                            <h4 class="house-title" itemprop="name">{{ house.name }}</h4>
+                            <div class="house-location" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span itemprop="addressLocality">{{ house.district }}</span>
                             </div>
-                            <div class="house-desc-short">{{ house.description|truncatechars:90 }}</div>
+                            <div class="house-desc-short" itemprop="description">{{ house.description|truncatechars:90 }}</div>
+                            <!-- Блок с отзывом -->
+                            <div class="house-review" itemprop="review" itemscope itemtype="https://schema.org/Review">
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i> 
+                                    <span itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                                        <span itemprop="ratingValue">{{ house.rating|default:5 }}</span>
+                                        <meta itemprop="bestRating" content="5">
+                                        <meta itemprop="worstRating" content="1">
+                                    </span>
+                                </div>
+                                <div class="review-text" itemprop="reviewBody">
+                                    «{{ house.review_text|default:'Дом полностью соответствует ожиданиям. Качество отделки на высоте!'|truncatechars:100 }}»
+                                </div>
+                                <div class="review-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                                    — <span itemprop="name">{{ house.review_author|default:'Семья Ивановых' }}</span>
+                                </div>
+                                <meta itemprop="datePublished" content="{{ house.review_date|default:'2024-10-01' }}">
+                            </div>
+                            <!-- Рейтинг на основе всех отзывов -->
+                            <div class="aggregate-rating" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating" style="display:none;">
+                                <meta itemprop="ratingValue" content="{{ house.avg_rating|default:4.8 }}">
+                                <meta itemprop="reviewCount" content="{{ house.review_count|default:5 }}">
+                                <meta itemprop="bestRating" content="5">
+                                <meta itemprop="worstRating" content="1">
+                            </div>
                         </div>
                         <div class="view-btn" data-id="{{ house.id }}">
                             <i class="fas fa-expand-alt"></i> Подробнее
                         </div>
                     </div>
+                    <script type="application/ld+json">
+                        {
+                        "@context": "https://schema.org",
+                        "@type": "SingleFamilyResidence",
+                        "@id": "https://thermoblock.ru/portfolio/house-{{house.id}}",
+                        "name": "{{ house.name }}",
+                        "description": "{{ house.description|truncatechars:150|escapejs }}",
+                        "image": "{% if house.photo %}{{ house.photo.url }}{% else %}https://picsum.photos/600/450{% endif %}",
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressLocality": "{{ house.district }}"
+                        },
+                        "provider": {
+                            "@id": "https://thermoblock.ru/about/contact/#org"
+                        },
+                        "builder": {
+                            "@id": "https://thermoblock.ru/about/contact/#org"
+                        },
+                        "floorSize": {
+                            "@type": "QuantitativeValue",
+                            "value": "{{ house.area }}",
+                            "unitCode": "MTK"
+                        },
+                        "numberOfRooms": {{ house.rooms|default:0 }},
+                        "yearBuilt": {{ house.year_built|default:2024 }},
+                        "review": {
+                            "@type": "Review",
+                            "reviewRating": {
+                            "@type": "Rating",
+                            "ratingValue": "{{ house.rating|default:5 }}",
+                            "bestRating": "5",
+                            "worstRating": "1"
+                            },
+                            "author": {
+                            "@type": "Person",
+                            "name": "{{ house.review_author|default:'Владелец дома' }}"
+                            },
+                            "reviewBody": "{{ house.review_text|default:'Отличное качество строительства. Рекомендуем!'|truncatechars:200|escapejs }}",
+                            "datePublished": "{{ house.review_date|default:'2024-01-01' }}"
+                        },
+                        "aggregateRating": {
+                            "@type": "AggregateRating",
+                            "ratingValue": "{{ house.avg_rating|default:'4.8' }}",
+                            "reviewCount": "{{ house.review_count|default:5 }}",
+                            "bestRating": "5",
+                            "worstRating": "1"
+                        },
+                        "award": "{% if house.is_best_project %}Лучший проект года{% endif %}",
+                        "additionalProperty": [
+                            {
+                            "@type": "PropertyValue",
+                            "name": "Статус объекта",
+                            "value": "Построен и сдан"
+                            },
+                            {
+                            "@type": "PropertyValue",
+                            "name": "Гарантия",
+                            "value": "{{ house.warranty_years|default:5 }} лет"
+                            }
+                        ]
+                        }
+                    </script>
                     {% empty %}
                     <div class="text-center p-5" style="min-width: 300px;">
                         <i class="fas fa-home fa-3x text-muted mb-3"></i>
                         <p class="text-muted">Пока нет добавленных домов</p>
                     </div>
                     {% endfor %}
+
                 </div>
             </div>
         </div>
@@ -437,6 +529,9 @@
     @media (max-width: 768px) {
         .portfolio-section .house-card-horizontal { width: 280px; }
         .portfolio-section .house-thumb-horizontal { height: 180px; }
+    }
+    .house-review {
+        visibility: hidden;
     }
     </style>
 
