@@ -1,4 +1,73 @@
 <style>
+    /* новый хистори */
+.history-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll_block {
+  padding: 20px 0;
+}
+
+#history_scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto; 
+}
+
+#history_scroll::-webkit-scrollbar {
+  height: 12px; /* толщина скроллбара */
+}
+
+#history_scroll::-webkit-scrollbar-track {
+  background: #f1f1f1; /* цвет дорожки */
+  border-radius: 6px;
+}
+
+#history_scroll::-webkit-scrollbar-thumb {
+  background: #dc3545; /* цвет ползунка */
+  border-radius: 6px;
+  border: 2px solid #f1f1f1; /* отступ от дорожки */
+}
+
+#history_scroll::-webkit-scrollbar-thumb:hover {
+  background: #c8253a; /* цвет при наведении */
+}
+
+.history-track {
+  transition: transform 0.5s ease-in-out;
+}
+
+.history_card {
+  width: 300px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+.year {
+  color: #dc3545;
+}
+
+.scroll-btn-side {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.scroll-btn-left {
+  left: -50px;
+}
+
+.scroll-btn-right {
+  right: -50px;
+}
+
+
+
     /* Горизонтальный скролл без выхода за пределы контейнера */
     .scroll-wrapper {
         width: 100%;
@@ -168,47 +237,79 @@
         <div class="row">
             <div class="col-12">
                 <div class="about_text">
-                    <p><strong aria-label="термоБлок">ThermoBlock</strong> — российский производитель энергоэффективных строительных материалов и подрядчик полного цикла. Собственное производство находится в г. Улан-Удэ. <strong aria-label="термоБлок">ThermoBlock</strong> - зарегистрированная торговая марка.</p>
+                    <p><strong aria-label="термоБлок">ThermoBlock</strong> — российский производитель энергоэффективных строительных материалов и подрядчик полного цикла. Собственное производство находится в г. Улан-Удэ.  Также мы оказываем такие услуги: строительство домов, гаражей, бань и коммерческой недвижимости. Работаем с ипотекой через основные банки, в том числе с использованием эскроу-счетов. Опыт в строительстве более 10 лет.<br><strong>ThermoBlock</strong> - зарегистрированная торговая марка.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Блок: История компании -->
-        <div class="scroll_block">
-            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+        <div class="history-section position-relative">
+            <div class="scroll_block">
+                <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
                 <h3 class="h2 mb-2 mb-sm-0">История компании</h3>
-                <div class="btn-group">
-                    <button class="btn btn-outline-danger scroll-btn" data-target="history_scroll" data-dir="left">←</button>
-                    <button class="btn btn-outline-danger scroll-btn" data-target="history_scroll" data-dir="right">→</button>
+                <!-- Кнопки управления для мобильных устройств -->
+                <div class="btn-group d-none d-md-block">
+                    <button class="btn btn-outline-danger scroll-btn" data-target="history_scroll" data-dir="left">
+                    <i class="bi bi-arrow-left">←</i>
+                    </button>
+                    <button class="btn btn-outline-danger scroll-btn" data-target="history_scroll" data-dir="right">
+                    <i class="bi bi-arrow-right">→</i>
+                    </button>
                 </div>
-            </div>
-            
-            <div class="scroll-wrapper" id="history_scroll">
-                <div class="scroll-track">
-                    <div class="history_card">
-                        <div class="year">2006</div>
-                        <p>Начало производства шлакоблока на оборудовании собственной разработки</p>
+                </div>
+
+                <!-- Контейнер скролла -->
+                <div class="position-relative">
+                <!-- Боковые кнопки для десктопа -->
+                <button class="btn btn-outline-danger scroll-btn-side scroll-btn-left"
+                        data-target="history_scroll" data-dir="left">
+                    <i class="bi bi-chevron-left">←</i>
+                </button>
+
+                <div class="overflow-hidden" id="history_scroll">
+                    <div class="d-flex gap-4 history-track">
+                        <div class="history_card flex-shrink-0" style="min-width: 300px;">
+                            <div class="year fs-4 fw-bold text-primary">2006</div>
+                            <p class="mt-2">Успешный запуск производства шлакоблока на оборудовании собственной разработки.</p>
+                        </div>
+                        <div class="history_card flex-shrink-0" style="min-width: 300px;">
+                            <div class="year fs-4 fw-bold text-primary">2009</div>
+                            <p class="mt-2">Разработан и изготовлен станок для аналогов финблока — собственный инновационный продукт.</p>
+                        </div>
+                        <div class="history_card flex-shrink-0" style="min-width: 300px;">
+                            <div class="year fs-4 fw-bold text-primary">2012</div>
+                            <p class="mt-2">Достигнута оптимальная адаптация финблока под местные условия эксплуатации.</p>
+                        </div>
+                        <div class="history_card flex-shrink-0" style="min-width: 300px;">
+                            <div class="year fs-4 fw-bold text-primary">2015</div>
+                            <p class="mt-2">Зарегистрирована ТМ <strong>ThermoBlock</strong>. Успешный выход на рынок с блоками несъёмной опалубки.</p>
+                        </div>
+                        <div class="history_card flex-shrink-0" style="min-width: 300px;">
+                            <div class="year fs-4 fw-bold text-primary">2016</div>
+                            <p class="mt-2">Расширение бизнеса: проектирование и строительство зданий из <strong>ThermoBlock</strong>.</p>
+                        </div>
+                        <div class="history_card flex-shrink-0" style="min-width: 300px;">
+                            <div class="year fs-4 fw-bold text-primary">2018</div>
+                            <p class="mt-2"><strong>ThermoBlock</strong> вошёл в ассортимент строительных сетей Улан‑Удэ. Запущена собственная служба доставки.</p>
+                        </div>
+                        <div class="history_card flex-shrink-0" style="min-width: 300px;">
+                            <div class="year fs-4 fw-bold text-primary">2022</div>
+                            <p class="mt-2">Знаковое достижение: более 500 построенных объектов из <strong>ThermoBlock</strong> в регионе.</p>
+                        </div>
+                        <div class="history_card flex-shrink-0" style="min-width: 300px;">
+                            <div class="year fs-4 fw-bold text-primary">2024</div>
+                            <p class="mt-2">Старт разработки новых серий <strong>ThermoBlock</strong> — основа системы каменного малоэтажного домостроения.</p>
+                        </div>
+                        <div class="history_card flex-shrink-0" style="min-width: 300px;">
+                            <div class="year fs-4 fw-bold text-primary">2026</div>
+                            <p class="mt-2">Цифровая трансформация <strong>ThermoBlock</strong>: внедрение BIM‑моделирования и современной системы контроля качества.</p>
+                        </div>
                     </div>
-                    <div class="history_card">
-                        <div class="year">2015</div>
-                        <p>Освоен выпуск «ThermoBlock» — аналога скандинавских блоков с утеплителем</p>
-                    </div>
-                    <div class="history_card">
-                        <div class="year">2016</div>
-                        <p>Открыто направление проектирования и строительства зданий из ThermoBlock</p>
-                    </div>
-                    <div class="history_card">
-                        <div class="year">2018</div>
-                        <p>Представлен в торговых строительных сетях г. Улан-Удэ. Доставка материалов собственным транспортом</p>
-                    </div>
-                    <div class="history_card">
-                        <div class="year">2022</div>
-                        <p>Построено более четырёхсот домов и зданий в Бурятии и соседних регионах</p>
-                    </div>
-                    <div class="history_card">
-                        <div class="year">2026</div>
-                        <p>Ведётся разработка новых блоков — элементов системы каменного малоэтажного домостроения</p>
-                    </div>
+                </div>
+
+                <button class="btn btn-outline-danger scroll-btn-side scroll-btn-right"
+                        data-target="history_scroll" data-dir="right">
+                    <i class="bi bi-chevron-right">→</i>
+                </button>
                 </div>
             </div>
         </div>
@@ -259,16 +360,49 @@
     </div>
 </section>
 <script>
-$(document).ready(function() {
-    $('.scroll-btn').on('click', function() {
-        var targetId = $(this).data('target');
-        var direction = $(this).data('dir');
-        var $container = $('#' + targetId);
-        var scrollAmount = direction === 'left' ? -300 : 300;
-        
-        $container.animate({
-            scrollLeft: $container.scrollLeft() + scrollAmount
-        }, 300);
+
+document.addEventListener('DOMContentLoaded', function() {
+  const scrollContainer = document.getElementById('history_scroll');
+  const track = scrollContainer.querySelector('.history-track');
+  const cards = track.querySelectorAll('.history_card');
+  const totalWidth = Array.from(cards).reduce((sum, card) => sum + card.offsetWidth + 4, 0); // 4 px — gap
+  let currentPosition = 0;
+  const step = 2; // скорость прокрутки (px за кадр)
+  const interval = 30; // интервал между кадрами (ms)
+
+  function autoScroll() {
+    currentPosition -= step;
+
+    if (Math.abs(currentPosition) >= totalWidth / 2) {
+      currentPosition = 0; // сброс позиции для бесконечной прокрутки
+    }
+
+    track.style.transform = `translateX(${currentPosition}px)`;
+  }
+
+  const autoScrollInterval = setInterval(autoScroll, interval);
+
+  // Пауза при наведении
+  scrollContainer.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
+  scrollContainer.addEventListener('mouseleave', () => {
+    autoScrollInterval = setInterval(autoScroll, interval);
+  });
+
+  // Обработка кнопок прокрутки
+  document.querySelectorAll('.scroll-btn, .scroll-btn-side').forEach(button => {
+    button.addEventListener('click', function() {
+      const target = this.getAttribute('data-target');
+      const direction = this.getAttribute('data-dir');
+      const container = document.getElementById(target);
+      const scrollAmount = direction === 'left' ? -300 : 300;
+    
+      scrollContainer.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
     });
+  });
 });
+
+
 </script>
