@@ -3,15 +3,68 @@ from django.views.generic import TemplateView, ListView
 
 from django.views.decorators.http import require_POST
 # views.py для простого API
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from apps.constructs.models import Product, ProductImage, ProductType, RoofType
 import json
 from django.db.models import Prefetch, Max
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, F
 
+
+@require_POST
+def like_product(request, product_id):
+    try:
+        # Пытаемся найти товар
+        product = Product.objects.get(pk=product_id)
+        
+        # Атомарное увеличение лайков на уровне БД
+        Product.objects.filter(pk=product.pk).update(likes=F('likes') + 1)
+        return redirect('feedback:project_question', product.id)
+        # # Обновляем объект в памяти, чтобы вернуть актуальное число лайков
+        # product.refresh_from_db()
+        
+        # return JsonResponse({
+        #     'success': True,
+        #     'message': 'Лайк добавлен!',
+        #     'new_likes_count': product.likes,
+        #     'redirect_url': 
+        # })
+    
+    except Product.DoesNotExist:
+        return HttpResponseBadRequest("Нет такой страницы")
+    
+    except Exception as e:
+        return HttpResponseServerError(f"e")
+    
+@require_POST
+def like_product_ajax(request, product_id):
+    try:
+        # Пытаемся найти товар
+        product = Product.objects.get(pk=product_id)
+        
+        # Атомарное увеличение лайков на уровне БД
+        Product.objects.filter(pk=product.pk).update(likes=F('likes') + 1)
+                
+        return JsonResponse({
+            'success': True,
+            'message': 'Лайк добавлен!',
+            'new_likes_count': product.likes,
+            # 'redirect_url': reversed()
+        })
+    
+    except Product.DoesNotExist:
+        return JsonResponse({
+            'success': False,
+            'message': 'Товар не найден'
+        }, status=404)
+    
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': str(e)
+        }, status=500)
 
 def project_list(request):
     projects = Product.objects.filter(is_active=True)

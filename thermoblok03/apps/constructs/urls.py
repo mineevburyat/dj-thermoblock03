@@ -1,5 +1,5 @@
 from django.urls import path
-from .views_ed import catalog_view, toggle_active, set_main_image, delete_image, reorder_images, project_list, product_detail_1
+from .views_ed import catalog_view, like_product_ajax, toggle_active, set_main_image, delete_image, reorder_images, project_list, product_detail_1, like_product, like_product_ajax
 from .views import product_list, product_detail, product_edit
 
 app_name = 'constructs'
@@ -7,6 +7,8 @@ app_name = 'constructs'
 urlpatterns = [
     path('', product_list, name='index'),
     path('<slug:slug>/', product_detail, name='project_detail'),
+    path('<int:product_id>/like/', like_product, name='like_product'),
+    path('like/<int:product_id>/', like_product_ajax, name='like_product_share'),
     # path('api/', products_list, name='api_list'),
     # path('api/product/<int:product_id>/', product_detail_view, name='api_detail'),
     path('test/', catalog_view, name='test_index'),

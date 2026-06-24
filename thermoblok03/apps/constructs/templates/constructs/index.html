@@ -1,9 +1,9 @@
 {% extends "old/base.html" %}
 {% load static %}
 {% load construct_tags breadcrumbs_tags %}
-{% block title %}ThermoBlock каталог проектов домов{% endblock  %}
-{% block meta_description %}Популярные проекты домов и зданий из термоблоков различных серий. Проекты продуманы для Сибири и Крайнего Севера{% endblock  %}
-{% block meta_keywords %}{% endblock  %}
+{% block title %}Проекты домов из ThermoBlock: тёплые, сейсмоустойчивые и пожаробезопасные стены. Каталог, ипотека, эскроу.{% endblock  %}
+{% block meta_description %}Выбирайте готовые проекты домов из ThermoBlock. Инновационная технология возведения стен гарантирует сейсмоустойчивость до 9 баллов, полную пожаробезопасность и высокую теплоизоляцию. Быстро строим под ключ.{% endblock  %}
+{% block meta_keywords %}ThermoBlock, сейсмоустойчивые дома, пожаробезопасное строительство, тёплые стены, проекты домов, каталог проектов домов, сейсмостойкие стены, энергоэффективное строительство, ThermoBlock технология{% endblock  %}
 {% block extra_css %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -902,9 +902,12 @@
                                 </div>
                                 
                                 <!-- Кнопка лайка -->
-                                <button class="like-btn" onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite(this, {{ project.id }})">
-                                    <i class="{% if project.id in favorites %}fas{% else %}far{% endif %} fa-heart"></i>
-                                </button>
+                                <form action="{% url 'constructs:like_product' project.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="like-btn" type="submit">
+                                        <i class="far fa-heart">{% if project.likes %}{{ project.likes }}{% endif %}</i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                         

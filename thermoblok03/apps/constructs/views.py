@@ -1,7 +1,7 @@
 # views.py
 from django.conf import settings
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, F
 from .models import Product, ProductType, ProductImage, RoofType
 from django.db.models import Prefetch, Max
 from django.shortcuts import render, get_object_or_404, redirect
@@ -13,6 +13,7 @@ from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.sites.models import Site
 from .utils import generate_yandex_yml_feed
+
 
 def product_list(request):
     projects = Product.objects.filter(is_active=True)
@@ -88,6 +89,8 @@ def product_detail(request, slug):
         slug=slug,
         is_active=True
     )
+    Product.objects.filter(pk=product.pk).update(views=F('views') + 1)
+    
     id = product.pk
     # Получаем следующий и предыдущий проекты для навигации
     prev_product = Product.objects.filter(

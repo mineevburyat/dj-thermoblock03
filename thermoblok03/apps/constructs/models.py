@@ -134,7 +134,18 @@ class Product(models.Model):
     )
     garage = models.BooleanField('Гараж', default=False)
     terrace = models.BooleanField('Терраса', default=False)
-    
+    likes = models.PositiveIntegerField(
+        'Лайки', 
+        default=0, 
+        validators=[MinValueValidator(0)],
+        help_text='Количество лайков у проекта дома'
+    )
+    views = models.PositiveIntegerField(
+        'Просмотры', 
+        default=0, 
+        validators=[MinValueValidator(0)],
+        help_text='Общее количество просмотров проекта'
+    )
     # Описание
     description = models.TextField('Описание', blank=True)
     short_description = models.CharField('Краткое описание', max_length=500, blank=True)
@@ -147,7 +158,9 @@ class Product(models.Model):
     # SEO
     meta_title = models.CharField('Meta Title', max_length=200, blank=True)
     meta_description = models.TextField('Meta Description', blank=True)
-    meta_keywords = models.CharField('Meta Keywords', max_length=300, blank=True)
+    meta_keywords = models.CharField('Meta Keywords', 
+                                     default='строительство домов и коттеджей, дома из ThermoBlock, проекты домов ThermoBlock, строительство домов из термоблока, коттеджи из ThermoBlock, ThermoBlock строительство, монолитные стены, несъемная опалубка, термоблок',
+                                     max_length=300, blank=True)
     
     # Даты
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
@@ -176,6 +189,10 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+        area_text = f"Площадь {self.area} м²." if self.area else "Сейсмостойкие и теплве стены"
+        self.meta_description = f"Проект {self.title}. Строительство из ThermoBlock. {area_text} "
+        f"Закажите расчет стоимости строительства дома, коттеджа или бани. ООО Строй Тех +7(964)4106320"
+        self.meta_title = f"{self.title} — монолитные стены из ThermoBlock",
         super().save(*args, **kwargs)
     
     def get_first_image(self):
@@ -189,6 +206,22 @@ class Product(models.Model):
         # 'post_detail' is the name of the URL pattern in urls.py
         return reverse('constructs:project_detail', kwargs={'slug': self.slug})
 
+    def get_area_category(self):
+        """Возвращает категорию площади для отображения в админке"""
+        if self.area is None:
+            return "Не указана"
+        
+        area_val = float(self.area)
+        
+        if area_val < 50:
+            return "До 50 м²"
+        elif 50 <= area_val < 100:
+            return "От 50 до 100 м²"
+        elif 100 <= area_val < 150:
+            return "От 100 до 150 м²"
+        else:
+            return "Более 150 м²"
+    get_area_category.short_description = 'Категория площади'
 
 
 class ProductImage(models.Model):

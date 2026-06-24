@@ -1054,10 +1054,13 @@
 
                         <!-- Панель действий: лайк и поделиться -->
                         <div class="action-buttons-panel">
-                            <button class="action-btn" id="likeActionBtn">
-                                <i class="far fa-heart"></i> <span>Нравится</span>
-                            </button>
-                            <button class="action-btn" id="shareActionBtn">
+                            <form action="{% url 'constructs:like_product' project.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="action-btn">
+                                    <i class="far fa-heart"></i> <span>Нравится {% if project.likes %}({{ project.likes }}){% endif %}</span>
+                                </button>
+                            </form>
+                            <button class="action-btn" id="shareActionBtn" data-product-id="{{ project.id }}">
                                 <i class="fas fa-share-alt"></i> <span>Поделиться</span>
                             </button>
                         </div>
@@ -1673,28 +1676,36 @@
         openFullGallery(idx);
     });
     
-    // Лайк
-    let liked = false;
-    const likeBtn = document.getElementById('likeActionBtn');
-    if (likeBtn) {
-        likeBtn.addEventListener('click', () => {
-            liked = !liked;
-            if (liked) {
-                likeBtn.classList.add('like-active');
-                likeBtn.innerHTML = '<i class="fas fa-heart"></i> <span>Нравится</span>';
-                likeBtn.style.transform = 'scale(1.1)';
-                setTimeout(() => { likeBtn.style.transform = ''; }, 200);
-            } else {
-                likeBtn.classList.remove('like-active');
-                likeBtn.innerHTML = '<i class="far fa-heart"></i> <span>Нравится</span>';
-            }
-        });
-    }
+    
     
     // Поделиться
     const shareBtn = document.getElementById('shareActionBtn');
     if (shareBtn) {
-        shareBtn.addEventListener('click', async () => {
+        shareBtn.addEventListener('click', async function(e) {
+            const btn = e.target.closest('button');
+            const productId = btn.dataset.productId;
+            const currentCount = parseInt(btn.dataset.likes);
+            const csrfToken = getCookie('csrftoken');
+            fetch(`/constructs/like/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken  // Передаем токен в заголовке
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('+1')
+                } else {
+                    console.log('Ошибка: ' + data.message);
+                    
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                btn.disabled = false;
+            });
             const shareData = {
                 title: '{{ project.title|default:"Проект дома"|escapejs }}',
                 text: '{{ project.area|default:"" }} м², {{ project.material|default:"" }}',
@@ -1725,6 +1736,22 @@
         });
     }
     
+    // Вспомогательная функция для получения CSRF токена из cookie
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     // Рассчитать и Ипотека
     const calcBtn = document.getElementById('calcProjectBtn');
     if (calcBtn) {

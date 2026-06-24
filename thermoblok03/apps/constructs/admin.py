@@ -79,7 +79,10 @@ class ProductAdmin(admin.ModelAdmin):
         'id',
         'order',
         'main_image_thumb', 
-        'title', 
+        'title',
+        'get_area_category',
+        'likes',
+        'views',
         'product_type', 
         'area_display', 
         'rooms_count', 
@@ -154,7 +157,7 @@ class ProductAdmin(admin.ModelAdmin):
     )
     
     # Поля только для чтения
-    readonly_fields = ['created_at', 'updated_at', 'main_image_preview']
+    readonly_fields = ['created_at', 'updated_at', 'main_image_preview', 'likes', 'views']
     
     # Предзаполнение slug
     prepopulated_fields = {'slug': ('title',)}
