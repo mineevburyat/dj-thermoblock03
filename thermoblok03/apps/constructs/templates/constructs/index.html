@@ -991,29 +991,17 @@
                     "name": "ThermoBlock"
                 },
                 "additionalProperty": [
-                    {% if project.area %}
-                    {"@type": "PropertyValue", "name": "Площадь", "value": "{{ project.area }} м²"},
-                    {% endif %}
-                    {% if project.rooms_count %}
-                    {"@type": "PropertyValue", "name": "Комнат", "value": "{{ project.rooms_count }}"},
-                    {% endif %}
-                    {% if project.bedrooms_count %}
-                    {"@type": "PropertyValue", "name": "Спален", "value": "{{ project.bedrooms_count }}"},
-                    {% endif %}
-                    {% if project.bathrooms_count %}
-                    {"@type": "PropertyValue", "name": "Санузлов", "value": "{{ project.bathrooms_count }}"}
-                    {% endif %}
+                    {% if project.area %}{"@type": "PropertyValue", "name": "Площадь", "value": "{{ project.area }} м²"},{% endif %}
+                    {% if project.rooms_count %}{"@type": "PropertyValue", "name": "Комнат", "value": "{{ project.rooms_count }}"},{% endif %}
+                    {% if project.bedrooms_count %}{"@type": "PropertyValue", "name": "Спален", "value": "{{ project.bedrooms_count }}"},{% endif %}
+                    {% if project.bathrooms_count %}{"@type": "PropertyValue", "name": "Санузлов", "value": "{{ project.bathrooms_count }}"}{% endif %}
                 ],
-                "seller": {
-                        "@type": "Organization",
-                        "name": "ООО 'Строй Тех'"
-                    }
-                {% comment %}  
                 "offers": {
                     "@type": "Offer",
                     "priceSpecification": {
                         "@type": "PriceSpecification",
-                        "priceType": "https://schema.org/RequestAQuote"
+                        "estimatedPrice": true,
+                        "priceCurrency": "RUB"
                     },
                     "availability": "https://schema.org/InStock",
                     "seller": {
@@ -1021,7 +1009,6 @@
                         "name": "ООО 'Строй Тех'"
                     }
                 },
-                {% endcomment %}
                 "potentialAction": {
                     "@type": "Action",
                     "name": "Request a Quote",
