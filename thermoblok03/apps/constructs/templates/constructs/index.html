@@ -1,9 +1,9 @@
 {% extends "old/base.html" %}
 {% load static %}
 {% load construct_tags breadcrumbs_tags %}
-{% block title %}Проекты домов из ThermoBlock: тёплые, сейсмоустойчивые и пожаробезопасные стены. Каталог, ипотека, эскроу.{% endblock  %}
-{% block meta_description %}Выбирайте готовые проекты домов из ThermoBlock. Инновационная технология возведения стен гарантирует сейсмоустойчивость до 9 баллов, полную пожаробезопасность и высокую теплоизоляцию. Быстро строим под ключ.{% endblock  %}
-{% block meta_keywords %}ThermoBlock, сейсмоустойчивые дома, пожаробезопасное строительство, тёплые стены, проекты домов, каталог проектов домов, сейсмостойкие стены, энергоэффективное строительство, ThermoBlock технология{% endblock  %}
+{% block title %}Проекты домов из термоблока | Фото и цены | ThermoBlock{% endblock  %}
+{% block meta_description %}Готовые проекты домов и коттеджей из энергоэффективных блоков ThermoBlock. Строительство под ключ в Улан-Удэ, Республике Бурятия и Дальнего Востока. Смотрите фото, планировки и выбирайте свой дом.{% endblock  %}
+{% block meta_keywords %}ThermoBlock, сейсмоустойчивые дома, пожаробезопасное строительство, тёплые стены, проекты домов, каталог проектов домов, сейсмостойкие стены, энергоэффективное строительство, ThermoBlock технология, ипотека, эскроу{% endblock  %}
 {% block extra_css %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -837,16 +837,18 @@
                 {% endif %}
             </form>
         </aside>
-
         <!-- Основной контент -->
         <div class="content-right">
         <!-- Информация о результатах и сортировка -->
         <div class="results-bar">
-            <div class="results-info">
-                <i class="fas fa-home" style="margin-right: 6px;"></i>
-                Найдено проектов: <strong>{{ page_obj.paginator.count }}</strong>
+            <div>
+                <h1>Каталог проектов домов из ThermoBlock</h1>
+                <p class="results-info">
+                    <i class="fas fa-home" style="margin-right: 6px;"></i>
+                    Всего проектов домов из ThermoBlock: <strong>{{ page_obj.paginator.count }}</strong>
+                </p>
             </div>
-            
+            {% comment %} 
             <select class="sort-select" name="sort" onchange="location = this.value;">
                 <option value="?{% url_replace sort='title' %}" {% if request.GET.sort == 'title' %}selected{% endif %}>
                     По названию
@@ -861,6 +863,7 @@
                     По новизне
                 </option>
             </select>
+             {% endcomment %}
         </div>
 
             <!-- Сетка проектов -->
@@ -869,120 +872,114 @@
                 <meta itemprop="numberOfItems" content="{{page_obj.paginator.count}}" />
                 {% for project in page_obj %}
                 <div itemprop="itemListElement" itemscope itemtype="https://schema.org/Product">
-                <a itemprop="url" href="{% url 'constructs:project_detail' project.slug %}" class="project-card">
-                    <div class="project-card__inner" style="background-image: url('{% if project.get_first_image %}{{ project.get_first_image.image.url }}{% else %}/static/img/placeholder.jpg{% endif %}');">
-                        <div class="project-card__overlay"></div>
-                        <meta itemprop="image" content="{{ request.scheme }}://{{ request.get_host}}{{project.get_first_image.image.url }}">
-                        <!-- Верхняя часть: бейджи слева, иконки и лайк справа -->
-                        <div class="project-card__top">
-                            <!-- Бейджи слева -->
-                            <div class="project-badges">
-                                {% if project.is_popular %}
-                                <span class="badge popular"><i class="fas fa-fire"></i> Популярное</span>
-                                {% endif %}
-                                {% if project.is_new %}
-                                <span class="badge new"><i class="fas fa-star"></i> Новинка</span>
-                                {% endif %}
+                    <a href="{% url 'constructs:project_detail' project.slug %}" class="project-card">
+                        <div class="project-card__inner" style="background-image: url('{% if project.get_first_image %}{{ project.get_first_image.image.url }}{% else %}/static/img/placeholder.jpg{% endif %}');">
+                            <div class="project-card__overlay"></div>
+                            <meta itemprop="image" content="{{ request.scheme }}://{{ request.get_host}}{{project.get_first_image.image.url }}">
+                            <!-- Верхняя часть: бейджи слева, иконки и лайк справа -->
+                            <div class="project-card__top">
+                                <!-- Бейджи слева -->
+                                <div class="project-badges">
+                                    {% if project.is_popular %}
+                                    <span class="badge popular"><i class="fas fa-fire"></i> Популярное</span>
+                                    {% endif %}
+                                    {% if project.is_new %}
+                                    <span class="badge new"><i class="fas fa-star"></i> Новинка</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Правый блок: иконки гаража/террасы + лайк -->
+                                <div class="project-actions">
+                                    <!-- Иконки дополнительных опций -->
+                                    <div class="project-features">
+                                        {% if project.garage %}
+                                        <span class="feature-icon" title="Гараж">
+                                            <i class="fas fa-warehouse"></i>
+                                        </span>
+                                        {% endif %}
+                                        {% if project.terrace %}
+                                        <span class="feature-icon" title="Терраса">
+                                            <i class="fas fa-umbrella-beach"></i>
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Кнопка лайка -->
+                                    <form action="{% url 'constructs:like_product' project.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="like-btn" type="submit">
+                                            <i class="far fa-heart">{% if project.likes %}{{ project.likes }}{% endif %}</i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                             
-                            <!-- Правый блок: иконки гаража/террасы + лайк -->
-                            <div class="project-actions">
-                                <!-- Иконки дополнительных опций -->
-                                <div class="project-features">
-                                    {% if project.garage %}
-                                    <span class="feature-icon" title="Гараж">
-                                        <i class="fas fa-warehouse"></i>
-                                    </span>
-                                    {% endif %}
-                                    {% if project.terrace %}
-                                    <span class="feature-icon" title="Терраса">
-                                        <i class="fas fa-umbrella-beach"></i>
-                                    </span>
-                                    {% endif %}
-                                </div>
-                                
-                                <!-- Кнопка лайка -->
-                                <form action="{% url 'constructs:like_product' project.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button class="like-btn" type="submit">
-                                        <i class="far fa-heart">{% if project.likes %}{{ project.likes }}{% endif %}</i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                        
-                        <!-- Нижняя часть: название, характеристики и бейджи -->
-                        <div class="project-card__content">
-                            <h3 itemprop="name" class="project-title">{{ project.title }}</h3>
-                            {% if project.short_description %}
-                            <p itemprop="description" class="project-short-description">
-                                {{ project.short_description|truncatechars:190 }}
-                            </p>
-                            {% elif project.description %}
-                            <p itemprop="description" class="project-short-description">
-                                {{ project.description|truncatechars:190 }}
-                            </p>
-                            {% endif %}
-                            <!-- Строка с характеристиками и бейджами -->
-                            <div class="project-info-row">
-                                <!-- Характеристики слева -->
-                                <div class="project-specs">
-                                    {% if project.area %}
-                                    <div itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
-                                        <meta itemprop="name" content="Площадь" />
-                                        <meta itemprop="value" content="{{ project.area }} м²" />
-                                        <span class="spec-badge"><i class="fas fa-arrows-alt"></i> {{ project.area }} м²</span>
-                                    </div>
-                                    {% endif %}
-                                    {% if project.rooms_count %}
-                                    <div itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
-                                        <meta itemprop="name" content="Комнат" />
-                                        <meta itemprop="value" content="{{project.rooms_count}}" />
-                                        <span class="spec-badge"><i class="fas fa-door-open"></i> {{ project.rooms_count }} комн.</span>
-                                    </div>
-                                    {% endif %}
-                                    {% if project.bedrooms_count %}
-                                    <div itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
-                                        <meta itemprop="name" content="Спален" />
-                                        <meta itemprop="value" content="{{ project.bedrooms_count }}" />
-                                        <span class="spec-badge"><i class="fas fa-bed"></i> {{ project.bedrooms_count }} спал.</span>
-                                    </div>
-                                    {% endif %}
-                                    {% if project.bathrooms_count %}
-                                    <div itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
-                                        <meta itemprop="name" content="Санузлов" />
-                                        <meta itemprop="value" content="{{ project.bathrooms_count }}" />
-                                        <span class="spec-badge"><i class="fas fa-toilet"></i> {{ project.bathrooms_count }} сан.</span>
-                                    </div>
-                                    {% endif %}
-                                    <!-- ЦЕНА И НАЛИЧИЕ (для расширенного сниппета) -->
-                                    <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                                        <meta itemprop="price" content="0" />
-                                        <meta itemprop="priceCurrency" content="RUB" />
-                                        <!-- Указываем, что цена договорная / нужен запрос -->
-                                        <link itemprop="availability" href="https://schema.org/PreOrder" />
+                            <!-- Нижняя часть: название, характеристики и бейджи -->
+                            <div class="project-card__content">
+                                <h2 itemprop="name" class="project-title">{{ project.title }}</h2>
+                                {% if project.short_description %}
+                                <p itemprop="description" class="project-short-description">
+                                    {{ project.short_description|truncatechars:190 }}
+                                </p>
+                                {% elif project.description %}
+                                <p itemprop="description" class="project-short-description">
+                                    {{ project.description|truncatechars:190 }}
+                                </p>
+                                {% endif %}
+                                <!-- Строка с характеристиками и бейджами -->
+                                <div class="project-info-row">
+                                    <!-- Характеристики слева -->
+                                    <div class="project-specs">
+                                        {% if project.area %}
+                                        <div itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
+                                            <meta itemprop="name" content="Площадь" />
+                                            <meta itemprop="value" content="{{ project.area }} м²" />
+                                            <span class="spec-badge"><i class="fas fa-arrows-alt"></i> {{ project.area }} м²</span>
+                                        </div>
+                                        {% endif %}
+                                        {% if project.rooms_count %}
+                                        <div itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
+                                            <meta itemprop="name" content="Комнат" />
+                                            <meta itemprop="value" content="{{project.rooms_count}}" />
+                                            <span class="spec-badge"><i class="fas fa-door-open"></i> {{ project.rooms_count }} комн.</span>
+                                        </div>
+                                        {% endif %}
+                                        {% if project.bedrooms_count %}
+                                        <div itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
+                                            <meta itemprop="name" content="Спален" />
+                                            <meta itemprop="value" content="{{ project.bedrooms_count }}" />
+                                            <span class="spec-badge"><i class="fas fa-bed"></i> {{ project.bedrooms_count }} спал.</span>
+                                        </div>
+                                        {% endif %}
+                                        {% if project.bathrooms_count %}
+                                        <div itemprop="additionalProperty" itemscope itemtype="https://schema.org/PropertyValue">
+                                            <meta itemprop="name" content="Санузлов" />
+                                            <meta itemprop="value" content="{{ project.bathrooms_count }}" />
+                                            <span class="spec-badge"><i class="fas fa-toilet"></i> {{ project.bathrooms_count }} сан.</span>
+                                        </div>
+                                        {% endif %}
+                                        <!-- ЦЕНА И НАЛИЧИЕ (для расширенного сниппета) -->
                                         <span>Цена по запросу</span>
                                     </div>
-                                </div>
-                                
-                                <!-- Бейджи справа -->
-                                <div class="info-badges">
-                                    <span class="info-badge mortgage">
-                                        <i class="fas fa-credit-card"></i> Ипотека
-                                    </span>
-                                    <span class="info-badge escrow">
-                                        <i class="fas fa-shield-alt"></i> Эскроу
-                                    </span>
+                                    
+                                    <!-- Бейджи справа -->
+                                    <div class="info-badges">
+                                        <span class="info-badge mortgage">
+                                            <i class="fas fa-credit-card"></i> Ипотека
+                                        </span>
+                                        <span class="info-badge escrow">
+                                            <i class="fas fa-shield-alt"></i> Эскроу
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
                 </div>
                 <script type="application/ld+json">
                 {
                 "@context": "https://schema.org",
-                "@type": {% if project.product_type != 4 %}["Product", "SingleFamilyResidence"],{% else %}"Product",{% endif %}
+                "@type": "Product",
                 "name": "{{ project.title }}",
                 "description": "{{ project.short_description }}",
                 "sku": "{{ project.article }}",
@@ -993,24 +990,38 @@
                     "@type": "Brand",
                     "name": "ThermoBlock"
                 },
-                "floorSize": {"@type": "QuantitativeValue", "value": "{{ project.area }}", "unitCode": "MTK"},
-                "numberOfRooms": "{{ project.rooms_count}}",
-                "numberOfBedrooms": "{{ project.bedrooms_count}}",
-                "numberOfBathroomsTotal": "{{ project.bathrooms_count }}",
+                "additionalProperty": [
+                    {% if project.area %}
+                    {"@type": "PropertyValue", "name": "Площадь", "value": "{{ project.area }} м²"},
+                    {% endif %}
+                    {% if project.rooms_count %}
+                    {"@type": "PropertyValue", "name": "Комнат", "value": "{{ project.rooms_count }}"},
+                    {% endif %}
+                    {% if project.bedrooms_count %}
+                    {"@type": "PropertyValue", "name": "Спален", "value": "{{ project.bedrooms_count }}"},
+                    {% endif %}
+                    {% if project.bathrooms_count %}
+                    {"@type": "PropertyValue", "name": "Санузлов", "value": "{{ project.bathrooms_count }}"}
+                    {% endif %}
+                ],
+                "seller": {
+                        "@type": "Organization",
+                        "name": "ООО 'Строй Тех'"
+                    }
+                {% comment %}  
                 "offers": {
-                    "@type": "AggregateOffer",
-                    "url": "https://thermoblock.ru",
-                    "priceCurrency": "RUB",
-                    "availability": "https://schema.org/PreOrder",
-                    "lowPrice": "0",
-                    "highPrice": "0",
-                    "offerCount": "{{ page_obj.paginator.count }}",
+                    "@type": "Offer",
+                    "priceSpecification": {
+                        "@type": "PriceSpecification",
+                        "priceType": "https://schema.org/RequestAQuote"
+                    },
+                    "availability": "https://schema.org/InStock",
                     "seller": {
                         "@type": "Organization",
-                        "name": "ООО 'Строй Тех'",
-                        "url": "https://thermoblock.ru"
-                        }
+                        "name": "ООО 'Строй Тех'"
+                    }
                 },
+                {% endcomment %}
                 "potentialAction": {
                     "@type": "Action",
                     "name": "Request a Quote",
