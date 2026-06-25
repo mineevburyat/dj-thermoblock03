@@ -996,18 +996,9 @@
                     {% if project.bedrooms_count %}{"@type": "PropertyValue", "name": "Спален", "value": "{{ project.bedrooms_count }}"},{% endif %}
                     {% if project.bathrooms_count %}{"@type": "PropertyValue", "name": "Санузлов", "value": "{{ project.bathrooms_count }}"}{% endif %}
                 ],
-                "offers": {
-                    "@type": "Offer",
-                    "priceSpecification": {
-                        "@type": "PriceSpecification",
-                        "estimatedPrice": true,
-                        "priceCurrency": "RUB"
-                    },
-                    "availability": "https://schema.org/InStock",
-                    "seller": {
+                "seller": {
                         "@type": "Organization",
                         "name": "ООО 'Строй Тех'"
-                    }
                 },
                 "potentialAction": {
                     "@type": "Action",
