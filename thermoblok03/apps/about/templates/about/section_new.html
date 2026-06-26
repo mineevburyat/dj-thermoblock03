@@ -60,9 +60,7 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  height: 100%;
-  background-color: #ccc;
-  padding:0;
+  
 }
 
 .scroll-btn-left {
@@ -120,9 +118,7 @@
   z-index: 10;
   padding: 12px 8px;
   border-radius: 4px;
-  height: 100%;
-  background-color: #ccc;
-  padding: 0;
+  
 }
 .scroll-btn-left {
   left: -1px;
@@ -298,81 +294,73 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   const initHorizontalScroll = (containerId, trackClass, btnSelector) => {
-    const container = document.getElementById(containerId);
-    if (!container) return;
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
-    const track = container.querySelector(`.${trackClass}`);
-    const cards = track.querySelectorAll('.flex-shrink-0');
-    if (cards.length === 0) return;
+  const track = container.querySelector(`.${trackClass}`);
+  const cards = track.querySelectorAll('.flex-shrink-0');
+  if (cards.length === 0) return;
 
-    // Получаем реальный gap из computed style
-    const style = window.getComputedStyle(track);
-    const gap = parseFloat(style.gap) || 16;
-    const cardWidth = cards[0].offsetWidth;
-    const totalWidth = cards.length * (cardWidth + gap) - gap;
+  const style = window.getComputedStyle(track);
+  const gap = parseFloat(style.gap) || 16;
+  const cardWidth = cards[0].offsetWidth;
+  const totalWidth = cards.length * (cardWidth + gap) - gap;
+  const maxPosition = -(totalWidth - 3 * cardWidth); // самая левая позиция
 
-    let currentPosition = 0;
-    const step = 4; // скорость автоскролла (px за кадр)
-    const interval = 30; // интервал (ms)
-    let autoScrollInterval = null;
+  let currentPosition = 0;
+  const step = 4;
+  const interval = 30;
+  let autoScrollInterval = null;
 
-    function autoScroll() {
-      const maxScroll = -(totalWidth - container.clientWidth);
-      if (currentPosition <= maxScroll) {
-        currentPosition = 0; // бесконечный цикл
+  function autoScroll() {
+    if (currentPosition <= maxPosition) {
+      currentPosition = 0; // зацикливание
+    } else {
+      currentPosition -= step;
+    }
+    track.style.transform = `translateX(${currentPosition}px)`;
+    
+  }
+
+  function startAutoScroll() {
+    if (autoScrollInterval) clearInterval(autoScrollInterval);
+    autoScrollInterval = setInterval(autoScroll, interval);
+  }
+
+  function stopAutoScroll() {
+    if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+    }
+  }
+
+  startAutoScroll();
+
+  container.addEventListener('mouseenter', stopAutoScroll);
+  container.addEventListener('mouseleave', startAutoScroll);
+
+  document.querySelectorAll(btnSelector).forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      stopAutoScroll();
+      const dir = btn.getAttribute('data-dir');
+      const isLeft = dir === 'left';
+      const moveStep = cardWidth + gap;
+
+      if (isLeft) {
+        currentPosition = Math.min(0, currentPosition - moveStep);
       } else {
-        currentPosition -= step;
+        currentPosition = Math.max(maxPosition, currentPosition + moveStep);
+         // не уходим правее 0
+        // или: currentPosition = Math.max(maxPosition, currentPosition + moveStep)
       }
+
       track.style.transform = `translateX(${currentPosition}px)`;
-    }
-
-    function startAutoScroll() {
-      if (autoScrollInterval) clearInterval(autoScrollInterval);
-      autoScrollInterval = setInterval(autoScroll, interval);
-    }
-
-    function stopAutoScroll() {
-      if (autoScrollInterval) {
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = null;
-      }
-    }
-
-    startAutoScroll();
-
-    container.addEventListener('mouseenter', stopAutoScroll);
-    container.addEventListener('mouseleave', startAutoScroll);
-
-    // Обработчики кнопок
-    document.querySelectorAll(btnSelector).forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        stopAutoScroll();
-
-        const dir = btn.getAttribute('data-dir');
-        const isLeft = dir === 'left';
-
-        // Для кнопок «в начало» и «в конец» используем scrollTo
-        if (isLeft) {
-          container.scrollTo({ left: 0, behavior: 'smooth' });
-          currentPosition = 0;
-          track.style.transform = 'translateX(0px)';
-        } else {
-          const maxScroll = container.scrollWidth - container.clientWidth;
-          container.scrollTo({ left: maxScroll, behavior: 'smooth' });
-        }
-
-        setTimeout(startAutoScroll, 3000);
-      });
+      setTimeout(startAutoScroll, 1500);
     });
-
-    // Синхронизация при ручном скролле
-    container.addEventListener('scroll', () => {
-      currentPosition = -container.scrollLeft;
-      track.style.transform = `translateX(${currentPosition}px)`;
-    });
-  };
+  });
+};
 
   // Инициализация для истории
   initHorizontalScroll('history_scroll', 'history-track', '.history-scroll-btn, .history-scroll-btn-side');
